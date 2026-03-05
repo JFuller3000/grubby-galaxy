@@ -1,0 +1,601 @@
+---
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Design System — Design Document. Single source of truth for visual and interaction design." />
+		<title>Design System — Design Document</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+		<style is:global>
+			:root {
+				--color-bg: #faf9f7;
+				--color-text: #1a1a1a;
+				--color-muted: #5c5c5c;
+				--color-accent: #2d5a4a;
+				--color-border: #e5e3e0;
+				--font-sans: 'DM Sans', system-ui, sans-serif;
+				--font-serif: 'DM Serif Display', Georgia, serif;
+				--max-width: 720px;
+				--toc-width: 220px;
+			}
+
+			* {
+				box-sizing: border-box;
+			}
+
+			body {
+				margin: 0;
+				padding: 2rem 1.5rem 4rem;
+				font-family: var(--font-sans);
+				font-size: 1rem;
+				line-height: 1.6;
+				color: var(--color-text);
+				background: var(--color-bg);
+			}
+
+			.doc-layout {
+				display: grid;
+				grid-template-columns: var(--toc-width) 1fr;
+				gap: 3rem;
+				max-width: calc(var(--toc-width) + var(--max-width) + 3rem);
+				margin: 0 auto;
+				align-items: start;
+			}
+
+			.doc-toc {
+				position: sticky;
+				top: 2rem;
+			}
+
+			.doc-toc-title {
+				font-size: 0.75rem;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				color: var(--color-muted);
+				margin: 0 0 0.75rem;
+			}
+
+			.doc-toc nav {
+				display: flex;
+				flex-direction: column;
+				gap: 0.125rem;
+			}
+
+			.doc-toc-accordion {
+				border: none;
+				padding: 0;
+				margin: 0;
+			}
+
+			.doc-toc-trigger {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				width: 100%;
+				padding: 0.35em 0 0.35em 0.5rem;
+				margin-left: -0.5rem;
+				font-size: 0.9rem;
+				color: var(--color-muted);
+				text-align: left;
+				background: none;
+				border: none;
+				border-left: 2px solid transparent;
+				cursor: pointer;
+				font-family: inherit;
+				gap: 0.5rem;
+			}
+
+			.doc-toc-trigger:hover {
+				color: var(--color-accent);
+			}
+
+			.doc-toc-trigger::-webkit-details-marker {
+				display: none;
+			}
+
+			.doc-toc-trigger .doc-toc-chevron {
+				flex-shrink: 0;
+				transition: transform 0.2s ease;
+				opacity: 0.7;
+			}
+
+			.doc-toc-accordion[open] .doc-toc-chevron {
+				transform: rotate(90deg);
+			}
+
+			.doc-toc-trigger a {
+				flex: 1;
+				color: inherit;
+				text-decoration: none;
+			}
+
+			.doc-toc-trigger a:hover {
+				color: var(--color-accent);
+			}
+
+			.doc-toc-trigger a.active {
+				color: var(--color-accent);
+				font-weight: 500;
+			}
+
+			.doc-toc-accordion:has(.doc-toc-trigger a.active) .doc-toc-trigger {
+				border-left-color: var(--color-accent);
+			}
+
+			.doc-toc-panel {
+				display: flex;
+				flex-direction: column;
+				gap: 0.125rem;
+				padding: 0.25rem 0 0.5rem 0.75rem;
+				margin-left: 0.25rem;
+				border-left: 1px solid var(--color-border);
+			}
+
+			.doc-toc-panel a {
+				font-size: 0.8rem;
+				color: var(--color-muted);
+				text-decoration: none;
+				padding: 0.2em 0;
+				display: block;
+			}
+
+			.doc-toc-panel a:hover {
+				color: var(--color-accent);
+			}
+
+			.doc-toc-panel a.active {
+				color: var(--color-accent);
+				font-weight: 500;
+			}
+
+			.doc-toc-item:not(.doc-toc-accordion) {
+				padding: 0.35em 0 0.35em 0.5rem;
+				margin-left: -0.5rem;
+				border-left: 2px solid transparent;
+			}
+
+			.doc-toc-item:not(.doc-toc-accordion) a {
+				font-size: 0.9rem;
+				color: var(--color-muted);
+				text-decoration: none;
+				display: block;
+			}
+
+			.doc-toc-item:not(.doc-toc-accordion) a:hover {
+				color: var(--color-accent);
+			}
+
+			.doc-toc-item:not(.doc-toc-accordion) a.active {
+				color: var(--color-accent);
+				border-left-color: var(--color-accent);
+				font-weight: 500;
+			}
+
+			@media (max-width: 768px) {
+				.doc-layout {
+					grid-template-columns: 1fr;
+					gap: 1.5rem;
+				}
+
+				.doc-toc {
+					position: static;
+					padding-bottom: 1rem;
+					border-bottom: 1px solid var(--color-border);
+				}
+
+				.doc-toc nav {
+					flex-direction: column;
+				}
+
+				.doc-toc-trigger {
+					padding: 0.4em 0.5em;
+					margin-left: 0;
+					border-left: none;
+					border-radius: 3px;
+					background: var(--color-border);
+				}
+
+				.doc-toc-panel {
+					margin-left: 0;
+					padding-left: 1rem;
+					border-left-color: var(--color-border);
+				}
+
+				.doc-toc-item:not(.doc-toc-accordion) a {
+					padding: 0.25em 0.5em;
+					margin-left: 0;
+					border-left: none;
+					border-radius: 3px;
+					background: var(--color-border);
+				}
+			}
+		</style>
+		<style is:global>
+			.doc {
+				max-width: var(--max-width);
+			}
+
+			.doc-header {
+				margin-bottom: 2.5rem;
+				padding-bottom: 2rem;
+				border-bottom: 1px solid var(--color-border);
+			}
+
+			.doc-title {
+				font-family: var(--font-serif);
+				font-size: clamp(1.75rem, 4vw, 2.25rem);
+				font-weight: 400;
+				margin: 0 0 1rem;
+				letter-spacing: 0.02em;
+			}
+
+			.doc-lead {
+				font-size: 1.05rem;
+				color: var(--color-muted);
+				margin: 0;
+				font-style: italic;
+			}
+
+			.doc section {
+				margin-bottom: 2.5rem;
+			}
+
+			.doc h2 {
+				font-family: var(--font-serif);
+				font-size: 1.35rem;
+				font-weight: 400;
+				margin: 2rem 0 1rem;
+				color: var(--color-text);
+				letter-spacing: 0.02em;
+			}
+
+			.doc h2:first-of-type {
+				margin-top: 0;
+			}
+
+			.doc h3 {
+				font-size: 1rem;
+				font-weight: 600;
+				margin: 1.5rem 0 0.5rem;
+				color: var(--color-text);
+			}
+
+			.doc h4 {
+				font-size: 0.95rem;
+				font-weight: 600;
+				margin: 1rem 0 0.35rem;
+				color: var(--color-muted);
+			}
+
+			.doc p {
+				margin: 0 0 0.75rem;
+				color: var(--color-text);
+			}
+
+			.doc ul {
+				margin: 0 0 1rem;
+				padding-left: 1.25rem;
+			}
+
+			.doc li {
+				margin-bottom: 0.35rem;
+				color: var(--color-muted);
+			}
+
+			.doc li strong {
+				color: var(--color-text);
+			}
+
+			.doc hr {
+				border: none;
+				border-top: 1px solid var(--color-border);
+				margin: 2rem 0;
+			}
+
+			.doc .note {
+				font-size: 0.9rem;
+				color: var(--color-muted);
+				font-style: italic;
+				margin-top: 2rem;
+			}
+
+			.doc code {
+				font-size: 0.9em;
+				background: var(--color-border);
+				padding: 0.15em 0.4em;
+				border-radius: 3px;
+			}
+
+			.doc a {
+				color: var(--color-accent);
+				text-decoration: none;
+			}
+
+			.doc a:hover {
+				text-decoration: underline;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="doc-layout">
+			<aside class="doc-toc" aria-label="Table of contents">
+				<p class="doc-toc-title">On this page</p>
+				<nav>
+					<details class="doc-toc-accordion doc-toc-item" open>
+						<summary class="doc-toc-trigger">
+							<a href="#overview-heading" onclick="event.stopPropagation()">1. Overview &amp; principles</a>
+							<span class="doc-toc-chevron" aria-hidden="true">▸</span>
+						</summary>
+						<div class="doc-toc-panel">
+							<a href="#purpose">1.1 Purpose</a>
+							<a href="#principles">1.2 Design principles</a>
+							<a href="#brand">1.3 Brand positioning</a>
+						</div>
+					</details>
+					<details class="doc-toc-accordion doc-toc-item">
+						<summary class="doc-toc-trigger">
+							<a href="#foundations-heading" onclick="event.stopPropagation()">2. Foundations</a>
+							<span class="doc-toc-chevron" aria-hidden="true">▸</span>
+						</summary>
+						<div class="doc-toc-panel">
+							<a href="#color">2.1 Color</a>
+							<a href="#typography">2.2 Typography</a>
+							<a href="#spacing">2.3 Spacing &amp; layout</a>
+							<a href="#motion">2.4 Motion &amp; animation</a>
+							<a href="#iconography">2.5 Iconography</a>
+							<a href="#imagery">2.6 Imagery &amp; media</a>
+						</div>
+					</details>
+					<details class="doc-toc-accordion doc-toc-item">
+						<summary class="doc-toc-trigger">
+							<a href="#components-heading" onclick="event.stopPropagation()">3. Components</a>
+							<span class="doc-toc-chevron" aria-hidden="true">▸</span>
+						</summary>
+						<div class="doc-toc-panel">
+							<a href="#component-template">3.1 Component template</a>
+						</div>
+					</details>
+					<details class="doc-toc-accordion doc-toc-item">
+						<summary class="doc-toc-trigger">
+							<a href="#patterns-heading" onclick="event.stopPropagation()">4. Patterns</a>
+							<span class="doc-toc-chevron" aria-hidden="true">▸</span>
+						</summary>
+						<div class="doc-toc-panel">
+							<a href="#layout-patterns">4.1 Layout patterns</a>
+							<a href="#navigation">4.2 Navigation</a>
+							<a href="#forms">4.3 Forms &amp; inputs</a>
+							<a href="#feedback">4.4 Feedback &amp; status</a>
+							<a href="#content-patterns">4.5 Content patterns</a>
+						</div>
+					</details>
+					<div class="doc-toc-item">
+						<a href="#a11y-heading">5. Accessibility</a>
+					</div>
+					<div class="doc-toc-item">
+						<a href="#responsive-heading">6. Responsive &amp; platform</a>
+					</div>
+					<div class="doc-toc-item">
+						<a href="#governance-heading">7. Governance &amp; maintenance</a>
+					</div>
+					<div class="doc-toc-item">
+						<a href="#appendix-heading">8. Appendix</a>
+					</div>
+				</nav>
+			</aside>
+			<article class="doc">
+			<header class="doc-header">
+				<h1 class="doc-title">Design System — Design Document</h1>
+				<p class="doc-lead">Single source of truth for visual and interaction design. Use this to keep Figma, brand, and product work consistent. Code implementation references this document.</p>
+			</header>
+
+			<section aria-labelledby="overview-heading">
+				<h2 id="overview-heading">1. Overview &amp; principles</h2>
+
+				<h3 id="purpose">1.1 Purpose</h3>
+				<ul>
+					<li>What this design system is for (product(s), audience, platforms).</li>
+					<li>Who it serves (design, eng, content, partners).</li>
+				</ul>
+
+				<h3 id="principles">1.2 Design principles</h3>
+				<ul>
+					<li>3–5 principles that guide decisions (e.g. “Clear over clever,” “Accessible by default,” “Content-first”).</li>
+					<li>One short paragraph each; reference in component and pattern docs when relevant.</li>
+				</ul>
+
+				<h3 id="brand">1.3 Brand positioning</h3>
+				<ul>
+					<li>Mission, voice, and personality in 1–2 paragraphs.</li>
+					<li>How the design system supports the brand (tone of UI, imagery, motion).</li>
+				</ul>
+			</section>
+
+			<hr />
+
+			<section aria-labelledby="foundations-heading">
+				<h2 id="foundations-heading">2. Foundations</h2>
+
+				<h3 id="color">2.1 Color</h3>
+				<ul>
+					<li><strong>Palette:</strong> Primary, secondary, neutrals (with hex/Pantone/HSL if needed).</li>
+					<li><strong>Semantic roles:</strong> Text (primary, secondary, muted), backgrounds (page, surface, overlay), borders, focus, error, success, warning.</li>
+					<li><strong>Usage rules:</strong> When to use which role; contrast and accessibility (e.g. WCAG AA).</li>
+					<li><strong>Dark mode (if applicable):</strong> Mapping from light roles to dark; any inversions or exceptions.</li>
+				</ul>
+
+				<h3 id="typography">2.2 Typography</h3>
+				<ul>
+					<li><strong>Type scale:</strong> Display, heading levels, body, caption, overline—sizes and line heights.</li>
+					<li><strong>Font families:</strong> Primary and secondary; usage (headings vs body vs UI).</li>
+					<li><strong>Weights:</strong> Which weights exist and when to use them.</li>
+					<li><strong>Prose/editorial:</strong> Rules for long-form content (line length, spacing, lists, blockquotes).</li>
+				</ul>
+
+				<h3 id="spacing">2.3 Spacing &amp; layout</h3>
+				<ul>
+					<li><strong>Spacing scale:</strong> Named scale (e.g. xs, sm, md, lg, xl) with values; usage (padding, margins, gaps).</li>
+					<li><strong>Grid:</strong> Column count, gutter, margin; breakpoints and when the grid changes.</li>
+					<li><strong>Breakpoints:</strong> Named breakpoints (e.g. sm, md, lg, xl) and what they represent (device / viewport intent).</li>
+				</ul>
+
+				<h3 id="motion">2.4 Motion &amp; animation</h3>
+				<ul>
+					<li><strong>Duration scale:</strong> Short, medium, long (e.g. 150ms, 300ms, 500ms) and when to use each.</li>
+					<li><strong>Easing:</strong> Standard curves (ease-in, ease-out, ease-in-out, custom) and use cases.</li>
+					<li><strong>Principles:</strong> When we animate (feedback, focus, transition) and when we don’t.</li>
+				</ul>
+
+				<h3 id="iconography">2.5 Iconography</h3>
+				<ul>
+					<li><strong>Style:</strong> Outline vs solid; stroke weight; size scale.</li>
+					<li><strong>Library/source:</strong> Which set we use; how to add or request icons.</li>
+					<li><strong>Usage:</strong> Sizing with text, alignment, color (inherit vs semantic).</li>
+				</ul>
+
+				<h3 id="imagery">2.6 Imagery &amp; media</h3>
+				<ul>
+					<li><strong>Photography:</strong> Style, cropping, treatment (e.g. no heavy filters).</li>
+					<li><strong>Illustration:</strong> Style (if any); when to use illustration vs photo vs icon.</li>
+					<li><strong>Aspect ratios:</strong> Standard ratios for cards, heroes, thumbnails.</li>
+					<li><strong>Accessibility:</strong> Alt text expectations; decorative vs meaningful.</li>
+				</ul>
+			</section>
+
+			<hr />
+
+			<section aria-labelledby="components-heading">
+				<h2 id="components-heading">3. Components</h2>
+				<p>For each component, keep the doc design-focused; implementation can live in code/Storybook.</p>
+
+				<h3 id="component-template">3.1 Component template (repeat per component)</h3>
+				<h4>Component name</h4>
+				<ul>
+					<li><strong>Purpose:</strong> What it’s for and when to use it.</li>
+					<li><strong>Variants:</strong> Primary, secondary, sizes, states (default, hover, focus, disabled, error).</li>
+					<li><strong>Anatomy:</strong> Labeled diagram or list (e.g. icon, label, helper text, trailing icon).</li>
+					<li><strong>Specs:</strong> Size, padding, border radius, typography, color roles.</li>
+					<li><strong>Composition:</strong> What it can contain (e.g. text only, icon + text, slots).</li>
+					<li><strong>Do’s and don’ts:</strong> 2–3 each; reference principles where it helps.</li>
+					<li><strong>Related:</strong> Links to patterns or other components.</li>
+				</ul>
+				<p><strong>Suggested order:</strong> Start with primitives (Button, Text, Icon, Input, Checkbox, etc.), then patterns (Card, Form field, Modal, Nav item).</p>
+			</section>
+
+			<hr />
+
+			<section aria-labelledby="patterns-heading">
+				<h2 id="patterns-heading">4. Patterns</h2>
+				<p>Higher-level, cross-component guidance.</p>
+
+				<h3 id="layout-patterns">4.1 Layout patterns</h3>
+				<ul>
+					<li>Page structure (header, main, sidebar, footer).</li>
+					<li>Containers (narrow, medium, full).</li>
+					<li>Stacking and grouping (sections, cards, lists).</li>
+				</ul>
+
+				<h3 id="navigation">4.2 Navigation</h3>
+				<ul>
+					<li>Global nav, local/tabs, breadcrumbs, pagination.</li>
+					<li>When to use which; hierarchy and placement.</li>
+				</ul>
+
+				<h3 id="forms">4.3 Forms &amp; inputs</h3>
+				<ul>
+					<li>Label placement, helper/error text, required indicator.</li>
+					<li>Validation and error state; multi-step flows if relevant.</li>
+				</ul>
+
+				<h3 id="feedback">4.4 Feedback &amp; status</h3>
+				<ul>
+					<li>Toasts, banners, inline messages.</li>
+					<li>Loading states (skeletons, spinners) and when to use each.</li>
+				</ul>
+
+				<h3 id="content-patterns">4.5 Content patterns</h3>
+				<ul>
+					<li>Article/page layout; headings, lists, blockquotes, code.</li>
+					<li>Cards for previews, feature lists, CTAs.</li>
+				</ul>
+			</section>
+
+			<hr />
+
+			<section aria-labelledby="a11y-heading">
+				<h2 id="a11y-heading">5. Accessibility</h2>
+				<ul>
+					<li><strong>Target:</strong> WCAG 2.1 AA (or other standard); any AAA goals.</li>
+					<li><strong>Color:</strong> Contrast ratios; never rely on color alone.</li>
+					<li><strong>Focus:</strong> Visible focus states; tab order and keyboard use.</li>
+					<li><strong>Motion:</strong> Respect <code>prefers-reduced-motion</code>; document any exceptions.</li>
+					<li><strong>Content:</strong> Headings hierarchy, alt text, form labels.</li>
+				</ul>
+			</section>
+
+			<hr />
+
+			<section aria-labelledby="responsive-heading">
+				<h2 id="responsive-heading">6. Responsive &amp; platform</h2>
+				<ul>
+					<li><strong>Breakpoint behavior:</strong> How layout and components change at each breakpoint.</li>
+					<li><strong>Touch targets:</strong> Minimum size (e.g. 44px); spacing for touch.</li>
+					<li><strong>Platform notes:</strong> Any differences for native, email, or embedded contexts.</li>
+				</ul>
+			</section>
+
+			<hr />
+
+			<section aria-labelledby="governance-heading">
+				<h2 id="governance-heading">7. Governance &amp; maintenance</h2>
+				<ul>
+					<li><strong>Ownership:</strong> Who approves changes to foundations and components.</li>
+					<li><strong>Contribution:</strong> How to propose new components or tokens (e.g. request template, review process).</li>
+					<li><strong>Versioning:</strong> How we communicate breaking vs additive changes (link to changelog or “What’s new”).</li>
+					<li><strong>Design tools:</strong> Where the canonical Figma library lives; how often it’s synced with this doc.</li>
+				</ul>
+			</section>
+
+			<hr />
+
+			<section aria-labelledby="appendix-heading">
+				<h2 id="appendix-heading">8. Appendix</h2>
+				<ul>
+					<li><strong>Changelog:</strong> Summary of major doc and system updates.</li>
+					<li><strong>Glossary:</strong> Terms used in the doc (e.g. “token,” “variant,” “primitive”).</li>
+					<li><strong>References:</strong> Links to brand guidelines, research, or external standards.</li>
+				</ul>
+			</section>
+
+			<p class="note">Use this document as the design spec. Code (tokens, components) and Figma should align to the decisions recorded here.</p>
+			</article>
+		</div>
+		<script>
+			// Optional: highlight TOC link for current section on scroll
+			const tocLinks = document.querySelectorAll('.doc-toc a[href^="#"]');
+			const sections = Array.from(tocLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+			function updateActive() {
+				const scrollY = window.scrollY;
+				let current = tocLinks[0];
+				for (let i = sections.length - 1; i >= 0; i--) {
+					if (sections[i] && sections[i].getBoundingClientRect().top <= 120) {
+						current = tocLinks[i];
+						break;
+					}
+				}
+				tocLinks.forEach(a => a.classList.remove('active'));
+				if (current) current.classList.add('active');
+			}
+
+			window.addEventListener('scroll', updateActive, { passive: true });
+			updateActive();
+		</script>
+	</body>
+</html>
