@@ -1,6 +1,7 @@
 ---
+import SiteNav from '../components/SiteNav.astro';
+const currentPath = Astro.url.pathname;
 ---
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -10,7 +11,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content="John S Fuller — Front End Visual & UX Designer. Resume and portfolio." />
-		<title>John S Fuller — Front End Visual & UX Designer</title>
+		<title>John S Fuller — Front End Visual &amp; UX Designer</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet" />
@@ -40,12 +41,12 @@
 				background: var(--color-bg);
 			}
 
-			.resume {
+			.page {
 				max-width: var(--max-width);
 				margin: 0 auto;
 			}
 
-			header {
+			.resume header {
 				text-align: center;
 				margin-bottom: 2.5rem;
 				padding-bottom: 2rem;
@@ -89,11 +90,11 @@
 				opacity: 0.85;
 			}
 
-			section {
+			.resume section {
 				margin-bottom: 2rem;
 			}
 
-			h2 {
+			.resume h2 {
 				font-family: var(--font-serif);
 				font-size: 1.25rem;
 				font-weight: 400;
@@ -192,133 +193,139 @@
 				.contact a {
 					color: var(--color-text);
 				}
+				.site-nav {
+					display: none;
+				}
 			}
 		</style>
 	</head>
 	<body>
-		<main class="resume">
-			<header>
-				<h1 class="name">John S Fuller</h1>
-				<p class="title">Front End Visual &amp; UX Designer</p>
-				<div class="contact">
-					<a href="mailto:Johnsfuller@gmail.com">Johnsfuller@gmail.com</a>
-					<span class="sep">|</span>
-					<a href="tel:+12026818640">202-681-8640</a>
-					<span class="sep">|</span>
-					<a href="https://www.linkedin.com/in/john-fuller-74410631" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-					<span class="sep">|</span>
-					<a href="https://github.com/JFuller3000" target="_blank" rel="noopener noreferrer">Github</a>
-				</div>
-			</header>
+		<div class="page">
+			<SiteNav currentPath={currentPath} />
+			<main class="resume">
+				<header>
+					<h1 class="name">John S Fuller</h1>
+					<p class="title">Front End Visual &amp; UX Designer</p>
+					<div class="contact">
+						<a href="mailto:Johnsfuller@gmail.com">Johnsfuller@gmail.com</a>
+						<span class="sep">|</span>
+						<a href="tel:+12026818640">202-681-8640</a>
+						<span class="sep">|</span>
+						<a href="https://www.linkedin.com/in/john-fuller-74410631" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+						<span class="sep">|</span>
+						<a href="https://github.com/JFuller3000" target="_blank" rel="noopener noreferrer">Github</a>
+					</div>
+				</header>
 
-			<section class="summary" aria-labelledby="summary-heading">
-				<h2 id="summary-heading">Summary</h2>
-				<p>
-					Front-end engineer and visual designer specializing in content driven large scale web apps. Ships with Astro, TypeScript, and Tailwind; comfortable with headless CMS, GraphQL, and static-first/Jamstack architecture.
-				</p>
-			</section>
+				<section class="summary" aria-labelledby="summary-heading">
+					<h2 id="summary-heading">Summary</h2>
+					<p>
+						Front-end engineer and visual designer specializing in content driven large scale web apps. Ships with Astro, TypeScript, and Tailwind; comfortable with headless CMS, GraphQL, and static-first/Jamstack architecture.
+					</p>
+				</section>
 
-			<section class="skills" aria-labelledby="skills-heading">
-				<h2 id="skills-heading">Skills</h2>
-				<div class="skills-grid">
-					<div class="skill-group">
-						<h3>Frontend</h3>
-						<p>Astro, TypeScript, TSX, Preact, React (hooks), Tailwind CSS, CSS custom properties, responsive design</p>
+				<section class="skills" aria-labelledby="skills-heading">
+					<h2 id="skills-heading">Skills</h2>
+					<div class="skills-grid">
+						<div class="skill-group">
+							<h3>Frontend</h3>
+							<p>Astro, TypeScript, TSX, Preact, React (hooks), Tailwind CSS, CSS custom properties, responsive design</p>
+						</div>
+						<div class="skill-group">
+							<h3>Design systems</h3>
+							<p>Design tokens (typography, color, spacing), component libraries, Tailwind theme extension, prose/editorial styling, accessibility (ARIA, semantic HTML)</p>
+						</div>
+						<div class="skill-group">
+							<h3>Data &amp; APIs</h3>
+							<p>GraphQL, Apollo Client, headless CMS (WordPress / WPGraphQL), REST</p>
+						</div>
+						<div class="skill-group">
+							<h3>Auth &amp; tooling</h3>
+							<p>OIDC / Ory, Prettier, Vitest, Git</p>
+						</div>
+						<div class="skill-group">
+							<h3>Platform / infra</h3>
+							<p>Jamstack, static site generation, Cloudflare, Node</p>
+						</div>
 					</div>
-					<div class="skill-group">
-						<h3>Design systems</h3>
-						<p>Design tokens (typography, color, spacing), component libraries, Tailwind theme extension, prose/editorial styling, accessibility (ARIA, semantic HTML)</p>
-					</div>
-					<div class="skill-group">
-						<h3>Data &amp; APIs</h3>
-						<p>GraphQL, Apollo Client, headless CMS (WordPress / WPGraphQL), REST</p>
-					</div>
-					<div class="skill-group">
-						<h3>Auth &amp; tooling</h3>
-						<p>OIDC / Ory, Prettier, Vitest, Git</p>
-					</div>
-					<div class="skill-group">
-						<h3>Platform / infra</h3>
-						<p>Jamstack, static site generation, Cloudflare, Node</p>
-					</div>
-				</div>
-			</section>
+				</section>
 
-			<section class="experience" aria-labelledby="experience-heading">
-				<h2 id="experience-heading">Work Experience</h2>
+				<section class="experience" aria-labelledby="experience-heading">
+					<h2 id="experience-heading">Work Experience</h2>
 
-				<article class="job">
-					<div class="job-header">
-						<span class="job-company">AOPA</span>
-						<span class="job-date">2021–present</span>
-					</div>
-					<p class="job-role">Senior Front End</p>
-					<ul>
-						<li>Lead UX and visual design for a major platform redesign; own end-to-end design from concept to implementation</li>
-						<li>Define and build the design system (tokens, components, typography) that powers the new member-facing product</li>
-						<li>Partner with engineering to ship a mobile-first, conversion-focused front end (Astro, Tailwind, headless CMS)</li>
-						<li>Drive UX and visual direction for landing pages, sign-up flows, and editorial experiences</li>
-					</ul>
-				</article>
+					<article class="job">
+						<div class="job-header">
+							<span class="job-company">AOPA</span>
+							<span class="job-date">2021–present</span>
+						</div>
+						<p class="job-role">Senior Front End</p>
+						<ul>
+							<li>Lead UX and visual design for a major platform redesign; own end-to-end design from concept to implementation</li>
+							<li>Define and build the design system (tokens, components, typography) that powers the new member-facing product</li>
+							<li>Partner with engineering to ship a mobile-first, conversion-focused front end (Astro, Tailwind, headless CMS)</li>
+							<li>Drive UX and visual direction for landing pages, sign-up flows, and editorial experiences</li>
+						</ul>
+					</article>
 
-				<article class="job">
-					<div class="job-header">
-						<span class="job-company">Solas AI</span>
-						<span class="job-date">2019–2021</span>
-					</div>
-					<p class="job-role">Principal Designer</p>
-					<ul>
-						<li>Served as sole designer on a small team; owned branding, visual identity, and key go-to-market materials</li>
-						<li>Designed and produced pitch decks and sales collateral that supported fundraising and client conversations</li>
-						<li>Established brand guidelines and reusable templates for a fast-moving early-stage team</li>
-					</ul>
-				</article>
+					<article class="job">
+						<div class="job-header">
+							<span class="job-company">Solas AI</span>
+							<span class="job-date">2019–2021</span>
+						</div>
+						<p class="job-role">Principal Designer</p>
+						<ul>
+							<li>Served as sole designer on a small team; owned branding, visual identity, and key go-to-market materials</li>
+							<li>Designed and produced pitch decks and sales collateral that supported fundraising and client conversations</li>
+							<li>Established brand guidelines and reusable templates for a fast-moving early-stage team</li>
+						</ul>
+					</article>
 
-				<article class="job">
-					<div class="job-header">
-						<span class="job-company">Freelance</span>
-						<span class="job-date">2017–2019</span>
-					</div>
-					<p class="job-role">Design &amp; Front-end</p>
-					<ul>
-						<li>Delivered brand identity, web design, and front-end implementation for startups and small businesses</li>
-						<li>Shipped responsive sites and design systems across industries including media and technology</li>
-					</ul>
-				</article>
+					<article class="job">
+						<div class="job-header">
+							<span class="job-company">Freelance</span>
+							<span class="job-date">2017–2019</span>
+						</div>
+						<p class="job-role">Design &amp; Front-end</p>
+						<ul>
+							<li>Delivered brand identity, web design, and front-end implementation for startups and small businesses</li>
+							<li>Shipped responsive sites and design systems across industries including media and technology</li>
+						</ul>
+					</article>
 
-				<article class="job">
-					<div class="job-header">
-						<span class="job-company">Vox Media Inc.</span>
-						<span class="job-date">2009–2017</span>
-					</div>
-					<p class="job-role">Principal Front End Designer</p>
-					<ul>
-						<li>First design hire; helped scale the design org from 1 to a 40-person, multi-location team</li>
-						<li>Led design of major rebrand initiatives and long-term brand platforms for flagship properties</li>
-						<li>Created and evolved brand systems and design standards that supported growth and consistency across properties</li>
-						<li>Shipped high-impact brand and product work that defined visual identity and audience experience</li>
-					</ul>
-				</article>
+					<article class="job">
+						<div class="job-header">
+							<span class="job-company">Vox Media Inc.</span>
+							<span class="job-date">2009–2017</span>
+						</div>
+						<p class="job-role">Principal Front End Designer</p>
+						<ul>
+							<li>First design hire; helped scale the design org from 1 to a 40-person, multi-location team</li>
+							<li>Led design of major rebrand initiatives and long-term brand platforms for flagship properties</li>
+							<li>Created and evolved brand systems and design standards that supported growth and consistency across properties</li>
+							<li>Shipped high-impact brand and product work that defined visual identity and audience experience</li>
+						</ul>
+					</article>
 
-				<article class="job">
-					<div class="job-header">
-						<span class="job-company">AOL</span>
-						<span class="job-date">2007–2009</span>
-					</div>
-					<p class="job-role">Junior Designer</p>
-					<ul>
-						<li>Designed and supported content brands at scale across a large portfolio of properties</li>
-						<li>Delivered UX and visual design for high-traffic, editorially driven products</li>
-						<li>Collaborated with senior design leadership and cross-functional teams in a fast-paced, scaled environment</li>
-					</ul>
-				</article>
-			</section>
+					<article class="job">
+						<div class="job-header">
+							<span class="job-company">AOL</span>
+							<span class="job-date">2007–2009</span>
+						</div>
+						<p class="job-role">Junior Designer</p>
+						<ul>
+							<li>Designed and supported content brands at scale across a large portfolio of properties</li>
+							<li>Delivered UX and visual design for high-traffic, editorially driven products</li>
+							<li>Collaborated with senior design leadership and cross-functional teams in a fast-paced, scaled environment</li>
+						</ul>
+					</article>
+				</section>
 
-			<section class="education" aria-labelledby="education-heading">
-				<h2 id="education-heading">Education</h2>
-				<p><strong>Corcoran College of Art &amp; Design</strong> | BA Graphic design | Washington DC</p>
-				<p><strong>University of Tallin</strong> | 1yr Study Abroad, CS | Tallinn, Estonia</p>
-			</section>
-		</main>
+				<section class="education" aria-labelledby="education-heading">
+					<h2 id="education-heading">Education</h2>
+					<p><strong>Corcoran College of Art &amp; Design</strong> | BA Graphic design | Washington DC</p>
+					<p><strong>University of Tallin</strong> | 1yr Study Abroad, CS | Tallinn, Estonia</p>
+				</section>
+			</main>
+		</div>
 	</body>
 </html>

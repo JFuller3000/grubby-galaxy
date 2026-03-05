@@ -1,6 +1,7 @@
 ---
+import SiteNav from '../../components/SiteNav.astro';
+const currentPath = Astro.url.pathname;
 ---
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -39,12 +40,15 @@
 				background: var(--color-bg);
 			}
 
+			.page-wrap {
+				max-width: calc(var(--toc-width) + var(--max-width) + 3rem);
+				margin: 0 auto;
+			}
+
 			.doc-layout {
 				display: grid;
 				grid-template-columns: var(--toc-width) 1fr;
 				gap: 3rem;
-				max-width: calc(var(--toc-width) + var(--max-width) + 3rem);
-				margin: 0 auto;
 				align-items: start;
 			}
 
@@ -324,7 +328,9 @@
 		</style>
 	</head>
 	<body>
-		<div class="doc-layout">
+		<div class="page-wrap">
+			<SiteNav currentPath={currentPath} />
+			<div class="doc-layout">
 			<aside class="doc-toc" aria-label="Table of contents">
 				<p class="doc-toc-title">On this page</p>
 				<nav>
@@ -400,14 +406,18 @@
 
 				<h3 id="purpose">1.1 Purpose</h3>
 				<ul>
-					<li>What this design system is for (product(s), audience, platforms).</li>
-					<li>Who it serves (design, eng, content, partners).</li>
+					<li>This system is for AOPA's digital design & branding.</li>
+					<li>It serves devs, design and content producers.</li>
 				</ul>
 
 				<h3 id="principles">1.2 Design principles</h3>
 				<ul>
-					<li>3–5 principles that guide decisions (e.g. “Clear over clever,” “Accessible by default,” “Content-first”).</li>
-					<li>One short paragraph each; reference in component and pattern docs when relevant.</li>
+					<li>
+						Clear Communication
+					</li>
+					<li>Simplified Structures</li>
+					<li>Impactful Patterns</li>
+					<li>REfined Typography</li>
 				</ul>
 
 				<h3 id="brand">1.3 Brand positioning</h3>
@@ -575,6 +585,7 @@
 
 			<p class="note">Use this document as the design spec. Code (tokens, components) and Figma should align to the decisions recorded here.</p>
 			</article>
+			</div>
 		</div>
 		<script>
 			// Optional: highlight TOC link for current section on scroll

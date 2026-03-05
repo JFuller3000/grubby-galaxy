@@ -1,0 +1,70 @@
+---
+import SiteNav from '../../components/SiteNav.astro';
+const currentPath = Astro.url.pathname;
+---
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Aopa Design System — Decks." />
+		<title>Aopa Design System — Decks</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+		<style is:global>
+			:root {
+				--color-bg: #faf9f7;
+				--color-text: #1a1a1a;
+				--color-muted: #5c5c5c;
+				--color-accent: #2d5a4a;
+				--color-border: #e5e3e0;
+				--font-sans: 'DM Sans', system-ui, sans-serif;
+				--font-serif: 'DM Serif Display', Georgia, serif;
+				--max-width: 720px;
+			}
+
+			* {
+				box-sizing: border-box;
+			}
+
+			body {
+				margin: 0;
+				padding: 2rem 1.5rem 4rem;
+				font-family: var(--font-sans);
+				font-size: 1rem;
+				line-height: 1.6;
+				color: var(--color-text);
+				background: var(--color-bg);
+			}
+
+			.decks-page {
+				max-width: var(--max-width);
+				margin: 0 auto;
+			}
+
+			.decks-page h1 {
+				font-family: var(--font-serif);
+				font-size: clamp(1.75rem, 4vw, 2.25rem);
+				font-weight: 400;
+				margin: 0 0 1rem;
+				letter-spacing: 0.02em;
+			}
+
+			.decks-page p {
+				color: var(--color-muted);
+				margin: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="decks-page">
+			<SiteNav currentPath={currentPath} />
+			<main>
+				<h1>Decks</h1>
+				<p>Design system decks and presentations. Add links or embed content here.</p>
+			</main>
+		</div>
+	</body>
+</html>
