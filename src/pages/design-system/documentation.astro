@@ -445,6 +445,33 @@ const currentPath = Astro.url.pathname;
 				margin-bottom: 0.5rem;
 			}
 
+			.doc-font-usage-label {
+				font-size: 0.75rem;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+				color: var(--color-muted);
+				margin: 0.75rem 0 0.35rem;
+			}
+
+			.doc-font-usage {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+				font-size: 0.9rem;
+				color: var(--color-muted);
+				line-height: 1.5;
+			}
+
+			.doc-font-usage li {
+				margin-bottom: 0.2rem;
+			}
+
+			.doc-font-usage li::before {
+				content: "– ";
+				color: var(--color-accent);
+			}
+
 			.doc-font-knockout-94,
 			.doc-font-knockout-47,
 			.doc-font-gotham-book,
@@ -496,6 +523,18 @@ const currentPath = Astro.url.pathname;
 				padding-bottom: 0;
 			}
 
+			.doc-header-level {
+				display: inline-block;
+				font-size: 0.7rem;
+				font-weight: 600;
+				font-family: var(--font-sans);
+				color: var(--color-muted);
+				background: var(--color-border);
+				padding: 0.2em 0.5em;
+				border-radius: 3px;
+				margin-bottom: 0.5rem;
+			}
+
 			.doc-header-body {
 				font-family: var(--font-sans);
 				font-size: 1rem;
@@ -508,37 +547,54 @@ const currentPath = Astro.url.pathname;
 			.doc-header-main,
 			.doc-header-heavy,
 			.doc-header-medium,
-			.doc-header-light {
+			.doc-header-light,
+			.doc-header-alt-heavy {
 				font-family: var(--font-serif);
 				margin: 0;
 				line-height: 1.3;
 			}
 
 			.doc-header-section {
+				font-family: "Knockout 94", sans-serif;
 				font-size: 2rem;
 				font-weight: 400;
-				letter-spacing: 0.02em;
+				text-transform: uppercase;
+				letter-spacing: 0.12em;
 			}
 
 			.doc-header-main {
+				font-family: "Knockout 94", sans-serif;
 				font-size: 1.5rem;
 				font-weight: 400;
-				letter-spacing: 0.02em;
+				text-transform: capitalize;
 			}
 
 			.doc-header-heavy {
-				font-size: 1.25rem;
+				font-family: "Knockout 47", sans-serif;
+				font-size: 2.25rem; /* 4xl */
 				font-weight: 700;
+				text-transform: capitalize;
 			}
 
 			.doc-header-medium {
+				font-family: "Gotham Bold", Gotham, sans-serif;
 				font-size: 1.15rem;
-				font-weight: 500;
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
 			}
 
 			.doc-header-light {
-				font-size: 1.05rem;
-				font-weight: 300;
+				font-family: "Gotham Bold", Gotham, sans-serif;
+				font-size: 1.15rem;
+				font-weight: 700;
+			}
+
+			.doc-header-alt-heavy {
+				font-family: "Gotham Book", Gotham, sans-serif;
+				font-size: 1.875rem; /* 3xl */
+				font-weight: 400;
+				text-transform: uppercase;
 			}
 
 			.doc p {
@@ -850,18 +906,34 @@ const currentPath = Astro.url.pathname;
 					<div class="doc-font-sample">
 						<span class="doc-font-label">Knockout 94</span>
 						<p class="doc-font-knockout-94">The quick brown fox jumps over the lazy dog. ABCDEFG 0123456789</p>
+						<p class="doc-font-usage-label">Usage</p>
+						<ul class="doc-font-usage">
+							<li>Primary headers, secondary headers, page titles</li>
+						</ul>
 					</div>
 					<div class="doc-font-sample">
 						<span class="doc-font-label">Knockout 47</span>
 						<p class="doc-font-knockout-47">The quick brown fox jumps over the lazy dog. ABCDEFG 0123456789</p>
-					</div>
-					<div class="doc-font-sample">
-						<span class="doc-font-label">Gotham Book</span>
-						<p class="doc-font-gotham-book">The quick brown fox jumps over the lazy dog. ABCDEFG 0123456789</p>
+						<p class="doc-font-usage-label">Usage</p>
+						<ul class="doc-font-usage">
+							<li>Secondary headers, heavy crosshead</li>
+						</ul>
 					</div>
 					<div class="doc-font-sample">
 						<span class="doc-font-label">Gotham Bold</span>
 						<p class="doc-font-gotham-bold">The quick brown fox jumps over the lazy dog. ABCDEFG 0123456789</p>
+						<p class="doc-font-usage-label">Usage</p>
+						<ul class="doc-font-usage">
+							<li>Secondary headers, tertiary headers, main crosshead, UI labels</li>
+						</ul>
+					</div>
+					<div class="doc-font-sample">
+						<span class="doc-font-label">Gotham Book</span>
+						<p class="doc-font-gotham-book">The quick brown fox jumps over the lazy dog. ABCDEFG 0123456789</p>
+						<p class="doc-font-usage-label">Usage</p>
+						<ul class="doc-font-usage">
+							<li>Body copy, UI text</li>
+						</ul>
 					</div>
 				</div>
 
@@ -869,22 +941,32 @@ const currentPath = Astro.url.pathname;
 				<p class="doc-typography-note">Body copy samples below use different quotes to show how each header pairs with supporting text.</p>
 				<div class="doc-headers">
 					<div class="doc-header-sample">
+						<span class="doc-header-level" aria-label="Heading level">h1</span>
 						<p class="doc-header-section">Main section header</p>
 						<p class="doc-header-body">Go confidently in the direction of your dreams. Live the life you have imagined. As you simplify your life, the laws of the universe will be simpler.</p>
 					</div>
 					<div class="doc-header-sample">
+						<span class="doc-header-level" aria-label="Heading level">h2</span>
 						<p class="doc-header-main">Main Crosshead</p>
 						<p class="doc-header-body">It is not the length of life, but the depth. The world is full of magical things patiently waiting for our wits to grow sharper.</p>
 					</div>
 					<div class="doc-header-sample">
+						<span class="doc-header-level" aria-label="Heading level">h3</span>
 						<p class="doc-header-heavy">Heavy crosshead</p>
 						<p class="doc-header-body">The only way to do great work is to love what you do. If you haven't found it yet, keep looking. Don't settle. As with all matters of the heart, you'll know when you find it.</p>
 					</div>
 					<div class="doc-header-sample">
+						<span class="doc-header-level" aria-label="Heading level">h4</span>
+						<p class="doc-header-alt-heavy">Alternate heavy crosshead</p>
+						<p class="doc-header-body">The real voyage of discovery consists not in seeking new landscapes, but in having new eyes. The only true wisdom is in knowing you know nothing.</p>
+					</div>
+					<div class="doc-header-sample">
+						<span class="doc-header-level" aria-label="Heading level">h5</span>
 						<p class="doc-header-medium">Medium crosshead</p>
 						<p class="doc-header-body">We need to give each other the space to grow, to be ourselves, to exercise our diversity. We need to give each other space so that we may both give and receive such beautiful things as ideas, openness, dignity, joy, healing.</p>
 					</div>
 					<div class="doc-header-sample">
+						<span class="doc-header-level" aria-label="Heading level">h6</span>
 						<p class="doc-header-light">Light crosshead</p>
 						<p class="doc-header-body">The real voyage of discovery consists not in seeking new landscapes, but in having new eyes. The only true wisdom is in knowing you know nothing.</p>
 					</div>
