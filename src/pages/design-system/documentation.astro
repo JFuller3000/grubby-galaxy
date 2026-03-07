@@ -14,6 +14,38 @@ const currentPath = Astro.url.pathname;
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
 		<style is:global>
+			@font-face {
+				font-family: "Knockout 94";
+				src: url("/fonts/knockout/Knockout-HTF94-UltmtSumo.otf") format("opentype");
+				font-weight: normal;
+				font-style: normal;
+				font-display: swap;
+			}
+
+			@font-face {
+				font-family: "Knockout 47";
+				src: url("/fonts/knockout/Knockout-HTF47-Bantamweight.otf") format("opentype");
+				font-weight: normal;
+				font-style: normal;
+				font-display: swap;
+			}
+
+			@font-face {
+				font-family: "Gotham Book";
+				src: url("/fonts/gotham/gothambook-webfont.woff") format("woff");
+				font-weight: normal;
+				font-style: normal;
+				font-display: swap;
+			}
+
+			@font-face {
+				font-family: "Gotham Bold";
+				src: url("/fonts/gotham/gothambold-webfont.woff") format("woff");
+				font-weight: 700;
+				font-style: normal;
+				font-display: swap;
+			}
+
 			:root {
 				--color-bg: #faf9f7;
 				--color-text: #1a1a1a;
@@ -278,6 +310,237 @@ const currentPath = Astro.url.pathname;
 				color: var(--color-muted);
 			}
 
+			.doc-palette {
+				display: grid;
+				grid-template-columns: repeat(5, 1fr);
+				gap: 1.5rem;
+				margin: 1rem 0 1.5rem;
+				padding: 0;
+			}
+
+			.doc-palette-4 {
+				grid-template-columns: repeat(4, 1fr);
+			}
+
+			.doc-palette-3 {
+				grid-template-columns: repeat(3, 1fr);
+			}
+
+			.doc-palette-item {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 0.75rem;
+			}
+
+			.doc-palette-item dl {
+				margin: 0;
+				padding: 0;
+				text-align: center;
+			}
+
+			.doc-palette-item dt {
+				font-weight: 600;
+				font-size: 0.85rem;
+				color: var(--color-text);
+				margin: 0 0 0.25rem;
+			}
+
+			.doc-palette-item dd {
+				margin: 0;
+				font-size: 0.8rem;
+				color: var(--color-muted);
+				line-height: 1.4;
+			}
+
+			.doc-swatch {
+				display: inline-block;
+				width: 1.25rem;
+				height: 1.25rem;
+				border-radius: 3px;
+				border: 1px solid var(--color-border);
+				flex-shrink: 0;
+			}
+
+			.doc-swatch-lg {
+				width: 7rem;
+				height: 7rem;
+				border-radius: 8px;
+			}
+
+			.doc-swatch-grey-100 {
+				background: #f3f4f6;
+			}
+
+			.doc-swatch-gr-grey {
+				background: #6b6b6b;
+			}
+
+			.doc-color-tabs {
+				margin: 1rem 0 1.5rem;
+			}
+
+			.doc-tablist {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.25rem;
+				margin-bottom: 1rem;
+				border-bottom: 1px solid var(--color-border);
+			}
+
+			.doc-tablist [role="tab"] {
+				padding: 0.5rem 1rem;
+				font-size: 0.9rem;
+				font-family: inherit;
+				color: var(--color-muted);
+				background: none;
+				border: none;
+				border-bottom: 2px solid transparent;
+				margin-bottom: -1px;
+				cursor: pointer;
+			}
+
+			.doc-tablist [role="tab"]:hover {
+				color: var(--color-text);
+			}
+
+			.doc-tablist [role="tab"][aria-selected="true"] {
+				color: var(--color-accent);
+				font-weight: 500;
+				border-bottom-color: var(--color-accent);
+			}
+
+			.doc-tabpanel {
+				padding-top: 0.25rem;
+			}
+
+			.doc-tabpanel[hidden] {
+				display: none;
+			}
+
+			.doc-font-families {
+				display: flex;
+				flex-direction: column;
+				gap: 1.25rem;
+				margin: 1rem 0 1.5rem;
+			}
+
+			.doc-font-sample {
+				padding-bottom: 1.25rem;
+				border-bottom: 1px solid var(--color-border);
+			}
+
+			.doc-font-sample:last-child {
+				border-bottom: none;
+				padding-bottom: 0;
+			}
+
+			.doc-font-label {
+				display: block;
+				font-size: 0.8rem;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+				color: var(--color-muted);
+				margin-bottom: 0.5rem;
+			}
+
+			.doc-font-knockout-94,
+			.doc-font-knockout-47,
+			.doc-font-gotham-book,
+			.doc-font-gotham-bold {
+				margin: 0;
+				font-size: 1.5rem;
+				line-height: 1.35;
+				color: var(--color-text);
+			}
+
+			.doc-font-knockout-94 {
+				font-family: "Knockout 94", sans-serif;
+			}
+
+			.doc-font-knockout-47 {
+				font-family: "Knockout 47", sans-serif;
+			}
+
+			.doc-font-gotham-book {
+				font-family: "Gotham Book", Gotham, sans-serif;
+			}
+
+			.doc-font-gotham-bold {
+				font-family: "Gotham Bold", Gotham, sans-serif;
+				font-weight: 700;
+			}
+
+			.doc-typography-note {
+				font-size: 0.85rem;
+				color: var(--color-muted);
+				font-style: italic;
+				margin: 0.5rem 0 1rem;
+			}
+
+			.doc-headers {
+				display: flex;
+				flex-direction: column;
+				gap: 1.5rem;
+				margin: 1rem 0 1.5rem;
+			}
+
+			.doc-header-sample {
+				padding-bottom: 1.5rem;
+				border-bottom: 1px solid var(--color-border);
+			}
+
+			.doc-header-sample:last-child {
+				border-bottom: none;
+				padding-bottom: 0;
+			}
+
+			.doc-header-body {
+				font-family: var(--font-sans);
+				font-size: 1rem;
+				line-height: 1.6;
+				color: var(--color-muted);
+				margin: 0.5rem 0 0;
+			}
+
+			.doc-header-section,
+			.doc-header-main,
+			.doc-header-heavy,
+			.doc-header-medium,
+			.doc-header-light {
+				font-family: var(--font-serif);
+				margin: 0;
+				line-height: 1.3;
+			}
+
+			.doc-header-section {
+				font-size: 2rem;
+				font-weight: 400;
+				letter-spacing: 0.02em;
+			}
+
+			.doc-header-main {
+				font-size: 1.5rem;
+				font-weight: 400;
+				letter-spacing: 0.02em;
+			}
+
+			.doc-header-heavy {
+				font-size: 1.25rem;
+				font-weight: 700;
+			}
+
+			.doc-header-medium {
+				font-size: 1.15rem;
+				font-weight: 500;
+			}
+
+			.doc-header-light {
+				font-size: 1.05rem;
+				font-weight: 300;
+			}
+
 			.doc p {
 				margin: 0 0 0.75rem;
 				color: var(--color-text);
@@ -353,6 +616,8 @@ const currentPath = Astro.url.pathname;
 						<div class="doc-toc-panel">
 							<a href="#color">2.1 Color</a>
 							<a href="#typography">2.2 Typography</a>
+							<a href="#typography-fonts">Font families</a>
+							<a href="#typography-headers">Headings and subheads</a>
 							<a href="#spacing">2.3 Spacing &amp; layout</a>
 							<a href="#motion">2.4 Motion &amp; animation</a>
 							<a href="#iconography">2.5 Iconography</a>
@@ -433,8 +698,140 @@ const currentPath = Astro.url.pathname;
 				<h2 id="foundations-heading">2. Foundations</h2>
 
 				<h3 id="color">2.1 Color</h3>
+				<div class="doc-color-tabs">
+					<div class="doc-tablist" role="tablist" aria-label="Color palettes">
+						<button type="button" role="tab" aria-selected="true" aria-controls="color-panel-primary" id="color-tab-primary">Primary</button>
+						<button type="button" role="tab" aria-selected="false" aria-controls="color-panel-ycf" id="color-tab-ycf">You Can Fly</button>
+						<button type="button" role="tab" aria-selected="false" aria-controls="color-panel-foundation" id="color-tab-foundation">Foundation</button>
+						<button type="button" role="tab" aria-selected="false" aria-controls="color-panel-asi" id="color-tab-asi">Air Safety Institute</button>
+					</div>
+					<div id="color-panel-primary" role="tabpanel" aria-labelledby="color-tab-primary" class="doc-tabpanel">
+						<h4>Primary palette</h4>
+						<div class="doc-palette">
+							<div class="doc-palette-item">
+								<span class="doc-swatch doc-swatch-lg" style="background: rgb(22, 51, 114);" aria-hidden="true"></span>
+								<dl>
+									<dt>aopa-dkblue</dt>
+									<dd><code>rgb(22, 51, 114)</code> / <code>#163372</code></dd>
+								</dl>
+							</div>
+							<div class="doc-palette-item">
+								<span class="doc-swatch doc-swatch-lg" style="background: rgb(15, 37, 84);" aria-hidden="true"></span>
+								<dl>
+									<dt>aopa-deep-blue</dt>
+									<dd><code>rgb(15, 37, 84)</code> / <code>#0f2554</code></dd>
+								</dl>
+							</div>
+							<div class="doc-palette-item">
+								<span class="doc-swatch doc-swatch-lg" style="background: #0f4c5c;" aria-hidden="true"></span>
+								<dl>
+									<dt>aopa-darkgreen</dt>
+									<dd><code>#0f4c5c</code></dd>
+								</dl>
+							</div>
+							<div class="doc-palette-item">
+								<span class="doc-swatch doc-swatch-lg" style="background: rgb(0, 134, 184);" aria-hidden="true"></span>
+								<dl>
+									<dt>aopa-ltblue</dt>
+									<dd><code>rgb(0, 134, 184)</code> / <code>#0086b8</code></dd>
+								</dl>
+							</div>
+							<div class="doc-palette-item">
+								<span class="doc-swatch doc-swatch-lg doc-swatch-grey-100" aria-hidden="true"></span>
+								<dl>
+									<dt>aopa-bg-grey</dt>
+									<dd><code>bg-grey-100</code> / <code>#f3f4f6</code></dd>
+								</dl>
+							</div>
+						</div>
+					</div>
+					<div id="color-panel-ycf" role="tabpanel" aria-labelledby="color-tab-ycf" class="doc-tabpanel" hidden>
+						<h4>You Can Fly palette</h4>
+						<div class="doc-palette doc-palette-4">
+							<div class="doc-palette-item">
+								<span class="doc-swatch doc-swatch-lg" style="background: #f6c655;" aria-hidden="true"></span>
+								<dl>
+									<dt>ycf-yellow</dt>
+									<dd><code>#f6c655</code></dd>
+								</dl>
+							</div>
+							<div class="doc-palette-item">
+								<span class="doc-swatch doc-swatch-lg" style="background: #575859;" aria-hidden="true"></span>
+								<dl>
+									<dt>ycf-grey</dt>
+									<dd><code>#575859</code></dd>
+								</dl>
+							</div>
+							<div class="doc-palette-item">
+								<span class="doc-swatch doc-swatch-lg" style="background: #5d0066;" aria-hidden="true"></span>
+								<dl>
+									<dt>ycf-accent</dt>
+									<dd><code>#5d0066</code></dd>
+								</dl>
+							</div>
+							<div class="doc-palette-item">
+								<span class="doc-swatch doc-swatch-lg doc-swatch-grey-100" aria-hidden="true"></span>
+								<dl>
+									<dt>aopa-bg-grey</dt>
+									<dd><code>bg-grey-100</code> / <code>#f3f4f6</code></dd>
+								</dl>
+							</div>
+						</div>
+					</div>
+					<div id="color-panel-foundation" role="tabpanel" aria-labelledby="color-tab-foundation" class="doc-tabpanel" hidden>
+						<h4>Foundation palette</h4>
+						<div class="doc-palette doc-palette-3">
+							<div class="doc-palette-item">
+								<span class="doc-swatch doc-swatch-lg" style="background: #00314f;" aria-hidden="true"></span>
+								<dl>
+									<dt>foundation-blue</dt>
+									<dd><code>#00314f</code></dd>
+								</dl>
+							</div>
+							<div class="doc-palette-item">
+								<span class="doc-swatch doc-swatch-lg" style="background: #6b6b6b;" aria-hidden="true"></span>
+								<dl>
+									<dt>foundation-grey</dt>
+									<dd><code>#6b6b6b</code></dd>
+								</dl>
+							</div>
+							<div class="doc-palette-item">
+								<span class="doc-swatch doc-swatch-lg doc-swatch-grey-100" aria-hidden="true"></span>
+								<dl>
+									<dt>aopa-bg-grey</dt>
+									<dd><code>bg-grey-100</code> / <code>#f3f4f6</code></dd>
+								</dl>
+							</div>
+						</div>
+					</div>
+					<div id="color-panel-asi" role="tabpanel" aria-labelledby="color-tab-asi" class="doc-tabpanel" hidden>
+						<h4>Air Safety Institute palette</h4>
+						<div class="doc-palette doc-palette-3">
+							<div class="doc-palette-item">
+								<span class="doc-swatch doc-swatch-lg" style="background: #cf4520;" aria-hidden="true"></span>
+								<dl>
+									<dt>asi-red</dt>
+									<dd><code>#cf4520</code></dd>
+								</dl>
+							</div>
+							<div class="doc-palette-item">
+								<span class="doc-swatch doc-swatch-lg" style="background: #002b3b;" aria-hidden="true"></span>
+								<dl>
+									<dt>asi-blue</dt>
+									<dd><code>#002b3b</code></dd>
+								</dl>
+							</div>
+							<div class="doc-palette-item">
+								<span class="doc-swatch doc-swatch-lg doc-swatch-gr-grey" aria-hidden="true"></span>
+								<dl>
+									<dt>aopa-gr-grey</dt>
+									<dd><code>aopa-gr-grey</code></dd>
+								</dl>
+							</div>
+						</div>
+					</div>
+				</div>
 				<ul>
-					<li><strong>Palette:</strong> Primary, secondary, neutrals (with hex/Pantone/HSL if needed).</li>
 					<li><strong>Semantic roles:</strong> Text (primary, secondary, muted), backgrounds (page, surface, overlay), borders, focus, error, success, warning.</li>
 					<li><strong>Usage rules:</strong> When to use which role; contrast and accessibility (e.g. WCAG AA).</li>
 					<li><strong>Dark mode (if applicable):</strong> Mapping from light roles to dark; any inversions or exceptions.</li>
@@ -447,6 +844,51 @@ const currentPath = Astro.url.pathname;
 					<li><strong>Weights:</strong> Which weights exist and when to use them.</li>
 					<li><strong>Prose/editorial:</strong> Rules for long-form content (line length, spacing, lists, blockquotes).</li>
 				</ul>
+
+				<h4 id="typography-fonts">Font families</h4>
+				<div class="doc-font-families">
+					<div class="doc-font-sample">
+						<span class="doc-font-label">Knockout 94</span>
+						<p class="doc-font-knockout-94">The quick brown fox jumps over the lazy dog. ABCDEFG 0123456789</p>
+					</div>
+					<div class="doc-font-sample">
+						<span class="doc-font-label">Knockout 47</span>
+						<p class="doc-font-knockout-47">The quick brown fox jumps over the lazy dog. ABCDEFG 0123456789</p>
+					</div>
+					<div class="doc-font-sample">
+						<span class="doc-font-label">Gotham Book</span>
+						<p class="doc-font-gotham-book">The quick brown fox jumps over the lazy dog. ABCDEFG 0123456789</p>
+					</div>
+					<div class="doc-font-sample">
+						<span class="doc-font-label">Gotham Bold</span>
+						<p class="doc-font-gotham-bold">The quick brown fox jumps over the lazy dog. ABCDEFG 0123456789</p>
+					</div>
+				</div>
+
+				<h4 id="typography-headers">Headings and subheads</h4>
+				<p class="doc-typography-note">Body copy samples below use different quotes to show how each header pairs with supporting text.</p>
+				<div class="doc-headers">
+					<div class="doc-header-sample">
+						<p class="doc-header-section">Main section header</p>
+						<p class="doc-header-body">Go confidently in the direction of your dreams. Live the life you have imagined. As you simplify your life, the laws of the universe will be simpler.</p>
+					</div>
+					<div class="doc-header-sample">
+						<p class="doc-header-main">Main Crosshead</p>
+						<p class="doc-header-body">It is not the length of life, but the depth. The world is full of magical things patiently waiting for our wits to grow sharper.</p>
+					</div>
+					<div class="doc-header-sample">
+						<p class="doc-header-heavy">Heavy crosshead</p>
+						<p class="doc-header-body">The only way to do great work is to love what you do. If you haven't found it yet, keep looking. Don't settle. As with all matters of the heart, you'll know when you find it.</p>
+					</div>
+					<div class="doc-header-sample">
+						<p class="doc-header-medium">Medium crosshead</p>
+						<p class="doc-header-body">We need to give each other the space to grow, to be ourselves, to exercise our diversity. We need to give each other space so that we may both give and receive such beautiful things as ideas, openness, dignity, joy, healing.</p>
+					</div>
+					<div class="doc-header-sample">
+						<p class="doc-header-light">Light crosshead</p>
+						<p class="doc-header-body">The real voyage of discovery consists not in seeking new landscapes, but in having new eyes. The only true wisdom is in knowing you know nothing.</p>
+					</div>
+				</div>
 
 				<h3 id="spacing">2.3 Spacing &amp; layout</h3>
 				<ul>
@@ -607,6 +1049,20 @@ const currentPath = Astro.url.pathname;
 
 			window.addEventListener('scroll', updateActive, { passive: true });
 			updateActive();
+
+			// Color palette tabs
+			const colorTabs = document.querySelectorAll('.doc-tablist [role="tab"]');
+			colorTabs.forEach((tab) => {
+				tab.addEventListener('click', () => {
+					const panelId = tab.getAttribute('aria-controls');
+					if (!panelId) return;
+					colorTabs.forEach((t) => t.setAttribute('aria-selected', 'false'));
+					tab.setAttribute('aria-selected', 'true');
+					document.querySelectorAll('.doc-color-tabs .doc-tabpanel').forEach((panel) => {
+						panel.hidden = panel.id !== panelId;
+					});
+				});
+			});
 		</script>
 	</body>
 </html>
