@@ -1,0 +1,167 @@
+@import "./fontImports.css";
+@import "./fonts.css";
+@import "./type-scale.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  /* @apply font-body; */
+}
+
+@layer base {
+  /* Global heading styles (mirrors typography DEFAULT preset so they apply without .prose) */
+  h1 {
+    font-family: var(--font-heading, "Knockout-94"), sans-serif;
+    font-size: 1.875rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-top: 2em;
+    margin-bottom: 1em;
+  }
+  h2 {
+    font-family: var(--font-heading, "Knockout-94"), sans-serif;
+    font-size: 1.875rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-top: 2em;
+    margin-bottom: 1em;
+  }
+  h3 {
+    font-family: var(--font-heading, "Knockout-94"), sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-top: 1.5em;
+    margin-bottom: 0.75em;
+    color: #111827;
+  }
+  h4 {
+    font-family: var(--font-heading, "Knockout-94"), sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 1.25em;
+    margin-bottom: 0.5em;
+  }
+}
+
+/* temp hiding some wp bullshit */
+.sharedaddy,
+.sd-sharing-enabled,
+.sd-like {
+  display: none !important;
+}
+
+/* Highlight styling for Pagefind excerpts */
+.results-list mark {
+  background-color: rgba(0, 51, 102, 0.1);
+  color: #003366;
+  font-weight: 600;
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* Main dropdown is now controlled by click, not hover */
+
+/* Optional: if you want pointer to still interact with right-side stuff without opening drawer */
+.navwrap nav > :not(.flex:first-child) * {
+  pointer-events: auto;
+}
+
+@layer utilities {
+  .text-body-var {
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+  }
+  .text-heading-var {
+    font-size: var(--fs-heading);
+    line-height: var(--lh-heading);
+    letter-spacing: var(--ls-heading);
+  }
+  .text-subhead-var {
+    font-size: var(--fs-subhead);
+    line-height: var(--lh-subhead);
+  }
+  .text-headline-var {
+    font-size: var(--fs-headline);
+    line-height: var(--lh-headline);
+    letter-spacing: var(--ls-headline);
+  }
+  .text-ui-var {
+    font-size: var(--fs-ui);
+    line-height: var(--lh-ui);
+  }
+  .text-ui-label-var {
+    font-size: var(--fs-ui-label);
+    line-height: var(--lh-ui-label);
+    letter-spacing: var(--ls-ui-label);
+    text-transform: var(--tt-ui-label);
+  }
+}
+
+#tuner-tray {
+  display: none;
+}
+
+@layer components {
+  /* HERO container */
+  .mag-hero {
+    position: relative;
+  }
+
+  /* Headline block */
+  .mag-hero .headline-block {
+    text-align: var(--hero-align, right);
+    max-width: var(--hero-max-w, 36ch);
+    transform: translate(var(--hero-x, 0), var(--hero-y, 0));
+    /* CHOOSE ONE of the next two lines (see notes below) */
+    /* color: var(--issue-title, #ffffff); */ /* readable contrast on bg */
+    color: var(--issue-primary, #ffffff);
+  }
+
+  /* Badge position + color */
+  .mag-hero .pub-badge {
+    position: absolute;
+    left: var(--badge-x, 0);
+    top: var(--badge-y, 0);
+    transform: translate(0, 0);
+    color: var(--badge-color, #ffffff);
+  }
+
+  /* Accent underline, etc. */
+  .mag-hero .accent-line {
+    background: var(--issue-accent, currentColor);
+  }
+
+  /* SIDEBAR scope */
+  .mag-sidebar {
+    background-color: var(--issue-bg, #001d3d);
+    color: var(--issue-title, #fff);
+  }
+  .mag-sidebar .cover-img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .mag-sidebar .logo {
+    height: 2.5rem;
+    width: auto;
+    max-width: none;
+    display: inline-block;
+  }
+  .mag-sidebar img {
+    height: auto;
+    max-width: 100%;
+  }
+}
+
+.cv-footer {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 400px; /* reserve space; tune to footer's typical height */
+}
+@media (max-width: 800px) {
+  .cv-footer {
+    contain-intrinsic-size: 1px 800px; /* reserve space; tune to footer’s typical height */
+  }
+}

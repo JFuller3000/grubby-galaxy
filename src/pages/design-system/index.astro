@@ -1,4 +1,5 @@
 ---
+import '../../styles/global.css';
 import SiteNav from '../../components/SiteNav.astro';
 const currentPath = Astro.url.pathname;
 ---
@@ -13,79 +14,18 @@ const currentPath = Astro.url.pathname;
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet" />
-		<style is:global>
-			:root {
-				--color-bg: #faf9f7;
-				--color-text: #1a1a1a;
-				--color-muted: #5c5c5c;
-				--color-accent: #2d5a4a;
-				--color-border: #e5e3e0;
-				--font-sans: 'DM Sans', system-ui, sans-serif;
-				--font-serif: 'DM Serif Display', Georgia, serif;
-				--max-width: 720px;
-			}
-
-			* {
-				box-sizing: border-box;
-			}
-
-			body {
-				margin: 0;
-				padding: 2rem 1.5rem 4rem;
-				font-family: var(--font-sans);
-				font-size: 1rem;
-				line-height: 1.6;
-				color: var(--color-text);
-				background: var(--color-bg);
-			}
-
-			.ds-index {
-				max-width: var(--max-width);
-				margin: 0 auto;
-			}
-
-			.ds-index h1 {
-				font-family: var(--font-serif);
-				font-size: clamp(1.75rem, 4vw, 2.25rem);
-				font-weight: 400;
-				margin: 0 0 1.5rem;
-				letter-spacing: 0.02em;
-			}
-
-			.ds-index-list {
-				list-style: none;
-				margin: 0;
-				padding: 0;
-				display: flex;
-				flex-direction: column;
-				gap: 0.75rem;
-			}
-
-			.ds-index-list a {
-				display: block;
-				font-size: 1.1rem;
-				color: var(--color-accent);
-				text-decoration: none;
-				padding: 0.5em 0;
-				border-bottom: 1px solid var(--color-border);
-			}
-
-			.ds-index-list a:hover {
-				text-decoration: underline;
-			}
-		</style>
 	</head>
-	<body>
-		<div class="ds-index">
+	<body class="min-h-screen bg-[#faf9f7] px-6 py-8 pb-16 font-sans text-base leading-relaxed text-[#1a1a1a]">
+		<div class="mx-auto max-w-[720px]">
 			<SiteNav currentPath={currentPath} />
 			<main>
-				<h1>Aopa Design System</h1>
-				<ul class="ds-index-list">
+				<h1 class="font-serif text-[clamp(1.75rem,4vw,2.25rem)] font-normal tracking-wide mb-6">Aopa Design System</h1>
+				<ul class="list-none m-0 p-0 flex flex-col gap-3">
 					<li>
-						<a href="/design-system/documentation">design documentation</a>
+						<a href="/design-system/documentation" class="block text-accent text-lg no-underline py-2 border-b border-divider hover:underline">design documentation</a>
 					</li>
 					<li>
-						<a href="/design-system/decks">decks</a>
+						<a href="/design-system/decks" class="block text-accent text-lg no-underline py-2 border-b border-divider hover:underline">decks</a>
 					</li>
 				</ul>
 			</main>

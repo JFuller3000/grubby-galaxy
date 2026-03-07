@@ -1,4 +1,5 @@
 ---
+import '../styles/global.css';
 import SiteNav from '../components/SiteNav.astro';
 const currentPath = Astro.url.pathname;
 ---
@@ -16,250 +17,74 @@ const currentPath = Astro.url.pathname;
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet" />
 		<style is:global>
-			:root {
-				--color-bg: #faf9f7;
-				--color-text: #1a1a1a;
-				--color-muted: #5c5c5c;
-				--color-accent: #2d5a4a;
-				--color-border: #e5e3e0;
-				--font-sans: 'DM Sans', system-ui, sans-serif;
-				--font-serif: 'DM Serif Display', Georgia, serif;
-				--max-width: 720px;
-			}
-
-			* {
-				box-sizing: border-box;
-			}
-
-			body {
-				margin: 0;
-				padding: 2rem 1.5rem 4rem;
-				font-family: var(--font-sans);
-				font-size: 1rem;
-				line-height: 1.6;
-				color: var(--color-text);
-				background: var(--color-bg);
-			}
-
-			.page {
-				max-width: var(--max-width);
-				margin: 0 auto;
-			}
-
-			.resume header {
-				text-align: center;
-				margin-bottom: 2.5rem;
-				padding-bottom: 2rem;
-				border-bottom: 1px solid var(--color-border);
-			}
-
-			.name {
-				font-family: var(--font-serif);
-				font-size: clamp(2rem, 5vw, 2.75rem);
-				font-weight: 400;
-				margin: 0 0 0.25rem;
-				letter-spacing: 0.02em;
-			}
-
-			.title {
-				font-size: 1.1rem;
-				color: var(--color-muted);
-				font-weight: 500;
-				margin: 0 0 1rem;
-			}
-
-			.contact {
-				display: flex;
-				flex-wrap: wrap;
-				justify-content: center;
-				gap: 0.5rem 1.25rem;
-				font-size: 0.9rem;
-				color: var(--color-muted);
-			}
-
-			.contact a {
-				color: var(--color-accent);
-				text-decoration: none;
-			}
-
-			.contact a:hover {
-				text-decoration: underline;
-			}
-
-			.contact span:not(.sep) {
-				opacity: 0.85;
-			}
-
-			.resume section {
-				margin-bottom: 2rem;
-			}
-
-			.resume h2 {
-				font-family: var(--font-serif);
-				font-size: 1.25rem;
-				font-weight: 400;
-				margin: 0 0 1rem;
-				color: var(--color-text);
-				letter-spacing: 0.02em;
-			}
-
-			.summary p {
-				margin: 0;
-				color: var(--color-muted);
-				font-size: 0.95rem;
-			}
-
-			.skills-grid {
-				display: grid;
-				gap: 1.25rem 2rem;
-				grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-			}
-
-			.skill-group h3 {
-				font-size: 0.75rem;
-				font-weight: 600;
-				text-transform: uppercase;
-				letter-spacing: 0.08em;
-				color: var(--color-accent);
-				margin: 0 0 0.5rem;
-			}
-
-			.skill-group p {
-				font-size: 0.9rem;
-				color: var(--color-muted);
-				margin: 0;
-				line-height: 1.5;
-			}
-
-			.job {
-				margin-bottom: 1.75rem;
-			}
-
-			.job:last-child {
-				margin-bottom: 0;
-			}
-
-			.job-header {
-				display: flex;
-				flex-wrap: wrap;
-				align-items: baseline;
-				justify-content: space-between;
-				gap: 0.5rem;
-				margin-bottom: 0.5rem;
-			}
-
-			.job-company {
-				font-weight: 600;
-				font-size: 1rem;
-			}
-
-			.job-role {
-				font-size: 0.95rem;
-				color: var(--color-muted);
-			}
-
-			.job-date {
-				font-size: 0.85rem;
-				color: var(--color-muted);
-			}
-
-			.job ul {
-				margin: 0;
-				padding-left: 1.25rem;
-				color: var(--color-muted);
-				font-size: 0.9rem;
-				line-height: 1.55;
-			}
-
-			.job li {
-				margin-bottom: 0.35rem;
-			}
-
-			.education p {
-				margin: 0 0 0.5rem;
-				font-size: 0.95rem;
-				color: var(--color-muted);
-			}
-
-			.education p:last-child {
-				margin-bottom: 0;
-			}
-
 			@media print {
-				body {
-					background: #fff;
-					padding: 1rem;
-				}
-				.contact a {
-					color: var(--color-text);
-				}
-				.site-nav {
-					display: none;
-				}
+				body { @apply bg-white p-4; }
+				.print\:hidden { display: none !important; }
+				.contact a { color: #1a1a1a; }
 			}
 		</style>
 	</head>
-	<body>
-		<div class="page">
+	<body class="min-h-screen bg-[#faf9f7] px-6 py-8 pb-16 font-sans text-base leading-relaxed text-[#1a1a1a] md:px-6">
+		<div class="mx-auto max-w-[720px]">
 			<SiteNav currentPath={currentPath} />
 			<main class="resume">
-				<header>
-					<h1 class="name">John S Fuller</h1>
-					<p class="title">Front End Visual &amp; UX Designer</p>
-					<div class="contact">
-						<a href="mailto:Johnsfuller@gmail.com">Johnsfuller@gmail.com</a>
+				<header class="mb-10 border-b border-divider pb-8 text-center">
+					<h1 class="font-serif text-[clamp(2rem,5vw,2.75rem)] font-normal tracking-wide">John S Fuller</h1>
+					<p class="text-lg font-medium text-muted mb-4">Front End Visual &amp; UX Designer</p>
+					<div class="contact flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-muted">
+						<a href="mailto:Johnsfuller@gmail.com" class="text-accent no-underline hover:underline">Johnsfuller@gmail.com</a>
 						<span class="sep">|</span>
-						<a href="tel:+12026818640">202-681-8640</a>
+						<a href="tel:+12026818640" class="text-accent no-underline hover:underline">202-681-8640</a>
 						<span class="sep">|</span>
-						<a href="https://www.linkedin.com/in/john-fuller-74410631" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+						<a href="https://www.linkedin.com/in/john-fuller-74410631" target="_blank" rel="noopener noreferrer" class="text-accent no-underline hover:underline">LinkedIn</a>
 						<span class="sep">|</span>
-						<a href="https://github.com/JFuller3000" target="_blank" rel="noopener noreferrer">Github</a>
+						<a href="https://github.com/JFuller3000" target="_blank" rel="noopener noreferrer" class="text-accent no-underline hover:underline">Github</a>
 					</div>
 				</header>
 
-				<section class="summary" aria-labelledby="summary-heading">
-					<h2 id="summary-heading">Summary</h2>
-					<p>
+				<section class="summary mb-8" aria-labelledby="summary-heading">
+					<h2 id="summary-heading" class="font-serif text-xl font-normal tracking-wide text-[#1a1a1a] mb-4">Summary</h2>
+					<p class="text-[#1a1a1a] text-[0.95rem] m-0 text-muted">
 						Front-end engineer and visual designer specializing in content driven large scale web apps. Ships with Astro, TypeScript, and Tailwind; comfortable with headless CMS, GraphQL, and static-first/Jamstack architecture.
 					</p>
 				</section>
 
-				<section class="skills" aria-labelledby="skills-heading">
-					<h2 id="skills-heading">Skills</h2>
-					<div class="skills-grid">
+				<section class="skills mb-8" aria-labelledby="skills-heading">
+					<h2 id="skills-heading" class="font-serif text-xl font-normal tracking-wide text-[#1a1a1a] mb-4">Skills</h2>
+					<div class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5">
 						<div class="skill-group">
-							<h3>Frontend</h3>
-							<p>Astro, TypeScript, TSX, Preact, React (hooks), Tailwind CSS, CSS custom properties, responsive design</p>
+							<h3 class="text-accent text-xs font-semibold uppercase tracking-wider mb-2">Frontend</h3>
+							<p class="text-muted text-sm leading-snug m-0">Astro, TypeScript, TSX, Preact, React (hooks), Tailwind CSS, CSS custom properties, responsive design</p>
 						</div>
 						<div class="skill-group">
-							<h3>Design systems</h3>
-							<p>Design tokens (typography, color, spacing), component libraries, Tailwind theme extension, prose/editorial styling, accessibility (ARIA, semantic HTML)</p>
+							<h3 class="text-accent text-xs font-semibold uppercase tracking-wider mb-2">Design systems</h3>
+							<p class="text-muted text-sm leading-snug m-0">Design tokens (typography, color, spacing), component libraries, Tailwind theme extension, prose/editorial styling, accessibility (ARIA, semantic HTML)</p>
 						</div>
 						<div class="skill-group">
-							<h3>Data &amp; APIs</h3>
-							<p>GraphQL, Apollo Client, headless CMS (WordPress / WPGraphQL), REST</p>
+							<h3 class="text-accent text-xs font-semibold uppercase tracking-wider mb-2">Data &amp; APIs</h3>
+							<p class="text-muted text-sm leading-snug m-0">GraphQL, Apollo Client, headless CMS (WordPress / WPGraphQL), REST</p>
 						</div>
 						<div class="skill-group">
-							<h3>Auth &amp; tooling</h3>
-							<p>OIDC / Ory, Prettier, Vitest, Git</p>
+							<h3 class="text-accent text-xs font-semibold uppercase tracking-wider mb-2">Auth &amp; tooling</h3>
+							<p class="text-muted text-sm leading-snug m-0">OIDC / Ory, Prettier, Vitest, Git</p>
 						</div>
 						<div class="skill-group">
-							<h3>Platform / infra</h3>
-							<p>Jamstack, static site generation, Cloudflare, Node</p>
+							<h3 class="text-accent text-xs font-semibold uppercase tracking-wider mb-2">Platform / infra</h3>
+							<p class="text-muted text-sm leading-snug m-0">Jamstack, static site generation, Cloudflare, Node</p>
 						</div>
 					</div>
 				</section>
 
-				<section class="experience" aria-labelledby="experience-heading">
-					<h2 id="experience-heading">Work Experience</h2>
+				<section class="experience mb-8" aria-labelledby="experience-heading">
+					<h2 id="experience-heading" class="font-serif text-xl font-normal tracking-wide text-[#1a1a1a] mb-4">Work Experience</h2>
 
-					<article class="job">
-						<div class="job-header">
-							<span class="job-company">AOPA</span>
-							<span class="job-date">2021–present</span>
+					<article class="job mb-7 last:mb-0">
+						<div class="job-header flex flex-wrap items-baseline justify-between gap-2 mb-2">
+							<span class="job-company font-semibold text-base">AOPA</span>
+							<span class="job-date text-sm text-muted">2021–present</span>
 						</div>
-						<p class="job-role">Senior Front End</p>
-						<ul>
+						<p class="job-role text-[0.95rem] text-muted">Senior Front End</p>
+						<ul class="list-[disc] pl-5 text-muted text-sm leading-snug my-0 [&>li]:mb-1.5">
 							<li>Lead UX and visual design for a major platform redesign; own end-to-end design from concept to implementation</li>
 							<li>Define and build the design system (tokens, components, typography) that powers the new member-facing product</li>
 							<li>Partner with engineering to ship a mobile-first, conversion-focused front end (Astro, Tailwind, headless CMS)</li>
@@ -267,38 +92,38 @@ const currentPath = Astro.url.pathname;
 						</ul>
 					</article>
 
-					<article class="job">
-						<div class="job-header">
-							<span class="job-company">Solas AI</span>
-							<span class="job-date">2019–2021</span>
+					<article class="job mb-7 last:mb-0">
+						<div class="job-header flex flex-wrap items-baseline justify-between gap-2 mb-2">
+							<span class="job-company font-semibold text-base">Solas AI</span>
+							<span class="job-date text-sm text-muted">2019–2021</span>
 						</div>
-						<p class="job-role">Principal Designer</p>
-						<ul>
+						<p class="job-role text-[0.95rem] text-muted">Principal Designer</p>
+						<ul class="list-[disc] pl-5 text-muted text-sm leading-snug my-0 [&>li]:mb-1.5">
 							<li>Served as sole designer on a small team; owned branding, visual identity, and key go-to-market materials</li>
 							<li>Designed and produced pitch decks and sales collateral that supported fundraising and client conversations</li>
 							<li>Established brand guidelines and reusable templates for a fast-moving early-stage team</li>
 						</ul>
 					</article>
 
-					<article class="job">
-						<div class="job-header">
-							<span class="job-company">Freelance</span>
-							<span class="job-date">2017–2019</span>
+					<article class="job mb-7 last:mb-0">
+						<div class="job-header flex flex-wrap items-baseline justify-between gap-2 mb-2">
+							<span class="job-company font-semibold text-base">Freelance</span>
+							<span class="job-date text-sm text-muted">2017–2019</span>
 						</div>
-						<p class="job-role">Design &amp; Front-end</p>
-						<ul>
+						<p class="job-role text-[0.95rem] text-muted">Design &amp; Front-end</p>
+						<ul class="list-[disc] pl-5 text-muted text-sm leading-snug my-0 [&>li]:mb-1.5">
 							<li>Delivered brand identity, web design, and front-end implementation for startups and small businesses</li>
 							<li>Shipped responsive sites and design systems across industries including media and technology</li>
 						</ul>
 					</article>
 
-					<article class="job">
-						<div class="job-header">
-							<span class="job-company">Vox Media Inc.</span>
-							<span class="job-date">2009–2017</span>
+					<article class="job mb-7 last:mb-0">
+						<div class="job-header flex flex-wrap items-baseline justify-between gap-2 mb-2">
+							<span class="job-company font-semibold text-base">Vox Media Inc.</span>
+							<span class="job-date text-sm text-muted">2009–2017</span>
 						</div>
-						<p class="job-role">Principal Front End Designer</p>
-						<ul>
+						<p class="job-role text-[0.95rem] text-muted">Principal Front End Designer</p>
+						<ul class="list-[disc] pl-5 text-muted text-sm leading-snug my-0 [&>li]:mb-1.5">
 							<li>First design hire; helped scale the design org from 1 to a 40-person, multi-location team</li>
 							<li>Led design of major rebrand initiatives and long-term brand platforms for flagship properties</li>
 							<li>Created and evolved brand systems and design standards that supported growth and consistency across properties</li>
@@ -306,13 +131,13 @@ const currentPath = Astro.url.pathname;
 						</ul>
 					</article>
 
-					<article class="job">
-						<div class="job-header">
-							<span class="job-company">AOL</span>
-							<span class="job-date">2007–2009</span>
+					<article class="job mb-7 last:mb-0">
+						<div class="job-header flex flex-wrap items-baseline justify-between gap-2 mb-2">
+							<span class="job-company font-semibold text-base">AOL</span>
+							<span class="job-date text-sm text-muted">2007–2009</span>
 						</div>
-						<p class="job-role">Junior Designer</p>
-						<ul>
+						<p class="job-role text-[0.95rem] text-muted">Junior Designer</p>
+						<ul class="list-[disc] pl-5 text-muted text-sm leading-snug my-0 [&>li]:mb-1.5">
 							<li>Designed and supported content brands at scale across a large portfolio of properties</li>
 							<li>Delivered UX and visual design for high-traffic, editorially driven products</li>
 							<li>Collaborated with senior design leadership and cross-functional teams in a fast-paced, scaled environment</li>
@@ -321,9 +146,9 @@ const currentPath = Astro.url.pathname;
 				</section>
 
 				<section class="education" aria-labelledby="education-heading">
-					<h2 id="education-heading">Education</h2>
-					<p><strong>Corcoran College of Art &amp; Design</strong> | BA Graphic design | Washington DC</p>
-					<p><strong>University of Tallin</strong> | 1yr Study Abroad, CS | Tallinn, Estonia</p>
+					<h2 id="education-heading" class="font-serif text-xl font-normal tracking-wide text-[#1a1a1a] mb-4">Education</h2>
+					<p class="text-[0.95rem] text-muted mb-2 last:mb-0"><strong class="text-[#1a1a1a]">Corcoran College of Art &amp; Design</strong> | BA Graphic design | Washington DC</p>
+					<p class="text-[0.95rem] text-muted mb-2 last:mb-0"><strong class="text-[#1a1a1a]">University of Tallin</strong> | 1yr Study Abroad, CS | Tallinn, Estonia</p>
 				</section>
 			</main>
 		</div>

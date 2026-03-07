@@ -1,0 +1,86 @@
+/* src/styles/fontfaces.css
+   Separate family per cut so bold/italic “just work” via family swap.
+   Prefer .woff2 if you have it; keep paths/names consistent with your files. */
+
+/* ——— News: Knockout ——— */
+@font-face {
+  font-family: "Knockout-28";
+  /*  src: url("/fonts/knockout/Knockout-HTF28-JuniorFeatherwt.otf") */
+  /*  src: url("/fonts/knockout/Knockout-HTF49-Liteweight.otf") format("opentype");*/
+  src: url("/fonts/knockout/Knockout-HTF29-JuniorLiteweight.otf")
+    format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: fallback;
+}
+
+@font-face {
+  font-family: "Knockout-47";
+  src: url("/fonts/knockout/Knockout-HTF47-Bantamweight.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Single declaration for Knockout-94 with variable weight support */
+@font-face {
+  font-family: "Knockout-94";
+  src: url("/fonts/knockout/Knockout-HTF94-UltmtSumo.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+/* Note: Font supports multiple weights but uses same file - browser will synthesize if needed */
+
+/* ——— Editorial: Mercury ——— */
+@font-face {
+  font-family: "Mercury-Roman";
+  src: url("/fonts/mercury/Mercury-TextG1Roman.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: optional;
+}
+@font-face {
+  font-family: "Mercury-BookItalic";
+  src: url("/fonts/mercury/Mercury-TextG1Italic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mercury-Bold";
+  src: url("/fonts/mercury/Mercury Display Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+/* Mercury-BoldItalic removed - not used in codebase */
+
+/* ——— Brand UI: Gotham ——— */
+@font-face {
+  font-family: "Gotham-Book";
+  src: url("/fonts/gotham/gothambook-webfont.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: fallback;
+}
+@font-face {
+  font-family: "Gotham-BookItalic";
+  src: url("/fonts/gotham/gothambookitalic-webfont.woff") format("woff");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Gotham-Bold";
+  src: url("/fonts/gotham/gothambold-webfont.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+/* Gotham-BoldItalic removed - not used in codebase */
+
+/* Avoid faux bold/italic if a cut is missing */
+html {
+  font-synthesis: none;
+}
