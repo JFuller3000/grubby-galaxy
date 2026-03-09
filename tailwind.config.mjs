@@ -18,8 +18,11 @@ export default {
         ],
         mainHeader: ['var(--font-heading, "Knockout-94")', "sans-serif"],
         header: ['var(--font-heading, "Knockout-94")', "sans-serif"],
+        heading: ['var(--font-heading, "Knockout-94")', "sans-serif"],
         subhead: ['var(--font-subheading, "Knockout-28")', "sans-serif"],
+        subheading: ['var(--font-subheading, "Knockout-28")', "sans-serif"],
         crosshead: ['var(--font-headline, "Knockout-28")', "sans-serif"],
+        headline: ['var(--font-headline, "Knockout-28")', "sans-serif"],
         pullquote: ['var(--font-headline, "Knockout-28")', "sans-serif"],
         blockquote: ['var(--font-blockquote, "Knockout-47")', "sans-serif"],
 
@@ -95,9 +98,9 @@ export default {
               marginBottom: "1em"
             },
             h3: {
-              fontFamily: theme("fontFamily.heading"),
+              fontFamily: theme("fontFamily.bold"),
               fontSize: "1.5rem",
-              fontWeight: "600",
+              fontWeight: "700",
               lineHeight: "1.4",
               marginTop: "1.5em",
               marginBottom: "0.75em",
@@ -105,6 +108,13 @@ export default {
             },
             h4: {
               fontFamily: theme("fontFamily.heading"),
+              fontSize: "1.25rem",
+              fontWeight: "600",
+              marginTop: "1.25em",
+              marginBottom: "0.5em"
+            },
+            h6: {
+              fontFamily: theme("fontFamily.bold"),
               fontSize: "1.25rem",
               fontWeight: "600",
               marginTop: "1.25em",
@@ -222,23 +232,25 @@ export default {
             lineHeight: "var(--lh-body)",
 
             h1: {
-              fontFamily: theme("fontFamily.heading")[0],
-              fontSize: "2.5rem",
-              lineHeight: "var(--lh-heading)"
+              fontFamily: theme("fontFamily.body")[0],
+              fontSize: "3rem",
+              lineHeight: "var(--lh-heading)",
             },
             h2: {
-              fontFamily: theme("fontFamily.serifBold")[0],
-              fontSize: "var(--fs-subhead)",
+              fontFamily: theme("fontFamily.body")[0],
+              fontSize: "1.5rem",
               lineHeight: "var(--lh-subhead)"
             },
             h3: {
-              fontFamily: theme("fontFamily.serifBold")[0],
-              fontSize: "var(--fs-subhead)",
-              lineHeight: "var(--lh-subhead)"
+              fontFamily: theme("fontFamily.bold")[0],
+              fontSize: "1rem",
+              lineHeight: "var(--lh-subhead)",
+              textTransform: "uppercase",
+              letterSpacing: ".05em"
             },
             h4: {
-              fontFamily: theme("fontFamily.subheading")[0],
-              fontSize: "4rem",
+              fontFamily: theme("fontFamily.bold")[0],
+              fontSize: "1rem",
               lineHeight: "var(--lh-subhead)"
             },
 
