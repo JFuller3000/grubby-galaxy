@@ -1,7 +1,16 @@
 ---
 import '../../styles/global.css';
 import SiteNav from '../../components/SiteNav.astro';
+import Accordion from '../../components/Accordion.astro';
+import Button from '../../components/Button.astro';
 const currentPath = Astro.url.pathname;
+
+// Faked accordion data for design system demo (future: from WP)
+const accordionItems = [
+  { title: 'When to use', content: '<p>Use the accordion for FAQs, optional details, or content that benefits from progressive disclosure. Avoid for critical information that should always be visible.</p>' },
+  { title: 'Behavior', content: '<p>Only one panel is open at a time (single). Click the header to toggle. The plus icon rotates to indicate expanded state. Animations respect <code>prefers-reduced-motion</code> where implemented.</p>' },
+  { title: 'Accessibility', content: '<p>Headers use <code>aria-expanded</code> and <code>aria-controls</code>. Content panels are associated via <code>aria-labelledby</code>. Keyboard support: focus and activate with Enter or Space.</p>' },
+];
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -65,11 +74,11 @@ const currentPath = Astro.url.pathname;
 		<div class="w-full max-w-[988px] mx-auto">
 			<SiteNav currentPath={currentPath} />
 			<div class="w-full grid grid-cols-1 md:grid-cols-[220px_1fr] gap-6 md:gap-12 items-start">
-			<aside data-doc="toc" class="min-w-0 sticky top-8 pb-4 border-b border-doc-border md:pb-0 md:border-b-0" aria-label="Table of contents">
+			<aside data-doc="toc" class="w-full min-w-0 sticky top-8 pb-4 border-b border-doc-border md:pb-0 md:border-b-0" aria-label="Table of contents">
 				<p class="text-xs  uppercase tracking-widest text-doc-muted m-0 mb-3">On this page</p>
-				<nav class="flex flex-col gap-0.5">
-					<details data-doc="toc-accordion" class="border-0 p-0 m-0" open>
-						<summary data-doc="toc-trigger" class="flex items-center justify-between w-full py-[0.35em] pl-2 -ml-2 text-[0.9rem] text-doc-muted text-left bg-transparent border-0 border-l-2 border-l-transparent cursor-pointer font-inherit gap-2 hover:text-doc-accent md:py-[0.4em] md:px-2 md:ml-0 md:border-l-0 md:rounded-sm md:bg-doc-border">
+				<nav class="w-full flex flex-col gap-0.5 min-w-0">
+					<details data-doc="toc-accordion" class="w-full min-w-0 border-0 p-0 m-0" open>
+						<summary data-doc="toc-trigger" class="flex items-center justify-between w-full min-w-0 py-[0.35em] pl-2 -ml-2 text-[0.9rem] text-doc-muted text-left border-0 border-l-2 border-l-transparent cursor-pointer font-inherit gap-2 hover:text-doc-accent md:py-[0.4em] md:px-2 md:ml-0 md:border-l-0 md:rounded-sm md:bg-gray-100">
 							<a href="#overview-heading" onclick="event.stopPropagation()" class="flex-1 text-inherit no-underline hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium">1. Overview &amp; principles</a>
 							<span data-doc="toc-chevron" class="shrink-0 transition-transform duration-200 ease-in-out opacity-70" aria-hidden="true">▸</span>
 						</summary>
@@ -79,8 +88,8 @@ const currentPath = Astro.url.pathname;
 							<a href="#brand" class="text-[0.8rem] text-doc-muted no-underline py-[0.2em] block hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium">1.3 Brand positioning</a>
 						</div>
 					</details>
-					<details data-doc="toc-accordion" class="border-0 p-0 m-0">
-						<summary data-doc="toc-trigger" class="flex items-center justify-between w-full py-[0.35em] pl-2 -ml-2 text-[0.9rem] text-doc-muted text-left bg-transparent border-0 border-l-2 border-l-transparent cursor-pointer font-inherit gap-2 hover:text-doc-accent md:py-[0.4em] md:px-2 md:ml-0 md:border-l-0 md:rounded-sm md:bg-doc-border">
+					<details data-doc="toc-accordion" class="w-full min-w-0 border-0 p-0 m-0">
+						<summary data-doc="toc-trigger" class="flex items-center justify-between w-full min-w-0 py-[0.35em] pl-2 -ml-2 text-[0.9rem] text-doc-muted text-left border-0 border-l-2 border-l-transparent cursor-pointer font-inherit gap-2 hover:text-doc-accent md:py-[0.4em] md:px-2 md:ml-0 md:border-l-0 md:rounded-sm md:bg-gray-100">
 							<a href="#foundations-heading" onclick="event.stopPropagation()" class="flex-1 text-inherit no-underline hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium">2. Foundations</a>
 							<span data-doc="toc-chevron" class="shrink-0 transition-transform duration-200 ease-in-out opacity-70" aria-hidden="true">▸</span>
 						</summary>
@@ -95,17 +104,18 @@ const currentPath = Astro.url.pathname;
 							<a href="#imagery" class="text-[0.8rem] text-doc-muted no-underline py-[0.2em] block hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium">2.6 Imagery &amp; media</a>
 						</div>
 					</details>
-					<details data-doc="toc-accordion" class="border-0 p-0 m-0">
-						<summary data-doc="toc-trigger" class="flex items-center justify-between w-full py-[0.35em] pl-2 -ml-2 text-[0.9rem] text-doc-muted text-left bg-transparent border-0 border-l-2 border-l-transparent cursor-pointer font-inherit gap-2 hover:text-doc-accent md:py-[0.4em] md:px-2 md:ml-0 md:border-l-0 md:rounded-sm md:bg-doc-border">
+					<details data-doc="toc-accordion" class="w-full min-w-0 border-0 p-0 m-0">
+						<summary data-doc="toc-trigger" class="flex items-center justify-between w-full min-w-0 py-[0.35em] pl-2 -ml-2 text-[0.9rem] text-doc-muted text-left border-0 border-l-2 border-l-transparent cursor-pointer font-inherit gap-2 hover:text-doc-accent md:py-[0.4em] md:px-2 md:ml-0 md:border-l-0 md:rounded-sm md:bg-gray-100">
 							<a href="#components-heading" onclick="event.stopPropagation()" class="flex-1 text-inherit no-underline hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium">3. Components</a>
 							<span data-doc="toc-chevron" class="shrink-0 transition-transform duration-200 ease-in-out opacity-70" aria-hidden="true">▸</span>
 						</summary>
 						<div data-doc="toc-panel" class="flex flex-col gap-0.5 pt-1 pb-2 pl-3 ml-1 border-l border-doc-border md:ml-0 md:pl-4">
-							<a href="#component-template" class="text-[0.8rem] text-doc-muted no-underline py-[0.2em] block hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium">3.1 Component template</a>
+							<a href="#component-template" class="text-[0.8rem] text-doc-muted no-underline py-[0.2em] block hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium">3.1 Accordion</a>
+							<a href="#button" class="text-[0.8rem] text-doc-muted no-underline py-[0.2em] block hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium">3.2 Button</a>
 						</div>
 					</details>
-					<details data-doc="toc-accordion" class="border-0 p-0 m-0">
-						<summary data-doc="toc-trigger" class="flex items-center justify-between w-full py-[0.35em] pl-2 -ml-2 text-[0.9rem] text-doc-muted text-left bg-transparent border-0 border-l-2 border-l-transparent cursor-pointer font-inherit gap-2 hover:text-doc-accent md:py-[0.4em] md:px-2 md:ml-0 md:border-l-0 md:rounded-sm md:bg-doc-border">
+					<details data-doc="toc-accordion" class="w-full min-w-0 border-0 p-0 m-0">
+						<summary data-doc="toc-trigger" class="flex items-center justify-between w-full min-w-0 py-[0.35em] pl-2 -ml-2 text-[0.9rem] text-doc-muted text-left border-0 border-l-2 border-l-transparent cursor-pointer font-inherit gap-2 hover:text-doc-accent md:py-[0.4em] md:px-2 md:ml-0 md:border-l-0 md:rounded-sm md:bg-gray-100">
 							<a href="#patterns-heading" onclick="event.stopPropagation()" class="flex-1 text-inherit no-underline hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium">4. Patterns</a>
 							<span data-doc="toc-chevron" class="shrink-0 transition-transform duration-200 ease-in-out opacity-70" aria-hidden="true">▸</span>
 						</summary>
@@ -117,17 +127,17 @@ const currentPath = Astro.url.pathname;
 							<a href="#content-patterns" class="text-[0.8rem] text-doc-muted no-underline py-[0.2em] block hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium">4.5 Content patterns</a>
 						</div>
 					</details>
-					<div data-doc="toc-item" class="py-[0.35em] pl-2 -ml-2 border-l-2 border-l-transparent md:py-[0.25em] md:px-2 md:ml-0 md:border-l-0 md:rounded-sm">
-						<a href="#a11y-heading" class="block text-[0.9rem] text-doc-muted no-underline hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium md:py-[0.25em] md:px-2 md:bg-doc-border">5. Accessibility</a>
+					<div data-doc="toc-item" class="w-full min-w-0 py-[0.35em] pl-2 -ml-2 border-l-2 border-l-transparent md:py-[0.25em] md:px-2 md:ml-0 md:border-l-0 md:rounded-sm md:bg-gray-100">
+						<a href="#a11y-heading" class="block w-full text-[0.9rem] text-doc-muted no-underline hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium md:py-[0.25em]">5. Accessibility</a>
 					</div>
-					<div data-doc="toc-item" class="py-[0.35em] pl-2 -ml-2 border-l-2 border-l-transparent md:py-[0.25em] md:px-2 md:ml-0 md:border-l-0 md:rounded-sm">
-						<a href="#responsive-heading" class="block text-[0.9rem] text-doc-muted no-underline hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium md:py-[0.25em] md:px-2 md:bg-doc-border">6. Responsive &amp; platform</a>
+					<div data-doc="toc-item" class="w-full min-w-0 py-[0.35em] pl-2 -ml-2 border-l-2 border-l-transparent md:py-[0.25em] md:px-2 md:ml-0 md:border-l-0 md:rounded-sm md:bg-gray-100">
+						<a href="#responsive-heading" class="block w-full text-[0.9rem] text-doc-muted no-underline hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium md:py-[0.25em]">6. Responsive &amp; platform</a>
 					</div>
-					<div data-doc="toc-item" class="py-[0.35em] pl-2 -ml-2 border-l-2 border-l-transparent md:py-[0.25em] md:px-2 md:ml-0 md:border-l-0 md:rounded-sm">
-						<a href="#governance-heading" class="block text-[0.9rem] text-doc-muted no-underline hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium md:py-[0.25em] md:px-2 md:bg-doc-border">7. Governance &amp; maintenance</a>
+					<div data-doc="toc-item" class="w-full min-w-0 py-[0.35em] pl-2 -ml-2 border-l-2 border-l-transparent md:py-[0.25em] md:px-2 md:ml-0 md:border-l-0 md:rounded-sm md:bg-gray-100">
+						<a href="#governance-heading" class="block w-full text-[0.9rem] text-doc-muted no-underline hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium md:py-[0.25em]">7. Governance &amp; maintenance</a>
 					</div>
-					<div data-doc="toc-item" class="py-[0.35em] pl-2 -ml-2 border-l-2 border-l-transparent md:py-[0.25em] md:px-2 md:ml-0 md:border-l-0 md:rounded-sm">
-						<a href="#appendix-heading" class="block text-[0.9rem] text-doc-muted no-underline hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium md:py-[0.25em] md:px-2 md:bg-doc-border">8. Appendix</a>
+					<div data-doc="toc-item" class="w-full min-w-0 py-[0.35em] pl-2 -ml-2 border-l-2 border-l-transparent md:py-[0.25em] md:px-2 md:ml-0 md:border-l-0 md:rounded-sm md:bg-gray-100">
+						<a href="#appendix-heading" class="block w-full text-[0.9rem] text-doc-muted no-underline hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium md:py-[0.25em]">8. Appendix</a>
 					</div>
 				</nav>
 			</aside>
@@ -140,7 +150,7 @@ const currentPath = Astro.url.pathname;
 			<section class="mb-10" aria-labelledby="overview-heading">
 				<h2 id="overview-heading" class="font-body">1. Overview &amp; principles</h2>
 
-				<h3 id="purpose" class="font-bold uppercase  mt-6 mb-2">1.1 Purpose</h3>
+				<h3 id="purpose" class="mt-6 mb-2">1.1 Purpose</h3>
 				<ul class="m-0 mb-4 pl-5">
 					<li class="mb-[0.35rem] text-doc-muted">This system is for AOPA's digital design & branding.</li>
 					<li class="mb-[0.35rem] text-doc-muted">It serves devs, design and content producers.</li>
@@ -178,17 +188,17 @@ const currentPath = Astro.url.pathname;
 						<h4 class="text-[0.95rem]  mt-4 mb-[0.35rem] text-doc-muted">Primary palette</h4>
 						<div class="grid grid-cols-5 gap-6 my-4 mb-6 p-0">
 							<div class="flex flex-col items-center gap-3">
-								<span class="inline-block w-28 h-28 rounded-lg border border-doc-border shrink-0" style="background: rgb(22, 51, 114);" aria-hidden="true"></span>
+								<span class="inline-block w-28 h-28 rounded-lg border border-doc-border shrink-0" style="background: #163372;" aria-hidden="true"></span>
 								<dl class="m-0 p-0 text-center">
 									<dt class=" text-sm text-doc-text m-0 mb-1">aopa-dkblue</dt>
-									<dd class="m-0 text-[0.8rem] text-doc-muted leading-snug"><code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">rgb(22, 51, 114)</code> / <code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">#163372</code></dd>
+									<dd class="m-0 text-[0.8rem] text-doc-muted leading-snug"><code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">#163372</code></dd>
 								</dl>
 							</div>
 							<div class="flex flex-col items-center gap-3">
-								<span class="inline-block w-28 h-28 rounded-lg border border-doc-border shrink-0" style="background: rgb(15, 37, 84);" aria-hidden="true"></span>
+								<span class="inline-block w-28 h-28 rounded-lg border border-doc-border shrink-0" style="background: #0f2554;" aria-hidden="true"></span>
 								<dl class="m-0 p-0 text-center">
 									<dt class=" text-sm text-doc-text m-0 mb-1">aopa-deep-blue</dt>
-									<dd class="m-0 text-[0.8rem] text-doc-muted leading-snug"><code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">rgb(15, 37, 84)</code> / <code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">#0f2554</code></dd>
+									<dd class="m-0 text-[0.8rem] text-doc-muted leading-snug"><code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">#0f2554</code></dd>
 								</dl>
 							</div>
 							<div class="flex flex-col items-center gap-3">
@@ -199,17 +209,17 @@ const currentPath = Astro.url.pathname;
 								</dl>
 							</div>
 							<div class="flex flex-col items-center gap-3">
-								<span class="inline-block w-28 h-28 rounded-lg border border-doc-border shrink-0" style="background: rgb(0, 134, 184);" aria-hidden="true"></span>
+								<span class="inline-block w-28 h-28 rounded-lg border border-doc-border shrink-0" style="background: #0086b8;" aria-hidden="true"></span>
 								<dl class="m-0 p-0 text-center">
 									<dt class=" text-sm text-doc-text m-0 mb-1">aopa-ltblue</dt>
-									<dd class="m-0 text-[0.8rem] text-doc-muted leading-snug"><code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">rgb(0, 134, 184)</code> / <code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">#0086b8</code></dd>
+									<dd class="m-0 text-[0.8rem] text-doc-muted leading-snug"><code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">#0086b8</code></dd>
 								</dl>
 							</div>
 							<div class="flex flex-col items-center gap-3">
 								<span class="inline-block w-28 h-28 rounded-lg border border-doc-border shrink-0 bg-[#f3f4f6]" aria-hidden="true"></span>
 								<dl class="m-0 p-0 text-center">
 									<dt class=" text-sm text-doc-text m-0 mb-1">aopa-bg-grey</dt>
-									<dd class="m-0 text-[0.8rem] text-doc-muted leading-snug"><code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">bg-grey-100</code> / <code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">#f3f4f6</code></dd>
+									<dd class="m-0 text-[0.8rem] text-doc-muted leading-snug"><code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">#f3f4f6</code></dd>
 								</dl>
 							</div>
 						</div>
@@ -242,7 +252,7 @@ const currentPath = Astro.url.pathname;
 								<span class="doc-swatch doc-swatch-lg inline-block w-28 h-28 rounded-lg border border-doc-border shrink-0 bg-[#f3f4f6]" aria-hidden="true"></span>
 								<dl class="m-0 p-0 text-center">
 									<dt class=" text-sm text-doc-text m-0 mb-1">aopa-bg-grey</dt>
-									<dd class="m-0 text-[0.8rem] text-doc-muted leading-snug"><code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">bg-grey-100</code> / <code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">#f3f4f6</code></dd>
+									<dd class="m-0 text-[0.8rem] text-doc-muted leading-snug"><code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">#f3f4f6</code></dd>
 								</dl>
 							</div>
 						</div>
@@ -268,7 +278,7 @@ const currentPath = Astro.url.pathname;
 								<span class="doc-swatch doc-swatch-lg inline-block w-28 h-28 rounded-lg border border-doc-border shrink-0 bg-[#f3f4f6]" aria-hidden="true"></span>
 								<dl class="m-0 p-0 text-center">
 									<dt class=" text-sm text-doc-text m-0 mb-1">aopa-bg-grey</dt>
-									<dd class="m-0 text-[0.8rem] text-doc-muted leading-snug"><code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">bg-grey-100</code> / <code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">#f3f4f6</code></dd>
+									<dd class="m-0 text-[0.8rem] text-doc-muted leading-snug"><code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">#f3f4f6</code></dd>
 								</dl>
 							</div>
 						</div>
@@ -300,25 +310,15 @@ const currentPath = Astro.url.pathname;
 						</div>
 					</div>
 				</div>
-				<ul class="m-0 mb-4 pl-5">
-					<li class="mb-[0.35rem] text-doc-muted"><strong class="text-doc-text">Semantic roles:</strong> Text (primary, secondary, muted), backgrounds (page, surface, overlay), borders, focus, error, success, warning.</li>
-					<li class="mb-[0.35rem] text-doc-muted"><strong class="text-doc-text">Usage rules:</strong> When to use which role; contrast and accessibility (e.g. WCAG AA).</li>
-					<li class="mb-[0.35rem] text-doc-muted"><strong class="text-doc-text">Dark mode (if applicable):</strong> Mapping from light roles to dark; any inversions or exceptions.</li>
-				</ul>
 
 				<h3 id="typography" class="text-base  mt-6 mb-2 text-doc-text">2.2 Typography</h3>
-				<ul class="m-0 mb-4 pl-5">
-					<li class="mb-[0.35rem] text-doc-muted"><strong class="text-doc-text">Type scale:</strong> Display, heading levels, body, caption, overline—sizes and line heights.</li>
-					<li class="mb-[0.35rem] text-doc-muted"><strong class="text-doc-text">Font families:</strong> Primary and secondary; usage (headings vs body vs UI).</li>
-					<li class="mb-[0.35rem] text-doc-muted"><strong class="text-doc-text">Weights:</strong> Which weights exist and when to use them.</li>
-					<li class="mb-[0.35rem] text-doc-muted"><strong class="text-doc-text">Prose/editorial:</strong> Rules for long-form content (line length, spacing, lists, blockquotes).</li>
-				</ul>
+
 
 				<h4 id="typography-fonts" class="text-[0.95rem]  mt-4 mb-[0.35rem] text-doc-muted">Font families</h4>
 				<div class="flex flex-col gap-5 my-4 mb-6">
 					<div class="pb-5 border-b border-doc-border last:border-b-0 last:pb-0">
 						<span class="block text-xs  uppercase tracking-wider text-doc-muted mb-2">Knockout 94</span>
-						<p class="m-0 text-2xl leading-snug text-doc-text font-knockout94">The quick brown fox jumps over the lazy dog. ABCDEFG 0123456789</p>
+						<p class="m-0 text-2xl leading-snug text-doc-text font-heading">The quick brown fox jumps over the lazy dog. ABCDEFG 0123456789</p>
 						<p class="text-[0.75rem]  uppercase tracking-wide text-doc-muted mt-3 mb-[0.35rem]">Usage</p>
 						<ul data-doc="font-usage" class="list-none m-0 p-0 text-[0.9rem] text-doc-muted leading-relaxed">
 							<li class="mb-0.5">Primary headers, secondary headers, page titles</li>
@@ -326,10 +326,10 @@ const currentPath = Astro.url.pathname;
 					</div>
 					<div class="pb-5 border-b border-doc-border last:border-b-0 last:pb-0">
 						<span class="block text-xs  uppercase tracking-wider text-doc-muted mb-2">Knockout 47</span>
-						<p class="m-0 text-2xl leading-snug text-doc-text font-knockout47">The quick brown fox jumps over the lazy dog. ABCDEFG 0123456789</p>
+						<p class="m-0 text-2xl leading-snug text-doc-text font-headline">The quick brown fox jumps over the lazy dog. ABCDEFG 0123456789</p>
 						<p class="text-[0.75rem]  uppercase tracking-wide text-doc-muted mt-3 mb-[0.35rem]">Usage</p>
 						<ul data-doc="font-usage" class="list-none m-0 p-0 text-[0.9rem] text-doc-muted leading-relaxed">
-							<li class="mb-0.5">Secondary headers, heavy crosshead</li>
+							<li class="mb-0.5">Secondary headers, heavy crosshead, headlines</li>
 						</ul>
 					</div>
 					<div class="pb-5 border-b border-doc-border last:border-b-0 last:pb-0">
@@ -421,18 +421,21 @@ const currentPath = Astro.url.pathname;
 				<h2 id="components-heading" class="font-docSerif text-[1.35rem] font-normal mt-8 mb-4 first:mt-0 text-doc-text tracking-wide">3. Components</h2>
 				<p class="m-0 mb-3 text-doc-text">For each component, keep the doc design-focused; implementation can live in code/Storybook.</p>
 
-				<h3 id="component-template" class="text-base  mt-6 mb-2 text-doc-text">3.1 Component template (repeat per component)</h3>
-				<h4 class="text-[0.95rem]  mt-4 mb-[0.35rem] text-doc-muted">Component name</h4>
-				<ul class="m-0 mb-4 pl-5">
-					<li class="mb-[0.35rem] text-doc-muted"><strong class="text-doc-text">Purpose:</strong> What it's for and when to use it.</li>
-					<li class="mb-[0.35rem] text-doc-muted"><strong class="text-doc-text">Variants:</strong> Primary, secondary, sizes, states (default, hover, focus, disabled, error).</li>
-					<li class="mb-[0.35rem] text-doc-muted"><strong class="text-doc-text">Anatomy:</strong> Labeled diagram or list (e.g. icon, label, helper text, trailing icon).</li>
-					<li class="mb-[0.35rem] text-doc-muted"><strong class="text-doc-text">Specs:</strong> Size, padding, border radius, typography, color roles.</li>
-					<li class="mb-[0.35rem] text-doc-muted"><strong class="text-doc-text">Composition:</strong> What it can contain (e.g. text only, icon + text, slots).</li>
-					<li class="mb-[0.35rem] text-doc-muted"><strong class="text-doc-text">Do's and don'ts:</strong> 2–3 each; reference principles where it helps.</li>
-					<li class="mb-[0.35rem] text-doc-muted"><strong class="text-doc-text">Related:</strong> Links to patterns or other components.</li>
-				</ul>
-				<p class="m-0 mb-3 text-doc-text"><strong class="text-doc-text">Suggested order:</strong> Start with primitives (Button, Text, Icon, Input, Checkbox, etc.), then patterns (Card, Form field, Modal, Nav item).</p>
+				<h3 id="component-template" class="text-base mt-6 mb-2 text-doc-text">3.1 Accordion</h3>
+				<Accordion items={accordionItems} defaultOpenIndex={0} />
+
+				<h3 id="button" class="text-base mt-8 mb-2 text-doc-text">3.2 Button</h3>
+				<p class="m-0 mb-3 text-doc-muted text-[0.95rem]">Primary actions, secondary actions, and links styled as buttons. Use <code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">href</code> to render as a link.</p>
+				<div class="flex flex-wrap gap-3 items-center">
+					<Button variant="primary">Primary</Button>
+					<Button variant="secondary">Secondary</Button>
+					<Button variant="outline">Outline</Button>
+					<Button variant="ghost">Ghost</Button>
+					<Button variant="primary" size="sm">Small</Button>
+					<Button variant="primary" size="lg">Large</Button>
+					<Button variant="primary" disabled>Disabled</Button>
+					<Button variant="primary" href="#">Link style</Button>
+				</div>
 			</section>
 
 			<hr class="border-0 border-t border-doc-border my-8" />

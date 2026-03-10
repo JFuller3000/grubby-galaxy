@@ -1,0 +1,270 @@
+---
+// Accordion component
+// Provides styling and functionality for ACF accordion blocks
+// In the future markup may come from WP; for now accepts an items array.
+export interface AccordionItem {
+  title: string;
+  content: string;
+}
+interface Props {
+  items?: AccordionItem[];
+  defaultOpenIndex?: number;
+}
+const { items = [], defaultOpenIndex = -1 } = Astro.props;
+---
+
+<style is:global>
+  /* Accordion block styling */
+  .accordion-block {
+    margin: 2rem 0;
+  }
+
+  .accordion-item {
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .accordion-item:first-child {
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .accordion-header {
+    width: 100%;
+    padding: 1rem;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.75rem;
+    font-weight: 600;
+    font-family: var(--font-headline);
+    transition: background-color 0.2s ease;
+  }
+
+  .accordion-header:hover {
+    background-color: #f5f5f5;
+  }
+
+  .accordion-icon {
+    font-size: 2rem;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    margin-left: 1rem;
+  }
+
+  .accordion-item[aria-expanded="true"] .accordion-icon {
+    transform: rotate(45deg);
+  }
+
+  .accordion-content {
+    padding: 0 1rem;
+    margin-bottom: 0;
+    line-height: 1.6;
+    overflow: hidden;
+    transition:
+      height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      margin-bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.3s ease;
+    opacity: 0;
+    height: 0;
+  }
+
+  .accordion-item[aria-expanded="true"] .accordion-content {
+    padding: 0 1rem;
+    margin-bottom: 1.5rem;
+    opacity: 1;
+  }
+
+  .accordion-content[hidden] {
+    display: block !important;
+    height: 0 !important;
+    padding: 0 1rem !important;
+    opacity: 0 !important;
+  }
+
+  .accordion-content p {
+    margin: 0.5rem 0;
+  }
+
+  .accordion-content p:first-child {
+    margin-top: 0;
+  }
+
+  .accordion-content p:last-child {
+    margin-bottom: 0;
+  }
+</style>
+
+{items.length > 0 && (
+  <div class="accordion-block">
+    {items.map((item, i) => {
+      const isOpen = i === defaultOpenIndex;
+      return (
+        <div
+          class="accordion-item"
+          aria-expanded={isOpen}
+        >
+          <button
+            type="button"
+            class="accordion-header"
+            aria-expanded={isOpen}
+            aria-controls={`accordion-content-${i}`}
+            id={`accordion-header-${i}`}
+          >
+            <span>{item.title}</span>
+            <span class="accordion-icon" aria-hidden="true">+</span>
+          </button>
+          <div
+            id={`accordion-content-${i}`}
+            class="accordion-content"
+            role="region"
+            aria-labelledby={`accordion-header-${i}`}
+            hidden={!isOpen}
+            set:html={item.content}
+          />
+        </div>
+      );
+    })}
+  </div>
+)}
+
+<script is:inline>
+  // Accordion functionality
+  (function () {
+    function initAccordions() {
+      const accordionHeaders = document.querySelectorAll(".accordion-header");
+
+      // First, ensure all items start closed (unless explicitly set as open)
+      accordionHeaders.forEach((header) => {
+        const accordionItem = header.closest(".accordion-item");
+        const content = accordionItem?.querySelector(".accordion-content");
+        if (accordionItem && content) {
+          const isExpanded = header.getAttribute("aria-expanded") === "true";
+          if (!isExpanded) {
+            // Ensure closed items are properly hidden
+            header.setAttribute("aria-expanded", "false");
+            accordionItem.setAttribute("aria-expanded", "false");
+            content.style.height = "0";
+            content.style.marginBottom = "0";
+            content.style.opacity = "0";
+            content.setAttribute("hidden", "");
+          } else {
+            // For items that start open, calculate and set actual height
+            content.removeAttribute("hidden");
+            const height = content.scrollHeight;
+            content.style.height = height + "px";
+            content.style.marginBottom = "1.5rem";
+            content.style.opacity = "1";
+          }
+        }
+      });
+
+      accordionHeaders.forEach((header) => {
+        // Remove existing listeners to prevent duplicates
+        const newHeader = header.cloneNode(true);
+        header.parentNode?.replaceChild(newHeader, header);
+
+        newHeader.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          const isExpanded = this.getAttribute("aria-expanded") === "true";
+          const accordionItem = this.closest(".accordion-item");
+          const content = accordionItem?.querySelector(".accordion-content");
+
+          if (!accordionItem || !content) {
+            return;
+          }
+
+          // Close all other items with animation
+          const allHeaders = document.querySelectorAll(".accordion-header");
+          allHeaders.forEach((otherHeader) => {
+            if (otherHeader !== this) {
+              const otherItem = otherHeader.closest(".accordion-item");
+              const otherContent =
+                otherItem?.querySelector(".accordion-content");
+              if (otherItem && otherContent) {
+                const otherIsExpanded =
+                  otherHeader.getAttribute("aria-expanded") === "true";
+                if (otherIsExpanded) {
+                  // Animate closing - get current height first
+                  const currentHeight = otherContent.scrollHeight;
+                  otherContent.style.height = currentHeight + "px";
+                  // Force reflow
+                  otherContent.offsetHeight;
+                  // Now animate to 0
+                  otherHeader.setAttribute("aria-expanded", "false");
+                  otherItem.setAttribute("aria-expanded", "false");
+                  otherContent.style.height = "0";
+                  otherContent.style.marginBottom = "0";
+                  otherContent.style.opacity = "0";
+                  setTimeout(() => {
+                    if (otherItem.getAttribute("aria-expanded") === "false") {
+                      otherContent.setAttribute("hidden", "");
+                    }
+                  }, 400); // Match transition duration
+                }
+              }
+            }
+          });
+
+          // Toggle current item
+          const newExpandedState = !isExpanded;
+          this.setAttribute(
+            "aria-expanded",
+            newExpandedState ? "true" : "false"
+          );
+          accordionItem.setAttribute(
+            "aria-expanded",
+            newExpandedState ? "true" : "false"
+          );
+
+          if (newExpandedState) {
+            // Remove hidden attribute and calculate actual height
+            content.removeAttribute("hidden");
+            // Temporarily set to auto to measure
+            content.style.height = "auto";
+            const height = content.scrollHeight;
+            // Set back to 0 to start animation
+            content.style.height = "0";
+            content.style.marginBottom = "0";
+            // Force reflow
+            content.offsetHeight;
+            // Now animate to actual height
+            content.style.height = height + "px";
+            content.style.marginBottom = "1.5rem";
+            content.style.opacity = "1";
+          } else {
+            // Animate closing - get current height first
+            const currentHeight = content.scrollHeight;
+            content.style.height = currentHeight + "px";
+            // Force reflow
+            content.offsetHeight;
+            // Now animate to 0
+            content.style.height = "0";
+            content.style.marginBottom = "0";
+            content.style.opacity = "0";
+            // Set hidden after animation completes
+            setTimeout(() => {
+              if (accordionItem.getAttribute("aria-expanded") === "false") {
+                content.setAttribute("hidden", "");
+              }
+            }, 400); // Match transition duration
+          }
+        });
+      });
+    }
+
+    // Run on DOM ready
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initAccordions);
+    } else {
+      initAccordions();
+    }
+
+    // Also run after a short delay to catch dynamically loaded content
+    setTimeout(initAccordions, 100);
+  })();
+</script>
