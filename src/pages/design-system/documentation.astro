@@ -110,8 +110,8 @@ const accordionItems = [
 							<span data-doc="toc-chevron" class="shrink-0 transition-transform duration-200 ease-in-out opacity-70" aria-hidden="true">▸</span>
 						</summary>
 						<div data-doc="toc-panel" class="flex flex-col gap-0.5 pt-1 pb-2 pl-3 ml-1 border-l border-doc-border md:ml-0 md:pl-4">
-							<a href="#component-template" class="text-[0.8rem] text-doc-muted no-underline py-[0.2em] block hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium">3.1 Accordion</a>
-							<a href="#button" class="text-[0.8rem] text-doc-muted no-underline py-[0.2em] block hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium">3.2 Button</a>
+							<a href="#button" class="text-[0.8rem] text-doc-muted no-underline py-[0.2em] block hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium">3.1 Button</a>
+							<a href="#accordion" class="text-[0.8rem] text-doc-muted no-underline py-[0.2em] block hover:text-doc-accent [&.active]:text-doc-accent [&.active]:font-medium">3.2 Accordion</a>
 						</div>
 					</details>
 					<details data-doc="toc-accordion" class="w-full min-w-0 border-0 p-0 m-0">
@@ -141,7 +141,7 @@ const accordionItems = [
 					</div>
 				</nav>
 			</aside>
-			<article class="min-w-0 max-w-doc w-full prose prose-instruction text-doc-text">
+			<article class="min-w-0 max-w-doc w-full prose 2truction text-doc-text">
 			<header class="mb-10 pb-8 border-b border-doc-border">
 				<h1 class="">AOPA Design System </h1>
 				<p class="text-[1.05rem] text-doc-muted m-0 italic">Single source of truth for visual and interaction design. Use this to keep Figma, brand, and product work consistent. Code implementation references this document.</p>
@@ -151,11 +151,9 @@ const accordionItems = [
 				<h2 id="overview-heading" class="font-body">1. Overview &amp; principles</h2>
 
 				<h3 id="purpose" class="mt-6 mb-2">1.1 Purpose</h3>
-				<ul class="m-0 mb-4 pl-5">
-					<li class="mb-[0.35rem] text-doc-muted">This system is for AOPA's digital design & branding.</li>
-					<li class="mb-[0.35rem] text-doc-muted">It serves devs, design and content producers.</li>
-				</ul>
-
+				<p class="mb-[0.35rem] text-doc-muted">The AOPA Digital Design System establishes the visual and interaction standards used across AOPA’s digital products. It defines shared patterns, typography, layout structures, and brand expression to ensure a consistent and high-quality experience across web platforms.</p>
+				<p class="mb-[0.35rem] text-doc-muted">This system is intended for designers, developers, and content producers working on AOPA’s digital properties. It provides a common foundation for building interfaces, creating editorial layouts, and presenting information clearly to pilots and aviation enthusiasts.</p>
+				<p>By standardizing core design elements and interaction patterns, the system reduces duplication, improves collaboration, and allows teams to move faster while maintaining a cohesive brand experience.</p>
 				<h3 id="principles" class="text-base  mt-6 mb-2">1.2 Design principles</h3>
 				<ul class="m-0 mb-4 pl-5">
 					<li class="mb-[0.35rem] text-doc-muted">Clear Communication</li>
@@ -175,8 +173,33 @@ const accordionItems = [
 
 			<section class="mb-10" aria-labelledby="foundations-heading">
 				<h2 id="foundations-heading" class="">2. Foundations</h2>
-
+				<p>Foundations define the visual and structural elements used across AOPA’s digital products. These elements establish consistency in layout, typography, and interaction, and serve as the basis for all components and patterns within the design system.</p>
 				<h3 id="color" class="text-base  mt-6 mb-2 text-doc-text">2.1 Color</h3>
+				<article class="pl-6">
+					<h4>Purpose</h4>
+					<p>Color supports brand recognition, visual hierarchy, and system feedback across AOPA’s digital platforms. The color system is designed to maintain a consistent visual language while allowing individual AOPA publications and initiatives to retain their identity.</p>
+					<h4>Brand Colors</h4>
+					<p>These represent the core identities of AOPA and its publications.</p>
+					<h5>Usage Guidelines</h5>
+					<ul class="m-0 mb-4 pl-0 list-none">
+						<li class="mb-[0.35rem] flex items-center gap-2">
+							<svg class="shrink-0 w-5 h-5" fill="#2d5a4a" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+							Used in section headers
+						</li>
+						<li class="mb-[0.35rem] flex items-center gap-2">
+							<svg class="shrink-0 w-5 h-5" fill="#2d5a4a" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+							Used for editorial accents
+						</li>
+						<li class="mb-[0.35rem] flex items-center gap-2">
+							<svg class="shrink-0 w-5 h-5" fill="#2d5a4a" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+							Used for category identification
+						</li>
+						<li class="mb-[0.35rem] flex items-center gap-2">
+							<svg class="shrink-0 w-5 h-5" fill="#dc2626" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+							Not used for body text or UI states
+						</li>
+					</ul>
+				</article>
 				<div data-doc="color-tabs" class="my-4 mb-6">
 					<div data-doc="tablist" class="flex flex-wrap gap-1 mb-4 border-b border-doc-border" role="tablist" aria-label="Color palettes">
 						<button type="button" role="tab" aria-selected="true" aria-controls="color-panel-primary" id="color-tab-primary" class="px-4 py-2 text-[0.9rem] font-inherit text-doc-muted bg-transparent border-0 border-b-2 border-b-transparent -mb-px cursor-pointer hover:text-doc-text [&[aria-selected=true]]:text-doc-accent [&[aria-selected=true]]:font-medium [&[aria-selected=true]]:border-b-doc-accent">Primary</button>
@@ -350,38 +373,117 @@ const accordionItems = [
 					</div>
 				</div>
 
-				<h4 id="typography-headers" class="text-[0.95rem]  mt-4 mb-[0.35rem] text-doc-muted">Headings and subheads</h4>
+				<h4 id="typography-headers" class="text-[0.95rem] mt-4 mb-[0.35rem] text-doc-muted">Headings and subheads</h4>
 				<p class="text-sm text-doc-muted italic my-2 mb-4">Body copy samples below use different quotes to show how each header pairs with supporting text.</p>
-				<div class="flex flex-col gap-6 my-4 mb-6">
-					<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
-						<span class="inline-block text-[0.7rem]  font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h1</span>
-						<h1 class="">Main section header</h1>
-						<p class="leading-relaxed">Go confidently in the direction of your dreams. Live the life you have imagined. As you simplify your life, the laws of the universe will be simpler.</p>
+				<div data-doc="headers-tabs" class="my-4 mb-6">
+					<div data-doc="tablist" class="flex flex-wrap gap-1 mb-4 border-b border-doc-border" role="tablist" aria-label="Heading styles by brand">
+						<button type="button" role="tab" aria-selected="true" aria-controls="headers-panel-default" id="headers-tab-default" class="px-4 py-2 text-[0.9rem] font-inherit text-doc-muted bg-transparent border-0 border-b-2 border-b-transparent -mb-px cursor-pointer hover:text-doc-text [&[aria-selected=true]]:text-doc-accent [&[aria-selected=true]]:font-medium [&[aria-selected=true]]:border-b-doc-accent">Default</button>
+						<button type="button" role="tab" aria-selected="false" aria-controls="headers-panel-ycf" id="headers-tab-ycf" class="px-4 py-2 text-[0.9rem] font-inherit text-doc-muted bg-transparent border-0 border-b-2 border-b-transparent -mb-px cursor-pointer hover:text-doc-text [&[aria-selected=true]]:text-doc-accent [&[aria-selected=true]]:font-medium [&[aria-selected=true]]:border-b-doc-accent">YCF</button>
+						<button type="button" role="tab" aria-selected="false" aria-controls="headers-panel-asi" id="headers-tab-asi" class="px-4 py-2 text-[0.9rem] font-inherit text-doc-muted bg-transparent border-0 border-b-2 border-b-transparent -mb-px cursor-pointer hover:text-doc-text [&[aria-selected=true]]:text-doc-accent [&[aria-selected=true]]:font-medium [&[aria-selected=true]]:border-b-doc-accent">ASI</button>
 					</div>
-					<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
-						<span class="inline-block text-[0.7rem]  font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h2</span>
-						<p class="m-0 leading-tight font-knockout94 text-2xl font-normal capitalize">Main Crosshead</p>
-						<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">It is not the length of life, but the depth. The world is full of magical things patiently waiting for our wits to grow sharper.</p>
+					<div id="headers-panel-default" role="tabpanel" aria-labelledby="headers-tab-default" data-doc="tabpanel" class="pt-1">
+						<div class="flex flex-col gap-6">
+							<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
+								<span class="inline-block text-[0.7rem] font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h1</span>
+								<h1 class="">Main section header</h1>
+								<p class="leading-relaxed">Go confidently in the direction of your dreams. Live the life you have imagined. As you simplify your life, the laws of the universe will be simpler.</p>
+							</div>
+							<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
+								<span class="inline-block text-[0.7rem] font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h2</span>
+								<p class="m-0 leading-tight font-knockout94 text-2xl font-normal capitalize">Main Crosshead</p>
+								<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">It is not the length of life, but the depth. The world is full of magical things patiently waiting for our wits to grow sharper.</p>
+							</div>
+							<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
+								<span class="inline-block text-[0.7rem] font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h3</span>
+								<p class="m-0 leading-tight font-knockout47 text-[2.25rem] font-bold capitalize">Heavy crosshead</p>
+								<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">The only way to do great work is to love what you do. If you haven't found it yet, keep looking. Don't settle. As with all matters of the heart, you'll know when you find it.</p>
+							</div>
+							<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
+								<span class="inline-block text-[0.7rem] font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h4</span>
+								<p class="m-0 leading-tight font-gothamBook text-[1.875rem] font-normal uppercase tracking-wide">Alternate heavy crosshead</p>
+								<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">The real voyage of discovery consists not in seeking new landscapes, but in having new eyes. The only true wisdom is in knowing you know nothing.</p>
+							</div>
+							<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
+								<span class="inline-block text-[0.7rem] font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h5</span>
+								<p class="m-0 leading-tight font-gothamBold text-[1.15rem] font-bold uppercase tracking-[0.1em]">Medium crosshead</p>
+								<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">We need to give each other the space to grow, to be ourselves, to exercise our diversity. We need to give each other space so that we may both give and receive such beautiful things as ideas, openness, dignity, joy, healing.</p>
+							</div>
+							<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
+								<span class="inline-block text-[0.7rem] font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h6</span>
+								<p class="m-0 leading-tight font-gothamBold text-[1.15rem] font-bold">Light crosshead</p>
+								<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">The real voyage of discovery consists not in seeking new landscapes, but in having new eyes. The only true wisdom is in knowing you know nothing.</p>
+							</div>
+						</div>
 					</div>
-					<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
-						<span class="inline-block text-[0.7rem]  font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h3</span>
-						<p class="m-0 leading-tight font-knockout47 text-[2.25rem] font-bold capitalize">Heavy crosshead</p>
-						<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">The only way to do great work is to love what you do. If you haven't found it yet, keep looking. Don't settle. As with all matters of the heart, you'll know when you find it.</p>
+					<div id="headers-panel-ycf" role="tabpanel" aria-labelledby="headers-tab-ycf" data-doc="tabpanel" class="pt-1" hidden>
+						<p class="text-sm text-doc-muted italic mb-4">You Can Fly heading hierarchy. Same structure; brand-specific type and color may apply.</p>
+						<div class="flex flex-col gap-6">
+							<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
+								<span class="inline-block text-[0.7rem] font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h1</span>
+								<h1 class="">YCF section header</h1>
+								<p class="leading-relaxed">Go confidently in the direction of your dreams. Live the life you have imagined.</p>
+							</div>
+							<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
+								<span class="inline-block text-[0.7rem] font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h2</span>
+								<p class="m-0 leading-tight font-knockout94 text-2xl font-normal capitalize">YCF Crosshead</p>
+								<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">It is not the length of life, but the depth.</p>
+							</div>
+							<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
+								<span class="inline-block text-[0.7rem] font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h3</span>
+								<p class="m-0 leading-tight font-knockout47 text-[2.25rem] font-bold capitalize">YCF Heavy crosshead</p>
+								<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">The only way to do great work is to love what you do.</p>
+							</div>
+							<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
+								<span class="inline-block text-[0.7rem] font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h4</span>
+								<p class="m-0 leading-tight font-gothamBook text-[1.875rem] font-normal uppercase tracking-wide">YCF Alternate crosshead</p>
+								<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">The real voyage of discovery consists not in seeking new landscapes.</p>
+							</div>
+							<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
+								<span class="inline-block text-[0.7rem] font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h5</span>
+								<p class="m-0 leading-tight font-gothamBold text-[1.15rem] font-bold uppercase tracking-[0.1em]">YCF Medium crosshead</p>
+								<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">We need to give each other the space to grow.</p>
+							</div>
+							<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
+								<span class="inline-block text-[0.7rem] font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h6</span>
+								<p class="m-0 leading-tight font-gothamBold text-[1.15rem] font-bold">YCF Light crosshead</p>
+								<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">The only true wisdom is in knowing you know nothing.</p>
+							</div>
+						</div>
 					</div>
-					<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
-						<span class="inline-block text-[0.7rem]  font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h4</span>
-						<p class="m-0 leading-tight font-gothamBook text-[1.875rem] font-normal uppercase tracking-wide">Alternate heavy crosshead</p>
-						<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">The real voyage of discovery consists not in seeking new landscapes, but in having new eyes. The only true wisdom is in knowing you know nothing.</p>
-					</div>
-					<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
-						<span class="inline-block text-[0.7rem]  font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h5</span>
-						<p class="m-0 leading-tight font-gothamBold text-[1.15rem] font-bold uppercase tracking-[0.1em]">Medium crosshead</p>
-						<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">We need to give each other the space to grow, to be ourselves, to exercise our diversity. We need to give each other space so that we may both give and receive such beautiful things as ideas, openness, dignity, joy, healing.</p>
-					</div>
-					<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
-						<span class="inline-block text-[0.7rem]  font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h6</span>
-						<p class="m-0 leading-tight font-gothamBold text-[1.15rem] font-bold">Light crosshead</p>
-						<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">The real voyage of discovery consists not in seeking new landscapes, but in having new eyes. The only true wisdom is in knowing you know nothing.</p>
+					<div id="headers-panel-asi" role="tabpanel" aria-labelledby="headers-tab-asi" data-doc="tabpanel" class="pt-1" hidden>
+						<p class="text-sm text-doc-muted italic mb-4">Air Safety Institute heading hierarchy. Same structure; brand-specific type and color may apply.</p>
+						<div class="flex flex-col gap-6">
+							<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
+								<span class="inline-block text-[0.7rem] font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h1</span>
+								<h1 class="">ASI section header</h1>
+								<p class="leading-relaxed">Go confidently in the direction of your dreams. Live the life you have imagined.</p>
+							</div>
+							<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
+								<span class="inline-block text-[0.7rem] font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h2</span>
+								<p class="m-0 leading-tight font-knockout94 text-2xl font-normal capitalize">ASI Crosshead</p>
+								<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">It is not the length of life, but the depth.</p>
+							</div>
+							<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
+								<span class="inline-block text-[0.7rem] font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h3</span>
+								<p class="m-0 leading-tight font-knockout47 text-[2.25rem] font-bold capitalize">ASI Heavy crosshead</p>
+								<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">The only way to do great work is to love what you do.</p>
+							</div>
+							<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
+								<span class="inline-block text-[0.7rem] font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h4</span>
+								<p class="m-0 leading-tight font-gothamBook text-[1.875rem] font-normal uppercase tracking-wide">ASI Alternate crosshead</p>
+								<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">The real voyage of discovery consists not in seeking new landscapes.</p>
+							</div>
+							<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
+								<span class="inline-block text-[0.7rem] font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h5</span>
+								<p class="m-0 leading-tight font-gothamBold text-[1.15rem] font-bold uppercase tracking-[0.1em]">ASI Medium crosshead</p>
+								<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">We need to give each other the space to grow.</p>
+							</div>
+							<div class="pb-6 border-b border-doc-border last:border-b-0 last:pb-0">
+								<span class="inline-block text-[0.7rem] font-docSans text-doc-muted bg-doc-border py-[0.2em] px-[0.5em] rounded-sm mb-2" aria-label="Heading level">h6</span>
+								<p class="m-0 leading-tight font-gothamBold text-[1.15rem] font-bold">ASI Light crosshead</p>
+								<p class="font-docSans text-base leading-relaxed text-doc-muted mt-2 mb-0">The only true wisdom is in knowing you know nothing.</p>
+							</div>
+						</div>
 					</div>
 				</div>
 
@@ -421,10 +523,7 @@ const accordionItems = [
 				<h2 id="components-heading" class="font-docSerif text-[1.35rem] font-normal mt-8 mb-4 first:mt-0 text-doc-text tracking-wide">3. Components</h2>
 				<p class="m-0 mb-3 text-doc-text">For each component, keep the doc design-focused; implementation can live in code/Storybook.</p>
 
-				<h3 id="component-template" class="text-base mt-6 mb-2 text-doc-text">3.1 Accordion</h3>
-				<Accordion items={accordionItems} defaultOpenIndex={0} />
-
-				<h3 id="button" class="text-base mt-8 mb-2 text-doc-text">3.2 Button</h3>
+				<h3 id="button" class="text-base mt-6 mb-2 text-doc-text">3.1 Button</h3>
 				<p class="m-0 mb-3 text-doc-muted text-[0.95rem]">Primary actions, secondary actions, and links styled as buttons. Use <code class="text-[0.9em] bg-doc-border py-[0.15em] px-[0.4em] rounded-sm">href</code> to render as a link.</p>
 				<div class="flex flex-wrap gap-3 items-center">
 					<Button variant="primary">Primary</Button>
@@ -436,6 +535,9 @@ const accordionItems = [
 					<Button variant="primary" disabled>Disabled</Button>
 					<Button variant="primary" href="#">Link style</Button>
 				</div>
+
+				<h3 id="accordion" class="text-base mt-8 mb-2 text-doc-text">3.2 Accordion</h3>
+				<Accordion items={accordionItems} defaultOpenIndex={0} />
 			</section>
 
 			<hr class="border-0 border-t border-doc-border my-8" />
@@ -547,17 +649,16 @@ const accordionItems = [
 			window.addEventListener('scroll', updateActive, { passive: true });
 			updateActive();
 
-			// Color palette tabs
-			const colorTabs = document.querySelectorAll('[data-doc="tablist"] [role="tab"]');
-			colorTabs.forEach((tab) => {
+			// Tabs: color palettes + headings (each tab group scoped to its container)
+			document.querySelectorAll('[data-doc="tablist"] [role="tab"]').forEach((tab) => {
 				tab.addEventListener('click', () => {
 					const panelId = tab.getAttribute('aria-controls');
 					if (!panelId) return;
-					colorTabs.forEach((t) => t.setAttribute('aria-selected', 'false'));
-					tab.setAttribute('aria-selected', 'true');
-					document.querySelectorAll('[data-doc="color-tabs"] [data-doc="tabpanel"]').forEach((panel) => {
-						panel.hidden = panel.id !== panelId;
-					});
+					const panel = document.getElementById(panelId);
+					const container = panel?.closest('[data-doc="color-tabs"], [data-doc="headers-tabs"]');
+					if (!container) return;
+					container.querySelectorAll('[role="tab"]').forEach((t) => t.setAttribute('aria-selected', t.getAttribute('aria-controls') === panelId ? 'true' : 'false'));
+					container.querySelectorAll('[data-doc="tabpanel"]').forEach((p) => { p.hidden = p.id !== panelId; });
 				});
 			});
 		</script>

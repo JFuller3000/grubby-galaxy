@@ -25,6 +25,10 @@ const currentPath = Astro.url.pathname;
 		</style>
 	</head>
 	<body class="min-h-screen bg-[#faf9f7] px-6 py-8 pb-16 font-sans text-base leading-relaxed text-[#1a1a1a] md:px-6">
+		<AuthProvider apiBaseUrl="https://authgravity.jfuller.dev">
+			<RegisterButton />
+			<LoginButton />
+		  </AuthProvider>
 		<div class="mx-auto max-w-[720px]">
 			<SiteNav currentPath={currentPath} />
 			<main class="resume">

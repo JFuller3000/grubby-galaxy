@@ -86,8 +86,8 @@ export default {
               fontSize: "1.875rem",
               fontWeight: "700",
               lineHeight: "1.3",
-              marginTop: "2em",
-              marginBottom: "1em"
+              marginTop: "1rem",
+              marginBottom: "1rem"
             },
             h2: {
               fontFamily: theme("fontFamily.header"),
@@ -235,6 +235,7 @@ export default {
               fontFamily: theme("fontFamily.body")[0],
               fontSize: "3rem",
               lineHeight: "var(--lh-heading)",
+              marginTop: "1rem",
             },
             h2: {
               fontFamily: theme("fontFamily.body")[0],
