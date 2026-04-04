@@ -1,7 +1,6 @@
 ---
 import SiteNav from '../components/SiteNav.astro';
 const currentPath = Astro.url.pathname;
-const authApiBase = import.meta.env.PUBLIC_AUTHGRAVITY_URL ?? '';
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -432,11 +431,13 @@ const authApiBase = import.meta.env.PUBLIC_AUTHGRAVITY_URL ?? '';
 			</aside>
 			</div>
 		</div>
-		<script define:vars={{ authApiBase }}>
+		<script>
 			import { startRegistration, startAuthentication } from "@simplewebauthn/browser";
 
-			const API =
-				typeof authApiBase === "string" ? authApiBase.replace(/\/$/, "") : "";
+			const API = (import.meta.env.PUBLIC_AUTHGRAVITY_URL ?? "").replace(
+				/\/$/,
+				"",
+			);
 			const registerBtn = document.getElementById("auth-register");
 			const loginBtn = document.getElementById("auth-login");
 			const statusEl = document.getElementById("auth-status");
