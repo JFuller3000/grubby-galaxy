@@ -5,11 +5,11 @@ interface Props {
 const { currentPath } = Astro.props;
 ---
 <nav class="site-nav" aria-label="Main">
-	<ul class="site-nav-list">
+	<ul class="site-nav-list"  style="display: none;">
 		<li>
 			<a href="/" class:list={{ active: currentPath === '/' }}>Resume</a>
 		</li>
-		<li class="site-nav-group">
+		<li class="site-nav-group" style="display: none;">
 			<a href="/design-system" class:list={['site-nav-label', { active: currentPath === '/design-system' && !currentPath.startsWith('/design-system/') }]}>Aopa Design System</a>
 			<ul class="site-nav-sublist">
 				<li>

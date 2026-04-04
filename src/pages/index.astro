@@ -434,10 +434,13 @@ const currentPath = Astro.url.pathname;
 		<script>
 			import { startRegistration, startAuthentication } from "@simplewebauthn/browser";
 
-			const API = (import.meta.env.PUBLIC_AUTHGRAVITY_URL ?? "").replace(
-				/\/$/,
-				"",
-			);
+			const publicAuthUrl = (
+				import.meta.env.PUBLIC_AUTHGRAVITY_URL ?? ""
+			).replace(/\/$/, "");
+			// astro dev: same-origin proxy (see astro.config.mjs) avoids CORS to authgravity.*.
+			const API = import.meta.env.DEV
+				? `${globalThis.location.origin}/api/authgravity`
+				: publicAuthUrl;
 			const registerBtn = document.getElementById("auth-register");
 			const loginBtn = document.getElementById("auth-login");
 			const statusEl = document.getElementById("auth-status");
@@ -446,8 +449,10 @@ const currentPath = Astro.url.pathname;
 				if (statusEl) statusEl.textContent = msg;
 			}
 
-			if (!API) {
-				setStatus("Set PUBLIC_AUTHGRAVITY_URL in .env to test AuthGravity.");
+			if (!publicAuthUrl) {
+				setStatus(
+					"Set PUBLIC_AUTHGRAVITY_URL in .env (dev uses it for the Vite proxy; prod calls it directly).",
+				);
 				registerBtn?.setAttribute("disabled", "true");
 				loginBtn?.setAttribute("disabled", "true");
 			} else {
