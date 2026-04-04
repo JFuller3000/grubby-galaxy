@@ -1,6 +1,7 @@
 ---
 import SiteNav from '../components/SiteNav.astro';
 const currentPath = Astro.url.pathname;
+const authApiBase = import.meta.env.PUBLIC_AUTHGRAVITY_URL ?? '';
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -25,6 +26,7 @@ const currentPath = Astro.url.pathname;
 				--font-sans: 'DM Sans', system-ui, sans-serif;
 				--font-serif: 'DM Serif Display', Georgia, serif;
 				--max-width: 720px;
+				--page-max-with-sidebar: min(1100px, 100%);
 			}
 
 			* {
@@ -42,8 +44,22 @@ const currentPath = Astro.url.pathname;
 			}
 
 			.page {
-				max-width: var(--max-width);
+				max-width: var(--page-max-with-sidebar);
 				margin: 0 auto;
+			}
+
+			.page-body {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: 1.5rem;
+				align-items: start;
+			}
+
+			@media (min-width: 900px) {
+				.page-body {
+					grid-template-columns: minmax(0, 1fr) 220px;
+					gap: 2rem;
+				}
 			}
 
 			.resume header {
@@ -88,6 +104,78 @@ const currentPath = Astro.url.pathname;
 
 			.contact span:not(.sep) {
 				opacity: 0.85;
+			}
+
+			.auth-gravity {
+				display: flex;
+				flex-direction: column;
+				align-items: stretch;
+				gap: 0.65rem;
+				margin-bottom: 0;
+				padding: 0.85rem 1rem;
+				border: 1px solid var(--color-border);
+				border-radius: 0.5rem;
+				background: #fff;
+			}
+
+			@media (min-width: 900px) {
+				.auth-gravity {
+					position: sticky;
+					top: 1.25rem;
+				}
+			}
+
+			.auth-gravity__label {
+				font-size: 0.75rem;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.06em;
+				color: var(--color-muted);
+				margin: 0;
+				text-align: center;
+			}
+
+			.auth-gravity button {
+				font-family: inherit;
+				font-size: 0.85rem;
+				font-weight: 600;
+				padding: 0.5rem 0.75rem;
+				border-radius: 0.35rem;
+				cursor: pointer;
+				border: 2px solid var(--color-accent);
+				background: var(--color-accent);
+				color: #fff;
+				width: 100%;
+			}
+
+			.auth-gravity button:hover:not(:disabled) {
+				filter: brightness(1.05);
+			}
+
+			.auth-gravity button:disabled {
+				opacity: 0.45;
+				cursor: not-allowed;
+			}
+
+			.auth-gravity button[data-variant="secondary"] {
+				background: transparent;
+				color: var(--color-accent);
+			}
+
+			#auth-status {
+				width: 100%;
+				margin: 0;
+				font-size: 0.75rem;
+				line-height: 1.4;
+				color: var(--color-muted);
+				text-align: center;
+				min-height: 1.25em;
+			}
+
+			.resume {
+				max-width: var(--max-width);
+				margin: 0;
+				width: 100%;
 			}
 
 			.resume section {
@@ -193,8 +281,17 @@ const currentPath = Astro.url.pathname;
 				.contact a {
 					color: var(--color-text);
 				}
-				.site-nav {
+				.site-nav,
+				.auth-gravity {
 					display: none;
+				}
+
+				.page-body {
+					display: block;
+				}
+
+				.resume {
+					max-width: none;
 				}
 			}
 		</style>
@@ -202,7 +299,8 @@ const currentPath = Astro.url.pathname;
 	<body>
 		<div class="page">
 			<SiteNav currentPath={currentPath} />
-			<main class="resume">
+			<div class="page-body">
+				<main class="resume">
 				<header>
 					<h1 class="name">John S Fuller</h1>
 					<p class="title">Front End Visual &amp; UX Designer</p>
@@ -326,6 +424,148 @@ const currentPath = Astro.url.pathname;
 					<p><strong>University of Tallin</strong> | 1yr Study Abroad, CS | Tallinn, Estonia</p>
 				</section>
 			</main>
+			<aside class="auth-gravity" aria-label="AuthGravity passkey demo">
+				<p class="auth-gravity__label">Passkey (AuthGravity)</p>
+				<button type="button" id="auth-register" data-variant="secondary">Register (passkey)</button>
+				<button type="button" id="auth-login">Sign in</button>
+				<p id="auth-status" role="status" aria-live="polite"></p>
+			</aside>
+			</div>
 		</div>
+		<script define:vars={{ authApiBase }}>
+			import { startRegistration, startAuthentication } from "@simplewebauthn/browser";
+
+			const API =
+				typeof authApiBase === "string" ? authApiBase.replace(/\/$/, "") : "";
+			const registerBtn = document.getElementById("auth-register");
+			const loginBtn = document.getElementById("auth-login");
+			const statusEl = document.getElementById("auth-status");
+
+			function setStatus(msg) {
+				if (statusEl) statusEl.textContent = msg;
+			}
+
+			if (!API) {
+				setStatus("Set PUBLIC_AUTHGRAVITY_URL in .env to test AuthGravity.");
+				registerBtn?.setAttribute("disabled", "true");
+				loginBtn?.setAttribute("disabled", "true");
+			} else {
+				registerBtn?.addEventListener("click", async () => {
+					try {
+						setStatus("Registering…");
+						const optRes = await fetch(`${API}/register/options`, {
+							credentials: "include",
+						});
+						if (!optRes.ok) {
+							const t = await optRes.text();
+							throw new Error(t || `register/options failed: ${optRes.status}`);
+						}
+						const opts = await optRes.json();
+						const attResp = await startRegistration({ optionsJSON: opts });
+						const verRes = await fetch(`${API}/register/verify`, {
+							method: "POST",
+							headers: { "Content-Type": "application/json" },
+							credentials: "include",
+							body: JSON.stringify({
+								response: attResp,
+								userId: opts.userId,
+							}),
+						});
+						const verText = await verRes.text();
+						let body = {};
+						try {
+							body = JSON.parse(verText);
+						} catch {
+							/* non-JSON body */
+						}
+						if (!verRes.ok) {
+							const err =
+								typeof body === "object" &&
+								body !== null &&
+								"error" in body &&
+								typeof body.error === "string"
+									? body.error
+									: verText;
+							throw new Error(err || `register/verify failed: ${verRes.status}`);
+						}
+						const uid =
+							typeof body === "object" &&
+							body !== null &&
+							"user" in body &&
+							body.user &&
+							typeof body.user === "object" &&
+							"id" in body.user &&
+							typeof body.user.id === "string"
+								? body.user.id
+								: undefined;
+						setStatus(
+							uid
+								? `Registered; session set. User id: ${uid}`
+								: "Registered; session set.",
+						);
+					} catch (e) {
+						setStatus(e instanceof Error ? e.message : String(e));
+					}
+				});
+
+				loginBtn?.addEventListener("click", async () => {
+					try {
+						setStatus("Signing in…");
+						const optRes = await fetch(`${API}/login/options`, {
+							credentials: "include",
+						});
+						if (!optRes.ok) {
+							const t = await optRes.text();
+							throw new Error(t || `login/options failed: ${optRes.status}`);
+						}
+						const opts = await optRes.json();
+						const assertResp = await startAuthentication({ optionsJSON: opts });
+						const verRes = await fetch(`${API}/login/verify`, {
+							method: "POST",
+							headers: { "Content-Type": "application/json" },
+							credentials: "include",
+							body: JSON.stringify({
+								response: assertResp,
+								challengeId: opts.challengeId,
+							}),
+						});
+						const verText = await verRes.text();
+						let body = {};
+						try {
+							body = JSON.parse(verText);
+						} catch {
+							/* non-JSON body */
+						}
+						if (!verRes.ok) {
+							const err =
+								typeof body === "object" &&
+								body !== null &&
+								"error" in body &&
+								typeof body.error === "string"
+									? body.error
+									: verText;
+							throw new Error(err || `login/verify failed: ${verRes.status}`);
+						}
+						const uid =
+							typeof body === "object" &&
+							body !== null &&
+							"user" in body &&
+							body.user &&
+							typeof body.user === "object" &&
+							"id" in body.user &&
+							typeof body.user.id === "string"
+								? body.user.id
+								: undefined;
+						setStatus(
+							uid
+								? `Signed in. User id: ${uid}`
+								: "Signed in.",
+						);
+					} catch (e) {
+						setStatus(e instanceof Error ? e.message : String(e));
+					}
+				});
+			}
+		</script>
 	</body>
 </html>
