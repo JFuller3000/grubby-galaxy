@@ -3,20 +3,39 @@ interface Props {
 	currentPath: string;
 }
 const { currentPath } = Astro.props;
+
+const isResume = currentPath === "/";
+const isDesignSystemRoot =
+	currentPath === "/design-system" &&
+	!currentPath.startsWith("/design-system/");
+const isDocumentation = currentPath === "/design-system/documentation";
+const isDecks = currentPath === "/design-system/decks";
 ---
 <nav class="site-nav" aria-label="Main">
-	<ul class="site-nav-list"  style="display: none;">
+	<ul class="site-nav-list">
 		<li>
-			<a href="/" class:list={{ active: currentPath === '/' }}>Resume</a>
+			<a href="/" class:list={{ active: isResume }}>Resume</a>
 		</li>
-		<li class="site-nav-group" style="display: none;">
-			<a href="/design-system" class:list={['site-nav-label', { active: currentPath === '/design-system' && !currentPath.startsWith('/design-system/') }]}>Aopa Design System</a>
+		<li class="site-nav-group">
+			<a
+				href="/design-system"
+				class:list={["site-nav-label", { active: isDesignSystemRoot }]}
+			>
+				Aopa Design System
+			</a>
 			<ul class="site-nav-sublist">
 				<li>
-					<a href="/design-system/documentation" class:list={{ active: currentPath === '/design-system/documentation' }}>design documentation</a>
+					<a
+						href="/design-system/documentation"
+						class:list={{ active: isDocumentation }}
+					>
+						design documentation
+					</a>
 				</li>
 				<li>
-					<a href="/design-system/decks" class:list={{ active: currentPath === '/design-system/decks' }}>decks</a>
+					<a href="/design-system/decks" class:list={{ active: isDecks }}>
+						decks
+					</a>
 				</li>
 			</ul>
 		</li>
@@ -24,10 +43,12 @@ const { currentPath } = Astro.props;
 </nav>
 
 <style>
+	/* Nav hidden for now — remove display:none and restore margin/padding/border when shipping. */
 	.site-nav {
-		margin-bottom: 2rem;
-		padding-bottom: 1.5rem;
-		border-bottom: 1px solid var(--color-border);
+		display: none;
+		margin: 0;
+		padding: 0;
+		border: 0;
 	}
 
 	.site-nav-list {
@@ -41,17 +62,17 @@ const { currentPath } = Astro.props;
 	}
 
 	.site-nav a {
-		color: var(--color-muted);
+		color: var(--color-muted, #5c5c5c);
 		text-decoration: none;
 		font-size: 0.95rem;
 	}
 
 	.site-nav a:hover {
-		color: var(--color-accent);
+		color: var(--color-accent, #2d5a4a);
 	}
 
 	.site-nav a.active {
-		color: var(--color-accent);
+		color: var(--color-accent, #2d5a4a);
 		font-weight: 500;
 	}
 
@@ -63,7 +84,7 @@ const { currentPath } = Astro.props;
 
 	.site-nav-label {
 		font-size: 0.95rem;
-		color: var(--color-muted);
+		color: var(--color-muted, #5c5c5c);
 		font-weight: 500;
 	}
 
