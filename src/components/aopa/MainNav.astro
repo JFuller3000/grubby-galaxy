@@ -1,0 +1,236 @@
+---
+interface Props {
+	userName?: string;
+	accountHref?: string;
+	brandHref?: string;
+}
+
+const {
+	userName = "John",
+	accountHref = "#",
+	brandHref = "#",
+} = Astro.props;
+
+const greeting = `Hi ${userName}`;
+---
+
+<nav class="aopa-main-nav" aria-label="Main navigation">
+	<div class="aopa-main-nav__bar">
+		<div class="aopa-main-nav__left">
+			<button
+				type="button"
+				class="aopa-main-nav__menu"
+				aria-expanded="false"
+				aria-label="Open menu"
+			>
+				<span class="aopa-main-nav__menu-lines" aria-hidden="true"></span>
+			</button>
+			<a href={brandHref} class="aopa-main-nav__brand">
+				<span class="aopa-main-nav__brand-primary">AOPA</span><span class="aopa-main-nav__brand-sep">/</span><span
+					class="aopa-main-nav__brand-sub">Advocacy</span>
+			</a>
+		</div>
+		<div class="aopa-main-nav__right">
+			<p class="aopa-main-nav__greeting">{greeting}</p>
+			<a href={accountHref} class="aopa-main-nav__account">My account</a>
+			<button type="button" class="aopa-main-nav__search" aria-label="Search">
+				<svg class="aopa-main-nav__search-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+					<circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.25"></circle>
+					<path
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2.25"
+						stroke-linecap="round"
+						d="M15 15l6 6"></path>
+				</svg>
+			</button>
+		</div>
+	</div>
+</nav>
+
+<style>
+	.aopa-main-nav {
+		--aopa-nav-blue: #29abe2;
+		--aopa-nav-blue-btn: #0082af;
+		--aopa-nav-charcoal: #444444;
+		--aopa-nav-ink: #444444;
+		--aopa-nav-height: clamp(3rem, 2.75rem + 0.75vw, 3.75rem);
+		--aopa-nav-font: "Arial Narrow", "Helvetica Neue Condensed", "Helvetica Neue", Arial, sans-serif;
+		--aopa-nav-link-size: clamp(1.1875rem, 1rem + 0.55vw, 1.5rem);
+		--aopa-nav-slice: clamp(1.75rem, 1rem + 2.5vw, 2.75rem);
+
+		width: 100%;
+		font-family: var(--aopa-nav-font);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		line-height: 1;
+		color: var(--aopa-nav-ink);
+	}
+
+	.aopa-main-nav__bar {
+		display: flex;
+		align-items: stretch;
+		min-height: var(--aopa-nav-height);
+		width: 100%;
+	}
+
+	.aopa-main-nav__left {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: clamp(0.75rem, 0.5rem + 1vw, 1.25rem);
+		flex: 0 1 auto;
+		padding-left: clamp(0.75rem, 0.5rem + 1.2vw, 1.5rem);
+		padding-right: clamp(2rem, 1.25rem + 3vw, 3.25rem);
+		background: var(--aopa-nav-blue);
+		clip-path: polygon(0 0, 100% 0, calc(100% - var(--aopa-nav-slice)) 100%, 0 100%);
+		z-index: 1;
+	}
+
+	.aopa-main-nav__menu {
+		display: grid;
+		place-items: center;
+		width: 2.75rem;
+		height: 2.75rem;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		color: var(--aopa-nav-ink);
+		cursor: pointer;
+		border-radius: 2px;
+	}
+
+	.aopa-main-nav__menu:focus-visible {
+		outline: 2px solid #fff;
+		outline-offset: 2px;
+	}
+
+	.aopa-main-nav__menu-lines {
+		display: block;
+		width: 1.375rem;
+		height: 2px;
+		background: currentColor;
+		box-shadow: 0 7px 0 currentColor, 0 -7px 0 currentColor;
+	}
+
+	.aopa-main-nav__brand {
+		display: flex;
+		align-items: baseline;
+		gap: 0.08em;
+		text-decoration: none;
+		color: var(--aopa-nav-ink);
+		font-size: var(--aopa-nav-link-size);
+		white-space: nowrap;
+	}
+
+	.aopa-main-nav__brand:hover {
+		opacity: 0.92;
+	}
+
+	.aopa-main-nav__brand:focus-visible {
+		outline: 2px solid var(--aopa-nav-ink);
+		outline-offset: 3px;
+	}
+
+	.aopa-main-nav__brand-primary {
+		font-size: 1.05em;
+	}
+
+	.aopa-main-nav__brand-sep {
+		font-weight: 700;
+		opacity: 1;
+	}
+
+	.aopa-main-nav__brand-sub {
+		font-size: 0.72em;
+		font-weight: 700;
+	}
+
+	.aopa-main-nav__right {
+		flex: 1 1 auto;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: clamp(0.75rem, 0.4rem + 1.2vw, 1.5rem);
+		padding-right: clamp(0.75rem, 0.5rem + 1.2vw, 1.5rem);
+		padding-left: clamp(0.5rem, 0.25rem + 1vw, 1rem);
+		background: var(--aopa-nav-charcoal);
+		color: #fff;
+		margin-left: calc(var(--aopa-nav-slice) * -1);
+		padding-left: calc(var(--aopa-nav-slice) + clamp(0.5rem, 0.25rem + 1vw, 1rem));
+		min-width: 0;
+		position: relative;
+		z-index: 0;
+	}
+
+	.aopa-main-nav__greeting {
+		margin: 0;
+		font-size: clamp(1rem, 0.9rem + 0.35vw, 1.1875rem);
+		font-weight: 700;
+		color: #fff;
+		white-space: nowrap;
+	}
+
+	.aopa-main-nav__account {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.55em 1.35em 0.5em;
+		border-radius: 9999px;
+		background: var(--aopa-nav-blue-btn);
+		color: #fff;
+		text-decoration: none;
+		font-size: clamp(0.9375rem, 0.82rem + 0.4vw, 1.125rem);
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		white-space: nowrap;
+	}
+
+	.aopa-main-nav__account:hover {
+		filter: brightness(1.06);
+	}
+
+	.aopa-main-nav__account:focus-visible {
+		outline: 2px solid #fff;
+		outline-offset: 3px;
+	}
+
+	.aopa-main-nav__search {
+		display: grid;
+		place-items: center;
+		width: 2.75rem;
+		height: 2.75rem;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		color: #fff;
+		cursor: pointer;
+		border-radius: 2px;
+	}
+
+	.aopa-main-nav__search:hover {
+		opacity: 0.9;
+	}
+
+	.aopa-main-nav__search:focus-visible {
+		outline: 2px solid #fff;
+		outline-offset: 2px;
+	}
+
+	.aopa-main-nav__search-icon {
+		display: block;
+	}
+
+	@media (max-width: 520px) {
+		.aopa-main-nav__greeting {
+			display: none;
+		}
+
+		.aopa-main-nav__right {
+			gap: 0.5rem;
+		}
+	}
+</style>

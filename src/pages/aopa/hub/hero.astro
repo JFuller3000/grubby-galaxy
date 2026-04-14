@@ -1,0 +1,37 @@
+---
+import MainNav from "../../../components/aopa/MainNav.astro";
+import HubHero from "../../../components/aopa/HubHero.astro";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<title>AOPA hub — hero</title>
+		<style is:global>
+			body {
+				margin: 0;
+				padding: 0;
+				min-height: 100vh;
+				background: #e8e8e8;
+			}
+		</style>
+	</head>
+	<body>
+		<MainNav />
+		<!--
+			Demo only — swap HubHero props (or add a `preset` later) when your real option set is defined.
+		-->
+		<HubHero
+			eyebrow="Content hub"
+			title="Placeholder headline"
+			description="This page exists to preview the hub hero. Wire your planned options to HubHero props when content and design are ready."
+			background="brand"
+			minHeight="tall"
+			primaryCta={{ label: "Primary action", href: "#" }}
+			secondaryCta={{ label: "Secondary", href: "#" }}
+		/>
+	</body>
+</html>
