@@ -1,15 +1,10 @@
 ---
-import type {
-	HubHeroCopyTone,
-	HubHeroImageAlign,
-	HubHeroImageWidth,
-	HubHeroMinHeight,
-	HubHeroVariant,
-} from "./hubHeroOptions";
+import type { HubHeroImageAlign, HubHeroImageWidth, HubHeroMinHeight, HubHeroVariant } from "./hubHeroOptions";
 import {
-	DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR,
-	DEFAULT_HUB_HERO_PRIMARY_COLOR,
-	normalizeHubHeroPrimaryHex,
+	colorSchemeFromPillarName,
+	copyToneFromColorScheme,
+	lockupOverlayColorFromColorScheme,
+	lockupCopyToneFromColorScheme,
 } from "../../lib/hubHeroSearchParams";
 
 export interface HubHeroCta {
@@ -27,10 +22,10 @@ export interface HubHeroImage {
  * Prop names and allowed values are placeholders until your spec is final.
  */
 interface Props {
-	/** Legacy lockup label source; prefer `columnName` for new usage. */
+	/** Legacy lockup label source; prefer `pillarName` for new usage. */
 	hubName?: string;
-	/** Shown under the wings mark as `AOPA | [columnName]`; omit to hide lockup column. */
-	columnName?: string;
+	/** Shown under the wings mark as `AOPA | [pillarName]`; omit to hide lockup column. */
+	pillarName?: string;
 	/** Omit or pass empty string to hide the headline. */
 	title?: string;
 	description?: string;
@@ -40,8 +35,6 @@ interface Props {
 	secondaryCta?: HubHeroCta;
 	/** Split = wider lockup + body grid when lockup is set; full = stacked gray panel */
 	variant?: HubHeroVariant;
-	/** Hero section fill (`#rgb` or `#rrggbb`); sets `--aopa-hero-primary`. */
-	primaryColor?: string;
 	/** Minimum block height */
 	minHeight?: HubHeroMinHeight;
 	/** Optional full-bleed hero background photo (not the lockup panel) */
@@ -55,37 +48,31 @@ interface Props {
 	 * Omitted = solid. Sets `--aopa-hero-lockup-overlay-opacity` on the section.
 	 */
 	lockupOverlayOpacity?: number;
-	/** Panel fill (`#rgb` / `#rrggbb`); with opacity uses `color-mix` on section. */
-	lockupOverlayColor?: string;
-	/** Headline + description: `dark` = default ink, `light` for on dark / photo heroes. */
-	copyTone?: HubHeroCopyTone;
-	/** AOPA + hub line in the lockup column; independent of `copyTone`. */
-	lockupCopyTone?: HubHeroCopyTone;
 }
 
 const {
 	hubName,
-	columnName,
+	pillarName,
 	title = "",
 	description,
 	primaryCta,
 	secondaryCta,
 	variant = "full",
-	primaryColor: primaryColorProp = DEFAULT_HUB_HERO_PRIMARY_COLOR,
 	minHeight = "tall",
 	image,
 	imageWidth = "full",
 	imageAlign = "left",
 	lockupOverlayOpacity,
-	lockupOverlayColor: lockupOverlayColorProp = DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR,
-	copyTone = "dark",
-	lockupCopyTone = "dark",
 } = Astro.props;
 
 const layout = variant === "split" ? "split" : "full";
-const lockupColumnName = columnName?.trim() ?? "";
+const lockupPillarName = pillarName?.trim() ?? "";
 const lockupHubName = hubName?.trim() ?? "";
-const hasLockup = lockupColumnName.length > 0 || lockupHubName.length > 0;
+const hasLockup = lockupPillarName.length > 0 || lockupHubName.length > 0;
+const primaryHex = colorSchemeFromPillarName(lockupPillarName);
+const lockupOverlayHex = lockupOverlayColorFromColorScheme(primaryHex);
+const copyTone = copyToneFromColorScheme(primaryHex);
+const lockupCopyTone = lockupCopyToneFromColorScheme(primaryHex);
 const lockupLogoSrc =
 	lockupCopyTone === "light"
 		? "/images/aopa-wings-logo-white.svg"
@@ -102,12 +89,6 @@ const hasHeroBgImage = Boolean(image?.src);
 const heroBgCssVars = image?.src
 	? { "--hub-hero-bg-image": `url(${JSON.stringify(image.src)})` }
 	: undefined;
-
-const primaryHex =
-	normalizeHubHeroPrimaryHex(primaryColorProp) ?? DEFAULT_HUB_HERO_PRIMARY_COLOR;
-const lockupOverlayHex =
-	normalizeHubHeroPrimaryHex(lockupOverlayColorProp) ??
-	DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR;
 
 const hubHeroSectionStyle: Record<string, string> = {
 	...(heroBgCssVars ?? {}),
@@ -168,12 +149,12 @@ const hubHeroSectionStyleAttr = hubHeroSectionStyle;
 					/>
 				<p class="aopa-hub-hero__lockup-column">
 					<span class="aopa-hub-hero__lockup-prefix" data-hub-lockup-prefix
-						>AOPA{lockupColumnName.length > 0 ? " | " : ""}</span
+						>AOPA{lockupPillarName.length > 0 ? " | " : ""}</span
 					>
 					<span
 						class="aopa-hub-hero__lockup-column-value"
 						data-hub-lockup-column
-						hidden={lockupColumnName.length === 0}>{lockupColumnName}</span
+						hidden={lockupPillarName.length === 0}>{lockupPillarName}</span
 					>
 				</p>
 				<p class="aopa-hub-hero__lockup-hub" data-hub-lockup-hub hidden={lockupHubName.length === 0}>

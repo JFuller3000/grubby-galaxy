@@ -1,15 +1,14 @@
 ---
 import {
-	HUB_HERO_COPY_TONES,
 	HUB_HERO_IMAGE_ALIGNS,
 	HUB_HERO_IMAGE_WIDTHS,
 	HUB_HERO_MIN_HEIGHTS,
 	HUB_HERO_VARIANTS,
 } from "./hubHeroOptions";
 import {
-	DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR,
-	hexForColorInput,
+	HUB_HERO_PILLAR_OPTIONS,
 	hubHeroQueryKeys as k,
+	normalizeHubHeroPillarName,
 } from "../../lib/hubHeroSearchParams";
 import type { HubHeroResolvedFromUrl } from "../../lib/hubHeroSearchParams";
 
@@ -60,11 +59,8 @@ const lockupOpacitySelected =
 				(p) => p.value !== "" && Math.abs(Number(p.value) - ro) < 1e-6,
 			)?.value ?? "");
 
-const primaryColorForPicker = hexForColorInput(resolved.primaryColor);
-const lockupOverlayColorForPicker = hexForColorInput(
-	resolved.lockupOverlayColor,
-	DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR,
-);
+const resolvedPillarName =
+	normalizeHubHeroPillarName(resolved.pillarName ?? "") ?? "Community";
 ---
 
 <div class="hh-dev-toolbar" data-hh-dev-toolbar>
@@ -97,13 +93,16 @@ const lockupOverlayColorForPicker = hexForColorInput(
 					<input type="text" name={k.hubName} value={resolved.hubName ?? ""} autocomplete="off" />
 				</label>
 				<label>
-					<span>columnName (after “AOPA |”, book)</span>
-					<input
-						type="text"
-						name={k.columnName}
-						value={resolved.columnName ?? resolved.hubName ?? ""}
-						autocomplete="off"
-					/>
+					<span>pillarName (after “AOPA |”, book)</span>
+					<select name={k.pillarName} title="Pillar name / scheme driver">
+						{
+							HUB_HERO_PILLAR_OPTIONS.map((pillar) => (
+								<option value={pillar} selected={resolvedPillarName === pillar}>
+									{pillar}
+								</option>
+							))
+						}
+					</select>
 				</label>
 				<label>
 					<span>title</span>
@@ -112,16 +111,6 @@ const lockupOverlayColorForPicker = hexForColorInput(
 				<label class="hh-dev-toolbar__full">
 					<span>description</span>
 					<textarea name={k.description} rows="2">{resolved.description ?? ""}</textarea>
-				</label>
-				<label class="hh-dev-toolbar__full">
-					<span>primaryColor</span>
-					<input
-						class="hh-dev-toolbar__color"
-						type="color"
-						name={k.primaryColor}
-						value={primaryColorForPicker}
-						title="Hero background fill (#rrggbb in URL)"
-					/>
 				</label>
 				<label>
 					<span>minHeight</span>
@@ -147,30 +136,6 @@ const lockupOverlayColorForPicker = hexForColorInput(
 						}
 					</select>
 				</label>
-				<label>
-					<span>copyTone (headline + description)</span>
-					<select name={k.copyTone}>
-						{
-							HUB_HERO_COPY_TONES.map((t) => (
-								<option value={t} selected={resolved.copyTone === t}>
-									{t}
-								</option>
-							))
-						}
-					</select>
-				</label>
-				<label>
-					<span>lockupCopyTone (AOPA + columnName + hubName)</span>
-					<select name={k.lockupCopyTone}>
-						{
-							HUB_HERO_COPY_TONES.map((t) => (
-								<option value={t} selected={resolved.lockupCopyTone === t}>
-									{t}
-								</option>
-							))
-						}
-					</select>
-				</label>
 				<label class="hh-dev-toolbar__full">
 					<span>lockupOpacity (full inner + split lockup gray)</span>
 					<select name={k.lockupOpacity}>
@@ -182,16 +147,6 @@ const lockupOverlayColorForPicker = hexForColorInput(
 							))
 						}
 					</select>
-				</label>
-				<label class="hh-dev-toolbar__full">
-					<span>lockupOverlayColor (panel tint + split copy panel)</span>
-					<input
-						class="hh-dev-toolbar__color"
-						type="color"
-						name={k.lockupOverlayColor}
-						value={lockupOverlayColorForPicker}
-						title="Gray panel fill (#rrggbb in URL)"
-					/>
 				</label>
 				<label class="hh-dev-toolbar__full">
 					<span>imageSrc (https — hero background)</span>

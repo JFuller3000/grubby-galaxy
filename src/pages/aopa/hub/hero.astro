@@ -3,8 +3,7 @@ import MainNav from "../../../components/aopa/MainNav.astro";
 import HubHero from "../../../components/aopa/HubHero.astro";
 import HubHeroDevToolbar from "../../../components/aopa/HubHeroDevToolbar.astro";
 import {
-	DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR,
-	DEFAULT_HUB_HERO_PRIMARY_COLOR,
+	DEFAULT_HUB_HERO_PILLAR_NAME,
 	hubHeroUrlOverridesActive,
 	isHubHeroPreviewQueryEnabled,
 	resolveHubHeroFromUrl,
@@ -13,12 +12,10 @@ import {
 
 const defaults: HubHeroResolvedFromUrl = {
 	hubName: "Content hub",
-	columnName: "Content hub",
 	title: "Placeholder headline",
 	description:
 		"This page exists to preview the hub hero. Use the hero options button at the bottom of the page to change props via the URL or click a link below for some examples of pre built heroes in various configurations.",
-	primaryColor: DEFAULT_HUB_HERO_PRIMARY_COLOR,
-	lockupOverlayColor: DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR,
+	pillarName: DEFAULT_HUB_HERO_PILLAR_NAME,
 	minHeight: "tall",
 	variant: "full",
 	imageSrc: undefined,
@@ -29,8 +26,6 @@ const defaults: HubHeroResolvedFromUrl = {
 	primaryHref: "#",
 	secondaryLabel: "Secondary",
 	secondaryHref: "#",
-	copyTone: "dark",
-	lockupCopyTone: "dark",
 };
 
 const resolved = resolveHubHeroFromUrl(Astro.url.searchParams, defaults);
@@ -56,15 +51,15 @@ const secondaryCta =
 		: undefined;
 
 const advocateCampaignHref =
-	"/aopa/hub/hero?hh=1&hubName=Legislative+Campaigns&columnName=Advocate&title=For+AOPA%2C+advocacy+is+more+than+just+lobbying+Congress+or+negotiating+with+the+FAA.&description=It%E2%80%99s+about+staying+engaged+with+hundreds+of+state+agencies+and+legislatures.+It%E2%80%99s+about+maintaining+a+network+of+pilots+to+monitor+thousands+of+airports.+It%E2%80%99s+about+putting+the+combined+weight+of+hundreds+of+thousands+of+pilots+behind+you.&primaryColor=%23115678&lockupOverlayColor=%23eaeaea&minHeight=viewport&variant=split&copyTone=light&lockupCopyTone=dark&imageWidth=half&imageAlign=left&imageSrc=https%3A%2F%2Faopa.org%2F-%2Fmedia%2FImages%2FAOPA-Main%2FNews-and-Media%2FPublications%2FPilot-Magazine%2F2026%2F2605%2F2605p_missionmountain%2F2605p_mission001%2F2605p_mission001_16x9.jpg%3Fh%3D675%26w%3D1200%26la%3Den%26hash%3D50FF572C113460EBFB871504DF2044D7&imageAlt=Hero+background&primaryLabel=Donate+Today&primaryHref=https%3A%2F%2Fwww.aopa.org%2Fdonation%2Foneclickpac%3Fkeycode%3DV1512WP01&secondaryLabel=&secondaryHref=%23&lockupOpacity=0.9";
+	"/aopa/hub/hero?hh=1&hubName=Legislative+Campaigns&pillarName=Advocate&title=For+AOPA%2C+advocacy+is+more+than+just+lobbying+Congress+or+negotiating+with+the+FAA.&description=It%E2%80%99s+about+staying+engaged+with+hundreds+of+state+agencies+and+legislatures.+It%E2%80%99s+about+maintaining+a+network+of+pilots+to+monitor+thousands+of+airports.+It%E2%80%99s+about+putting+the+combined+weight+of+hundreds+of+thousands+of+pilots+behind+you.&minHeight=viewport&variant=split&imageWidth=half&imageAlign=left&imageSrc=https%3A%2F%2Faopa.org%2F-%2Fmedia%2FImages%2FAOPA-Main%2FNews-and-Media%2FPublications%2FPilot-Magazine%2F2026%2F2605%2F2605p_missionmountain%2F2605p_mission001%2F2605p_mission001_16x9.jpg%3Fh%3D675%26w%3D1200%26la%3Den%26hash%3D50FF572C113460EBFB871504DF2044D7&imageAlt=Hero+background&primaryLabel=Donate+Today&primaryHref=https%3A%2F%2Fwww.aopa.org%2Fdonation%2Foneclickpac%3Fkeycode%3DV1512WP01&secondaryLabel=&secondaryHref=%23&lockupOpacity=0.9";
 const trainingSafetyHref =
-	"/aopa/hub/hero?hh=1&hubName=Training+%26+Safety&columnName=Learn&title=&description=Whether+it%E2%80%99s+prepping+for+a+checkride%2C+perfecting+an+instrument+approach%2C+or+just+going+out+for+a+proficiency+flight%2C+a+good+pilot+is+always+learning.+To+make+that+easier%2C+AOPA+and+the+Air+Safety+Institute+offer+a+wide+variety+of+resources+specifically+tailored+to+your+flying+life.&primaryColor=%23115678&lockupOverlayColor=%23eaeaea&minHeight=viewport&variant=full&copyTone=dark&lockupCopyTone=dark&imageWidth=full&imageAlign=left&imageSrc=https%3A%2F%2Fwww.aopa.org%2F-%2Fmedia%2FImages%2FAOPA-Main%2FNews-and-Media%2F2022%2FSeptember%2F220902_training_tip.jpg&imageAlt=Hero+background&primaryLabel=Choose+your+path&primaryHref=%23paths&secondaryLabel=&secondaryHref=%23&lockupOpacity=0.9";
+	"/aopa/hub/hero?hh=1&hubName=Training+%26+Safety&pillarName=Learn&title=&description=Whether+it%E2%80%99s+prepping+for+a+checkride%2C+perfecting+an+instrument+approach%2C+or+just+going+out+for+a+proficiency+flight%2C+a+good+pilot+is+always+learning.+To+make+that+easier%2C+AOPA+and+the+Air+Safety+Institute+offer+a+wide+variety+of+resources+specifically+tailored+to+your+flying+life.&minHeight=viewport&variant=full&imageWidth=full&imageAlign=left&imageSrc=https%3A%2F%2Fwww.aopa.org%2F-%2Fmedia%2FImages%2FAOPA-Main%2FNews-and-Media%2F2022%2FSeptember%2F220902_training_tip.jpg&imageAlt=Hero+background&primaryLabel=Choose+your+path&primaryHref=%23paths&secondaryLabel=&secondaryHref=%23&lockupOpacity=0.9";
 const careersEducationHref =
-	"http://localhost:4321/aopa/hub/hero?hh=1&hubName=Careers+%26+Education&columnName=Learn&title=Resources+for+Career+Pilots&description=Many+aspiring+pilots+have+dreams+of+taking+their+passion+for+aviation+and+making+it+into+a+career.+The+good+news+is+that+the+outlook+has+never+been+better+for+hopeful+commercial+pilots.+In+2018%2C+Boeing+projected+a+demand+for+790%2C000+pilots+over+the+next+20+years%2C+thanks+in+part+to+rapid+expansion+of+the+global+commercial+airplane+fleet.&primaryColor=%23115678&lockupOverlayColor=%23333333&minHeight=tall&variant=full&copyTone=light&lockupCopyTone=light&imageWidth=full&imageAlign=left&imageSrc=https%3A%2F%2Fwww.aopa.org%2Ftraining-and-safety%2F-%2Fmedia%2Fimages%2Faopa-main%2Ftraining-and-safety%2Flearn-to-fly%2Ffly_for_career&imageAlt=Hero+background&primaryLabel=Choose+your+path&primaryHref=%23paths&secondaryLabel=&secondaryHref=%23&lockupOpacity=0.9";
+	"http://localhost:4321/aopa/hub/hero?hh=1&hubName=Careers+%26+Education&pillarName=Learn&title=Resources+for+Career+Pilots&description=Many+aspiring+pilots+have+dreams+of+taking+their+passion+for+aviation+and+making+it+into+a+career.+The+good+news+is+that+the+outlook+has+never+been+better+for+hopeful+commercial+pilots.+In+2018%2C+Boeing+projected+a+demand+for+790%2C000+pilots+over+the+next+20+years%2C+thanks+in+part+to+rapid+expansion+of+the+global+commercial+airplane+fleet.&minHeight=tall&variant=full&imageWidth=full&imageAlign=left&imageSrc=https%3A%2F%2Fwww.aopa.org%2Ftraining-and-safety%2F-%2Fmedia%2Fimages%2Faopa-main%2Ftraining-and-safety%2Flearn-to-fly%2Ffly_for_career&imageAlt=Hero+background&primaryLabel=Choose+your+path&primaryHref=%23paths&secondaryLabel=&secondaryHref=%23&lockupOpacity=0.9";
 const rustyPilotsHref =
-	"/aopa/hub/hero?hh=1&hubName=Rusty+Pilots&columnName=Learn&title=If+you%E2%80%99ve+been+out+of+the+flight+deck+for+a+while%2C+we%E2%80%99ll+help+you+get+back+in&description=On+behalf+of+AOPA%2C+the+Rusty+Pilots+team+congratulates+the+13%2C000-plus+pilots+who+returned+to+flying+after+attending+a+Rusty+Pilots+seminar%2C+webinar%2C+or+took+the+online+course+and+completed+their+flight+review.+We+celebrate+with+you%21&primaryColor=%23cde3e4&lockupOverlayColor=%232e5261&minHeight=tall&variant=full&copyTone=light&lockupCopyTone=light&imageWidth=half&imageAlign=left&imageSrc=https%3A%2F%2Fwww.aopa.org%2F-%2Fmedia%2FImages%2FAOPA-Main%2FTraining-and-Safety%2Frustypilotseminar3.jpg&imageAlt=Hero+background&primaryLabel=Meet+Our+Instructors&primaryHref=%23paths&secondaryLabel=&secondaryHref=%23&lockupOpacity=0.9";
+	"/aopa/hub/hero?hh=1&hubName=Rusty+Pilots&pillarName=Learn&title=If+you%E2%80%99ve+been+out+of+the+flight+deck+for+a+while%2C+we%E2%80%99ll+help+you+get+back+in&description=On+behalf+of+AOPA%2C+the+Rusty+Pilots+team+congratulates+the+13%2C000-plus+pilots+who+returned+to+flying+after+attending+a+Rusty+Pilots+seminar%2C+webinar%2C+or+took+the+online+course+and+completed+their+flight+review.+We+celebrate+with+you%21&minHeight=tall&variant=full&imageWidth=half&imageAlign=left&imageSrc=https%3A%2F%2Fwww.aopa.org%2F-%2Fmedia%2FImages%2FAOPA-Main%2FTraining-and-Safety%2Frustypilotseminar3.jpg&imageAlt=Hero+background&primaryLabel=Meet+Our+Instructors&primaryHref=%23paths&secondaryLabel=&secondaryHref=%23&lockupOpacity=0.9";
 const aircraftBuyingOwnershipHref =
-	"/aopa/hub/hero?hh=1&hubName=Aircraft+Buying+%26+Ownership&columnName=fly&title=Whether+you%27re+interested+in+purchasing+your+first+aircraft%2C+or+upgrading+to+another%2C+AOPA+offers+a+wealth+of+resources+to+assist.&description=Need+help+with+buying+or+selling+an+aircraft%3F+Find+it+here.+Check+out+the+resource+pages+for+an+overview+of+all+aspects+of+the+purchasing+process+or+click+on+the+Quick+Links+to+access+specific+information.&primaryColor=%232079a2&lockupOverlayColor=%231d356d&minHeight=tall&variant=full&copyTone=light&lockupCopyTone=light&imageWidth=full&imageAlign=left&imageSrc=https%3A%2F%2Fwww.aopa.org%2F-%2Fmedia%2FImages%2FAOPA-Main%2FNews-and-Media%2F2023%2FMar%2FSNF2023%2F23_SNF_Tue_328_3595F_c.jpg&imageAlt=Hero+background&primaryLabel=Selling+a+Plane&primaryHref=%23&secondaryLabel=Buying+A+Plane&secondaryHref=%23&lockupOpacity=0.88";
+	"/aopa/hub/hero?hh=1&hubName=Aircraft+Buying+%26+Ownership&pillarName=fly&title=Whether+you%27re+interested+in+purchasing+your+first+aircraft%2C+or+upgrading+to+another%2C+AOPA+offers+a+wealth+of+resources+to+assist.&description=Need+help+with+buying+or+selling+an+aircraft%3F+Find+it+here.+Check+out+the+resource+pages+for+an+overview+of+all+aspects+of+the+purchasing+process+or+click+on+the+Quick+Links+to+access+specific+information.&minHeight=tall&variant=full&imageWidth=full&imageAlign=left&imageSrc=https%3A%2F%2Fwww.aopa.org%2F-%2Fmedia%2FImages%2FAOPA-Main%2FNews-and-Media%2F2023%2FMar%2FSNF2023%2F23_SNF_Tue_328_3595F_c.jpg&imageAlt=Hero+background&primaryLabel=Selling+a+Plane&primaryHref=%23&secondaryLabel=Buying+A+Plane&secondaryHref=%23&lockupOpacity=0.88";
 
 const quoted = (v: string | undefined) => JSON.stringify(v ?? "");
 const lockupOpacityLiteral =
@@ -83,16 +78,12 @@ const secondaryCtaLiteral = secondaryCta
 
 const hubHeroExampleCode = `<HubHero
   hubName=${quoted(resolved.hubName)}
-  columnName=${quoted(resolved.columnName)}
+  pillarName=${quoted(resolved.pillarName)}
   title=${quoted(resolved.title)}
   description=${quoted(resolved.description)}
   variant=${quoted(resolved.variant)}
   minHeight=${quoted(resolved.minHeight)}
-  primaryColor=${quoted(resolved.primaryColor)}
-  lockupOverlayColor=${quoted(resolved.lockupOverlayColor)}
   lockupOverlayOpacity={${lockupOpacityLiteral}}
-  copyTone=${quoted(resolved.copyTone)}
-  lockupCopyTone=${quoted(resolved.lockupCopyTone)}
   image={${imageLiteral}}
   imageWidth=${quoted(resolved.imageWidth)}
   imageAlign=${quoted(resolved.imageAlign)}
@@ -272,10 +263,9 @@ const hubHeroExampleCode = `<HubHero
 		<MainNav />
 		<HubHero
 			hubName={resolved.hubName}
-			columnName={resolved.columnName}
+			pillarName={resolved.pillarName}
 			title={resolved.title}
 			description={resolved.description}
-			primaryColor={resolved.primaryColor}
 			minHeight={resolved.minHeight}
 			variant={resolved.variant}
 			image={image}
@@ -284,9 +274,6 @@ const hubHeroExampleCode = `<HubHero
 			primaryCta={primaryCta}
 			secondaryCta={secondaryCta}
 			lockupOverlayOpacity={resolved.lockupOverlayOpacity}
-			lockupOverlayColor={resolved.lockupOverlayColor}
-			copyTone={resolved.copyTone}
-			lockupCopyTone={resolved.lockupCopyTone}
 		/>
 		<h2 class="hh-hero-columns__heading">Sample heroes</h2>
 		<section class="hh-hero-columns" aria-label="Hub sections">
@@ -394,16 +381,12 @@ const hubHeroExampleCode = `<HubHero
 					: "undefined";
 				return `<HubHero
   hubName=${quote(state.hubName)}
-  columnName=${quote(state.columnName)}
+  pillarName=${quote(state.pillarName)}
   title=${quote(state.title)}
   description=${quote(state.description)}
   variant=${quote(state.variant)}
   minHeight=${quote(state.minHeight)}
-  primaryColor=${quote(state.primaryColor)}
-  lockupOverlayColor=${quote(state.lockupOverlayColor)}
   lockupOverlayOpacity={${lockupOpacityLiteral}}
-  copyTone=${quote(state.copyTone)}
-  lockupCopyTone=${quote(state.lockupCopyTone)}
   image={${imageLiteral}}
   imageWidth=${quote(state.imageWidth)}
   imageAlign=${quote(state.imageAlign)}

@@ -1,36 +1,27 @@
 import {
-	HUB_HERO_COPY_TONES,
 	HUB_HERO_IMAGE_ALIGNS,
 	HUB_HERO_IMAGE_WIDTHS,
 	HUB_HERO_MIN_HEIGHTS,
 	HUB_HERO_VARIANTS,
-	type HubHeroCopyTone,
 	type HubHeroImageAlign,
 	type HubHeroImageWidth,
 	type HubHeroMinHeight,
 	type HubHeroVariant,
 } from "../components/aopa/hubHeroOptions";
 import {
-	DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR,
-	DEFAULT_HUB_HERO_PRIMARY_COLOR,
-	hexForColorInput,
+	colorSchemeFromPillarName,
+	copyToneFromColorScheme,
 	HUB_HERO_PREVIEW_QUERY_KEY,
 	hubHeroQueryKeys,
 	isSafeHttpUrl,
-	normalizeHubHeroPrimaryHex,
+	lockupOverlayColorFromColorScheme,
+	lockupCopyToneFromColorScheme,
+	normalizeHubHeroPillarName,
 	resolveHubHeroFromUrl,
 	type HubHeroResolvedFromUrl,
 } from "../lib/hubHeroSearchParams";
 
 const heightClassPrefix = "aopa-hub-hero--height-";
-
-function pickPrimaryColor(v: string): string {
-	return normalizeHubHeroPrimaryHex(v) ?? DEFAULT_HUB_HERO_PRIMARY_COLOR;
-}
-
-function pickLockupOverlayColor(v: string): string {
-	return normalizeHubHeroPrimaryHex(v) ?? DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR;
-}
 
 function pickHeight(v: string): HubHeroMinHeight {
 	return (HUB_HERO_MIN_HEIGHTS as readonly string[]).includes(v)
@@ -56,12 +47,6 @@ function pickImageAlign(v: string): HubHeroImageAlign {
 		: "left";
 }
 
-function pickCopyTone(v: string): HubHeroCopyTone {
-	return (HUB_HERO_COPY_TONES as readonly string[]).includes(v)
-		? (v as HubHeroCopyTone)
-		: "dark";
-}
-
 function stripHeroImageLayout(section: HTMLElement) {
 	section.classList.remove(
 		"aopa-hub-hero--has-hero-image",
@@ -84,24 +69,16 @@ export function writeHubHeroFormFromResolved(
 			el instanceof HTMLSelectElement
 		) {
 			if (el instanceof HTMLInputElement && el.type === "color") {
-				if (name === hubHeroQueryKeys.primaryColor) {
-					el.value = hexForColorInput(value);
-				} else if (name === hubHeroQueryKeys.lockupOverlayColor) {
-					el.value = hexForColorInput(value, DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR);
-				} else {
-					el.value = value;
-				}
+				el.value = value;
 			} else {
 				el.value = value;
 			}
 		}
 	};
 	set(k.hubName, state.hubName ?? "");
-	set(k.columnName, state.columnName ?? state.hubName ?? "");
+	set(k.pillarName, state.pillarName ?? state.hubName ?? "");
 	set(k.title, state.title);
 	set(k.description, state.description ?? "");
-	set(k.primaryColor, state.primaryColor);
-	set(k.lockupOverlayColor, state.lockupOverlayColor);
 	set(k.minHeight, state.minHeight);
 	set(k.variant, state.variant);
 	set(k.imageSrc, state.imageSrc ?? "");
@@ -118,8 +95,6 @@ export function writeHubHeroFormFromResolved(
 			? String(state.lockupOverlayOpacity)
 			: "",
 	);
-	set(k.copyTone, state.copyTone);
-	set(k.lockupCopyTone, state.lockupCopyTone);
 }
 
 /**
@@ -146,15 +121,13 @@ export function readHubHeroForm(form: HTMLFormElement): HubHeroResolvedFromUrl {
 	const fd = new FormData(form);
 	const g = (k: string) => (fd.get(k) as string | null) ?? "";
 	const hubName = g(hubHeroQueryKeys.hubName).trim();
-	const columnName = g(hubHeroQueryKeys.columnName).trim();
+	const pillarName = normalizeHubHeroPillarName(g(hubHeroQueryKeys.pillarName)) ?? "";
 	const imageSrc = g(hubHeroQueryKeys.imageSrc).trim();
 	return {
 		hubName: hubName.length > 0 ? hubName : undefined,
-		columnName: columnName.length > 0 ? columnName : undefined,
+		pillarName: pillarName.length > 0 ? pillarName : undefined,
 		title: g(hubHeroQueryKeys.title).trim(),
 		description: g(hubHeroQueryKeys.description),
-		primaryColor: pickPrimaryColor(g(hubHeroQueryKeys.primaryColor)),
-		lockupOverlayColor: pickLockupOverlayColor(g(hubHeroQueryKeys.lockupOverlayColor)),
 		minHeight: pickHeight(g(hubHeroQueryKeys.minHeight)),
 		variant: pickVariant(g(hubHeroQueryKeys.variant)),
 		imageSrc: imageSrc.length > 0 && isSafeHttpUrl(imageSrc) ? imageSrc : undefined,
@@ -171,8 +144,6 @@ export function readHubHeroForm(form: HTMLFormElement): HubHeroResolvedFromUrl {
 			const n = Number(raw);
 			return Number.isFinite(n) ? Math.min(1, Math.max(0, n)) : undefined;
 		})(),
-		copyTone: pickCopyTone(g(hubHeroQueryKeys.copyTone)),
-		lockupCopyTone: pickCopyTone(g(hubHeroQueryKeys.lockupCopyTone)),
 	};
 }
 
@@ -188,19 +159,25 @@ export function applyHubHeroLiveState(
 ): void {
 	if (!section.querySelector(".aopa-hub-hero__body")) return;
 
-	const lockupColumnName = state.columnName?.trim() ?? "";
+	const lockupPillarName = state.pillarName?.trim() ?? "";
 	const lockupHubName = state.hubName?.trim() ?? "";
-	const hasLockup = lockupColumnName.length > 0 || lockupHubName.length > 0;
+	const hasLockup = lockupPillarName.length > 0 || lockupHubName.length > 0;
 	const splitLayout = state.variant === "split";
 	const fullLayout = !splitLayout;
 	const imgSrc = state.imageSrc?.trim() ?? "";
 	const hasImage = imgSrc.length > 0 && isSafeHttpUrl(imgSrc);
 	const iw = state.imageWidth === "half" ? "half" : "full";
 	const ia = state.imageAlign === "right" ? "right" : "left";
+	const colorScheme = colorSchemeFromPillarName(state.pillarName);
+	const copyTone = copyToneFromColorScheme(colorScheme);
+	const lockupCopyTone = lockupCopyToneFromColorScheme(colorScheme);
 
 	stripPrefixedClasses(section, "aopa-hub-hero--bg-");
-	section.style.setProperty("--aopa-hero-primary", state.primaryColor);
-	section.style.setProperty("--aopa-hero-lockup-overlay-color", state.lockupOverlayColor);
+	section.style.setProperty("--aopa-hero-primary", colorScheme);
+	section.style.setProperty(
+		"--aopa-hero-lockup-overlay-color",
+		lockupOverlayColorFromColorScheme(colorScheme),
+	);
 	stripPrefixedClasses(section, heightClassPrefix);
 	section.classList.add(`${heightClassPrefix}${state.minHeight}`);
 
@@ -228,10 +205,10 @@ export function applyHubHeroLiveState(
 	section.classList.toggle("aopa-hub-hero--variant-full", fullLayout);
 	section.classList.toggle("aopa-hub-hero--has-lockup", hasLockup);
 	section.classList.toggle("aopa-hub-hero--split", splitLayout);
-	section.classList.toggle("aopa-hub-hero--copy-light", state.copyTone === "light");
+	section.classList.toggle("aopa-hub-hero--copy-light", copyTone === "light");
 	section.classList.toggle(
 		"aopa-hub-hero--lockup-copy-light",
-		hasLockup && state.lockupCopyTone === "light",
+		hasLockup && lockupCopyTone === "light",
 	);
 
 	const bgLayer = section.querySelector<HTMLElement>("[data-hub-hero-bg]");
@@ -252,14 +229,14 @@ export function applyHubHeroLiveState(
 	if (lockLogo) {
 		const lightSrc = lockLogo.dataset.lockupLogoLight ?? "/images/aopa-wings-logo-white.svg";
 		const darkSrc = lockLogo.dataset.lockupLogoDark ?? "/images/aopa-wings-logo-blue.svg";
-		lockLogo.src = state.lockupCopyTone === "light" ? lightSrc : darkSrc;
+		lockLogo.src = lockupCopyTone === "light" ? lightSrc : darkSrc;
 	}
 	if (lockPrefix) {
-		lockPrefix.textContent = `AOPA${lockupColumnName.length > 0 ? " | " : ""}`;
+		lockPrefix.textContent = `AOPA${lockupPillarName.length > 0 ? " | " : ""}`;
 	}
 	if (lockColumn) {
-		lockColumn.textContent = lockupColumnName;
-		lockColumn.hidden = lockupColumnName.length === 0;
+		lockColumn.textContent = lockupPillarName;
+		lockColumn.hidden = lockupPillarName.length === 0;
 	}
 	if (lockHub) {
 		lockHub.textContent = lockupHubName;
@@ -323,15 +300,11 @@ export function buildHubHeroShareSearchParams(state: HubHeroResolvedFromUrl): UR
 	sp.set(HUB_HERO_PREVIEW_QUERY_KEY, "1");
 	const k = hubHeroQueryKeys;
 	if (state.hubName?.trim()) sp.set(k.hubName, state.hubName.trim());
-	if (state.columnName?.trim()) sp.set(k.columnName, state.columnName.trim());
+	if (state.pillarName?.trim()) sp.set(k.pillarName, state.pillarName.trim());
 	sp.set(k.title, state.title);
 	if (state.description != null) sp.set(k.description, state.description);
-	sp.set(k.primaryColor, state.primaryColor);
-	sp.set(k.lockupOverlayColor, state.lockupOverlayColor);
 	sp.set(k.minHeight, state.minHeight);
 	sp.set(k.variant, state.variant);
-	sp.set(k.copyTone, state.copyTone);
-	sp.set(k.lockupCopyTone, state.lockupCopyTone);
 	sp.set(k.imageWidth, state.imageWidth);
 	sp.set(k.imageAlign, state.imageAlign);
 	if (state.imageSrc?.trim()) sp.set(k.imageSrc, state.imageSrc.trim());

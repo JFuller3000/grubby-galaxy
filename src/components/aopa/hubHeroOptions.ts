@@ -16,7 +16,3 @@ export type HubHeroImageWidth = (typeof HUB_HERO_IMAGE_WIDTHS)[number];
 /** When width is half, which side the photo occupies */
 export const HUB_HERO_IMAGE_ALIGNS = ["left", "right"] as const;
 export type HubHeroImageAlign = (typeof HUB_HERO_IMAGE_ALIGNS)[number];
-
-/** Headline + description (`copyTone`) and lockup AOPA + hub line (`lockupCopyTone`). */
-export const HUB_HERO_COPY_TONES = ["dark", "light"] as const;
-export type HubHeroCopyTone = (typeof HUB_HERO_COPY_TONES)[number];

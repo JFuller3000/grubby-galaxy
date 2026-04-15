@@ -3,8 +3,6 @@ import {
 	HUB_HERO_IMAGE_WIDTHS,
 	HUB_HERO_MIN_HEIGHTS,
 	HUB_HERO_VARIANTS,
-	HUB_HERO_COPY_TONES,
-	type HubHeroCopyTone,
 	type HubHeroImageAlign,
 	type HubHeroImageWidth,
 	type HubHeroMinHeight,
@@ -22,11 +20,9 @@ export const HUB_HERO_PREVIEW_QUERY_KEY = "hh";
 export const hubHeroQueryKeys = {
 	hubName: "hubName",
 	/** Preferred lockup label source (replaces `hubName` in new links/forms). */
-	columnName: "columnName",
+	pillarName: "pillarName",
 	title: "title",
 	description: "description",
-	/** Hero section fill (`--aopa-hero-primary`); `#rgb` or `#rrggbb`. */
-	primaryColor: "primaryColor",
 	minHeight: "minHeight",
 	variant: "variant",
 	imageSrc: "imageSrc",
@@ -39,13 +35,14 @@ export const hubHeroQueryKeys = {
 	secondaryHref: "secondaryHref",
 	/** 0–1 fill opacity for gray hero panels; omit for solid. */
 	lockupOpacity: "lockupOpacity",
-	/** Panel fill hue (`#rgb` / `#rrggbb`); `color-mix` with `lockupOpacity`. */
-	lockupOverlayColor: "lockupOverlayColor",
-	/** `dark` | `light` — headline + description. */
-	copyTone: "copyTone",
-	/** `dark` | `light` — AOPA + hub name in the lockup column. */
-	lockupCopyTone: "lockupCopyTone",
 } as const;
+
+/** Legacy URL key kept so older shared links still resolve. */
+const LEGACY_HUB_HERO_PRIMARY_COLOR_QUERY_KEY = "primaryColor";
+const LEGACY_HUB_HERO_COLOR_SCHEME_QUERY_KEY = "colorScheme";
+const LEGACY_HUB_HERO_LOCKUP_OVERLAY_COLOR_QUERY_KEY = "lockupOverlayColor";
+const LEGACY_HUB_HERO_COPY_TONE_QUERY_KEY = "copyTone";
+const LEGACY_HUB_HERO_LOCKUP_COPY_TONE_QUERY_KEY = "lockupCopyTone";
 
 function pickLiteral<T extends string>(
 	allowed: readonly T[],
@@ -66,9 +63,39 @@ export function isSafeHttpUrl(value: string): boolean {
 
 /** Default hero field color (replaces former “brand” preset). */
 export const DEFAULT_HUB_HERO_PRIMARY_COLOR = "#d4ecf7";
+export const DEFAULT_HUB_HERO_PILLAR_NAME = "Community";
+export const HUB_HERO_PILLAR_OPTIONS = ["Advocate", "Learn", "Fly", "Community"] as const;
 
 /** Default gray for full inner + split lockup / split-only panel (was `rgb(234 234 234)`). */
 export const DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR = "#eaeaea";
+
+const COLOR_SCHEME_LOCKUP_OVERLAY_MAP: Record<string, string> = {
+	"#115678": "#eaeaea", // Advocate
+	"#1d356d": "#4a4a4a", // Learn (charcoal)
+	"#2079a2": "#1d356d", // Fly
+	"#d4ecf7": "#eaeaea", // Community
+};
+
+const COLOR_SCHEME_COPY_TONE_MAP: Record<string, "dark" | "light"> = {
+	"#115678": "dark", // Advocate
+	"#1d356d": "light", // Learn
+	"#2079a2": "light", // Fly
+	"#d4ecf7": "dark", // Community
+};
+
+const PILLAR_NAME_COLOR_SCHEME_MAP: Record<string, string> = {
+	advocate: "#115678",
+	learn: "#1d356d",
+	fly: "#2079a2",
+	community: "#d4ecf7",
+};
+
+const HEX_TO_PILLAR_NAME_MAP: Record<string, string> = {
+	"#115678": "Advocate",
+	"#1d356d": "Learn",
+	"#2079a2": "Fly",
+	"#d4ecf7": "Community",
+};
 
 /** `#rgb` or `#rrggbb` only (safe for CSS custom property). */
 export function isValidHubHeroPrimaryHex(value: string): boolean {
@@ -85,28 +112,48 @@ export function normalizeHubHeroPrimaryHex(value: string): string | undefined {
 	return v.toLowerCase();
 }
 
-/** `<input type="color">` requires `#rrggbb`. */
-export function hexForColorInput(
-	value: string,
-	fallbackHex: string = DEFAULT_HUB_HERO_PRIMARY_COLOR,
-): string {
-	const h = (normalizeHubHeroPrimaryHex(value) ?? fallbackHex).toLowerCase();
-	const m = /^#([0-9a-f])([0-9a-f])([0-9a-f])$/i.exec(h);
-	if (m) return `#${m[1]}${m[1]}${m[2]}${m[2]}${m[3]}${m[3]}`;
-	return h;
+/** Normalize user input pillar names to canonical labels. */
+export function normalizeHubHeroPillarName(value: string): string | undefined {
+	const trimmed = value.trim();
+	if (!trimmed) return undefined;
+	const canonical = HEX_TO_PILLAR_NAME_MAP[PILLAR_NAME_COLOR_SCHEME_MAP[trimmed.toLowerCase()]];
+	return canonical ?? undefined;
+}
+
+/** Derive hero fill color from the selected pillar name. */
+export function colorSchemeFromPillarName(pillarName: string | undefined): string {
+	const normalized = normalizeHubHeroPillarName(pillarName ?? "");
+	if (!normalized) return DEFAULT_HUB_HERO_PRIMARY_COLOR;
+	return PILLAR_NAME_COLOR_SCHEME_MAP[normalized.toLowerCase()] ?? DEFAULT_HUB_HERO_PRIMARY_COLOR;
+}
+
+/** Derive panel tint from color scheme; keeps lockup tone in sync with selected scheme. */
+export function lockupOverlayColorFromColorScheme(colorScheme: string): string {
+	const normalized =
+		normalizeHubHeroPrimaryHex(colorScheme) ?? DEFAULT_HUB_HERO_PRIMARY_COLOR;
+	return COLOR_SCHEME_LOCKUP_OVERLAY_MAP[normalized] ?? DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR;
+}
+
+/** Derive body copy tone from selected color scheme. */
+export function copyToneFromColorScheme(colorScheme: string): "dark" | "light" {
+	const normalized =
+		normalizeHubHeroPrimaryHex(colorScheme) ?? DEFAULT_HUB_HERO_PRIMARY_COLOR;
+	return COLOR_SCHEME_COPY_TONE_MAP[normalized] ?? "dark";
+}
+
+/** Derive lockup copy tone from selected color scheme. */
+export function lockupCopyToneFromColorScheme(colorScheme: string): "dark" | "light" {
+	// Currently follows the same mapping as body copy tone.
+	return copyToneFromColorScheme(colorScheme);
 }
 
 export type HubHeroResolvedFromUrl = {
 	/** Legacy lockup label key kept for backward compatibility with existing shared links. */
 	hubName?: string;
 	/** Lockup label shown after `AOPA |` under the wings mark. */
-	columnName?: string;
+	pillarName?: string;
 	title: string;
 	description?: string;
-	/** Section / half-hero fill via `--aopa-hero-primary`. */
-	primaryColor: string;
-	/** Panel tint via `--aopa-hero-lockup-overlay-color` (with opacity). */
-	lockupOverlayColor: string;
 	minHeight: HubHeroMinHeight;
 	variant: HubHeroVariant;
 	imageSrc?: string;
@@ -119,8 +166,6 @@ export type HubHeroResolvedFromUrl = {
 	secondaryHref: string;
 	/** Split + lockup column and full-variant gray inner. Omitted or solid when var unset. */
 	lockupOverlayOpacity?: number;
-	copyTone: HubHeroCopyTone;
-	lockupCopyTone: HubHeroCopyTone;
 };
 
 /**
@@ -136,9 +181,9 @@ export function parseHubHeroSearchParams(
 		const v = (searchParams.get(k.hubName) ?? "").trim();
 		out.hubName = v.length > 0 ? v : undefined;
 	}
-	if (searchParams.has(k.columnName)) {
-		const v = (searchParams.get(k.columnName) ?? "").trim();
-		out.columnName = v.length > 0 ? v : undefined;
+	if (searchParams.has(k.pillarName)) {
+		const v = (searchParams.get(k.pillarName) ?? "").trim();
+		out.pillarName = normalizeHubHeroPillarName(v);
 	}
 	if (searchParams.has(k.title)) {
 		out.title = (searchParams.get(k.title) ?? "").trim();
@@ -146,32 +191,20 @@ export function parseHubHeroSearchParams(
 	if (searchParams.has(k.description)) {
 		out.description = searchParams.get(k.description) ?? "";
 	}
-	if (searchParams.has(k.primaryColor)) {
-		const raw = (searchParams.get(k.primaryColor) ?? "").trim();
-		if (raw === "") {
-			out.primaryColor = DEFAULT_HUB_HERO_PRIMARY_COLOR;
-		} else {
-			const hex = normalizeHubHeroPrimaryHex(raw);
-			if (hex) out.primaryColor = hex;
-		}
-	}
-	if (searchParams.has(k.lockupOverlayColor)) {
-		const raw = (searchParams.get(k.lockupOverlayColor) ?? "").trim();
-		if (raw === "") {
-			out.lockupOverlayColor = DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR;
-		} else {
-			const hex = normalizeHubHeroPrimaryHex(raw);
-			if (hex) out.lockupOverlayColor = hex;
+	const rawColorScheme = searchParams.get(LEGACY_HUB_HERO_COLOR_SCHEME_QUERY_KEY);
+	const rawLegacyPrimaryColor = searchParams.get(LEGACY_HUB_HERO_PRIMARY_COLOR_QUERY_KEY);
+	if (rawColorScheme != null || rawLegacyPrimaryColor != null) {
+		const raw = (rawColorScheme ?? rawLegacyPrimaryColor ?? "").trim();
+		const hex = raw === "" ? DEFAULT_HUB_HERO_PRIMARY_COLOR : normalizeHubHeroPrimaryHex(raw);
+		if (hex) {
+			const pillarFromLegacyColor = HEX_TO_PILLAR_NAME_MAP[hex];
+			if (pillarFromLegacyColor && !out.pillarName) out.pillarName = pillarFromLegacyColor;
 		}
 	}
 	const mh = pickLiteral(HUB_HERO_MIN_HEIGHTS, searchParams.get(k.minHeight));
 	if (mh) out.minHeight = mh;
 	const v = pickLiteral(HUB_HERO_VARIANTS, searchParams.get(k.variant));
 	if (v) out.variant = v;
-	const copyTone = pickLiteral(HUB_HERO_COPY_TONES, searchParams.get(k.copyTone));
-	if (copyTone) out.copyTone = copyTone;
-	const lockupCopyTone = pickLiteral(HUB_HERO_COPY_TONES, searchParams.get(k.lockupCopyTone));
-	if (lockupCopyTone) out.lockupCopyTone = lockupCopyTone;
 	if (searchParams.has(k.imageSrc)) {
 		const src = (searchParams.get(k.imageSrc) ?? "").trim();
 		out.imageSrc = src.length > 0 && isSafeHttpUrl(src) ? src : undefined;
@@ -207,7 +240,14 @@ export function parseHubHeroSearchParams(
 	return out;
 }
 
-const hubHeroKeySet = new Set<string>(Object.values(hubHeroQueryKeys));
+const hubHeroKeySet = new Set<string>([
+	...Object.values(hubHeroQueryKeys),
+	LEGACY_HUB_HERO_COLOR_SCHEME_QUERY_KEY,
+	LEGACY_HUB_HERO_PRIMARY_COLOR_QUERY_KEY,
+	LEGACY_HUB_HERO_LOCKUP_OVERLAY_COLOR_QUERY_KEY,
+	LEGACY_HUB_HERO_COPY_TONE_QUERY_KEY,
+	LEGACY_HUB_HERO_LOCKUP_COPY_TONE_QUERY_KEY,
+]);
 
 /** True if the URL contains any hub-hero field keys (excluding the preview gate). */
 export function hasHubHeroContentParams(searchParams: URLSearchParams): boolean {
