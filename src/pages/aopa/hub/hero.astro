@@ -67,6 +67,14 @@ const aircraftBuyingOwnershipHref =
 	"/aopa/hub/hero?hh=1&hubName=Aircraft+Buying+%26+Ownership&pillarName=fly&title=Whether+you%27re+interested+in+purchasing+your+first+aircraft%2C+or+upgrading+to+another%2C+AOPA+offers+a+wealth+of+resources+to+assist.&description=Need+help+with+buying+or+selling+an+aircraft%3F+Find+it+here.+Check+out+the+resource+pages+for+an+overview+of+all+aspects+of+the+purchasing+process+or+click+on+the+Quick+Links+to+access+specific+information.&minHeight=tall&variant=full&imageWidth=full&imageAlign=left&imageSrc=https%3A%2F%2Fwww.aopa.org%2F-%2Fmedia%2FImages%2FAOPA-Main%2FNews-and-Media%2F2023%2FMar%2FSNF2023%2F23_SNF_Tue_328_3595F_c.jpg&imageAlt=Hero+background&primaryLabel=Selling+a+Plane&primaryHref=%23&secondaryLabel=Buying+A+Plane&secondaryHref=%23&lockupOpacity=0.88";
 const flyMedicalResourcesHref =
 	"/aopa/hub/hero?hh=1&hubName=Medical+Resources&pillarName=Fly&title=Find+answers+here&description=Do+you+have+questions+or+need+information+about+an+airman+medical+topic%3F+Look+through+the+information+on+these+pages%2C+and+feel+free+to+contact+AOPA%27s+Medical+Certification+Specialists.+&minHeight=tall&variant=full&imageWidth=half&imageAlign=left&imageSrc=https%3A%2F%2Fwww.aopa.org%2F-%2Fmedia%2FImages%2FAOPA-Main%2FNews-and-Media%2F2018%2FOctober%2F1031_aopa_colombia.jpg&imageAlt=Hero+background&primaryLabel=Contact+Info&primaryHref=%23&secondaryLabel=&secondaryHref=%23&secondaryStyle=default&lockupOpacity=0.9";
+const flyFlyingClubsHref =
+	"/aopa/hub/hero?hh=1&hubName=Flying+Clubs&pillarName=Fly&title=&description=Flying+clubs+are+one+of+the+very+best+ways+to+save+money+while+you+fly+more%2C+enjoy+increased+access+to+aircraft%2C+and+spend+time+with+friends+and+family.+Whether+you+are+new+to+flying+or+you%E2%80%99ve+been+a+pilot+for+years%2C+flying+clubs+have+something+for+you.+%0A&minHeight=viewport&variant=full&imageWidth=full&imageAlign=left&imageSrc=https%3A%2F%2Fwww.aopa.org%2F-%2Fmedia%2FImages%2FAOPA-Main%2FNews-and-Media%2F2017%2FJune%2F0613_FlyingClubs.jpg&imageAlt=Hero+background&primaryLabel=Find+a+club&primaryHref=%23&secondaryLabel=&secondaryHref=%23&secondaryStyle=default";
+const communityScholarshipsHref =
+	"/aopa/hub/hero?hh=1&hubName=Scholarships&pillarName=Community&title=Now+Accepting+Applications.+Exclusively+for+AOPA+Members.&description=Two+annual+scholarship+periods+to+help+our+members+achieve+their+aviation+goals%21+Thanks+to+generous+donor+support%2C+we+award+over+%241+million+each+year+to+help+AOPA+members+take+the+next+step+in+their+aviation+journey%2C+whether+that%E2%80%99s+pursuing+primary+flight+training%2C+earning+advanced+ratings+and+certificates%2C+or+building+a+career+through+pathways+like+aviation+maintenance.&minHeight=viewport&variant=split&imageWidth=half&imageAlign=left&imageSrc=https%3A%2F%2Fwww.aopa.org%2F-%2Fmedia%2FImages%2FAOPA-Main%2FNews-and-Media%2F2020%2FDecember%2F1228_Maddy_Seymour_Scholarship%2F1228_Maddy_Seymour_scholarship_01F.jpg&imageAlt=Hero+background&primaryLabel=Apply+Now&primaryHref=%23&secondaryLabel=&secondaryHref=%23&secondaryStyle=default&lockupOpacity=0.88";
+const communityEventsGatheringsHref =
+	"/aopa/hub/hero?hh=1&hubName=Events+%26+Gatherings&pillarName=Community&title=Where+pilots+gather+to+connect+with+each+other&description=From+regional+fly-ins+and+safety+seminars+to+national+gatherings%2C+you+can+sharpen+your+skills%2C+see+the+latest+gear+and+aircraft%2C+and+connect+with+the+community+that+shares+your+passion+for+flight.+Whether+you+fly+every+week+or+you+are+working+toward+your+next+rating%2C+there+is+an+AOPA+event+built+to+help+you+go+further.&minHeight=viewport&variant=full&imageWidth=full&imageAlign=left&imageSrc=https%3A%2F%2Fwww.aopa.org%2F-%2Fmedia%2FImages%2FAOPA-Main%2FNews-and-Media%2F2019%2FMay%2F0522_1805-Valdez-STOL_7314-Spectators.jpg&imageAlt=Hero+background&primaryLabel=Find+Events&primaryHref=%23&secondaryLabel=&secondaryHref=%23&secondaryStyle=default&lockupOpacity=0.88";
+const communityFoundationHref =
+	"/aopa/hub/hero?hh=1&hubName=FOUNDATION&pillarName=Community&title=Building+A+Stronger+Safer+Pilot+Community&description=The+AOPA+Foundation+is+the+philanthropic+arm+of+AOPA.+Your+contributions+fund+programs+that+membership+dues+don%E2%80%99t+cover%2C+including+the+AOPA+Air+Safety+Institute+and+You+Can+Fly+program.+Our+goal+is+to+fund+opportunities+of+growth+for+every+AOPA+member+and+the+entire+general+aviation+community.&minHeight=tall&variant=full&imageWidth=half&imageAlign=left&imageSrc=https%3A%2F%2Fwww.aopa.org%2F-%2Fmedia%2FImages%2FAOPA-Main%2FNews-and-Media%2F2024%2FFeb%2F240227_foundation_fundraising.jpg&imageAlt=Hero+background&primaryLabel=Donate+Now&primaryHref=%23&secondaryLabel=Ways+to+Give&secondaryHref=%23&secondaryStyle=alternate&lockupOpacity=0.9";
 
 const quoted = (v: string | undefined) => JSON.stringify(v ?? "");
 const lockupOpacityLiteral =
@@ -304,8 +312,16 @@ const hubHeroExampleCode = `<HubHero
 					>aircraft buying &amp; ownership</a
 				>
 				<a class="hh-hero-columns__link" href={flyMedicalResourcesHref}>medical resources</a>
+				<a class="hh-hero-columns__link" href={flyFlyingClubsHref}>flying clubs</a>
 			</div>
-			<div class="hh-hero-columns__item">Community</div>
+			<div class="hh-hero-columns__item">
+				Community
+				<a class="hh-hero-columns__link" href={communityScholarshipsHref}>scholarships</a>
+				<a class="hh-hero-columns__link" href={communityEventsGatheringsHref}
+					>events &amp; gatherings</a
+				>
+				<a class="hh-hero-columns__link" href={communityFoundationHref}>foundation</a>
+			</div>
 		</section>
 		<section class="hh-hero-code" aria-label="HubHero component example">
 			<div class="hh-hero-code__actions">
