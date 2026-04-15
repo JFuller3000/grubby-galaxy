@@ -65,6 +65,40 @@ const rustyPilotsHref =
 	"/aopa/hub/hero?hh=1&hubName=Rusty+Pilots&columnName=Learn&title=If+you%E2%80%99ve+been+out+of+the+flight+deck+for+a+while%2C+we%E2%80%99ll+help+you+get+back+in&description=On+behalf+of+AOPA%2C+the+Rusty+Pilots+team+congratulates+the+13%2C000-plus+pilots+who+returned+to+flying+after+attending+a+Rusty+Pilots+seminar%2C+webinar%2C+or+took+the+online+course+and+completed+their+flight+review.+We+celebrate+with+you%21&primaryColor=%23cde3e4&lockupOverlayColor=%232e5261&minHeight=tall&variant=full&copyTone=light&lockupCopyTone=light&imageWidth=half&imageAlign=left&imageSrc=https%3A%2F%2Fwww.aopa.org%2F-%2Fmedia%2FImages%2FAOPA-Main%2FTraining-and-Safety%2Frustypilotseminar3.jpg&imageAlt=Hero+background&primaryLabel=Meet+Our+Instructors&primaryHref=%23paths&secondaryLabel=&secondaryHref=%23&lockupOpacity=0.9";
 const aircraftBuyingOwnershipHref =
 	"/aopa/hub/hero?hh=1&hubName=Aircraft+Buying+%26+Ownership&columnName=fly&title=Whether+you%27re+interested+in+purchasing+your+first+aircraft%2C+or+upgrading+to+another%2C+AOPA+offers+a+wealth+of+resources+to+assist.&description=Need+help+with+buying+or+selling+an+aircraft%3F+Find+it+here.+Check+out+the+resource+pages+for+an+overview+of+all+aspects+of+the+purchasing+process+or+click+on+the+Quick+Links+to+access+specific+information.&primaryColor=%232079a2&lockupOverlayColor=%231d356d&minHeight=tall&variant=full&copyTone=light&lockupCopyTone=light&imageWidth=full&imageAlign=left&imageSrc=https%3A%2F%2Fwww.aopa.org%2F-%2Fmedia%2FImages%2FAOPA-Main%2FNews-and-Media%2F2023%2FMar%2FSNF2023%2F23_SNF_Tue_328_3595F_c.jpg&imageAlt=Hero+background&primaryLabel=Selling+a+Plane&primaryHref=%23&secondaryLabel=Buying+A+Plane&secondaryHref=%23&lockupOpacity=0.88";
+
+const quoted = (v: string | undefined) => JSON.stringify(v ?? "");
+const lockupOpacityLiteral =
+	resolved.lockupOverlayOpacity != null && Number.isFinite(resolved.lockupOverlayOpacity)
+		? String(resolved.lockupOverlayOpacity)
+		: "undefined";
+const imageLiteral = image
+	? `{ src: ${JSON.stringify(image.src)}, alt: ${JSON.stringify(image.alt)} }`
+	: "undefined";
+const primaryCtaLiteral = primaryCta
+	? `{ label: ${JSON.stringify(primaryCta.label)}, href: ${JSON.stringify(primaryCta.href)} }`
+	: "undefined";
+const secondaryCtaLiteral = secondaryCta
+	? `{ label: ${JSON.stringify(secondaryCta.label)}, href: ${JSON.stringify(secondaryCta.href)} }`
+	: "undefined";
+
+const hubHeroExampleCode = `<HubHero
+  hubName=${quoted(resolved.hubName)}
+  columnName=${quoted(resolved.columnName)}
+  title=${quoted(resolved.title)}
+  description=${quoted(resolved.description)}
+  variant=${quoted(resolved.variant)}
+  minHeight=${quoted(resolved.minHeight)}
+  primaryColor=${quoted(resolved.primaryColor)}
+  lockupOverlayColor=${quoted(resolved.lockupOverlayColor)}
+  lockupOverlayOpacity={${lockupOpacityLiteral}}
+  copyTone=${quoted(resolved.copyTone)}
+  lockupCopyTone=${quoted(resolved.lockupCopyTone)}
+  image={${imageLiteral}}
+  imageWidth=${quoted(resolved.imageWidth)}
+  imageAlign=${quoted(resolved.imageAlign)}
+  primaryCta={${primaryCtaLiteral}}
+  secondaryCta={${secondaryCtaLiteral}}
+/>`;
 ---
 
 <!DOCTYPE html>
@@ -77,7 +111,7 @@ const aircraftBuyingOwnershipHref =
 		<style is:global>
 			body {
 				margin: 0;
-				padding: 0;
+				padding: 0 0 8rem;
 				min-height: 100vh;
 				background: #e8e8e8;
 			}
@@ -145,6 +179,57 @@ const aircraftBuyingOwnershipHref =
 				text-underline-offset: 0.15em;
 			}
 
+			.hh-hero-code {
+				max-width: 72rem;
+				margin: 1rem auto 0;
+				padding: 0 1rem;
+				position: relative;
+			}
+
+			.hh-hero-code__actions {
+				position: absolute;
+				top: 0.55rem;
+				right: 1.55rem;
+				z-index: 1;
+			}
+
+			.hh-hero-code__copy {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.35rem;
+				padding: 0.25rem 0.45rem;
+				border: 1px solid rgba(255, 255, 255, 0.22);
+				border-radius: 0.35rem;
+				background: rgba(15, 23, 42, 0.45);
+				font-family: "Gotham Book", Gotham, "Gotham", "Helvetica Neue", Arial, sans-serif;
+				font-size: 0.8125rem;
+				line-height: 1.2;
+				color: #e2e8f0;
+				text-decoration: none;
+				cursor: pointer;
+			}
+
+			.hh-hero-code__copy:hover {
+				background: rgba(15, 23, 42, 0.7);
+			}
+
+			.hh-hero-code__copy-icon {
+				font-size: 0.9em;
+				line-height: 1;
+			}
+
+			.hh-hero-code pre {
+				margin: 0;
+				padding: 0.85rem 1rem;
+				border-radius: 0.5rem;
+				border: 1px solid rgba(0, 0, 0, 0.1);
+				background: #0f172a;
+				color: #e2e8f0;
+				font-size: 0.8rem;
+				line-height: 1.45;
+				overflow-x: auto;
+			}
+
 			@media (min-width: 860px) {
 				.hh-hero-columns {
 					grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -203,6 +288,15 @@ const aircraftBuyingOwnershipHref =
 			</div>
 			<div class="hh-hero-columns__item">Community</div>
 		</section>
+		<section class="hh-hero-code" aria-label="HubHero component example">
+			<div class="hh-hero-code__actions">
+				<button type="button" class="hh-hero-code__copy" data-hh-copy-code>
+					<span class="hh-hero-code__copy-icon" aria-hidden="true">⧉</span>
+					<span>Copy</span>
+				</button>
+			</div>
+			<pre><code data-hh-code-text>{hubHeroExampleCode}</code></pre>
+		</section>
 		<HubHeroDevToolbar
 			pathname={Astro.url.pathname}
 			resolved={resolved}
@@ -212,6 +306,7 @@ const aircraftBuyingOwnershipHref =
 		<script>
 			import {
 				hydrateHubHeroFromCurrentUrl,
+				readHubHeroForm,
 				wireHubHeroLivePreview,
 			} from "../../../scripts/hub-hero-live";
 
@@ -224,6 +319,66 @@ const aircraftBuyingOwnershipHref =
 				}
 			}
 			wireHubHeroLivePreview();
+
+			const form = document.querySelector<HTMLFormElement>("[data-hh-dev-form]");
+			const codeEl = document.querySelector<HTMLElement>("[data-hh-code-text]");
+			const quote = (v: string | undefined) => JSON.stringify(v ?? "");
+			const renderHubHeroSnippet = (state: ReturnType<typeof readHubHeroForm>) => {
+				const lockupOpacityLiteral =
+					state.lockupOverlayOpacity != null && Number.isFinite(state.lockupOverlayOpacity)
+						? String(state.lockupOverlayOpacity)
+						: "undefined";
+				const imageLiteral = state.imageSrc
+					? `{ src: ${JSON.stringify(state.imageSrc)}, alt: ${JSON.stringify(state.imageAlt || "Hero background")} }`
+					: "undefined";
+				const primaryCtaLiteral = state.primaryLabel.trim()
+					? `{ label: ${JSON.stringify(state.primaryLabel.trim())}, href: ${JSON.stringify(state.primaryHref || "#")} }`
+					: "undefined";
+				const secondaryCtaLiteral = state.secondaryLabel.trim()
+					? `{ label: ${JSON.stringify(state.secondaryLabel.trim())}, href: ${JSON.stringify(state.secondaryHref || "#")} }`
+					: "undefined";
+				return `<HubHero
+  hubName=${quote(state.hubName)}
+  columnName=${quote(state.columnName)}
+  title=${quote(state.title)}
+  description=${quote(state.description)}
+  variant=${quote(state.variant)}
+  minHeight=${quote(state.minHeight)}
+  primaryColor=${quote(state.primaryColor)}
+  lockupOverlayColor=${quote(state.lockupOverlayColor)}
+  lockupOverlayOpacity={${lockupOpacityLiteral}}
+  copyTone=${quote(state.copyTone)}
+  lockupCopyTone=${quote(state.lockupCopyTone)}
+  image={${imageLiteral}}
+  imageWidth=${quote(state.imageWidth)}
+  imageAlign=${quote(state.imageAlign)}
+  primaryCta={${primaryCtaLiteral}}
+  secondaryCta={${secondaryCtaLiteral}}
+/>`;
+			};
+			const syncCodeSnippet = () => {
+				if (!form || !codeEl) return;
+				codeEl.textContent = renderHubHeroSnippet(readHubHeroForm(form));
+			};
+			syncCodeSnippet();
+			form?.addEventListener("input", syncCodeSnippet);
+			form?.addEventListener("change", syncCodeSnippet);
+
+			const copyBtn = document.querySelector<HTMLButtonElement>("[data-hh-copy-code]");
+			if (copyBtn && codeEl) {
+				copyBtn.addEventListener("click", async () => {
+					try {
+						await navigator.clipboard.writeText(codeEl.textContent ?? "");
+						copyBtn.textContent = "Copied";
+					} catch {
+						copyBtn.textContent = "Copy failed";
+					}
+					window.setTimeout(() => {
+						copyBtn.innerHTML =
+							'<span class="hh-hero-code__copy-icon" aria-hidden="true">⧉</span><span>Copy</span>';
+					}, 1200);
+				});
+			}
 		</script>
 	</body>
 </html>
