@@ -230,6 +230,26 @@ const hubHeroExampleCode = `<HubHero
 				overflow-x: auto;
 			}
 
+			.hh-hero-code .hh-code-tag {
+				color: #7dd3fc;
+			}
+
+			.hh-hero-code .hh-code-prop {
+				color: #f8fafc;
+			}
+
+			.hh-hero-code .hh-code-op {
+				color: #93c5fd;
+			}
+
+			.hh-hero-code .hh-code-string {
+				color: #86efac;
+			}
+
+			.hh-hero-code .hh-code-expr {
+				color: #fbbf24;
+			}
+
 			@media (min-width: 860px) {
 				.hh-hero-columns {
 					grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -323,6 +343,41 @@ const hubHeroExampleCode = `<HubHero
 			const form = document.querySelector<HTMLFormElement>("[data-hh-dev-form]");
 			const codeEl = document.querySelector<HTMLElement>("[data-hh-code-text]");
 			const quote = (v: string | undefined) => JSON.stringify(v ?? "");
+			const escapeHtml = (v: string) =>
+				v
+					.replace(/&/g, "&amp;")
+					.replace(/</g, "&lt;")
+					.replace(/>/g, "&gt;")
+					.replace(/"/g, "&quot;")
+					.replace(/'/g, "&#39;");
+			const formatCodeValue = (raw: string) => {
+				const v = raw.trim();
+				if (v.startsWith('"') && v.endsWith('"')) {
+					return `<span class="hh-code-string">${escapeHtml(v)}</span>`;
+				}
+				if (v.startsWith("{") && v.endsWith("}")) {
+					return `<span class="hh-code-expr">${escapeHtml(v)}</span>`;
+				}
+				return escapeHtml(raw);
+			};
+			const renderHighlightedSnippet = (code: string) => {
+				const lines = code.split("\n");
+				return lines
+					.map((line) => {
+						const trimmed = line.trim();
+						if (trimmed === "<HubHero") {
+							return `<span class="hh-code-tag">&lt;HubHero</span>`;
+						}
+						if (trimmed === "/>") {
+							return `<span class="hh-code-tag">/&gt;</span>`;
+						}
+						const m = line.match(/^(\s*)([A-Za-z_][\w]*)(=)(.*)$/);
+						if (!m) return escapeHtml(line);
+						const [, indent, prop, op, value] = m;
+						return `${escapeHtml(indent)}<span class="hh-code-prop">${escapeHtml(prop)}</span><span class="hh-code-op">${escapeHtml(op)}</span>${formatCodeValue(value)}`;
+					})
+					.join("\n");
+			};
 			const renderHubHeroSnippet = (state: ReturnType<typeof readHubHeroForm>) => {
 				const lockupOpacityLiteral =
 					state.lockupOverlayOpacity != null && Number.isFinite(state.lockupOverlayOpacity)
@@ -358,7 +413,9 @@ const hubHeroExampleCode = `<HubHero
 			};
 			const syncCodeSnippet = () => {
 				if (!form || !codeEl) return;
-				codeEl.textContent = renderHubHeroSnippet(readHubHeroForm(form));
+				const snippet = renderHubHeroSnippet(readHubHeroForm(form));
+				codeEl.dataset.raw = snippet;
+				codeEl.innerHTML = renderHighlightedSnippet(snippet);
 			};
 			syncCodeSnippet();
 			form?.addEventListener("input", syncCodeSnippet);
@@ -368,7 +425,7 @@ const hubHeroExampleCode = `<HubHero
 			if (copyBtn && codeEl) {
 				copyBtn.addEventListener("click", async () => {
 					try {
-						await navigator.clipboard.writeText(codeEl.textContent ?? "");
+						await navigator.clipboard.writeText(codeEl.dataset.raw ?? codeEl.textContent ?? "");
 						copyBtn.textContent = "Copied";
 					} catch {
 						copyBtn.textContent = "Copy failed";
