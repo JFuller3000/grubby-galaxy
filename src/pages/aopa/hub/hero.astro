@@ -1,6 +1,58 @@
 ---
 import MainNav from "../../../components/aopa/MainNav.astro";
 import HubHero from "../../../components/aopa/HubHero.astro";
+import HubHeroDevToolbar from "../../../components/aopa/HubHeroDevToolbar.astro";
+import {
+	DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR,
+	DEFAULT_HUB_HERO_PRIMARY_COLOR,
+	hubHeroUrlOverridesActive,
+	isHubHeroPreviewQueryEnabled,
+	resolveHubHeroFromUrl,
+	type HubHeroResolvedFromUrl,
+} from "../../../lib/hubHeroSearchParams";
+
+const defaults: HubHeroResolvedFromUrl = {
+	hubName: "Content hub",
+	title: "Placeholder headline",
+	description:
+		"This page exists to preview the hub hero. Use the dev toolbar to change props via the URL.",
+	primaryColor: DEFAULT_HUB_HERO_PRIMARY_COLOR,
+	lockupOverlayColor: DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR,
+	minHeight: "tall",
+	variant: "full",
+	imageSrc: undefined,
+	imageAlt: "Hero background",
+	imageWidth: "full",
+	imageAlign: "left",
+	primaryLabel: "Primary action",
+	primaryHref: "#",
+	secondaryLabel: "Secondary",
+	secondaryHref: "#",
+	copyTone: "dark",
+	lockupCopyTone: "dark",
+};
+
+const resolved = resolveHubHeroFromUrl(Astro.url.searchParams, defaults);
+const sp = Astro.url.searchParams;
+const hubHeroPreviewOverrides =
+	import.meta.env.DEV && hubHeroUrlOverridesActive(sp);
+const clearQueryHref = Astro.url.pathname || "/";
+const syncUrlDefault = isHubHeroPreviewQueryEnabled(sp);
+
+const image =
+	resolved.imageSrc && resolved.imageSrc.length > 0
+		? { src: resolved.imageSrc, alt: resolved.imageAlt || "Hero background" }
+		: undefined;
+
+const primaryCta =
+	resolved.primaryLabel.trim().length > 0
+		? { label: resolved.primaryLabel.trim(), href: resolved.primaryHref || "#" }
+		: undefined;
+
+const secondaryCta =
+	resolved.secondaryLabel.trim().length > 0
+		? { label: resolved.secondaryLabel.trim(), href: resolved.secondaryHref || "#" }
+		: undefined;
 ---
 
 <!DOCTYPE html>
@@ -17,21 +69,75 @@ import HubHero from "../../../components/aopa/HubHero.astro";
 				min-height: 100vh;
 				background: #e8e8e8;
 			}
+
+			.hh-dev-query-banner {
+				margin: 0;
+				padding: 0.5rem 1rem;
+				font-family: system-ui, sans-serif;
+				font-size: 0.8125rem;
+				line-height: 1.4;
+				color: #3d2f00;
+				background: #ffe08a;
+				border-bottom: 1px solid #e6c04d;
+			}
+
+			.hh-dev-query-banner a {
+				color: #0b5cab;
+				font-weight: 600;
+			}
+
 		</style>
 	</head>
 	<body>
+		{
+			hubHeroPreviewOverrides && (
+				<p class="hh-dev-query-banner" role="status">
+					<strong>Hub hero query params are active.</strong> Known keys in the URL override{" "}
+					<code>defaults</code> in <code>hero.astro</code>. Toolbar <strong>Update URL now</strong>{" "}
+					also adds <code>hh=1</code> for shareable links.
+					<a href={clearQueryHref}>Use code defaults only (strip query)</a>
+				</p>
+			)
+		}
 		<MainNav />
-		<!--
-			Demo only — swap HubHero props (or add a `preset` later) when your real option set is defined.
-		-->
 		<HubHero
-			eyebrow="Content hub"
-			title="Placeholder headline"
-			description="This page exists to preview the hub hero. Wire your planned options to HubHero props when content and design are ready."
-			background="brand"
-			minHeight="tall"
-			primaryCta={{ label: "Primary action", href: "#" }}
-			secondaryCta={{ label: "Secondary", href: "#" }}
+			hubName={resolved.hubName}
+			title={resolved.title}
+			description={resolved.description}
+			primaryColor={resolved.primaryColor}
+			minHeight={resolved.minHeight}
+			variant={resolved.variant}
+			image={image}
+			imageWidth={resolved.imageWidth}
+			imageAlign={resolved.imageAlign}
+			primaryCta={primaryCta}
+			secondaryCta={secondaryCta}
+			lockupOverlayOpacity={resolved.lockupOverlayOpacity}
+			lockupOverlayColor={resolved.lockupOverlayColor}
+			copyTone={resolved.copyTone}
+			lockupCopyTone={resolved.lockupCopyTone}
 		/>
+		<HubHeroDevToolbar
+			pathname={Astro.url.pathname}
+			resolved={resolved}
+			syncUrlDefault={syncUrlDefault}
+		/>
+		<script type="application/json" id="hh-hub-defaults" set:html={JSON.stringify(defaults)} />
+		<script>
+			import {
+				hydrateHubHeroFromCurrentUrl,
+				wireHubHeroLivePreview,
+			} from "../../../scripts/hub-hero-live";
+
+			const raw = document.getElementById("hh-hub-defaults")?.textContent;
+			if (raw) {
+				try {
+					hydrateHubHeroFromCurrentUrl(JSON.parse(raw));
+				} catch {
+					/* ignore malformed embedded defaults */
+				}
+			}
+			wireHubHeroLivePreview();
+		</script>
 	</body>
 </html>

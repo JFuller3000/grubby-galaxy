@@ -1,10 +1,16 @@
 ---
 import type {
-	HubHeroBackground,
-	HubHeroImagePosition,
+	HubHeroCopyTone,
+	HubHeroImageAlign,
+	HubHeroImageWidth,
 	HubHeroMinHeight,
 	HubHeroVariant,
 } from "./hubHeroOptions";
+import {
+	DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR,
+	DEFAULT_HUB_HERO_PRIMARY_COLOR,
+	normalizeHubHeroPrimaryHex,
+} from "../../lib/hubHeroSearchParams";
 
 export interface HubHeroCta {
 	label: string;
@@ -21,89 +27,165 @@ export interface HubHeroImage {
  * Prop names and allowed values are placeholders until your spec is final.
  */
 interface Props {
-	eyebrow?: string;
-	title: string;
+	/** Shown under “AOPA” in the left lockup column; omit to hide the lockup column. */
+	hubName?: string;
+	/** Omit or pass empty string to hide the headline. */
+	title?: string;
 	description?: string;
 	/** Primary button */
 	primaryCta?: HubHeroCta;
 	/** Text link or secondary button */
 	secondaryCta?: HubHeroCta;
-	/** Optional hero image (split layout) */
-	image?: HubHeroImage;
-	/** Where the image sits in split layout */
-	imagePosition?: HubHeroImagePosition;
-	/** Split = media + copy; centered = stacked, max-width copy */
+	/** Split = wider lockup + body grid when lockup is set; full = stacked gray panel */
 	variant?: HubHeroVariant;
-	/** Surface colors */
-	background?: HubHeroBackground;
+	/** Hero section fill (`#rgb` or `#rrggbb`); sets `--aopa-hero-primary`. */
+	primaryColor?: string;
 	/** Minimum block height */
 	minHeight?: HubHeroMinHeight;
+	/** Optional full-bleed hero background photo (not the lockup panel) */
+	image?: HubHeroImage;
+	/** Background image width: full bleed or half the hero */
+	imageWidth?: HubHeroImageWidth;
+	/** When `imageWidth` is half, which side the photo sits on */
+	imageAlign?: HubHeroImageAlign;
+	/**
+	 * Gray panel fill opacity (0–1): split + lockup column and full-variant inner panel.
+	 * Omitted = solid. Sets `--aopa-hero-lockup-overlay-opacity` on the section.
+	 */
+	lockupOverlayOpacity?: number;
+	/** Panel fill (`#rgb` / `#rrggbb`); with opacity uses `color-mix` on section. */
+	lockupOverlayColor?: string;
+	/** Headline + description: `dark` = default ink, `light` for on dark / photo heroes. */
+	copyTone?: HubHeroCopyTone;
+	/** AOPA + hub line in the lockup column; independent of `copyTone`. */
+	lockupCopyTone?: HubHeroCopyTone;
 }
 
 const {
-	eyebrow,
-	title,
+	hubName,
+	title = "",
 	description,
 	primaryCta,
 	secondaryCta,
-	image,
-	imagePosition = "right",
-	variant = image ? "split" : "centered",
-	background = "neutral",
+	variant = "full",
+	primaryColor: primaryColorProp = DEFAULT_HUB_HERO_PRIMARY_COLOR,
 	minHeight = "tall",
+	image,
+	imageWidth = "full",
+	imageAlign = "left",
+	lockupOverlayOpacity,
+	lockupOverlayColor: lockupOverlayColorProp = DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR,
+	copyTone = "dark",
+	lockupCopyTone = "dark",
 } = Astro.props;
 
-const layout = variant === "split" && image ? "split" : "centered";
-const splitImageLeft = layout === "split" && imagePosition === "left";
+const layout = variant === "split" ? "split" : "full";
+const lockupHubName = hubName?.trim() ?? "";
+const hasLockup = lockupHubName.length > 0;
+const titleText = title.trim();
+const descText = (description ?? "").trim();
+const hasDescription = descText.length > 0;
+const hasTitle = Astro.slots.has("title") || titleText.length > 0;
+const showPrimaryCta = Boolean(primaryCta?.label.trim());
+const showSecondaryCta = Boolean(secondaryCta?.label.trim());
+const showActions = showPrimaryCta || showSecondaryCta;
+
+const hasHeroBgImage = Boolean(image?.src);
+const heroBgCssVars = image?.src
+	? { "--hub-hero-bg-image": `url(${JSON.stringify(image.src)})` }
+	: undefined;
+
+const primaryHex =
+	normalizeHubHeroPrimaryHex(primaryColorProp) ?? DEFAULT_HUB_HERO_PRIMARY_COLOR;
+const lockupOverlayHex =
+	normalizeHubHeroPrimaryHex(lockupOverlayColorProp) ??
+	DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR;
+
+const hubHeroSectionStyle: Record<string, string> = {
+	...(heroBgCssVars ?? {}),
+	"--aopa-hero-primary": primaryHex,
+	"--aopa-hero-lockup-overlay-color": lockupOverlayHex,
+};
+if (lockupOverlayOpacity != null && Number.isFinite(lockupOverlayOpacity)) {
+	hubHeroSectionStyle["--aopa-hero-lockup-overlay-opacity"] = String(
+		Math.min(1, Math.max(0, lockupOverlayOpacity)),
+	);
+}
+const hubHeroSectionStyleAttr = hubHeroSectionStyle;
 ---
 
 <section
+	data-hub-hero-root
 	class:list={[
 		"aopa-hub-hero",
-		`aopa-hub-hero--bg-${background}`,
 		`aopa-hub-hero--height-${minHeight}`,
+		layout === "full" && "aopa-hub-hero--variant-full",
+		hasLockup && "aopa-hub-hero--has-lockup",
 		layout === "split" && "aopa-hub-hero--split",
-		layout === "split" && splitImageLeft && "aopa-hub-hero--split-image-left",
+		hasHeroBgImage && "aopa-hub-hero--has-hero-image",
+		hasHeroBgImage && imageWidth === "full" && "aopa-hub-hero--hero-image-full",
+		hasHeroBgImage && imageWidth === "half" && "aopa-hub-hero--hero-image-half",
+		copyTone === "light" && "aopa-hub-hero--copy-light",
+		hasLockup && lockupCopyTone === "light" && "aopa-hub-hero--lockup-copy-light",
 	]}
-	aria-labelledby="aopa-hub-hero-title"
+	style={hubHeroSectionStyleAttr}
+	aria-labelledby={
+		hasTitle ? "aopa-hub-hero-title" : hasDescription ? "aopa-hub-hero-description" : undefined
+	}
+	aria-label={!hasTitle && !hasDescription ? "Hero" : undefined}
 >
+	<div
+		class:list={[
+			"aopa-hub-hero__bg",
+			hasHeroBgImage && imageWidth === "half" && imageAlign === "right" && "aopa-hub-hero__bg--half-right",
+			hasHeroBgImage && imageWidth === "half" && imageAlign !== "right" && "aopa-hub-hero__bg--half-left",
+		]}
+		data-hub-hero-bg
+		aria-hidden="true"
+		hidden={!hasHeroBgImage}
+	>
+	</div>
 	<div class="aopa-hub-hero__inner">
-		{
-			layout === "split" && image && (
-				<div class="aopa-hub-hero__media">
-					<img src={image.src} alt={image.alt} class="aopa-hub-hero__img" width="960" height="640" loading="eager" />
-				</div>
-			)
-		}
-		<div class="aopa-hub-hero__content">
-			{
-				eyebrow && <p class="aopa-hub-hero__eyebrow">{eyebrow}</p>
-			}
-			<h1 id="aopa-hub-hero-title" class="aopa-hub-hero__title">
-				<slot name="title">{title}</slot>
-			</h1>
-			{
-				description && <p class="aopa-hub-hero__description">{description}</p>
-			}
-			<div class="aopa-hub-hero__slot">
-				<slot />
+		<div class="aopa-hub-hero__lockup-col" data-hub-lockup-wrap hidden={!hasLockup}>
+			<div class="aopa-hub-hero__lockup">
+				<p class="aopa-hub-hero__lockup-brand">AOPA</p>
+				<p class="aopa-hub-hero__lockup-hub" data-hub-lockup-hub>{lockupHubName}</p>
 			</div>
-			{
-				(primaryCta || secondaryCta) && (
-					<div class="aopa-hub-hero__actions">
-						{primaryCta && (
-							<a href={primaryCta.href} class="aopa-hub-hero__cta aopa-hub-hero__cta--primary">
-								{primaryCta.label}
-							</a>
-						)}
-						{secondaryCta && (
-							<a href={secondaryCta.href} class="aopa-hub-hero__cta aopa-hub-hero__cta--secondary">
-								{secondaryCta.label}
-							</a>
-						)}
-					</div>
-				)
-			}
+		</div>
+		<div class="aopa-hub-hero__body">
+			<div class="aopa-hub-hero__content">
+				<h1
+					id="aopa-hub-hero-title"
+					class="aopa-hub-hero__title"
+					data-hub-title-root
+					hidden={!hasTitle}
+				>
+					<span data-hub-title><slot name="title">{title}</slot></span>
+				</h1>
+				<p
+					id="aopa-hub-hero-description"
+					class="aopa-hub-hero__description"
+					data-hub-description
+					hidden={!hasDescription}
+				>
+					{description ?? ""}
+				</p>
+				<div class="aopa-hub-hero__slot">
+					<slot />
+				</div>
+				<div class="aopa-hub-hero__actions" data-hub-actions hidden={!showActions}>
+					<a
+						href={primaryCta?.href ?? "#"}
+						class="aopa-hub-hero__cta aopa-hub-hero__cta--primary"
+						data-hub-cta-primary
+						hidden={!showPrimaryCta}>{primaryCta?.label ?? ""}</a>
+					<a
+						href={secondaryCta?.href ?? "#"}
+						class="aopa-hub-hero__cta aopa-hub-hero__cta--secondary"
+						data-hub-cta-secondary
+						hidden={!showSecondaryCta}>{secondaryCta?.label ?? ""}</a>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
@@ -113,27 +195,49 @@ const splitImageLeft = layout === "split" && imagePosition === "left";
 		--aopa-hero-font: "Arial Narrow", "Helvetica Neue Condensed", "Helvetica Neue", Arial, sans-serif;
 		--aopa-hero-blue: #29abe2;
 		--aopa-hero-blue-deep: #0082af;
-		--aopa-hero-ink: #1a1a1a;
-		--aopa-hero-muted: #4a4a4a;
-		--aopa-hero-max: min(72rem, 100% - 2 * clamp(1rem, 0.5rem + 2vw, 2.5rem));
+		--aopa-hero-ink: #333338;
+		--aopa-hero-muted: #5c5c64;
+		--aopa-hero-lockup-overlay-color: #eaeaea;
 
+		position: relative;
+		z-index: 0;
 		width: 100%;
 		font-family: var(--aopa-hero-font);
 		color: var(--aopa-hero-ink);
+		background: var(--aopa-hero-primary, #d4ecf7);
 	}
 
-	.aopa-hub-hero--bg-neutral {
-		background: linear-gradient(180deg, #f0f4f6 0%, #e4eaee 100%);
+	.aopa-hub-hero__bg {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		pointer-events: none;
+		background-image: var(--hub-hero-bg-image);
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center;
 	}
 
-	.aopa-hub-hero--bg-brand {
-		background: linear-gradient(135deg, #e8f6fc 0%, #d4ecf7 45%, #c5e5f5 100%);
+	.aopa-hub-hero__bg--half-left {
+		inset: 0 auto 0 0;
+		width: 50%;
+		background-position: left center;
 	}
 
-	.aopa-hub-hero--bg-dark {
-		--aopa-hero-ink: #fff;
-		--aopa-hero-muted: rgba(255, 255, 255, 0.85);
-		background: linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 100%);
+	.aopa-hub-hero__bg--half-right {
+		inset: 0 0 0 auto;
+		width: 50%;
+		background-position: right center;
+	}
+
+	.aopa-hub-hero--has-hero-image .aopa-hub-hero__inner {
+		position: relative;
+		z-index: 1;
+	}
+
+	/* Hero background photo (overrides section fill) */
+	.aopa-hub-hero--has-hero-image.aopa-hub-hero--hero-image-full {
+		background: #0f1724;
 	}
 
 	.aopa-hub-hero--height-short {
@@ -150,8 +254,8 @@ const splitImageLeft = layout === "split" && imagePosition === "left";
 
 	.aopa-hub-hero__inner {
 		box-sizing: border-box;
-		width: min(var(--aopa-hero-max), 100%);
-		margin: 0 auto;
+		width: 100%;
+		margin: 0;
 		padding: clamp(2rem, 1.25rem + 2.5vw, 4rem) clamp(1rem, 0.5rem + 2vw, 2.5rem);
 		display: flex;
 		flex-direction: column;
@@ -160,81 +264,169 @@ const splitImageLeft = layout === "split" && imagePosition === "left";
 		gap: clamp(1.5rem, 1rem + 2vw, 2.5rem);
 	}
 
-	.aopa-hub-hero--split .aopa-hub-hero__inner {
+	/* Full variant: hero keeps min-height; gray panel is only as tall as content */
+	.aopa-hub-hero--variant-full {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	.aopa-hub-hero--variant-full .aopa-hub-hero__inner {
+		min-height: 0;
+		height: fit-content;
+		flex: 0 0 auto;
+		background: color-mix(
+			in srgb,
+			var(--aopa-hero-lockup-overlay-color) calc(var(--aopa-hero-lockup-overlay-opacity, 1) * 100%),
+			transparent
+		);
+		/* top-right + bottom-left only */
+		border-radius: 0 112px 0 112px;
+	}
+
+	/* Full + lockup: gray panel (whole inner) capped and centered */
+	.aopa-hub-hero--variant-full.aopa-hub-hero--has-lockup .aopa-hub-hero__inner {
+		max-width: 1440px;
+		margin-inline: auto;
+	}
+
+	.aopa-hub-hero--has-lockup .aopa-hub-hero__inner {
 		display: grid;
-		align-items: center;
+		align-items: stretch;
 		grid-template-columns: 1fr;
+		justify-items: stretch;
 	}
 
-	@media (min-width: 900px) {
-		.aopa-hub-hero--split .aopa-hub-hero__inner {
-			grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+	@media (min-width: 720px) {
+		/* Full variant + lockup: 40/60 (lockup / body) */
+		.aopa-hub-hero--has-lockup:not(.aopa-hub-hero--split) .aopa-hub-hero__inner {
+			grid-template-columns: 2fr 3fr;
+			column-gap: clamp(1.25rem, 0.75rem + 2vw, 2.5rem);
 		}
 
-		.aopa-hub-hero--split.aopa-hub-hero--split-image-left .aopa-hub-hero__inner {
-			grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+		/* Split + lockup: 40/60 outer columns */
+		.aopa-hub-hero--has-lockup.aopa-hub-hero--split .aopa-hub-hero__inner {
+			grid-template-columns: 2fr 3fr;
+			column-gap: clamp(1.25rem, 0.75rem + 2vw, 2.5rem);
 		}
 
-		.aopa-hub-hero--split.aopa-hub-hero--split-image-left .aopa-hub-hero__media {
-			order: -1;
+		.aopa-hub-hero--variant-full.aopa-hub-hero--has-lockup .aopa-hub-hero__lockup-col {
+			justify-self: center;
+			width: fit-content;
+			max-width: 100%;
 		}
 	}
 
-	.aopa-hub-hero__media {
-		position: relative;
-		border-radius: clamp(0.25rem, 0.1rem + 0.5vw, 0.5rem);
-		overflow: hidden;
-		box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.12);
+	.aopa-hub-hero__lockup-col {
+		display: grid;
+		place-items: center;
+		text-align: center;
+		min-width: 0;
 	}
 
-	.aopa-hub-hero__img {
-		display: block;
-		width: 100%;
-		height: auto;
-		aspect-ratio: 3 / 2;
-		object-fit: cover;
-		vertical-align: middle;
+	.aopa-hub-hero__lockup {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.2em;
+	}
+
+	.aopa-hub-hero__lockup-brand {
+		margin: 0;
+		font-family: "Knockout 47 A", "Knockout 47 B", "Knockout 47", Knockout, "Arial Narrow", Arial, sans-serif;
+		font-size: clamp(2.35rem, 1.65rem + 2.4vw, 3.35rem);
+		font-weight: 400;
+		line-height: 0.95;
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+		color: var(--aopa-hero-blue-deep);
+	}
+
+	.aopa-hub-hero__lockup-hub {
+		margin: 0;
+		font-family: "Gotham Bold", Gotham, "Gotham", "Helvetica Neue", Arial, sans-serif;
+		font-size: clamp(0.9375rem, 0.82rem + 0.45vw, 1.125rem);
+		font-weight: 700;
+		line-height: 1.15;
+		text-transform: uppercase;
+		letter-spacing: 0.22em;
+		color: var(--aopa-hero-ink);
+		max-width: 12rem;
+	}
+
+	.aopa-hub-hero--lockup-copy-light .aopa-hub-hero__lockup-brand {
+		color: #7dd3fc;
+	}
+
+	.aopa-hub-hero--lockup-copy-light .aopa-hub-hero__lockup-hub {
+		color: #f8fafc;
+	}
+
+	.aopa-hub-hero__body {
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	/* Right column (copy + CTAs): center block when beside lockup */
+	.aopa-hub-hero--has-lockup .aopa-hub-hero__body {
+		align-items: center;
+	}
+
+	.aopa-hub-hero--has-lockup .aopa-hub-hero__content {
+		width: min(100%, 40rem);
+		margin-inline: auto;
+	}
+
+	/* Split + lockup: gray behind lockup column */
+	.aopa-hub-hero--split.aopa-hub-hero--has-lockup .aopa-hub-hero__lockup-col {
+		box-sizing: border-box;
+		/* max-width alone shrinks to content; width uses the full 420px when the track allows */
+		width: min(100%, 420px);
+		max-width: 420px;
+		min-height: 360px;
+		max-height: 360px;
+		justify-self: center;
+		align-self: center;
+		background: color-mix(
+			in srgb,
+			var(--aopa-hero-lockup-overlay-color) calc(var(--aopa-hero-lockup-overlay-opacity, 1) * 100%),
+			transparent
+		);
+		border-radius: 0 112px 0 112px;
+		padding: clamp(1rem, 0.65rem + 1vw, 1.5rem);
+	}
+
+	/* Split without lockup: gray panel behind copy (same role as full variant inner) */
+	.aopa-hub-hero--split:not(.aopa-hub-hero--has-lockup) .aopa-hub-hero__content {
+		background: color-mix(
+			in srgb,
+			var(--aopa-hero-lockup-overlay-color) calc(var(--aopa-hero-lockup-overlay-opacity, 1) * 100%),
+			transparent
+		);
+		border-radius: 0 112px 0 112px;
+		padding: clamp(1rem, 0.65rem + 1vw, 1.5rem);
 	}
 
 	.aopa-hub-hero__content {
 		max-width: 40rem;
 	}
 
-	.aopa-hub-hero--centered .aopa-hub-hero__content {
-		margin: 0 auto;
-		text-align: center;
-		max-width: min(40rem, 100%);
-	}
-
-	.aopa-hub-hero--centered .aopa-hub-hero__actions {
-		justify-content: center;
-	}
-
-	.aopa-hub-hero__eyebrow {
-		margin: 0 0 0.65rem;
-		font-size: clamp(0.8125rem, 0.75rem + 0.25vw, 0.9375rem);
-		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.12em;
-		color: var(--aopa-hero-blue-deep);
-	}
-
-	.aopa-hub-hero--bg-dark .aopa-hub-hero__eyebrow {
-		color: var(--aopa-hero-blue);
-	}
-
 	.aopa-hub-hero__title {
 		margin: 0 0 1rem;
-		font-size: clamp(2rem, 1.35rem + 2.5vw, 3.25rem);
+		font-family: "Gotham Bold", Gotham, "Gotham", "Helvetica Neue", Arial, sans-serif;
+		font-size: clamp(0.9375rem, 0.82rem + 0.45vw, 1.1875rem);
 		font-weight: 700;
-		line-height: 1.05;
-		text-transform: uppercase;
-		letter-spacing: 0.06em;
+		line-height: 1.25;
+		text-transform: none;
+		letter-spacing: normal;
+		color: var(--aopa-hero-ink);
 	}
 
 	.aopa-hub-hero__description {
 		margin: 0 0 1.25rem;
-		font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+		font-family: "Gotham Book", Gotham, "Gotham", "Helvetica Neue", Arial, sans-serif;
 		font-size: clamp(1rem, 0.92rem + 0.35vw, 1.125rem);
 		font-weight: 400;
 		line-height: 1.55;
@@ -244,9 +436,12 @@ const splitImageLeft = layout === "split" && imagePosition === "left";
 		max-width: 36rem;
 	}
 
-	.aopa-hub-hero--centered .aopa-hub-hero__description {
-		margin-left: auto;
-		margin-right: auto;
+	.aopa-hub-hero--copy-light .aopa-hub-hero__title {
+		color: #f8fafc;
+	}
+
+	.aopa-hub-hero--copy-light .aopa-hub-hero__description {
+		color: rgba(226, 232, 240, 0.9);
 	}
 
 	.aopa-hub-hero__slot:empty {
@@ -263,6 +458,15 @@ const splitImageLeft = layout === "split" && imagePosition === "left";
 		align-items: center;
 		gap: 0.75rem 1.25rem;
 		margin-top: 0.25rem;
+	}
+
+	/* `hidden` must win over flex/inline-flex (otherwise empty-label toggles still show pills). */
+	.aopa-hub-hero__actions[hidden] {
+		display: none !important;
+	}
+
+	.aopa-hub-hero__cta[hidden] {
+		display: none !important;
 	}
 
 	.aopa-hub-hero__cta {
@@ -292,10 +496,6 @@ const splitImageLeft = layout === "split" && imagePosition === "left";
 		background: transparent;
 		color: var(--aopa-hero-blue-deep);
 		box-shadow: inset 0 0 0 2px currentColor;
-	}
-
-	.aopa-hub-hero--bg-dark .aopa-hub-hero__cta--secondary {
-		color: #fff;
 	}
 
 	.aopa-hub-hero__cta--secondary:hover {

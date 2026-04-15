@@ -1,0 +1,468 @@
+---
+import {
+	HUB_HERO_COPY_TONES,
+	HUB_HERO_IMAGE_ALIGNS,
+	HUB_HERO_IMAGE_WIDTHS,
+	HUB_HERO_MIN_HEIGHTS,
+	HUB_HERO_VARIANTS,
+} from "./hubHeroOptions";
+import {
+	DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR,
+	hexForColorInput,
+	hubHeroQueryKeys as k,
+} from "../../lib/hubHeroSearchParams";
+import type { HubHeroResolvedFromUrl } from "../../lib/hubHeroSearchParams";
+
+interface Props {
+	/** Path for form GET (no query), e.g. `/aopa/hub/hero` or `/aopa/hub/hero/` */
+	pathname: string;
+	/** Current resolved hero values (drives form defaults). */
+	resolved: HubHeroResolvedFromUrl;
+	/** Pre-check “Sync address bar” when the page loaded with <code>hh=1</code> (toolbar share links). */
+	syncUrlDefault?: boolean;
+}
+
+const { pathname, resolved, syncUrlDefault = false } = Astro.props;
+
+const formAction = pathname || "/";
+
+const lockupOpacityPresets: { value: string; label: string }[] = [
+	{ value: "", label: "Solid (default)" },
+	{ value: "0.95", label: "95%" },
+	{ value: "0.9", label: "90%" },
+	{ value: "0.88", label: "88%" },
+	{ value: "0.85", label: "85%" },
+	{ value: "0.8", label: "80%" },
+	{ value: "0.75", label: "75%" },
+	{ value: "0.7", label: "70%" },
+	{ value: "0.6", label: "60%" },
+	{ value: "0.5", label: "50%" },
+];
+
+const ro = resolved.lockupOverlayOpacity;
+const lockupOpacityChoices =
+	ro != null &&
+	Number.isFinite(ro) &&
+	!lockupOpacityPresets.some(
+		(p) => p.value !== "" && Math.abs(Number(p.value) - ro) < 1e-6,
+	)
+		? [
+				lockupOpacityPresets[0],
+				{ value: String(ro), label: `Custom (${ro})` },
+				...lockupOpacityPresets.slice(1),
+			]
+		: lockupOpacityPresets;
+
+const lockupOpacitySelected =
+	ro == null || !Number.isFinite(ro)
+		? ""
+		: (lockupOpacityChoices.find(
+				(p) => p.value !== "" && Math.abs(Number(p.value) - ro) < 1e-6,
+			)?.value ?? "");
+
+const primaryColorForPicker = hexForColorInput(resolved.primaryColor);
+const lockupOverlayColorForPicker = hexForColorInput(
+	resolved.lockupOverlayColor,
+	DEFAULT_HUB_HERO_LOCKUP_OVERLAY_COLOR,
+);
+---
+
+<div class="hh-dev-toolbar" data-hh-dev-toolbar>
+	<button
+		type="button"
+		class="hh-dev-toolbar__toggle"
+		aria-expanded="false"
+		aria-controls="hh-dev-toolbar-panel"
+		data-hh-dev-toggle
+	>
+		<span class="hh-dev-toolbar__toggle-icon" aria-hidden="true"></span>
+		<span class="hh-dev-toolbar__toggle-label">Hub hero</span>
+	</button>
+
+	<div id="hh-dev-toolbar-panel" class="hh-dev-toolbar__panel" hidden data-hh-dev-panel>
+		<p class="hh-dev-toolbar__hint">
+			Fields update the hero <strong>live</strong>. Any <strong>known query key</strong> in the URL
+			overrides <code>defaults</code> on refresh. <strong>Update URL now</strong> writes{" "}
+			<code>hh=1</code> plus fields for shareable links. Turn on <strong>Sync address bar</strong> to
+			mirror edits to the bar (debounced).
+		</p>
+		<form class="hh-dev-toolbar__form" data-hh-dev-form action={formAction}>
+			<label class="hh-dev-toolbar__sync">
+				<input type="checkbox" data-hh-sync-url checked={syncUrlDefault} />
+				<span>Sync address bar (shareable URL)</span>
+			</label>
+			<div class="hh-dev-toolbar__grid">
+				<label>
+					<span>hubName</span>
+					<input type="text" name={k.hubName} value={resolved.hubName ?? ""} autocomplete="off" />
+				</label>
+				<label>
+					<span>title</span>
+					<input type="text" name={k.title} value={resolved.title} autocomplete="off" />
+				</label>
+				<label class="hh-dev-toolbar__full">
+					<span>description</span>
+					<textarea name={k.description} rows="2">{resolved.description ?? ""}</textarea>
+				</label>
+				<label class="hh-dev-toolbar__full">
+					<span>primaryColor</span>
+					<input
+						class="hh-dev-toolbar__color"
+						type="color"
+						name={k.primaryColor}
+						value={primaryColorForPicker}
+						title="Hero background fill (#rrggbb in URL)"
+					/>
+				</label>
+				<label>
+					<span>minHeight</span>
+					<select name={k.minHeight}>
+						{
+							HUB_HERO_MIN_HEIGHTS.map((h) => (
+								<option value={h} selected={resolved.minHeight === h}>
+									{h}
+								</option>
+							))
+						}
+					</select>
+				</label>
+				<label>
+					<span>variant</span>
+					<select name={k.variant}>
+						{
+							HUB_HERO_VARIANTS.map((v) => (
+								<option value={v} selected={resolved.variant === v}>
+									{v}
+								</option>
+							))
+						}
+					</select>
+				</label>
+				<label>
+					<span>copyTone (headline + description)</span>
+					<select name={k.copyTone}>
+						{
+							HUB_HERO_COPY_TONES.map((t) => (
+								<option value={t} selected={resolved.copyTone === t}>
+									{t}
+								</option>
+							))
+						}
+					</select>
+				</label>
+				<label>
+					<span>lockupCopyTone (AOPA + hub line)</span>
+					<select name={k.lockupCopyTone}>
+						{
+							HUB_HERO_COPY_TONES.map((t) => (
+								<option value={t} selected={resolved.lockupCopyTone === t}>
+									{t}
+								</option>
+							))
+						}
+					</select>
+				</label>
+				<label class="hh-dev-toolbar__full">
+					<span>lockupOpacity (full inner + split lockup gray)</span>
+					<select name={k.lockupOpacity}>
+						{
+							lockupOpacityChoices.map((p) => (
+								<option value={p.value} selected={lockupOpacitySelected === p.value}>
+									{p.label}
+								</option>
+							))
+						}
+					</select>
+				</label>
+				<label class="hh-dev-toolbar__full">
+					<span>lockupOverlayColor (panel tint + split copy panel)</span>
+					<input
+						class="hh-dev-toolbar__color"
+						type="color"
+						name={k.lockupOverlayColor}
+						value={lockupOverlayColorForPicker}
+						title="Gray panel fill (#rrggbb in URL)"
+					/>
+				</label>
+				<label class="hh-dev-toolbar__full">
+					<span>imageSrc (https — hero background)</span>
+					<input type="url" name={k.imageSrc} value={resolved.imageSrc ?? ""} placeholder="https://…" />
+				</label>
+				<label>
+					<span>imageWidth</span>
+					<select name={k.imageWidth}>
+						{
+							HUB_HERO_IMAGE_WIDTHS.map((w) => (
+								<option value={w} selected={resolved.imageWidth === w}>
+									{w}
+								</option>
+							))
+						}
+					</select>
+				</label>
+				<label>
+					<span>imageAlign</span>
+					<select name={k.imageAlign}>
+						{
+							HUB_HERO_IMAGE_ALIGNS.map((a) => (
+								<option value={a} selected={resolved.imageAlign === a}>
+									{a}
+								</option>
+							))
+						}
+					</select>
+				</label>
+				<label class="hh-dev-toolbar__full">
+					<span>imageAlt</span>
+					<input type="text" name={k.imageAlt} value={resolved.imageAlt ?? ""} />
+				</label>
+				<label>
+					<span>primaryLabel</span>
+					<input type="text" name={k.primaryLabel} value={resolved.primaryLabel} />
+				</label>
+				<label>
+					<span>primaryHref</span>
+					<input type="text" name={k.primaryHref} value={resolved.primaryHref} />
+				</label>
+				<label>
+					<span>secondaryLabel</span>
+					<input type="text" name={k.secondaryLabel} value={resolved.secondaryLabel} />
+				</label>
+				<label>
+					<span>secondaryHref</span>
+					<input type="text" name={k.secondaryHref} value={resolved.secondaryHref} />
+				</label>
+			</div>
+			<div class="hh-dev-toolbar__actions">
+				<button type="submit" class="hh-dev-toolbar__primary">Update URL now</button>
+				<a href={formAction} class="hh-dev-toolbar__link">Strip query</a>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script>
+	const root = document.querySelector("[data-hh-dev-toolbar]");
+	if (root) {
+		const toggle = root.querySelector("[data-hh-dev-toggle]");
+		const panel = root.querySelector("[data-hh-dev-panel]");
+		if (toggle instanceof HTMLButtonElement && panel instanceof HTMLElement) {
+			const setOpen = (open: boolean) => {
+				toggle.setAttribute("aria-expanded", open ? "true" : "false");
+				panel.hidden = !open;
+			};
+
+			toggle.addEventListener("click", () => {
+				const open = toggle.getAttribute("aria-expanded") === "true";
+				setOpen(!open);
+			});
+
+			document.addEventListener("keydown", (e) => {
+				if (e.key === "Escape") setOpen(false);
+			});
+		}
+	}
+</script>
+
+<style>
+	.hh-dev-toolbar {
+		position: fixed;
+		z-index: 99998;
+		left: 50%;
+		bottom: 0.75rem;
+		transform: translateX(-50%);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+		max-width: min(100vw - 1rem, 72rem);
+		font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+		font-size: 0.8125rem;
+		line-height: 1.35;
+	}
+
+	.hh-dev-toolbar__toggle {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		padding: 0.45rem 0.9rem 0.45rem 0.65rem;
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		border-radius: 9999px;
+		background: linear-gradient(180deg, #3d3d45 0%, #2a2a30 100%);
+		color: #f4f4f8;
+		box-shadow:
+			0 1px 0 rgba(255, 255, 255, 0.06) inset,
+			0 4px 14px rgba(0, 0, 0, 0.35);
+		cursor: pointer;
+		letter-spacing: 0.02em;
+	}
+
+	.hh-dev-toolbar__toggle:hover {
+		filter: brightness(1.06);
+	}
+
+	.hh-dev-toolbar__toggle:focus-visible {
+		outline: 2px solid #7cb8ff;
+		outline-offset: 2px;
+	}
+
+	.hh-dev-toolbar__toggle-icon {
+		width: 1.1rem;
+		height: 1.1rem;
+		border-radius: 3px;
+		background: linear-gradient(135deg, #ff5d01 0%, #ffc800 50%, #7c3aed 100%);
+		opacity: 0.95;
+	}
+
+	.hh-dev-toolbar__toggle-label {
+		font-weight: 600;
+	}
+
+	.hh-dev-toolbar__panel {
+		width: min(100vw - 1rem, 72rem);
+		max-height: min(70vh, 28rem);
+		overflow: auto;
+		padding: 0.75rem 0.9rem 0.85rem;
+		border-radius: 0.65rem;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		background: rgba(28, 28, 32, 0.97);
+		color: #e8e8ee;
+		box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.35);
+	}
+
+	.hh-dev-toolbar__panel[hidden] {
+		display: none !important;
+	}
+
+	.hh-dev-toolbar__hint {
+		margin: 0 0 0.65rem;
+		color: #a8a8b8;
+		font-size: 0.75rem;
+	}
+
+	.hh-dev-toolbar__hint code {
+		font-size: 0.7rem;
+		padding: 0.1em 0.35em;
+		border-radius: 3px;
+		background: rgba(255, 255, 255, 0.08);
+		color: #d8d8e8;
+	}
+
+	.hh-dev-toolbar__form {
+		margin: 0;
+	}
+
+	.hh-dev-toolbar__sync {
+		display: flex;
+		align-items: center;
+		gap: 0.45rem;
+		margin-bottom: 0.6rem;
+		font-size: 0.78rem;
+		color: #c4c4d4;
+		cursor: pointer;
+		user-select: none;
+	}
+
+	.hh-dev-toolbar__sync input {
+		width: auto;
+		margin: 0;
+		accent-color: #3b82f6;
+	}
+
+	.hh-dev-toolbar__grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 0.5rem 0.65rem;
+	}
+
+	@media (max-width: 1100px) {
+		.hh-dev-toolbar__grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 768px) {
+		.hh-dev-toolbar__grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 520px) {
+		.hh-dev-toolbar__grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.hh-dev-toolbar__full {
+		grid-column: 1 / -1;
+	}
+
+	.hh-dev-toolbar__grid label {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		min-width: 0;
+	}
+
+	.hh-dev-toolbar__grid label > span {
+		font-size: 0.65rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: #8b8b9c;
+	}
+
+	.hh-dev-toolbar__grid input,
+	.hh-dev-toolbar__grid select,
+	.hh-dev-toolbar__grid textarea {
+		box-sizing: border-box;
+		width: 100%;
+		padding: 0.35rem 0.45rem;
+		border-radius: 4px;
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		background: rgba(0, 0, 0, 0.35);
+		color: #f4f4f8;
+		font-size: 0.8125rem;
+	}
+
+	.hh-dev-toolbar__grid textarea {
+		resize: vertical;
+		min-height: 2.5rem;
+	}
+
+	.hh-dev-toolbar__grid input[type="color"] {
+		height: 2.25rem;
+		padding: 0.2rem;
+		cursor: pointer;
+	}
+
+	.hh-dev-toolbar__actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.65rem;
+		margin-top: 0.65rem;
+		padding-top: 0.55rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.hh-dev-toolbar__primary {
+		padding: 0.4rem 0.95rem;
+		border-radius: 6px;
+		border: 0;
+		background: #3b82f6;
+		color: #fff;
+		font-weight: 600;
+		font-size: 0.8125rem;
+		cursor: pointer;
+	}
+
+	.hh-dev-toolbar__primary:hover {
+		filter: brightness(1.08);
+	}
+
+	.hh-dev-toolbar__link {
+		color: #93c5fd;
+		font-size: 0.8125rem;
+	}
+</style>

@@ -15,6 +15,9 @@ export default defineConfig(({ mode }) => {
     .replace(/\/$/, "");
 
   return {
+    devToolbar: {
+      enabled: false,
+    },
     vite: {
       server: {
         proxy: proxyTarget
