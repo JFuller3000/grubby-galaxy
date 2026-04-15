@@ -97,6 +97,7 @@ export function writeHubHeroFormFromResolved(
 		}
 	};
 	set(k.hubName, state.hubName ?? "");
+	set(k.columnName, state.columnName ?? state.hubName ?? "");
 	set(k.title, state.title);
 	set(k.description, state.description ?? "");
 	set(k.primaryColor, state.primaryColor);
@@ -145,9 +146,11 @@ export function readHubHeroForm(form: HTMLFormElement): HubHeroResolvedFromUrl {
 	const fd = new FormData(form);
 	const g = (k: string) => (fd.get(k) as string | null) ?? "";
 	const hubName = g(hubHeroQueryKeys.hubName).trim();
+	const columnName = g(hubHeroQueryKeys.columnName).trim();
 	const imageSrc = g(hubHeroQueryKeys.imageSrc).trim();
 	return {
 		hubName: hubName.length > 0 ? hubName : undefined,
+		columnName: columnName.length > 0 ? columnName : undefined,
 		title: g(hubHeroQueryKeys.title).trim(),
 		description: g(hubHeroQueryKeys.description),
 		primaryColor: pickPrimaryColor(g(hubHeroQueryKeys.primaryColor)),
@@ -185,8 +188,9 @@ export function applyHubHeroLiveState(
 ): void {
 	if (!section.querySelector(".aopa-hub-hero__body")) return;
 
-	const hub = state.hubName?.trim() ?? "";
-	const hasLockup = hub.length > 0;
+	const lockupColumnName = state.columnName?.trim() ?? "";
+	const lockupHubName = state.hubName?.trim() ?? "";
+	const hasLockup = lockupColumnName.length > 0 || lockupHubName.length > 0;
 	const splitLayout = state.variant === "split";
 	const fullLayout = !splitLayout;
 	const imgSrc = state.imageSrc?.trim() ?? "";
@@ -238,12 +242,28 @@ export function applyHubHeroLiveState(
 	}
 
 	const lockWrap = section.querySelector<HTMLElement>("[data-hub-lockup-wrap]");
+	const lockLogo = section.querySelector<HTMLImageElement>("[data-hub-lockup-logo]");
+	const lockPrefix = section.querySelector<HTMLElement>("[data-hub-lockup-prefix]");
+	const lockColumn = section.querySelector<HTMLElement>("[data-hub-lockup-column]");
 	const lockHub = section.querySelector<HTMLElement>("[data-hub-lockup-hub]");
 	if (lockWrap) {
 		lockWrap.hidden = !hasLockup;
 	}
+	if (lockLogo) {
+		const lightSrc = lockLogo.dataset.lockupLogoLight ?? "/images/aopa-wings-logo-white.svg";
+		const darkSrc = lockLogo.dataset.lockupLogoDark ?? "/images/aopa-wings-logo-blue.svg";
+		lockLogo.src = state.lockupCopyTone === "light" ? lightSrc : darkSrc;
+	}
+	if (lockPrefix) {
+		lockPrefix.textContent = `AOPA${lockupColumnName.length > 0 ? " | " : ""}`;
+	}
+	if (lockColumn) {
+		lockColumn.textContent = lockupColumnName;
+		lockColumn.hidden = lockupColumnName.length === 0;
+	}
 	if (lockHub) {
-		lockHub.textContent = hub;
+		lockHub.textContent = lockupHubName;
+		lockHub.hidden = lockupHubName.length === 0;
 	}
 
 	const titleText = state.title.trim();
@@ -303,6 +323,7 @@ export function buildHubHeroShareSearchParams(state: HubHeroResolvedFromUrl): UR
 	sp.set(HUB_HERO_PREVIEW_QUERY_KEY, "1");
 	const k = hubHeroQueryKeys;
 	if (state.hubName?.trim()) sp.set(k.hubName, state.hubName.trim());
+	if (state.columnName?.trim()) sp.set(k.columnName, state.columnName.trim());
 	sp.set(k.title, state.title);
 	if (state.description != null) sp.set(k.description, state.description);
 	sp.set(k.primaryColor, state.primaryColor);

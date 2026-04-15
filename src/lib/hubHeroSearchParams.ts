@@ -21,6 +21,8 @@ export const HUB_HERO_PREVIEW_QUERY_KEY = "hh";
 /** Query keys used by the hub hero preview page and dev toolbar. */
 export const hubHeroQueryKeys = {
 	hubName: "hubName",
+	/** Preferred lockup label source (replaces `hubName` in new links/forms). */
+	columnName: "columnName",
 	title: "title",
 	description: "description",
 	/** Hero section fill (`--aopa-hero-primary`); `#rgb` or `#rrggbb`. */
@@ -95,7 +97,10 @@ export function hexForColorInput(
 }
 
 export type HubHeroResolvedFromUrl = {
+	/** Legacy lockup label key kept for backward compatibility with existing shared links. */
 	hubName?: string;
+	/** Lockup label shown after `AOPA |` under the wings mark. */
+	columnName?: string;
 	title: string;
 	description?: string;
 	/** Section / half-hero fill via `--aopa-hero-primary`. */
@@ -130,6 +135,10 @@ export function parseHubHeroSearchParams(
 	if (searchParams.has(k.hubName)) {
 		const v = (searchParams.get(k.hubName) ?? "").trim();
 		out.hubName = v.length > 0 ? v : undefined;
+	}
+	if (searchParams.has(k.columnName)) {
+		const v = (searchParams.get(k.columnName) ?? "").trim();
+		out.columnName = v.length > 0 ? v : undefined;
 	}
 	if (searchParams.has(k.title)) {
 		out.title = (searchParams.get(k.title) ?? "").trim();

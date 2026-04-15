@@ -82,7 +82,7 @@ const lockupOverlayColorForPicker = hexForColorInput(
 	<div id="hh-dev-toolbar-panel" class="hh-dev-toolbar__panel" hidden data-hh-dev-panel>
 		<p class="hh-dev-toolbar__hint">
 			Fields update the hero <strong>live</strong>. Any <strong>known query key</strong> in the URL
-			overrides <code>defaults</code> on refresh. <strong>Update URL now</strong> writes{" "}
+			overrides <code>defaults</code> on refresh. <strong>Update URL </strong> writes{" "}
 			<code>hh=1</code> plus fields for shareable links. Turn on <strong>Sync address bar</strong> to
 			mirror edits to the bar (debounced).
 		</p>
@@ -93,8 +93,17 @@ const lockupOverlayColorForPicker = hexForColorInput(
 			</label>
 			<div class="hh-dev-toolbar__grid">
 				<label>
-					<span>hubName</span>
+					<span>hubName (second line, bold)</span>
 					<input type="text" name={k.hubName} value={resolved.hubName ?? ""} autocomplete="off" />
+				</label>
+				<label>
+					<span>columnName (after “AOPA |”, book)</span>
+					<input
+						type="text"
+						name={k.columnName}
+						value={resolved.columnName ?? resolved.hubName ?? ""}
+						autocomplete="off"
+					/>
 				</label>
 				<label>
 					<span>title</span>
@@ -151,7 +160,7 @@ const lockupOverlayColorForPicker = hexForColorInput(
 					</select>
 				</label>
 				<label>
-					<span>lockupCopyTone (AOPA + hub line)</span>
+					<span>lockupCopyTone (AOPA + columnName + hubName)</span>
 					<select name={k.lockupCopyTone}>
 						{
 							HUB_HERO_COPY_TONES.map((t) => (

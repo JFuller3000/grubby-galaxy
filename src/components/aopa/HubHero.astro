@@ -27,8 +27,10 @@ export interface HubHeroImage {
  * Prop names and allowed values are placeholders until your spec is final.
  */
 interface Props {
-	/** Shown under “AOPA” in the left lockup column; omit to hide the lockup column. */
+	/** Legacy lockup label source; prefer `columnName` for new usage. */
 	hubName?: string;
+	/** Shown under the wings mark as `AOPA | [columnName]`; omit to hide lockup column. */
+	columnName?: string;
 	/** Omit or pass empty string to hide the headline. */
 	title?: string;
 	description?: string;
@@ -63,6 +65,7 @@ interface Props {
 
 const {
 	hubName,
+	columnName,
 	title = "",
 	description,
 	primaryCta,
@@ -80,8 +83,13 @@ const {
 } = Astro.props;
 
 const layout = variant === "split" ? "split" : "full";
+const lockupColumnName = columnName?.trim() ?? "";
 const lockupHubName = hubName?.trim() ?? "";
-const hasLockup = lockupHubName.length > 0;
+const hasLockup = lockupColumnName.length > 0 || lockupHubName.length > 0;
+const lockupLogoSrc =
+	lockupCopyTone === "light"
+		? "/images/aopa-wings-logo-white.svg"
+		: "/images/aopa-wings-logo-blue.svg";
 const titleText = title.trim();
 const descText = (description ?? "").trim();
 const hasDescription = descText.length > 0;
@@ -148,8 +156,29 @@ const hubHeroSectionStyleAttr = hubHeroSectionStyle;
 	<div class="aopa-hub-hero__inner">
 		<div class="aopa-hub-hero__lockup-col" data-hub-lockup-wrap hidden={!hasLockup}>
 			<div class="aopa-hub-hero__lockup">
-				<p class="aopa-hub-hero__lockup-brand">AOPA</p>
-				<p class="aopa-hub-hero__lockup-hub" data-hub-lockup-hub>{lockupHubName}</p>
+					<img
+						class="aopa-hub-hero__lockup-brand"
+						src={lockupLogoSrc}
+						data-hub-lockup-logo
+						data-lockup-logo-light="/images/aopa-wings-logo-white.svg"
+						data-lockup-logo-dark="/images/aopa-wings-logo-blue.svg"
+						alt="AOPA wings logo"
+						loading="lazy"
+						decoding="async"
+					/>
+				<p class="aopa-hub-hero__lockup-column">
+					<span class="aopa-hub-hero__lockup-prefix" data-hub-lockup-prefix
+						>AOPA{lockupColumnName.length > 0 ? " | " : ""}</span
+					>
+					<span
+						class="aopa-hub-hero__lockup-column-value"
+						data-hub-lockup-column
+						hidden={lockupColumnName.length === 0}>{lockupColumnName}</span
+					>
+				</p>
+				<p class="aopa-hub-hero__lockup-hub" data-hub-lockup-hub hidden={lockupHubName.length === 0}>
+					{lockupHubName}
+				</p>
 			</div>
 		</div>
 		<div class="aopa-hub-hero__body">
@@ -332,14 +361,23 @@ const hubHeroSectionStyleAttr = hubHeroSectionStyle;
 	}
 
 	.aopa-hub-hero__lockup-brand {
+		display: block;
+		width: clamp(9rem, 7rem + 8vw, 15.5rem);
+		max-width: 100%;
+		height: auto;
+	}
+
+	.aopa-hub-hero__lockup-column {
 		margin: 0;
-		font-family: "Knockout 47 A", "Knockout 47 B", "Knockout 47", Knockout, "Arial Narrow", Arial, sans-serif;
-		font-size: clamp(2.35rem, 1.65rem + 2.4vw, 3.35rem);
+		margin-bottom: 0.35rem;
+		font-family: "Gotham Book", Gotham, "Gotham", "Helvetica Neue", Arial, sans-serif;
+		font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);
 		font-weight: 400;
-		line-height: 0.95;
+		line-height: 1.2;
 		text-transform: uppercase;
-		letter-spacing: 0.03em;
-		color: var(--aopa-hero-blue-deep);
+		letter-spacing: 0.12em;
+		color: var(--aopa-hero-ink);
+		max-width: 13rem;
 	}
 
 	.aopa-hub-hero__lockup-hub {
@@ -354,10 +392,20 @@ const hubHeroSectionStyleAttr = hubHeroSectionStyle;
 		max-width: 12rem;
 	}
 
-	.aopa-hub-hero--lockup-copy-light .aopa-hub-hero__lockup-brand {
-		color: #7dd3fc;
+	.aopa-hub-hero__lockup-prefix {
+		opacity: 0.9;
 	}
 
+	.aopa-hub-hero__lockup-column-value {
+		color: inherit;
+	}
+
+	.aopa-hub-hero--lockup-copy-light .aopa-hub-hero__lockup-brand {
+		filter: drop-shadow(0 0 0.4rem rgba(0, 0, 0, 0.25));
+	}
+
+	.aopa-hub-hero--lockup-copy-light .aopa-hub-hero__lockup-column,
+	.aopa-hub-hero--lockup-copy-light .aopa-hub-hero__lockup-column-value,
 	.aopa-hub-hero--lockup-copy-light .aopa-hub-hero__lockup-hub {
 		color: #f8fafc;
 	}
@@ -377,6 +425,10 @@ const hubHeroSectionStyleAttr = hubHeroSectionStyle;
 	.aopa-hub-hero--has-lockup .aopa-hub-hero__content {
 		width: min(100%, 40rem);
 		margin-inline: auto;
+	}
+
+	.aopa-hub-hero--variant-full.aopa-hub-hero--has-lockup .aopa-hub-hero__body {
+		align-items: stretch;
 	}
 
 	/* Split + lockup: gray behind lockup column */
@@ -436,6 +488,18 @@ const hubHeroSectionStyleAttr = hubHeroSectionStyle;
 		max-width: 36rem;
 	}
 
+	/* Full + lockup: right column copy should fully use its grid track. */
+	.aopa-hub-hero--variant-full.aopa-hub-hero--has-lockup .aopa-hub-hero__content {
+		width: 100%;
+		max-width: none;
+		margin-inline-start: 0;
+		margin-inline-end: clamp(1.5rem, 2.75vw, 3rem);
+	}
+
+	.aopa-hub-hero--variant-full.aopa-hub-hero--has-lockup .aopa-hub-hero__description {
+		max-width: 40rem;
+	}
+
 	.aopa-hub-hero--copy-light .aopa-hub-hero__title {
 		color: #f8fafc;
 	}
@@ -483,23 +547,15 @@ const hubHeroSectionStyleAttr = hubHeroSectionStyle;
 		transition: filter 0.15s ease, opacity 0.15s ease;
 	}
 
-	.aopa-hub-hero__cta--primary {
+	.aopa-hub-hero__cta--primary,
+	.aopa-hub-hero__cta--secondary {
 		background: var(--aopa-hero-blue-deep);
 		color: #fff;
 	}
 
-	.aopa-hub-hero__cta--primary:hover {
-		filter: brightness(1.08);
-	}
-
-	.aopa-hub-hero__cta--secondary {
-		background: transparent;
-		color: var(--aopa-hero-blue-deep);
-		box-shadow: inset 0 0 0 2px currentColor;
-	}
-
+	.aopa-hub-hero__cta--primary:hover,
 	.aopa-hub-hero__cta--secondary:hover {
-		opacity: 0.88;
+		filter: brightness(1.08);
 	}
 
 	.aopa-hub-hero__cta:focus-visible {
