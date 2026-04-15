@@ -196,6 +196,13 @@ const resolvedPillarName =
 					<span>secondaryHref</span>
 					<input type="text" name={k.secondaryHref} value={resolved.secondaryHref} />
 				</label>
+				<label>
+					<span>secondaryStyle</span>
+					<select name={k.secondaryStyle}>
+						<option value="default" selected={resolved.secondaryStyle === "default"}>default</option>
+						<option value="alternate" selected={resolved.secondaryStyle === "alternate"}>alternate</option>
+					</select>
+				</label>
 			</div>
 			<div class="hh-dev-toolbar__actions">
 				<button type="submit" class="hh-dev-toolbar__primary">Update URL now</button>

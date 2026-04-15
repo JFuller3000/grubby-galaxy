@@ -18,6 +18,7 @@ import {
 	lockupCopyToneFromColorScheme,
 	normalizeHubHeroPillarName,
 	resolveHubHeroFromUrl,
+	type HubHeroSecondaryStyle,
 	type HubHeroResolvedFromUrl,
 } from "../lib/hubHeroSearchParams";
 
@@ -45,6 +46,10 @@ function pickImageAlign(v: string): HubHeroImageAlign {
 	return (HUB_HERO_IMAGE_ALIGNS as readonly string[]).includes(v)
 		? (v as HubHeroImageAlign)
 		: "left";
+}
+
+function pickSecondaryStyle(v: string): HubHeroSecondaryStyle {
+	return v === "alternate" ? "alternate" : "default";
 }
 
 function stripHeroImageLayout(section: HTMLElement) {
@@ -89,6 +94,7 @@ export function writeHubHeroFormFromResolved(
 	set(k.primaryHref, state.primaryHref);
 	set(k.secondaryLabel, state.secondaryLabel);
 	set(k.secondaryHref, state.secondaryHref);
+	set(k.secondaryStyle, state.secondaryStyle);
 	set(
 		k.lockupOpacity,
 		state.lockupOverlayOpacity != null && Number.isFinite(state.lockupOverlayOpacity)
@@ -138,6 +144,7 @@ export function readHubHeroForm(form: HTMLFormElement): HubHeroResolvedFromUrl {
 		primaryHref: g(hubHeroQueryKeys.primaryHref).trim() || "#",
 		secondaryLabel: g(hubHeroQueryKeys.secondaryLabel).trim(),
 		secondaryHref: g(hubHeroQueryKeys.secondaryHref).trim() || "#",
+		secondaryStyle: pickSecondaryStyle(g(hubHeroQueryKeys.secondaryStyle)),
 		lockupOverlayOpacity: (() => {
 			const raw = g(hubHeroQueryKeys.lockupOpacity).trim();
 			if (raw === "") return undefined;
@@ -169,7 +176,8 @@ export function applyHubHeroLiveState(
 	const iw = state.imageWidth === "half" ? "half" : "full";
 	const ia = state.imageAlign === "right" ? "right" : "left";
 	const colorScheme = colorSchemeFromPillarName(state.pillarName);
-	const copyTone = copyToneFromColorScheme(colorScheme);
+	const copyTone =
+		splitLayout && colorScheme === "#115678" ? "light" : copyToneFromColorScheme(colorScheme);
 	const lockupCopyTone = lockupCopyToneFromColorScheme(colorScheme);
 
 	stripPrefixedClasses(section, "aopa-hub-hero--bg-");
@@ -288,6 +296,7 @@ export function applyHubHeroLiveState(
 	}
 	if (sCta) {
 		sCta.hidden = !showS;
+		sCta.classList.toggle("aopa-hub-hero__cta--secondary-alt", state.secondaryStyle === "alternate");
 		if (showS) {
 			sCta.textContent = sLabel;
 			sCta.href = state.secondaryHref || "#";
@@ -314,6 +323,7 @@ export function buildHubHeroShareSearchParams(state: HubHeroResolvedFromUrl): UR
 	sp.set(k.primaryHref, (state.primaryHref ?? "").trim() || "#");
 	sp.set(k.secondaryLabel, state.secondaryLabel.trim());
 	sp.set(k.secondaryHref, (state.secondaryHref ?? "").trim() || "#");
+	sp.set(k.secondaryStyle, state.secondaryStyle);
 	if (state.lockupOverlayOpacity != null && Number.isFinite(state.lockupOverlayOpacity)) {
 		sp.set(k.lockupOpacity, String(state.lockupOverlayOpacity));
 	}

@@ -33,6 +33,8 @@ export const hubHeroQueryKeys = {
 	primaryHref: "primaryHref",
 	secondaryLabel: "secondaryLabel",
 	secondaryHref: "secondaryHref",
+	/** Secondary CTA style variant. */
+	secondaryStyle: "secondaryStyle",
 	/** 0–1 fill opacity for gray hero panels; omit for solid. */
 	lockupOpacity: "lockupOpacity",
 } as const;
@@ -43,6 +45,8 @@ const LEGACY_HUB_HERO_COLOR_SCHEME_QUERY_KEY = "colorScheme";
 const LEGACY_HUB_HERO_LOCKUP_OVERLAY_COLOR_QUERY_KEY = "lockupOverlayColor";
 const LEGACY_HUB_HERO_COPY_TONE_QUERY_KEY = "copyTone";
 const LEGACY_HUB_HERO_LOCKUP_COPY_TONE_QUERY_KEY = "lockupCopyTone";
+const HUB_HERO_SECONDARY_STYLES = ["default", "alternate"] as const;
+export type HubHeroSecondaryStyle = (typeof HUB_HERO_SECONDARY_STYLES)[number];
 
 function pickLiteral<T extends string>(
 	allowed: readonly T[],
@@ -164,6 +168,7 @@ export type HubHeroResolvedFromUrl = {
 	primaryHref: string;
 	secondaryLabel: string;
 	secondaryHref: string;
+	secondaryStyle: HubHeroSecondaryStyle;
 	/** Split + lockup column and full-variant gray inner. Omitted or solid when var unset. */
 	lockupOverlayOpacity?: number;
 };
@@ -228,6 +233,8 @@ export function parseHubHeroSearchParams(
 	if (searchParams.has(k.secondaryHref)) {
 		out.secondaryHref = (searchParams.get(k.secondaryHref) ?? "").trim();
 	}
+	const secondaryStyle = pickLiteral(HUB_HERO_SECONDARY_STYLES, searchParams.get(k.secondaryStyle));
+	if (secondaryStyle) out.secondaryStyle = secondaryStyle;
 	if (searchParams.has(k.lockupOpacity)) {
 		const raw = (searchParams.get(k.lockupOpacity) ?? "").trim();
 		if (raw.length > 0) {

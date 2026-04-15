@@ -3,6 +3,7 @@ import type { HubHeroImageAlign, HubHeroImageWidth, HubHeroMinHeight, HubHeroVar
 import {
 	colorSchemeFromPillarName,
 	copyToneFromColorScheme,
+	type HubHeroSecondaryStyle,
 	lockupOverlayColorFromColorScheme,
 	lockupCopyToneFromColorScheme,
 } from "../../lib/hubHeroSearchParams";
@@ -33,6 +34,8 @@ interface Props {
 	primaryCta?: HubHeroCta;
 	/** Text link or secondary button */
 	secondaryCta?: HubHeroCta;
+	/** Secondary button visual treatment. */
+	secondaryStyle?: HubHeroSecondaryStyle;
 	/** Split = wider lockup + body grid when lockup is set; full = stacked gray panel */
 	variant?: HubHeroVariant;
 	/** Minimum block height */
@@ -57,6 +60,7 @@ const {
 	description,
 	primaryCta,
 	secondaryCta,
+	secondaryStyle = "default",
 	variant = "full",
 	minHeight = "tall",
 	image,
@@ -71,7 +75,10 @@ const lockupHubName = hubName?.trim() ?? "";
 const hasLockup = lockupPillarName.length > 0 || lockupHubName.length > 0;
 const primaryHex = colorSchemeFromPillarName(lockupPillarName);
 const lockupOverlayHex = lockupOverlayColorFromColorScheme(primaryHex);
-const copyTone = copyToneFromColorScheme(primaryHex);
+const copyTone =
+	layout === "split" && primaryHex === "#115678"
+		? "light"
+		: copyToneFromColorScheme(primaryHex);
 const lockupCopyTone = lockupCopyToneFromColorScheme(primaryHex);
 const lockupLogoSrc =
 	lockupCopyTone === "light"
@@ -191,7 +198,11 @@ const hubHeroSectionStyleAttr = hubHeroSectionStyle;
 						hidden={!showPrimaryCta}>{primaryCta?.label ?? ""}</a>
 					<a
 						href={secondaryCta?.href ?? "#"}
-						class="aopa-hub-hero__cta aopa-hub-hero__cta--secondary"
+						class:list={[
+							"aopa-hub-hero__cta",
+							"aopa-hub-hero__cta--secondary",
+							secondaryStyle === "alternate" && "aopa-hub-hero__cta--secondary-alt",
+						]}
 						data-hub-cta-secondary
 						hidden={!showSecondaryCta}>{secondaryCta?.label ?? ""}</a>
 				</div>
@@ -537,6 +548,16 @@ const hubHeroSectionStyleAttr = hubHeroSectionStyle;
 	.aopa-hub-hero__cta--primary:hover,
 	.aopa-hub-hero__cta--secondary:hover {
 		filter: brightness(1.08);
+	}
+
+	.aopa-hub-hero__cta--secondary-alt {
+		background: #4b5563;
+		color: #f8fafc;
+	}
+
+	.aopa-hub-hero--copy-light .aopa-hub-hero__cta--secondary-alt {
+		background: #374151;
+		color: #e2e8f0;
 	}
 
 	.aopa-hub-hero__cta:focus-visible {

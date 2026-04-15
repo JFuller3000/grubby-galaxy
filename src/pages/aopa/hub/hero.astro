@@ -26,6 +26,7 @@ const defaults: HubHeroResolvedFromUrl = {
 	primaryHref: "#",
 	secondaryLabel: "Secondary",
 	secondaryHref: "#",
+	secondaryStyle: "default",
 };
 
 const resolved = resolveHubHeroFromUrl(Astro.url.searchParams, defaults);
@@ -89,6 +90,7 @@ const hubHeroExampleCode = `<HubHero
   imageAlign=${quoted(resolved.imageAlign)}
   primaryCta={${primaryCtaLiteral}}
   secondaryCta={${secondaryCtaLiteral}}
+  secondaryStyle=${quoted(resolved.secondaryStyle)}
 />`;
 ---
 
@@ -273,6 +275,7 @@ const hubHeroExampleCode = `<HubHero
 			imageAlign={resolved.imageAlign}
 			primaryCta={primaryCta}
 			secondaryCta={secondaryCta}
+			secondaryStyle={resolved.secondaryStyle}
 			lockupOverlayOpacity={resolved.lockupOverlayOpacity}
 		/>
 		<h2 class="hh-hero-columns__heading">Sample heroes</h2>
@@ -392,6 +395,7 @@ const hubHeroExampleCode = `<HubHero
   imageAlign=${quote(state.imageAlign)}
   primaryCta={${primaryCtaLiteral}}
   secondaryCta={${secondaryCtaLiteral}}
+  secondaryStyle=${quote(state.secondaryStyle)}
 />`;
 			};
 			const syncCodeSnippet = () => {
