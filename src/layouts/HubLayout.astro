@@ -21,17 +21,17 @@ interface Props {
 	// HubHero
 	hubName?: string;
 	pillarName?: string;
-	title?: string;
-	description?: string;
-	variant?: HubHeroVariant;
-	minHeight?: HubHeroMinHeight;
-	image?: { src: string; alt: string };
-	imageWidth?: HubHeroImageWidth;
-	imageAlign?: HubHeroImageAlign;
-	primaryCta?: { label: string; href: string };
-	secondaryCta?: { label: string; href: string };
-	secondaryStyle?: "default" | "alternate";
-	lockupOverlayOpacity?: number;
+	heroTitle?: string;
+	heroDescription?: string;
+	heroVariant?: HubHeroVariant;
+	heroMinHeight?: HubHeroMinHeight;
+	heroImage?: { src: string; alt: string };
+	heroImageWidth?: HubHeroImageWidth;
+	heroImageAlign?: HubHeroImageAlign;
+	heroPrimaryCta?: { label: string; href: string };
+	heroSecondaryCta?: { label: string; href: string };
+	heroSecondaryStyle?: "default" | "alternate";
+	heroLockupOverlayOpacity?: number;
 
 	// HubSubnav + HubSections
 	subnavLabel: string;
@@ -45,17 +45,17 @@ const {
 	pageTitle,
 	hubName,
 	pillarName,
-	title,
-	description,
-	variant,
-	minHeight,
-	image,
-	imageWidth,
-	imageAlign,
-	primaryCta,
-	secondaryCta,
-	secondaryStyle,
-	lockupOverlayOpacity,
+	heroTitle,
+	heroDescription,
+	heroVariant,
+	heroMinHeight,
+	heroImage,
+	heroImageWidth,
+	heroImageAlign,
+	heroPrimaryCta,
+	heroSecondaryCta,
+	heroSecondaryStyle,
+	heroLockupOverlayOpacity,
 	subnavLabel,
 	columns,
 	blockCode,
@@ -64,19 +64,6 @@ const {
 // ── code block snippet ────────────────────────────────────────────
 const q = (v: string | undefined) => JSON.stringify(v ?? "");
 
-const heroCode = `<HubHero
-  hubName=${q(hubName)}
-  pillarName=${q(pillarName)}
-  title=${q(title)}
-  description=${q(description)}
-  variant=${q(variant)}
-  minHeight=${q(minHeight)}
-  image={{ src: ${q(image?.src)}, alt: ${q(image?.alt)} }}
-  imageWidth=${q(imageWidth)}
-  imageAlign=${q(imageAlign)}
-  primaryCta={{ label: ${q(primaryCta?.label)}, href: ${q(primaryCta?.href)} }}
-  lockupOverlayOpacity={${lockupOverlayOpacity ?? "undefined"}}
-/>`;
 
 const columnsLines = [
 	`const columns = [`,
@@ -89,26 +76,112 @@ const columnsLines = [
 	`];`,
 ].join("\n");
 
-const slotContent = blockCode ? blockCode.split("\n").map((l) => `  ${l}`).join("\n") : `  <!-- slot content -->`;
+const blockCodeConst = blockCode
+	? `const blockCode = \`\n${blockCode.split("\n").map((l) => `  ${l}`).join("\n")}\n\`;\n`
+	: "";
+
+const slotContent = blockCode
+	? `  <Fragment set:html={blockCode} />`
+	: `  <!-- slot content -->`;
 
 const layoutAttrs = [
-	pageTitle && `  pageTitle=${q(pageTitle)}`,
-	hubName && `  hubName=${q(hubName)}`,
-	pillarName && `  pillarName=${q(pillarName)}`,
-	title && `  title=${q(title)}`,
-	description && `  description=${q(description)}`,
-	variant && `  variant=${q(variant)}`,
-	minHeight && `  minHeight=${q(minHeight)}`,
-	image && `  image={{ src: ${q(image.src)}, alt: ${q(image.alt)} }}`,
-	imageWidth && `  imageWidth=${q(imageWidth)}`,
-	imageAlign && `  imageAlign=${q(imageAlign)}`,
-	primaryCta && `  primaryCta={{ label: ${q(primaryCta.label)}, href: ${q(primaryCta.href)} }}`,
-	secondaryCta && `  secondaryCta={{ label: ${q(secondaryCta.label)}, href: ${q(secondaryCta.href)} }}`,
-	secondaryStyle && `  secondaryStyle=${q(secondaryStyle)}`,
-	lockupOverlayOpacity != null && `  lockupOverlayOpacity={${lockupOverlayOpacity}}`,
+	`  pageTitle=${q(pageTitle)}`,
+	`  hubName=${q(hubName)}`,
+	`  pillarName=${q(pillarName)}`,
+	`  heroTitle=${q(heroTitle)}`,
+	`  heroDescription=${q(heroDescription)}`,
+	`  heroVariant=${q(heroVariant)}`,
+	`  heroMinHeight=${q(heroMinHeight)}`,
+	`  heroImage={{ src: ${q(heroImage?.src)}, alt: ${q(heroImage?.alt)} }}`,
+	`  heroImageWidth=${q(heroImageWidth)}`,
+	`  heroImageAlign=${q(heroImageAlign)}`,
+	`  heroPrimaryCta={{ label: ${q(heroPrimaryCta?.label)}, href: ${q(heroPrimaryCta?.href)} }}`,
+	`  heroSecondaryCta={{ label: ${q(heroSecondaryCta?.label)}, href: ${q(heroSecondaryCta?.href)} }}`,
+	`  heroSecondaryStyle=${q(heroSecondaryStyle)}`,
+	`  heroLockupOverlayOpacity={${heroLockupOverlayOpacity ?? "undefined"}}`,
 	`  subnavLabel=${q(subnavLabel)}`,
 	`  columns={columns}`,
+	blockCode && `  blockCode={blockCode}`,
 ].filter(Boolean).join("\n");
+
+function highlightCode(raw: string): string {
+	const esc = (s: string) =>
+		s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+	const marks: [string, string][] = [];
+	let n = 0;
+	const mark = (cls: string, content: string) => {
+		const id = `\x01${n++}\x01`;
+		marks.push([id, `<span class="hl-${cls}">${esc(content)}</span>`]);
+		return id;
+	};
+
+	let inTmpl = false;
+
+	const out = raw.split("\n").map((line) => {
+		const t = line.trim();
+		const ind = line.slice(0, line.length - t.length);
+		if (!t) return "";
+
+		if (inTmpl) {
+			if (/^`[;,]?$/.test(t) || t.endsWith("`.trim();") || t.endsWith("`;")) inTmpl = false;
+			return mark("str", line);
+		}
+		if (t === "---") return mark("punc", "---");
+
+		// import X from "Y"
+		const impM = line.match(/^(\s*)import\s+(.+?)\s+from\s+(".*?"|'.*?');?$/);
+		if (impM)
+			return impM[1] + mark("kw", "import") + " " + mark("id", impM[2]) + " " + mark("kw", "from") + " " + mark("str", impM[3]);
+
+		// const X = ` (template literal)
+		const tmplM = line.match(/^(\s*)const\s+(\w+)\s*=\s*(`.*)$/);
+		if (tmplM) {
+			inTmpl = !tmplM[3].endsWith("`;");
+			return tmplM[1] + mark("kw", "const") + " " + mark("id", tmplM[2]) + " " + mark("punc", "=") + " " + mark("str", tmplM[3]);
+		}
+
+		// const X = [ or {
+		const constM = line.match(/^(\s*)const\s+(\w+)\s*=\s*([\[{])(.*)/);
+		if (constM)
+			return constM[1] + mark("kw", "const") + " " + mark("id", constM[2]) + " " + mark("punc", "=") + " " + mark("punc", constM[3]) + constM[4];
+
+		// pure structural: ]; }, { etc.
+		if (/^[\][\s{},;.`]+$/.test(t)) return ind + mark("punc", t);
+
+		// closing JSX tag
+		if (/^<\/[\w.:-]+>$/.test(t)) return ind + mark("tag", t);
+		if (t === "/>") return ind + mark("tag", "/>");
+		if (t === ">") return ind + mark("tag", ">");
+
+		// HTML comment
+		if (t.startsWith("<!--")) return ind + mark("comment", t);
+
+		// opening JSX tag
+		if (t.startsWith("<")) {
+			let s = t
+				.replace(/^<([\w.:-]+)/, (_, n) => mark("punc", "<") + mark("tag", n))
+				.replace(/([\w:.-]+)(=)("(?:[^"\\]|\\.)*?"|'(?:[^'\\]|\\.)*?')/g, (_, n, eq, v) => mark("attr", n) + mark("punc", eq) + mark("str", v))
+				.replace(/([\w:.-]+)(=)(\{[^}]*\})/g, (_, n, eq, v) => mark("attr", n) + mark("punc", eq) + mark("expr", v))
+				.replace(/\s*\/>$/, " " + mark("tag", "/>"))
+				.replace(/>$/, mark("tag", ">"));
+			return ind + s;
+		}
+
+		// standalone attribute line
+		const aStr = t.match(/^([\w:.-]+)(=)("(?:[^"\\]|\\.)*?"|'(?:[^'\\]|\\.)*?')(.*)$/);
+		if (aStr) return ind + mark("attr", aStr[1]) + mark("punc", "=") + mark("str", aStr[3]) + aStr[4];
+		const aExpr = t.match(/^([\w:.-]+)(=)(\{[^}]*\})(.*)$/);
+		if (aExpr) return ind + mark("attr", aExpr[1]) + mark("punc", "=") + mark("expr", aExpr[3]) + aExpr[4];
+
+		// inline strings (object data lines)
+		return line.replace(/"(?:[^"\\]|\\.)*?"/g, (v) => mark("str", v));
+	});
+
+	const joined = out.join("\n");
+	const escaped = joined.split(/(\x01\d+\x01)/).map((p, i) => (i % 2 === 0 ? esc(p) : p)).join("");
+	return marks.reduce((s, [id, html]) => s.split(id).join(html), escaped);
+}
 
 const codeSnippet = [
 	`---`,
@@ -116,6 +189,7 @@ const codeSnippet = [
 	`import { slugify } from "../lib/slugify";`,
 	``,
 	columnsLines,
+	blockCodeConst,
 	`---`,
 	``,
 	`<HubLayout`,
@@ -185,6 +259,15 @@ const codeSnippet = [
 				line-height: 1.5;
 				overflow-x: auto;
 			}
+
+			.hl-kw    { color: #c084fc; }
+			.hl-id    { color: #93c5fd; }
+			.hl-tag   { color: #7dd3fc; }
+			.hl-attr  { color: #f8fafc; }
+			.hl-str   { color: #86efac; }
+			.hl-expr  { color: #fbbf24; }
+			.hl-punc  { color: #94a3b8; }
+			.hl-comment { color: #6b7280; font-style: italic; }
 		</style>
 	</head>
 	<body>
@@ -192,17 +275,17 @@ const codeSnippet = [
 		<HubHero
 			hubName={hubName}
 			pillarName={pillarName}
-			title={title}
-			description={description}
-			variant={variant}
-			minHeight={minHeight}
-			image={image}
-			imageWidth={imageWidth}
-			imageAlign={imageAlign}
-			primaryCta={primaryCta}
-			secondaryCta={secondaryCta}
-			secondaryStyle={secondaryStyle}
-			lockupOverlayOpacity={lockupOverlayOpacity}
+			title={heroTitle}
+			description={heroDescription}
+			variant={heroVariant}
+			minHeight={heroMinHeight}
+			image={heroImage}
+			imageWidth={heroImageWidth}
+			imageAlign={heroImageAlign}
+			primaryCta={heroPrimaryCta}
+			secondaryCta={heroSecondaryCta}
+			secondaryStyle={heroSecondaryStyle}
+			lockupOverlayOpacity={heroLockupOverlayOpacity}
 		/>
 		<HubSubnav label={subnavLabel} columns={columns} />
 		<HubBlock>
@@ -216,7 +299,7 @@ const codeSnippet = [
 					<span>Copy</span>
 				</button>
 			</div>
-			<pre><code data-hub-code>{codeSnippet}</code></pre>
+			<pre><code data-hub-code set:html={highlightCode(codeSnippet)} /></pre>
 		</section>
 		<script>
 			const copyBtn = document.querySelector<HTMLButtonElement>("[data-hub-copy]");
