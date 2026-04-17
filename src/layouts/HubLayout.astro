@@ -1,0 +1,239 @@
+---
+import MainNav from "../components/aopa/MainNav.astro";
+import HubHero from "../components/aopa/HubHero.astro";
+import HubSubnav from "../components/aopa/HubSubnav.astro";
+import HubBlock from "../components/aopa/HubBlock.astro";
+import HubSections from "../components/aopa/HubSections.astro";
+import type { HubHeroVariant, HubHeroMinHeight, HubHeroImageWidth, HubHeroImageAlign } from "../components/aopa/hubHeroOptions";
+
+interface HubSubnavLink {
+	label: string;
+	href: string;
+}
+
+interface HubSubnavColumn {
+	links: HubSubnavLink[];
+}
+
+interface Props {
+	pageTitle?: string;
+
+	// HubHero
+	hubName?: string;
+	pillarName?: string;
+	title?: string;
+	description?: string;
+	variant?: HubHeroVariant;
+	minHeight?: HubHeroMinHeight;
+	image?: { src: string; alt: string };
+	imageWidth?: HubHeroImageWidth;
+	imageAlign?: HubHeroImageAlign;
+	primaryCta?: { label: string; href: string };
+	secondaryCta?: { label: string; href: string };
+	secondaryStyle?: "default" | "alternate";
+	lockupOverlayOpacity?: number;
+
+	// HubSubnav + HubSections
+	subnavLabel: string;
+	columns: HubSubnavColumn[];
+
+	// Code block
+	blockCode?: string;
+}
+
+const {
+	pageTitle,
+	hubName,
+	pillarName,
+	title,
+	description,
+	variant,
+	minHeight,
+	image,
+	imageWidth,
+	imageAlign,
+	primaryCta,
+	secondaryCta,
+	secondaryStyle,
+	lockupOverlayOpacity,
+	subnavLabel,
+	columns,
+	blockCode,
+} = Astro.props;
+
+// ── code block snippet ────────────────────────────────────────────
+const q = (v: string | undefined) => JSON.stringify(v ?? "");
+
+const heroCode = `<HubHero
+  hubName=${q(hubName)}
+  pillarName=${q(pillarName)}
+  title=${q(title)}
+  description=${q(description)}
+  variant=${q(variant)}
+  minHeight=${q(minHeight)}
+  image={{ src: ${q(image?.src)}, alt: ${q(image?.alt)} }}
+  imageWidth=${q(imageWidth)}
+  imageAlign=${q(imageAlign)}
+  primaryCta={{ label: ${q(primaryCta?.label)}, href: ${q(primaryCta?.href)} }}
+  lockupOverlayOpacity={${lockupOverlayOpacity ?? "undefined"}}
+/>`;
+
+const columnsLines = [
+	`const columns = [`,
+	...columns.map((col) => {
+		const inner = col.links
+			.map((l) => `      { label: ${JSON.stringify(l.label)}, href: ${JSON.stringify(l.href)} }`)
+			.join(",\n");
+		return `  {\n    links: [\n${inner},\n    ],\n  }`;
+	}),
+	`];`,
+].join("\n");
+
+const slotContent = blockCode ? blockCode.split("\n").map((l) => `  ${l}`).join("\n") : `  <!-- slot content -->`;
+
+const layoutAttrs = [
+	pageTitle && `  pageTitle=${q(pageTitle)}`,
+	hubName && `  hubName=${q(hubName)}`,
+	pillarName && `  pillarName=${q(pillarName)}`,
+	title && `  title=${q(title)}`,
+	description && `  description=${q(description)}`,
+	variant && `  variant=${q(variant)}`,
+	minHeight && `  minHeight=${q(minHeight)}`,
+	image && `  image={{ src: ${q(image.src)}, alt: ${q(image.alt)} }}`,
+	imageWidth && `  imageWidth=${q(imageWidth)}`,
+	imageAlign && `  imageAlign=${q(imageAlign)}`,
+	primaryCta && `  primaryCta={{ label: ${q(primaryCta.label)}, href: ${q(primaryCta.href)} }}`,
+	secondaryCta && `  secondaryCta={{ label: ${q(secondaryCta.label)}, href: ${q(secondaryCta.href)} }}`,
+	secondaryStyle && `  secondaryStyle=${q(secondaryStyle)}`,
+	lockupOverlayOpacity != null && `  lockupOverlayOpacity={${lockupOverlayOpacity}}`,
+	`  subnavLabel=${q(subnavLabel)}`,
+	`  columns={columns}`,
+].filter(Boolean).join("\n");
+
+const codeSnippet = [
+	`---`,
+	`import HubLayout from "../layouts/HubLayout.astro";`,
+	`import { slugify } from "../lib/slugify";`,
+	``,
+	columnsLines,
+	`---`,
+	``,
+	`<HubLayout`,
+	layoutAttrs,
+	`>`,
+	slotContent,
+	`</HubLayout>`,
+].join("\n");
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{pageTitle ?? "AOPA hub"}</title>
+		<style is:global>
+			body {
+				margin: 0;
+				padding-bottom: 4rem;
+				min-height: 100vh;
+				background: #f5f7fa;
+			}
+
+			.hub-code {
+				max-width: 72rem;
+				margin: 2rem auto 0;
+				padding: 0 1rem;
+				position: relative;
+			}
+
+			.hub-code__actions {
+				position: absolute;
+				top: 0.55rem;
+				right: 1.55rem;
+				z-index: 1;
+			}
+
+			.hub-code__copy {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.35rem;
+				padding: 0.25rem 0.45rem;
+				border: 1px solid rgba(255, 255, 255, 0.22);
+				border-radius: 0.35rem;
+				background: rgba(15, 23, 42, 0.45);
+				font-family: "Gotham Book", Gotham, "Helvetica Neue", Arial, sans-serif;
+				font-size: 0.8125rem;
+				line-height: 1.2;
+				color: #e2e8f0;
+				cursor: pointer;
+			}
+
+			.hub-code__copy:hover {
+				background: rgba(15, 23, 42, 0.7);
+			}
+
+			.hub-code pre {
+				margin: 0;
+				padding: 0.85rem 1rem;
+				border-radius: 0.5rem;
+				border: 1px solid rgba(0, 0, 0, 0.1);
+				background: #0f172a;
+				color: #e2e8f0;
+				font-size: 0.8rem;
+				line-height: 1.5;
+				overflow-x: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<MainNav />
+		<HubHero
+			hubName={hubName}
+			pillarName={pillarName}
+			title={title}
+			description={description}
+			variant={variant}
+			minHeight={minHeight}
+			image={image}
+			imageWidth={imageWidth}
+			imageAlign={imageAlign}
+			primaryCta={primaryCta}
+			secondaryCta={secondaryCta}
+			secondaryStyle={secondaryStyle}
+			lockupOverlayOpacity={lockupOverlayOpacity}
+		/>
+		<HubSubnav label={subnavLabel} columns={columns} />
+		<HubBlock>
+			<slot />
+		</HubBlock>
+		<HubSections columns={columns} />
+		<section class="hub-code" aria-label="Component code">
+			<div class="hub-code__actions">
+				<button type="button" class="hub-code__copy" data-hub-copy>
+					<span aria-hidden="true">⧉</span>
+					<span>Copy</span>
+				</button>
+			</div>
+			<pre><code data-hub-code>{codeSnippet}</code></pre>
+		</section>
+		<script>
+			const copyBtn = document.querySelector<HTMLButtonElement>("[data-hub-copy]");
+			const codeEl = document.querySelector<HTMLElement>("[data-hub-code]");
+			if (copyBtn && codeEl) {
+				copyBtn.addEventListener("click", async () => {
+					try {
+						await navigator.clipboard.writeText(codeEl.textContent ?? "");
+						copyBtn.textContent = "Copied";
+					} catch {
+						copyBtn.textContent = "Copy failed";
+					}
+					window.setTimeout(() => {
+						copyBtn.innerHTML = '<span aria-hidden="true">⧉</span><span>Copy</span>';
+					}, 1200);
+				});
+			}
+		</script>
+	</body>
+</html>

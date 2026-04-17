@@ -1,6 +1,5 @@
 ---
 import MainNav from "../../../components/aopa/MainNav.astro";
-import HubSubnav from "../../../components/aopa/HubSubnav.astro";
 import HubSections from "../../../components/aopa/HubSections.astro";
 import { slugify } from "../../../lib/slugify";
 
@@ -62,7 +61,6 @@ const codeSnippet = [
 		return `  {\n    links: [\n${inner},\n    ],\n  }`;
 	}),
 	`];\n`,
-	`<HubSubnav label=${JSON.stringify(active.label)} columns={columns} />`,
 	`<HubSections columns={columns} />`,
 ].join("\n");
 
@@ -202,7 +200,6 @@ const presetHref = (key: string) => `${Astro.url.pathname}?preset=${key}`;
 		<MainNav />
 
 		<div class="ps-preview">
-			<HubSubnav label={active.label} columns={columns} />
 			<HubSections columns={columns} />
 		</div>
 

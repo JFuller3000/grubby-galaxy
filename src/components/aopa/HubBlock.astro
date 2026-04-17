@@ -1,0 +1,35 @@
+---
+---
+
+<div class="hub-block">
+	<slot />
+</div>
+
+<style>
+	.hub-block {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 2rem 1rem;
+		font-family: "Gotham Book", Gotham, "Helvetica Neue", Arial, sans-serif;
+		color: #1f2937;
+	}
+
+	.hub-block :global(h2) {
+		margin: 0 0 0.75rem;
+		font-family: "Gotham Bold", Gotham, "Helvetica Neue", Arial, sans-serif;
+		font-size: clamp(1.25rem, 1.1rem + 0.55vw, 1.65rem);
+		line-height: 1.2;
+		letter-spacing: 0.01em;
+	}
+
+	.hub-block :global(p) {
+		margin: 0 0 1rem;
+		max-width: 48rem;
+		font-size: 1rem;
+		line-height: 1.6;
+	}
+
+	.hub-block :global(p:last-child) {
+		margin-bottom: 0;
+	}
+</style>
