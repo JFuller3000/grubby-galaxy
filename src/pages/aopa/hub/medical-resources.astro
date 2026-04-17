@@ -1,0 +1,94 @@
+---
+import MainNav from "../../../components/aopa/MainNav.astro";
+import HubHero from "../../../components/aopa/HubHero.astro";
+import HubSubnav from "../../../components/aopa/HubSubnav.astro";
+
+const medicalSubnavLabel = "Medical\nResource\nLinks";
+const medicalColumns = [
+	{
+		links: [
+			{ label: "BasicMed Pilot Resources", href: "#" },
+			{ label: "Airman Medical", href: "#" },
+			{ label: "Certification", href: "#" },
+		],
+	},
+	{
+		links: [
+			{ label: "Health Conditions", href: "#" },
+			{ label: "Submitting to the FAA Medications Database", href: "#" },
+			{ label: "Special Issuance", href: "#" },
+		],
+	},
+	{
+		links: [{ label: "Certification", href: "#" }],
+	},
+] as const;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<title>AOPA hub — medical resources</title>
+		<style is:global>
+			body {
+				margin: 0;
+				min-height: 100vh;
+				background: #f5f7fa;
+			}
+
+			.hub-medical-content {
+				max-width: 72rem;
+				margin: 2rem auto 0;
+				padding: 0 1rem 4rem;
+				font-family: "Gotham Book", Gotham, "Gotham", "Helvetica Neue", Arial, sans-serif;
+				color: #1f2937;
+			}
+
+			.hub-medical-content h2 {
+				margin: 0 0 0.75rem;
+				font-family: "Gotham Bold", Gotham, "Gotham", "Helvetica Neue", Arial, sans-serif;
+				font-size: clamp(1.25rem, 1.1rem + 0.55vw, 1.65rem);
+				line-height: 1.2;
+				letter-spacing: 0.01em;
+			}
+
+			.hub-medical-content p {
+				margin: 0;
+				max-width: 48rem;
+				font-size: 1rem;
+				line-height: 1.6;
+			}
+		</style>
+	</head>
+	<body>
+		<MainNav />
+		<HubHero
+			hubName="Medical Resources"
+			pillarName="Fly"
+			title="Find answers here"
+			description="Do you have questions or need information about an airman medical topic? Look through the information on these pages, and feel free to contact AOPA's Medical Certification Specialists."
+			variant="full"
+			minHeight="tall"
+			imageWidth="half"
+			imageAlign="left"
+			image={{
+				src: "https://www.aopa.org/-/media/Images/AOPA-Main/News-and-Media/2018/October/1031_aopa_colombia.jpg",
+				alt: "Hero background",
+			}}
+			primaryCta={{ label: "Contact Info", href: "#" }}
+			lockupOverlayOpacity={0.9}
+		/>
+		<HubSubnav label={medicalSubnavLabel} columns={medicalColumns} />
+		<main class="hub-medical-content">
+			<h2>Medical certification support</h2>
+			<p>
+				Use the links above to browse medical topics, BasicMed guidance, and certification resources.
+				This page is ready for wiring to real destinations as the hub content is finalized.
+			</p>
+		</main>
+	</body>
+</html>
+

@@ -1,0 +1,129 @@
+---
+import HubSubnav from "../../../components/aopa/HubSubnav.astro";
+
+const medicalSubnavLabel = "Medical\nResource\nLinks";
+
+const medicalColumns = [
+	{
+		links: [
+			{ label: "BasicMed Pilot Resources", href: "#" },
+			{ label: "Airman Medical", href: "#" },
+			{ label: "Certification", href: "#" },
+		],
+	},
+	{
+		links: [
+			{ label: "Health Conditions", href: "#" },
+			{ label: "Submitting to the FAA Medications Database", href: "#" },
+			{ label: "Special Issuance", href: "#" },
+		],
+	},
+	{
+		links: [{ label: "Certification", href: "#" }],
+	},
+];
+
+const subnavExampleCode = `<HubSubnav
+  label={\`Medical\\nResource\\nLinks\`}
+  columns={[
+    {
+      links: [
+        { label: "BasicMed Pilot Resources", href: "#" },
+        { label: "Airman Medical", href: "#" },
+        { label: "Certification", href: "#" },
+      ],
+    },
+    {
+      links: [
+        { label: "Health Conditions", href: "#" },
+        { label: "Submitting to the FAA Medications Database", href: "#" },
+        { label: "Special Issuance", href: "#" },
+      ],
+    },
+    {
+      links: [{ label: "Certification", href: "#" }],
+    },
+  ] as const}
+/>`;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>AOPA hub — subnav</title>
+		<style is:global>
+			body {
+				margin: 0;
+				padding: 4rem 0 6rem;
+				min-height: 100vh;
+				background: #e8e8e8;
+				font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+			}
+
+			.hh-subnav-page {
+				max-width: 1200px;
+				margin-inline: auto;
+				padding-inline: 1.5rem;
+			}
+
+			.hh-subnav-page__heading {
+				margin: 0 0 0.5rem;
+				font-size: 1.75rem;
+				font-weight: 650;
+				letter-spacing: -0.02em;
+			}
+
+			.hh-subnav-page__lede {
+				margin: 0 0 2rem;
+				max-width: 36rem;
+				font-size: 0.95rem;
+				color: #4b5563;
+			}
+
+			.hh-subnav-page__section {
+				margin-top: 2.5rem;
+			}
+
+			.hh-subnav-page__code-heading {
+				margin: 0 0 0.5rem;
+				font-size: 0.95rem;
+				font-weight: 600;
+				color: #374151;
+			}
+
+			.hh-subnav-page__code {
+				margin: 0;
+				padding: 1rem 1.25rem;
+				border-radius: 0.75rem;
+				background: #111827;
+				color: #e5e7eb;
+				font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+					"Courier New", monospace;
+				font-size: 0.8rem;
+				line-height: 1.6;
+				overflow-x: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<main class="hh-subnav-page">
+			<section aria-label="Hub subnav example">
+				<h1 class="hh-subnav-page__heading">Hub Subnav</h1>
+				<p class="hh-subnav-page__lede">
+					Early component sketch for a wide, dark subnavigation bar that pairs with the hub hero.
+					The example below mimics the medical resource links layout.
+				</p>
+			</section>
+
+			<HubSubnav label={medicalSubnavLabel} columns={medicalColumns} />
+
+			<section class="hh-subnav-page__section" aria-label="HubSubnav usage">
+				<h2 class="hh-subnav-page__code-heading">Component usage</h2>
+				<pre class="hh-subnav-page__code"><code>{subnavExampleCode}</code></pre>
+			</section>
+		</main>
+	</body>
+</html>
+

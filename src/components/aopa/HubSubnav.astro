@@ -1,0 +1,160 @@
+---
+export interface HubSubnavLink {
+	label: string;
+	href: string;
+}
+
+export interface HubSubnavColumn {
+	/** Nav links in this column (top-to-bottom). */
+	links: HubSubnavLink[];
+}
+
+interface Props {
+	/** Left-hand section title. Newline characters (\\n) become line breaks. */
+	label: string;
+	/** One or more link columns to render on the right. */
+	columns: HubSubnavColumn[];
+}
+
+const { label, columns } = Astro.props;
+const labelAccessible = label.replace(/\s*\n\s*/g, " ").replace(/\s+/g, " ").trim();
+---
+
+<nav class="aopa-hub-subnav" aria-label={labelAccessible}>
+	<div class="aopa-hub-subnav__inner">
+		<div class="aopa-hub-subnav__label" aria-hidden="true">
+			<span>{label}</span>
+		</div>
+		<div class="aopa-hub-subnav__columns">
+			{
+				columns.map((col) => (
+					<div class="aopa-hub-subnav__column">
+						<ul class="aopa-hub-subnav__list">
+							{
+								col.links.map((item) => (
+									<li class="aopa-hub-subnav__item">
+										<a href={item.href} class="aopa-hub-subnav__link">
+											{item.label}
+										</a>
+									</li>
+								))
+							}
+						</ul>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</nav>
+
+<style>
+	.aopa-hub-subnav {
+		box-sizing: border-box;
+		/* Full-bleed bar when nested inside a max-width wrapper */
+		width: 100vw;
+		margin-inline: calc(50% - 50vw);
+		background: #3c3c3c;
+		color: #ffffff;
+		padding-block: 1.25rem;
+	}
+
+	.aopa-hub-subnav__inner {
+		max-width: 1200px;
+		margin-inline: auto;
+		padding-inline: 1.5rem;
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr);
+		align-items: stretch;
+		column-gap: clamp(3.5rem, 2rem + 8vw, 8.5rem);
+		row-gap: 1.5rem;
+	}
+
+	.aopa-hub-subnav__label {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		max-width: min(22rem, 42vw);
+		font-family: "Gotham Bold", Gotham, "Gotham", "Helvetica Neue", Arial, sans-serif;
+		font-size: clamp(1rem, 0.82rem + 0.8vw, 1.5rem);
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: #00a3e0;
+		line-height: 1.05;
+	}
+
+	.aopa-hub-subnav__label span {
+		white-space: pre-line;
+		text-wrap: balance;
+	}
+
+	.aopa-hub-subnav__columns {
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: 1fr;
+		gap: 3rem;
+	}
+
+	.aopa-hub-subnav__column {
+		min-width: 0;
+	}
+
+	.aopa-hub-subnav__list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.aopa-hub-subnav__link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: flex-start;
+		box-sizing: border-box;
+		width: 100%;
+		padding: 0.55rem 0.9rem;
+		border-radius: 0.375rem;
+		border: 1px solid rgba(255, 255, 255, 0.32);
+		background: rgba(255, 255, 255, 0.07);
+		font-family: "Gotham Bold", Gotham, "Gotham", "Helvetica Neue", Arial, sans-serif;
+		font-size: 0.8125rem;
+		font-weight: 700;
+		line-height: 1.35;
+		color: #ffffff;
+		text-decoration: none;
+		transition:
+			background 0.15s ease,
+			border-color 0.15s ease;
+	}
+
+	.aopa-hub-subnav__link:hover {
+		background: rgba(255, 255, 255, 0.14);
+		border-color: rgba(255, 255, 255, 0.48);
+	}
+
+	.aopa-hub-subnav__link:focus-visible {
+		outline: 2px solid #00a3e0;
+		outline-offset: 2px;
+	}
+
+	@media (max-width: 768px) {
+		.aopa-hub-subnav__inner {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 1.5rem;
+		}
+
+		.aopa-hub-subnav__label {
+			max-width: none;
+		}
+
+		.aopa-hub-subnav__columns {
+			grid-auto-flow: row;
+			grid-auto-columns: unset;
+			grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+			row-gap: 1.5rem;
+		}
+	}
+</style>
+
