@@ -1,0 +1,251 @@
+---
+import MainNav from "../../../components/aopa/MainNav.astro";
+import HubSubnav from "../../../components/aopa/HubSubnav.astro";
+import HubSections from "../../../components/aopa/HubSections.astro";
+import { slugify } from "../../../lib/slugify";
+
+const PRESETS = {
+	medical: {
+		label: "Medical\nResource\nLinks",
+		pillar: "Fly",
+		columns: [
+			["BasicMed Pilot Resources", "Airman Medical", "Certification"],
+			["Health Conditions", "Submitting to the FAA Medications Database", "Special Issuance"],
+			["Special Issuance Renewals"],
+		],
+	},
+	training: {
+		label: "Training\n& Safety\nLinks",
+		pillar: "Learn",
+		columns: [
+			["Flight Training", "Ground School", "Practice Tests"],
+			["Safety Courses", "WINGS Program", "Accident Case Studies"],
+			["CFI Resources"],
+		],
+	},
+	"flying-clubs": {
+		label: "Flying\nClub\nLinks",
+		pillar: "Fly",
+		columns: [
+			["Find a Club", "Start a Club", "Club Benefits"],
+			["Member Resources", "Insurance", "Aircraft Maintenance"],
+			["Flying Club Stories"],
+		],
+	},
+	advocacy: {
+		label: "Advocacy\nResource\nLinks",
+		pillar: "Advocate",
+		columns: [
+			["Legislative Campaigns", "Action Alerts", "Airport Advocacy"],
+			["Regulatory Issues", "Airspace & Operations", "User Fees & Fuel Tax"],
+			["State Advocacy"],
+		],
+	},
+} as const;
+
+type PresetKey = keyof typeof PRESETS;
+
+const presetParam = Astro.url.searchParams.get("preset") ?? "medical";
+const activeKey: PresetKey = presetParam in PRESETS ? (presetParam as PresetKey) : "medical";
+const active = PRESETS[activeKey];
+
+const columns = active.columns.map((labels) => ({
+	links: [...labels].map((label) => ({ label, href: `#${slugify(label)}` })),
+}));
+
+const codeSnippet = [
+	`const columns = [`,
+	...columns.map((col) => {
+		const inner = col.links
+			.map((l) => `      { label: ${JSON.stringify(l.label)}, href: ${JSON.stringify(l.href)} }`)
+			.join(",\n");
+		return `  {\n    links: [\n${inner},\n    ],\n  }`;
+	}),
+	`];\n`,
+	`<HubSubnav label=${JSON.stringify(active.label)} columns={columns} />`,
+	`<HubSections columns={columns} />`,
+].join("\n");
+
+const presetHref = (key: string) => `${Astro.url.pathname}?preset=${key}`;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<title>AOPA hub — page section</title>
+		<style is:global>
+			body {
+				margin: 0;
+				padding: 0 0 6rem;
+				min-height: 100vh;
+				background: #e8e8e8;
+			}
+
+			/* ── preset switcher ─────────────────────────────────── */
+			.ps-presets__heading {
+				max-width: 72rem;
+				margin: 1.5rem auto 0.75rem;
+				padding: 0 1rem;
+				font-family: "Gotham Bold", Gotham, "Helvetica Neue", Arial, sans-serif;
+				font-size: clamp(1rem, 0.92rem + 0.35vw, 1.125rem);
+				line-height: 1.2;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				color: #1f2937;
+			}
+
+			.ps-presets {
+				max-width: 72rem;
+				margin: 0 auto;
+				padding: 0 1rem;
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 0.875rem;
+			}
+
+			.ps-presets__item {
+				padding: 1rem 1.1rem;
+				background: rgba(255, 255, 255, 0.72);
+				border: 1px solid rgba(0, 0, 0, 0.08);
+				border-radius: 0.5rem;
+				font-family: "Gotham Bold", Gotham, "Helvetica Neue", Arial, sans-serif;
+				font-size: 1rem;
+				line-height: 1.2;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				color: #1f2937;
+			}
+
+			.ps-presets__item[data-active] {
+				background: rgba(255, 255, 255, 0.95);
+				border-color: #00a3e0;
+				outline: 2px solid #00a3e0;
+				outline-offset: -1px;
+			}
+
+			.ps-presets__link {
+				display: block;
+				margin-top: 0.65rem;
+				font-family: "Gotham Book", Gotham, "Helvetica Neue", Arial, sans-serif;
+				font-size: 0.875rem;
+				line-height: 1.35;
+				text-transform: none;
+				letter-spacing: normal;
+				color: #0b5cab;
+				text-decoration: underline;
+				text-underline-offset: 0.15em;
+			}
+
+			@media (min-width: 640px) {
+				.ps-presets {
+					grid-template-columns: repeat(4, minmax(0, 1fr));
+				}
+			}
+
+			/* ── code panel ──────────────────────────────────────── */
+			.ps-code {
+				max-width: 72rem;
+				margin: 1.5rem auto 0;
+				padding: 0 1rem;
+				position: relative;
+			}
+
+			.ps-code__actions {
+				position: absolute;
+				top: 0.55rem;
+				right: 1.55rem;
+				z-index: 1;
+			}
+
+			.ps-code__copy {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.35rem;
+				padding: 0.25rem 0.45rem;
+				border: 1px solid rgba(255, 255, 255, 0.22);
+				border-radius: 0.35rem;
+				background: rgba(15, 23, 42, 0.45);
+				font-family: "Gotham Book", Gotham, "Helvetica Neue", Arial, sans-serif;
+				font-size: 0.8125rem;
+				line-height: 1.2;
+				color: #e2e8f0;
+				cursor: pointer;
+			}
+
+			.ps-code__copy:hover {
+				background: rgba(15, 23, 42, 0.7);
+			}
+
+			.ps-code pre {
+				margin: 0;
+				padding: 0.85rem 1rem;
+				border-radius: 0.5rem;
+				border: 1px solid rgba(0, 0, 0, 0.1);
+				background: #0f172a;
+				color: #e2e8f0;
+				font-size: 0.8rem;
+				line-height: 1.5;
+				overflow-x: auto;
+			}
+
+			/* ── component preview frame ─────────────────────────── */
+			.ps-preview {
+				margin-top: 1.5rem;
+				background: #f5f7fa;
+			}
+		</style>
+	</head>
+	<body>
+		<MainNav />
+
+		<div class="ps-preview">
+			<HubSubnav label={active.label} columns={columns} />
+			<HubSections columns={columns} />
+		</div>
+
+		<h2 class="ps-presets__heading">Sample presets</h2>
+		<div class="ps-presets">
+			{
+				(Object.keys(PRESETS) as PresetKey[]).map((key) => (
+					<div class="ps-presets__item" data-active={key === activeKey ? "" : undefined}>
+						{PRESETS[key].pillar}
+						<a class="ps-presets__link" href={presetHref(key)}>
+							{key.replace(/-/g, " ")}
+						</a>
+					</div>
+				))
+			}
+		</div>
+
+		<section class="ps-code" aria-label="HubSections component code">
+			<div class="ps-code__actions">
+				<button type="button" class="ps-code__copy" data-ps-copy>
+					<span aria-hidden="true">⧉</span>
+					<span>Copy</span>
+				</button>
+			</div>
+			<pre><code data-ps-code>{codeSnippet}</code></pre>
+		</section>
+
+		<script>
+			const copyBtn = document.querySelector<HTMLButtonElement>("[data-ps-copy]");
+			const codeEl = document.querySelector<HTMLElement>("[data-ps-code]");
+			if (copyBtn && codeEl) {
+				copyBtn.addEventListener("click", async () => {
+					try {
+						await navigator.clipboard.writeText(codeEl.textContent ?? "");
+						copyBtn.textContent = "Copied";
+					} catch {
+						copyBtn.textContent = "Copy failed";
+					}
+					window.setTimeout(() => {
+						copyBtn.innerHTML = '<span aria-hidden="true">⧉</span><span>Copy</span>';
+					}, 1200);
+				});
+			}
+		</script>
+	</body>
+</html>

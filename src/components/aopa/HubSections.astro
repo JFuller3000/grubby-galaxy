@@ -1,0 +1,66 @@
+---
+import { slugify } from "../../lib/slugify";
+
+interface HubSubnavLink {
+	label: string;
+	href: string;
+}
+
+interface HubSubnavColumn {
+	links: readonly HubSubnavLink[] | HubSubnavLink[];
+}
+
+interface Props {
+	columns: readonly HubSubnavColumn[] | HubSubnavColumn[];
+}
+
+const { columns } = Astro.props;
+const links = columns.flatMap((col) => [...col.links]);
+---
+
+<div class="hub-sections">
+	{
+		links.map((link) => (
+			<section id={slugify(link.label)} class="hub-section">
+				<h2>{link.label}</h2>
+				<p class="hub-section__placeholder">Content coming soon.</p>
+			</section>
+		))
+	}
+</div>
+
+<style>
+	.hub-sections {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 2rem 1rem 4rem;
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+		font-family: "Gotham Book", Gotham, "Helvetica Neue", Arial, sans-serif;
+		color: #1f2937;
+	}
+
+	.hub-section {
+		border-top: 2px solid #e5e7eb;
+		padding-top: 2rem;
+		scroll-margin-top: 4rem;
+	}
+
+	.hub-section h2 {
+		margin: 0 0 0.75rem;
+		font-family: "Gotham Bold", Gotham, "Helvetica Neue", Arial, sans-serif;
+		font-size: clamp(1.25rem, 1.1rem + 0.55vw, 1.65rem);
+		line-height: 1.2;
+		letter-spacing: 0.01em;
+	}
+
+	.hub-section__placeholder {
+		margin: 0;
+		max-width: 48rem;
+		font-size: 1rem;
+		line-height: 1.6;
+		color: #6b7280;
+		font-style: italic;
+	}
+</style>
