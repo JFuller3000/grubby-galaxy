@@ -5,6 +5,7 @@ import { loadEnv } from "vite";
 // https://astro.build/config
 // Dev: browser calls same-origin /api/authgravity/* → Vite proxies to AuthGravity (avoids CORS on localhost).
 export default defineConfig(({ mode }) => {
+
   const env = loadEnv(mode, process.cwd(), "");
   const proxyTarget = (
     env.AUTHGRAVITY_PROXY_TARGET ||
