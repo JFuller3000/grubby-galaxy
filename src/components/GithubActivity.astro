@@ -1,0 +1,336 @@
+---
+import { fetchGitHubActivity, type ActivityData, type PRInfo, type CommitInfo, type LanguageInfo } from '../lib/github';
+
+let data: ActivityData | null = null;
+let errorMsg: string | null = null;
+
+try {
+  const token = import.meta.env.GITHUB_TOKEN as string | undefined;
+  data = await fetchGitHubActivity(token);
+  if (
+    !data.prs.length &&
+    !data.commits.length &&
+    !data.languages.length &&
+    !data.currentStreak
+  ) {
+    errorMsg = 'No recent activity';
+  }
+} catch (e) {
+  errorMsg = e instanceof Error ? e.message : String(e);
+}
+
+function timeAgo(dateStr: string): string {
+  const now = Date.now();
+  const then = new Date(dateStr).getTime();
+  const diff = Math.floor((now - then) / 1000);
+  if (diff < 60) return 'just now';
+  if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+  if (diff < 604800) return Math.floor(diff / 86400) + 'd ago';
+  if (diff < 2592000) return Math.floor(diff / 604800) + 'w ago';
+  return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+interface PRWithClass extends PRInfo {
+  stateClass: string;
+}
+
+interface CommitWithRepo extends CommitInfo {}
+
+interface LangWithBg extends LanguageInfo {
+  dotBg: string;
+}
+
+const prs: PRWithClass[] = (data?.prs ?? []).map((pr) => ({
+  ...pr,
+  stateClass: 'gh-state gh-state--' + pr.state.toLowerCase(),
+}));
+
+const commits: CommitWithRepo[] = data?.commits ?? [];
+
+const languages: LangWithBg[] = (data?.languages ?? []).map((lang) => ({
+  ...lang,
+  dotBg: lang.color ?? '#ccc',
+}));
+
+const hasError = errorMsg !== null;
+const hasData = data !== null && !hasError;
+const isEmpty = hasData && !prs.length && !commits.length && !languages.length && !data.currentStreak;
+const showFallback = hasError || isEmpty;
+const fallbackMsg = hasError ? errorMsg : 'No recent activity';
+
+const streakNum = data?.currentStreak ?? 0;
+const streakLabel = 'day' + (streakNum !== 1 ? 's' : '');
+const streakTotal = data?.totalContributions ?? 0;
+---
+
+{showFallback ? (
+<section class="gh-section" aria-label="GitHub activity">
+  <div class="gh-card gh-fallback">
+    <p>Activity data unavailable{hasError && errorMsg !== 'No recent activity' ? ': ' + errorMsg : ''}.</p>
+  </div>
+</section>
+) : hasData ? (
+<section class="gh-section" aria-label="GitHub activity">
+  <div class="gh-grid">
+    <article class="gh-card">
+      <h3 class="gh-card-title">
+        <a href="https://github.com/JFuller3000?tab=pullrequests" target="_blank" rel="noopener noreferrer">Recent PRs</a>
+      </h3>
+      {prs.length > 0 ? (
+      <ul class="gh-list">
+        {prs.map((pr) => (
+          <li>
+            <span class="gh-list-title">{pr.title}</span>
+            <span class="gh-meta">
+              <span class="gh-repo">{pr.repo}</span>
+            </span>
+            <span class="gh-meta">
+              <span class={pr.stateClass}>{pr.state}</span>
+              <span class="gh-time">{timeAgo(pr.date)}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+      ) : (
+      <p class="gh-empty">No recent pull requests.</p>
+      )}
+    </article>
+
+    <article class="gh-card">
+      <h3 class="gh-card-title">
+        <a href="https://github.com/JFuller3000" target="_blank" rel="noopener noreferrer">Recent Commits</a>
+      </h3>
+      {commits.length > 0 ? (
+      <ul class="gh-list">
+        {commits.map((commit) => (
+          <li>
+            <span class="gh-list-title">{commit.message}</span>
+            <span class="gh-meta">
+              <span class="gh-repo">{commit.repo}</span>
+              <span class="gh-time">{timeAgo(commit.date)}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+      ) : (
+      <p class="gh-empty">No recent commits.</p>
+      )}
+    </article>
+
+    <article class="gh-card">
+      <h3 class="gh-card-title">
+        <a href="https://github.com/JFuller3000?tab=repositories" target="_blank" rel="noopener noreferrer">Top Languages</a>
+      </h3>
+      {languages.length > 0 ? (
+      <ul class="gh-lang-list">
+        {languages.map((lang) => (
+          <li>
+            <span class="gh-lang-dot" style={"background: " + lang.dotBg}></span>
+            <span class="gh-lang-name">{lang.name}</span>
+            <span class="gh-lang-count">{lang.count}</span>
+          </li>
+        ))}
+      </ul>
+      ) : (
+      <p class="gh-empty">No languages found.</p>
+      )}
+    </article>
+
+    <article class="gh-card gh-streak-card">
+      <h3 class="gh-card-title">Contribution Streak</h3>
+      <div class="gh-streak">
+        <span class="gh-streak-number">{streakNum}</span>
+        <span class="gh-streak-label">{streakLabel}</span>
+      </div>
+      <p class="gh-streak-total">{streakTotal} contributions this year</p>
+    </article>
+  </div>
+</section>
+) : null}
+
+<style>
+  .gh-section {
+    max-width: var(--max-width);
+    margin: 3rem auto 0;
+    width: 100%;
+  }
+
+  .gh-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .gh-card {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+  }
+
+  .gh-card-title {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 0 0 0.75rem;
+    letter-spacing: 0.02em;
+  }
+
+  .gh-card-title a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .gh-card-title a:hover {
+    text-decoration: underline;
+  }
+
+  .gh-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .gh-list li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .gh-list li::before {
+    content: '';
+    display: none;
+  }
+
+  .gh-list-title {
+    font-size: 0.9rem;
+    color: var(--color-text);
+    line-height: 1.3;
+  }
+
+  .gh-meta {
+    font-size: 0.8rem;
+    color: var(--color-muted);
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .gh-repo {
+    opacity: 0.8;
+  }
+
+  .gh-state {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    padding: 0.1em 0.4em;
+    border-radius: 0.25em;
+  }
+
+  .gh-state--merged {
+    color: #8250df;
+    background: #f3e8fd;
+  }
+
+  .gh-state--open {
+    color: #1a7f37;
+    background: #dafbe1;
+  }
+
+  .gh-state--closed {
+    color: #cf222e;
+    background: #ffebe9;
+  }
+
+  .gh-time {
+    opacity: 0.7;
+  }
+
+  .gh-lang-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .gh-lang-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .gh-lang-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .gh-lang-name {
+    flex: 1;
+    color: var(--color-text);
+  }
+
+  .gh-lang-count {
+    color: var(--color-muted);
+    font-size: 0.8rem;
+  }
+
+  .gh-streak-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .gh-streak {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .gh-streak-number {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: var(--color-accent);
+    line-height: 1;
+  }
+
+  .gh-streak-label {
+    font-size: 1rem;
+    color: var(--color-muted);
+  }
+
+  .gh-streak-total {
+    font-size: 0.85rem;
+    color: var(--color-muted);
+    margin: 0;
+  }
+
+  .gh-empty {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+    margin: 0;
+  }
+
+  .gh-fallback {
+    text-align: center;
+    color: var(--color-muted);
+  }
+
+  @media (max-width: 640px) {
+    .gh-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

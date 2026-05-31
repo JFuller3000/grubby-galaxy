@@ -1,5 +1,7 @@
 ---
 import SiteNav from '../components/SiteNav.astro';
+import Resume from '../components/Resume.astro';
+import GithubActivity from '../components/GithubActivity.astro';
 const currentPath = Astro.url.pathname;
 ---
 <!DOCTYPE html>
@@ -299,13 +301,17 @@ const currentPath = Astro.url.pathname;
 		<div class="page">
 			<SiteNav currentPath={currentPath} />
 			<div class="page-body">
-			<aside class="auth-gravity" aria-label="AuthGravity passkey demo">
-				<p class="auth-gravity__label">Passkey (AuthGravity)</p>
-				<button type="button" id="auth-register" data-variant="secondary">Register (passkey)</button>
-				<button type="button" id="auth-login">Sign in</button>
-				<p id="auth-status" role="status" aria-live="polite"></p>
-			</aside>
+				<main>
+					<Resume />
+				</main>
+				<aside class="auth-gravity" aria-label="AuthGravity passkey demo">
+					<p class="auth-gravity__label">Passkey (AuthGravity)</p>
+					<button type="button" id="auth-register" data-variant="secondary">Register (passkey)</button>
+					<button type="button" id="auth-login">Sign in</button>
+					<p id="auth-status" role="status" aria-live="polite"></p>
+				</aside>
 			</div>
+			<GithubActivity />
 		</div>
 		<script>
 			import { startRegistration, startAuthentication } from "@simplewebauthn/browser";

@@ -12,16 +12,184 @@ const {
 } = Astro.props;
 
 const greeting = `Hi ${userName}`;
+
+interface NavGroup {
+	label: string;
+	links?: string[];
+}
+
+interface NavColumn {
+	label: string;
+	groups: NavGroup[];
+}
+
+const membershipGroups: NavGroup[] = [
+	{
+		label: "Acquisition Journey",
+		links: ["Trial Membership", "Student Join Form", "Military Join Form"],
+	},
+	{ label: "Transactional Join / Renew / Upgrade" },
+	{ label: "Credit Card" },
+	{ label: "Sweepstakes" },
+];
+
+const navColumns: NavColumn[] = [
+	{
+		label: "Advocacy",
+		groups: [
+			{
+				label: "Advocacy & Regulatory",
+				links: [
+					"Key Issues",
+					"MOSAIC",
+					"BasicMed",
+					"100 Unleaded Avgas",
+					"Fees Transparency",
+				],
+			},
+			{
+				label: "State/Regional",
+				links: ["Airport Support Network"],
+			},
+			{ label: "PAC" },
+		],
+	},
+	{
+		label: "Learn",
+		groups: [
+			{
+				label: "Training & Safety",
+				links: [
+					"Learn to Fly",
+					"Flight Schools",
+					"Flight School Business",
+					"Student Pilots",
+					"New Pilots Guide to ATC Communication",
+					"PPL Cost",
+					"Airspace",
+					"AOPA Personal Minimums",
+					"Flight Following",
+					"Density Altitude",
+					"Ratings and Endorsements",
+					"Instrument Rating",
+					"IFR Requirements",
+					"High Altitude Endorsement",
+					"Other Ratings",
+					"Commercial Pilot Certificate",
+					"Commercial Pilot License Requirements",
+					"Guide to Logging PIC Time",
+					"Flight Review",
+					"Rusty Pilots",
+					"PIC",
+					"Air Safety Institute",
+					"SOOO MUCH CONTENT",
+				],
+			},
+			{
+				label: "Careers & Education",
+				links: [
+					"Aviation Scholarships",
+					"AOPA Flight Training Scholarships",
+					"CFI",
+					"JS Firm",
+				],
+			},
+			{ label: "Scholarships" },
+		],
+	},
+	{
+		label: "Fly",
+		groups: [
+			{
+				label: "Flight Tools",
+				links: ["Flight Planning", "Weather", "Airport Directory", "TFRs"],
+			},
+			{
+				label: "Aircraft Types & Ownership",
+				links: [
+					"Aircraft Guide",
+					"Buying or Selling an Aircraft",
+					"Aircraft Valuation",
+					"Purchase Agreement",
+					"Maintenance and Inspections",
+					"Operating Costs Calculator",
+					"Aircraft Insurance",
+					"Renting an Aircraft",
+					"Renters Insurance",
+				],
+			},
+			{
+				label: "Flying Clubs",
+				links: ["Flying Clubs Finder"],
+			},
+			{ label: "Finance & Insurance" },
+			{ label: "Legal & PPS" },
+			{
+				label: "Medical / Medications",
+				links: [
+					"BasicMed",
+					"Mental Health",
+					"Airman Medical Certification",
+					"Medication Database",
+				],
+			},
+			{ label: "Destinations / Travel" },
+			{ label: "International" },
+			{ label: "TSA & Security" },
+		],
+	},
+	{
+		label: "Community",
+		groups: [
+			{
+				label: "Publications & Media",
+				links: [
+					"AOPA Pilot",
+					"AOPA Pilot Turbine",
+					"Flight Training",
+					"Digital Editions",
+					"Newsletters",
+					"Podcasts",
+					"AOPA Video",
+					"Social Media",
+				],
+			},
+			{
+				label: "Events",
+				links: [
+					"Buckeye Air Fair",
+					"Hoover Awards",
+					"Sun N' Fun",
+					"Triple Tree",
+					"EAA AirVenture Oshkosh",
+				],
+			},
+			{ label: "Public Benefit Flying" },
+		],
+	},
+];
+
+const slugify = (value: string) =>
+	value
+		.toLowerCase()
+		.replace(/&/g, "and")
+		.replace(/'/g, "")
+		.replace(/[^a-z0-9]+/g, "-")
+		.replace(/^-+|-+$/g, "");
+
+const hrefFor = (label: string) => `#${slugify(label)}`;
 ---
 
-<nav class="aopa-main-nav" aria-label="Main navigation">
+<nav class="aopa-main-nav" aria-label="Main navigation" data-aopa-main-nav>
 	<div class="aopa-main-nav__bar">
 		<div class="aopa-main-nav__left">
 			<button
 				type="button"
 				class="aopa-main-nav__menu"
 				aria-expanded="false"
+				aria-controls="aopa-main-nav-drawer"
 				aria-label="Open menu"
+				data-aopa-main-nav-toggle
 			>
 				<span class="aopa-main-nav__menu-lines" aria-hidden="true"></span>
 			</button>
@@ -46,7 +214,159 @@ const greeting = `Hi ${userName}`;
 			</button>
 		</div>
 	</div>
+
+	<div
+		id="aopa-main-nav-drawer"
+		class="aopa-main-nav__drawer"
+		aria-hidden="true"
+		inert
+		data-aopa-main-nav-drawer
+	>
+		<div class="aopa-main-nav__drawer-inner">
+  <section class="aopa-main-nav__membership" aria-labelledby="aopa-main-nav-membership-heading">
+                <h2 id="aopa-main-nav-membership-heading">Membership</h2>
+                <ul class="aopa-main-nav__drawer-list">
+                    {membershipGroups.map((group) => (
+                        <li>
+                            <button class="aopa-main-nav__group-toggle" aria-expanded="false" aria-controls={`aopa-main-nav-membership-${slugify(group.label)}-sublist`}>
+                                <span class="aopa-main-nav__group-label">{group.label}</span>
+                                {group.links && (
+                                    <span class="aopa-main-nav__toggle-icon" aria-hidden="true">▾</span>
+                                )}
+                            </button>
+                            {group.links && (
+                                <ul id={`aopa-main-nav-membership-${slugify(group.label)}-sublist`} class="aopa-main-nav__sublist" style="max-height: 0;">
+                                    {group.links.map((link) => (
+                                        <li>
+                                            <a href={hrefFor(link)}>{link}</a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            </section>
+
+  <div class="aopa-main-nav__columns" aria-label="Main menu sections">
+                {navColumns.map((column) => (
+                  <section class="aopa-main-nav__column" aria-labelledby={`aopa-main-nav-${slugify(column.label)}-heading`}>
+                    <h2 id={`aopa-main-nav-${slugify(column.label)}-heading`}>{column.label}</h2>
+                    <ul class="aopa-main-nav__drawer-list">
+                      {column.groups.map((group) => (
+                        <li>
+                          <button class="aopa-main-nav__group-toggle" aria-expanded="false" aria-controls={`aopa-main-nav-${slugify(column.label)}-${slugify(group.label)}-sublist`}>
+                            <span class="aopa-main-nav__group-label">{group.label}</span>
+                            {group.links && (
+                                <span class="aopa-main-nav__toggle-icon" aria-hidden="true">▾</span>
+                            )}
+                          </button>
+                          {group.links && (
+                            <ul id={`aopa-main-nav-${slugify(column.label)}-${slugify(group.label)}-sublist`} class="aopa-main-nav__sublist" style="max-height: 0;">
+                              {group.links.map((link) => (
+                                <li>
+                                  <a href={hrefFor(link)}>{link}</a>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                ))}
+              </div>
+		</div>
+	</div>
 </nav>
+
+<script>
+  const mainNavs = document.querySelectorAll<HTMLElement>("[data-aopa-main-nav]");
+
+  mainNavs.forEach((nav) => {
+    const toggle = nav.querySelector<HTMLButtonElement>("[data-aopa-main-nav-toggle]");
+    const drawer = nav.querySelector<HTMLElement>("[data-aopa-main-nav-drawer]");
+
+    if (!toggle || !drawer) return;
+
+    const setOpen = (isOpen: boolean) => {
+      nav.classList.toggle("is-open", isOpen);
+      toggle.setAttribute("aria-expanded", String(isOpen));
+      toggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+      drawer.setAttribute("aria-hidden", String(!isOpen));
+
+      if (isOpen) {
+        drawer.removeAttribute("inert");
+      } else {
+        drawer.setAttribute("inert", "");
+      }
+    };
+
+    toggle.addEventListener("click", () => {
+      setOpen(toggle.getAttribute("aria-expanded") !== "true");
+    });
+
+    drawer.addEventListener("click", (event) => {
+      if (event.target instanceof HTMLAnchorElement) setOpen(false);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    // Handle accordion toggle functionality
+    const groupToggles = nav.querySelectorAll<HTMLButtonElement>(".aopa-main-nav__group-toggle");
+    groupToggles.forEach(button => {
+      button.addEventListener("click", () => {
+        const isExpanded = button.getAttribute("aria-expanded") === "true";
+        const targetId = button.getAttribute("aria-controls");
+        const targetElement = document.getElementById(targetId);
+        
+        // Close all other accordions first
+        groupToggles.forEach(otherButton => {
+          if (otherButton !== button) {
+            const otherTargetId = otherButton.getAttribute("aria-controls");
+            const otherTargetElement = document.getElementById(otherTargetId);
+            if (otherTargetElement && otherButton.getAttribute("aria-expanded") === "true") {
+              otherButton.setAttribute("aria-expanded", "false");
+              otherTargetElement.style.maxHeight = "0";
+              const otherIcon = otherButton.querySelector(".aopa-main-nav__toggle-icon");
+              if (otherIcon) {
+                otherIcon.textContent = "▾";
+                otherIcon.style.transform = "rotate(0deg)";
+              }
+            }
+          }
+        });
+        
+        // Toggle current accordion
+        button.setAttribute("aria-expanded", String(!isExpanded));
+        if (targetElement) {
+          if (isExpanded) {
+            // Collapsing
+            targetElement.style.maxHeight = "0";
+            const icon = button.querySelector(".aopa-main-nav__toggle-icon");
+            if (icon) {
+              icon.textContent = "▾";
+              icon.style.transform = "rotate(0deg)";
+            }
+          } else {
+            // Expanding
+            targetElement.style.maxHeight = targetElement.scrollHeight + "px";
+            const icon = button.querySelector(".aopa-main-nav__toggle-icon");
+            if (icon) {
+              icon.textContent = "▴";
+              icon.style.transform = "rotate(180deg)";
+            }
+          }
+        }
+      });
+    });
+  });
+</script>
 
 <style>
 	.aopa-main-nav {
@@ -122,12 +442,47 @@ const greeting = `Hi ${userName}`;
 		outline-offset: 2px;
 	}
 
-	.aopa-main-nav__menu-lines {
+	.aopa-main-nav__menu-lines,
+	.aopa-main-nav__menu-lines::before,
+	.aopa-main-nav__menu-lines::after {
 		display: block;
 		width: 1.375rem;
 		height: 2px;
 		background: currentColor;
-		box-shadow: 0 7px 0 currentColor, 0 -7px 0 currentColor;
+		transition:
+			transform 180ms ease,
+			opacity 180ms ease;
+	}
+
+	.aopa-main-nav__menu-lines {
+		position: relative;
+	}
+
+	.aopa-main-nav__menu-lines::before,
+	.aopa-main-nav__menu-lines::after {
+		content: "";
+		position: absolute;
+		left: 0;
+	}
+
+	.aopa-main-nav__menu-lines::before {
+		top: -7px;
+	}
+
+	.aopa-main-nav__menu-lines::after {
+		top: 7px;
+	}
+
+	.aopa-main-nav.is-open .aopa-main-nav__menu-lines {
+		background: transparent;
+	}
+
+	.aopa-main-nav.is-open .aopa-main-nav__menu-lines::before {
+		transform: translateY(7px) rotate(45deg);
+	}
+
+	.aopa-main-nav.is-open .aopa-main-nav__menu-lines::after {
+		transform: translateY(-7px) rotate(-45deg);
 	}
 
 	.aopa-main-nav__brand {
@@ -239,6 +594,149 @@ const greeting = `Hi ${userName}`;
 		display: block;
 	}
 
+	.aopa-main-nav__drawer {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		z-index: 2;
+		max-height: 0;
+		overflow: hidden;
+		background: #fff;
+		box-shadow: 0 18px 30px rgba(0, 0, 0, 0.18);
+		opacity: 0;
+		transform: translateY(-0.75rem);
+		transition:
+			max-height 300ms ease,
+			opacity 220ms ease,
+			transform 260ms ease;
+	}
+
+	.aopa-main-nav.is-open .aopa-main-nav__drawer {
+		max-height: 78vh;
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.aopa-main-nav__drawer-inner {
+		display: grid;
+		grid-template-columns: minmax(13rem, 0.9fr) minmax(0, 4fr);
+		align-items: stretch;
+		max-height: 78vh;
+		overflow-y: auto;
+		border-top: 5px solid rgba(0, 0, 0, 0.2);
+	}
+
+	.aopa-main-nav__membership {
+		background: var(--aopa-nav-blue);
+		color: var(--aopa-nav-ink);
+		padding: clamp(1rem, 0.8rem + 0.8vw, 1.5rem);
+	}
+
+.aopa-main-nav__columns {
+	display: flex;
+	gap: clamp(1rem, 0.5rem + 1.5vw, 2rem);
+	padding: clamp(1rem, 0.8rem + 0.8vw, 1.5rem);
+	background: #fff;
+}
+
+	.aopa-main-nav__column {
+		flex: 1;
+		min-width: 0;
+		padding-right: clamp(1rem, 0.5rem + 1.5vw, 2rem);
+		border-right: 1px solid #e0e0e0;
+	}
+
+	.aopa-main-nav__column:last-child {
+		border-right: none;
+		padding-right: 0;
+	}
+
+	.aopa-main-nav__membership h2,
+	.aopa-main-nav__column h2 {
+		margin: 0 0 1rem;
+		font-size: clamp(1rem, 0.9rem + 0.35vw, 1.2rem);
+		line-height: 1.1;
+		letter-spacing: 0.08em;
+	}
+
+	.aopa-main-nav__drawer-list,
+	.aopa-main-nav__sublist {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.aopa-main-nav__drawer-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.aopa-main-nav__drawer-list li {
+		margin: 0;
+		padding: 0;
+	}
+
+	.aopa-main-nav__group-toggle {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+		padding: 0.15rem 0;
+		min-height: 44px;
+		background: none;
+		border: none;
+		text-align: left;
+		color: var(--aopa-nav-ink);
+		font-size: 0.9rem;
+		font-weight: 700;
+		line-height: 1.25;
+		cursor: pointer;
+	}
+
+	.aopa-main-nav__group-toggle:hover {
+		color: var(--aopa-nav-blue-btn);
+	}
+
+	.aopa-main-nav__group-toggle:focus-visible {
+		outline: 2px solid var(--aopa-nav-ink);
+		outline-offset: 2px;
+	}
+
+	.aopa-main-nav__group-label {
+		flex-grow: 1;
+	}
+
+	.aopa-main-nav__toggle-icon {
+		font-size: 1.75rem;
+		transition: transform 200ms ease;
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.aopa-main-nav__sublist {
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+		margin-top: 0.55rem;
+		padding-left: 1.5rem;
+		transition: max-height 200ms ease;
+		overflow: hidden;
+	}
+
+	.aopa-main-nav__sublist a {
+		display: inline-flex;
+		color: var(--aopa-nav-ink);
+		text-decoration: none;
+		font-family: var(--aopa-nav-font);
+		font-size: 0.9rem;
+		font-weight: 700;
+		line-height: 1.25;
+		letter-spacing: 0.08em;
+		text-transform: none;
+	}
+
 	@media (max-width: 520px) {
 		.aopa-main-nav__greeting {
 			display: none;
@@ -246,6 +744,72 @@ const greeting = `Hi ${userName}`;
 
 		.aopa-main-nav__right {
 			gap: 0.5rem;
+		}
+	}
+
+	@media (min-width: 561px) and (max-width: 900px) {
+		.aopa-main-nav__drawer-inner {
+			grid-template-columns: 1fr;
+		}
+
+		.aopa-main-nav__columns {
+			flex-wrap: wrap;
+		}
+
+		.aopa-main-nav__column {
+			flex: 1 1 calc(50% - 1rem);
+		}
+
+		.aopa-main-nav__column:nth-child(even) {
+			border-right: none;
+			padding-right: 0;
+		}
+
+		.aopa-main-nav__column:nth-child(odd) {
+			border-right: 1px solid #e0e0e0;
+		}
+
+		.aopa-main-nav__column:last-child {
+			border-right: none;
+			padding-right: 0;
+		}
+	}
+
+	@media (max-width: 560px) {
+		.aopa-main-nav__drawer-inner {
+			grid-template-columns: 1fr !important;
+		}
+
+		.aopa-main-nav__columns {
+			flex-direction: column !important;
+			flex-wrap: nowrap !important;
+		}
+
+		.aopa-main-nav__column {
+			flex: 1 1 100% !important;
+			max-width: 100% !important;
+			border-right: none !important;
+			border-bottom: 1px solid #e0e0e0;
+			padding-right: 0 !important;
+			padding-bottom: 1rem;
+		}
+
+		.aopa-main-nav__column:last-child {
+			border-bottom: none;
+			padding-bottom: 0;
+		}
+
+		.aopa-main-nav__sublist {
+			padding-left: 2rem !important;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.aopa-main-nav__drawer,
+		.aopa-main-nav__menu-lines,
+		.aopa-main-nav__menu-lines::before,
+		.aopa-main-nav__menu-lines::after {
+			transition: none;
 		}
 	}
 </style>
