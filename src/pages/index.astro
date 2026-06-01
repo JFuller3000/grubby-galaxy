@@ -1,57 +1,13 @@
 ---
-import SiteNav from '../components/SiteNav.astro';
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/homepage/Hero.astro';
 import GithubActivity from '../components/GithubActivity.astro';
-const currentPath = Astro.url.pathname;
 ---
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content="John S Fuller — Front End Visual & UX Designer. Resume and portfolio." />
-		<title>John S Fuller — Front End Visual &amp; UX Designer</title>
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet" />
-		<style is:global>
-			:root {
-				--color-bg: #faf9f7;
-				--color-text: #1a1a1a;
-				--color-muted: #5c5c5c;
-				--color-accent: #2d5a4a;
-				--color-border: #e5e3e0;
-				--font-sans: 'DM Sans', system-ui, sans-serif;
-				--font-serif: 'DM Serif Display', Georgia, serif;
-				--max-width: 720px;
-			}
-
-			* {
-				box-sizing: border-box;
-			}
-
-			body {
-				margin: 0;
-				padding: 2rem 1.5rem 4rem;
-				font-family: var(--font-sans);
-				font-size: 1rem;
-				line-height: 1.6;
-				color: var(--color-text);
-				background: var(--color-bg);
-			}
-
-			.page {
-				max-width: var(--max-width);
-				margin: 0 auto;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="page">
-			<SiteNav currentPath={currentPath} />
-			<GithubActivity />
-		</div>
-	</body>
-</html>
+<Layout title="John S Fuller — Front End Visual & UX Designer" description="John S Fuller — Front End Visual & UX Designer. Resume and portfolio.">
+  <Hero
+    name="John S Fuller"
+    title="Front End Visual & UX Designer"
+    description="Design systems, Astro, and accessible web experiences."
+  />
+  <GithubActivity />
+</Layout>
