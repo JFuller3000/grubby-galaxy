@@ -16,37 +16,12 @@ const isDecks = currentPath === "/design-system/decks";
 		<li>
 			<a href="/resume" class:list={{ active: isResume }}>Resume</a>
 		</li>
-		<li class="site-nav-group">
-			<a
-				href="/design-system"
-				class:list={["site-nav-label", { active: isDesignSystemRoot }]}
-			>
-				Aopa Design System
-			</a>
-			<ul class="site-nav-sublist">
-				<li>
-					<a
-						href="/design-system/documentation"
-						class:list={{ active: isDocumentation }}
-					>
-						design documentation
-					</a>
-				</li>
-				<li>
-					<a href="/design-system/decks" class:list={{ active: isDecks }}>
-						decks
-					</a>
-				</li>
-			</ul>
-		</li>
 	</ul>
 </nav>
 
 <style>
-	/* Nav hidden for now — remove display:none and restore margin/padding/border when shipping. */
 	.site-nav {
-		display: none;
-		margin: 0;
+		margin: 0 0 1.5rem;
 		padding: 0;
 		border: 0;
 	}
