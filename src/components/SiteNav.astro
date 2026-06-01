@@ -4,7 +4,7 @@ interface Props {
 }
 const { currentPath } = Astro.props;
 
-const isResume = currentPath === "/";
+const isResume = currentPath === "/resume";
 const isDesignSystemRoot =
 	currentPath === "/design-system" &&
 	!currentPath.startsWith("/design-system/");
@@ -14,7 +14,7 @@ const isDecks = currentPath === "/design-system/decks";
 <nav class="site-nav" aria-label="Main">
 	<ul class="site-nav-list">
 		<li>
-			<a href="/" class:list={{ active: isResume }}>Resume</a>
+			<a href="/resume" class:list={{ active: isResume }}>Resume</a>
 		</li>
 		<li class="site-nav-group">
 			<a

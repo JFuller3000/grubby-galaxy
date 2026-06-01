@@ -5,24 +5,26 @@ export interface PRInfo {
   date: string;
 }
 
-export interface CommitInfo {
-  message: string;
-  repo: string;
-  date: string;
-}
-
 export interface LanguageInfo {
   name: string;
   color: string | null;
   count: number;
 }
 
+export interface ContributionDay {
+  count: number;
+  date: string;
+}
+
+export interface ContributionWeek {
+  days: ContributionDay[];
+}
+
 export interface ActivityData {
   prs: PRInfo[];
-  commits: CommitInfo[];
   languages: LanguageInfo[];
-  currentStreak: number;
   totalContributions: number;
+  contributionWeeks: ContributionWeek[];
 }
 
 const GITHUB_USERNAME = 'JFuller3000';
@@ -54,7 +56,6 @@ const GITHUB_LANG_COLORS: Record<string, string | null> = {
 };
 
 const graphqlUrl = 'https://api.github.com/graphql';
-const restBaseUrl = 'https://api.github.com';
 
 function headers(token?: string): Record<string, string> {
   const h: Record<string, string> = {
@@ -83,20 +84,10 @@ async function graphql<T>(query: string, token?: string): Promise<T> {
   return json.data as T;
 }
 
-async function rest<T>(path: string, token?: string): Promise<T> {
-  const res = await fetch(`${restBaseUrl}${path}`, {
-    headers: headers(token),
-  });
-  if (!res.ok) {
-    throw new Error(`REST request failed: ${res.status} ${path}`);
-  }
-  return res.json() as Promise<T>;
-}
-
 const graphQlQuery = `
   query {
     user(login: "${GITHUB_USERNAME}") {
-      contributionsCollection {
+      contributionsCollection(from: "2026-01-01T00:00:00Z", to: "2026-12-31T23:59:59Z") {
         contributionCalendar {
           totalContributions
           weeks {
@@ -187,48 +178,9 @@ interface GraphQLResponse {
   };
 }
 
-interface RestEvent {
-  type: string;
-  repo: { name: string };
-  payload: {
-    commits?: Array<{ message: string; sha: string }>;
-    head_commit?: { message: string };
-  };
-  created_at: string;
-  public?: boolean;
-}
-
-function computeStreak(weeks: Array<{ contributionDays: Array<{ contributionCount: number; date: string }> }>): number {
-  const days: Array<{ count: number; date: string }> = [];
-  for (const week of weeks) {
-    for (const day of week.contributionDays) {
-      days.push(day);
-    }
-  }
-  if (days.length === 0) return 0;
-  days.sort((a, b) => a.date.localeCompare(b.date));
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const todayStr = today.toISOString().slice(0, 10);
-  let streak = 0;
-  for (let i = days.length - 1; i >= 0; i--) {
-    const d = days[i];
-    const dayDate = new Date(d.date + 'T00:00:00');
-    dayDate.setHours(0, 0, 0, 0);
-    if (dayDate > today) continue;
-    if (d.contributionCount > 0) {
-      streak++;
-    } else {
-      break;
-    }
-  }
-  return streak;
-}
-
 export async function fetchGitHubActivity(token?: string): Promise<ActivityData> {
   const data = await graphql<GraphQLResponse>(graphQlQuery, token);
   const calendar = data.user.contributionsCollection.contributionCalendar;
-  const currentStreak = computeStreak(calendar.weeks);
   const totalContributions = calendar.totalContributions;
 
   const userRepos = data.user.repositories.nodes;
@@ -270,22 +222,12 @@ export async function fetchGitHubActivity(token?: string): Promise<ActivityData>
       date: pr.mergedAt ?? pr.updatedAt ?? pr.createdAt,
     }));
 
-  let commits: CommitInfo[] = [];
-  try {
-    const events = await rest<RestEvent[]>(`/users/${GITHUB_USERNAME}/events/public`, token);
-    commits = events
-      .filter((e) => e.type === 'PushEvent' && e.payload.commits?.length)
-      .flatMap((e) =>
-        (e.payload.commits ?? []).map((c) => ({
-          message: c.message.split('\n')[0].slice(0, 80),
-          repo: e.repo.name,
-          date: e.created_at,
-        }))
-      )
-      .slice(0, 5);
-  } catch {
-    commits = [];
-  }
+  const contributionWeeks: ContributionWeek[] = calendar.weeks.map((week) => ({
+    days: week.contributionDays.map((day) => ({
+      count: day.contributionCount,
+      date: day.date,
+    })),
+  }));
 
-  return { prs, commits, languages, currentStreak, totalContributions };
+  return { prs, languages, totalContributions, contributionWeeks };
 }

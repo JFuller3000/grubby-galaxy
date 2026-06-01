@@ -1,5 +1,5 @@
 ---
-import { fetchGitHubActivity, type ActivityData, type PRInfo, type CommitInfo, type LanguageInfo } from '../lib/github';
+import { fetchGitHubActivity, type ActivityData, type PRInfo, type LanguageInfo, type ContributionWeek } from '../lib/github';
 
 let data: ActivityData | null = null;
 let errorMsg: string | null = null;
@@ -9,9 +9,8 @@ try {
   data = await fetchGitHubActivity(token);
   if (
     !data.prs.length &&
-    !data.commits.length &&
     !data.languages.length &&
-    !data.currentStreak
+    !data.totalContributions
   ) {
     errorMsg = 'No recent activity';
   }
@@ -35,8 +34,6 @@ interface PRWithClass extends PRInfo {
   stateClass: string;
 }
 
-interface CommitWithRepo extends CommitInfo {}
-
 interface LangWithBg extends LanguageInfo {
   dotBg: string;
 }
@@ -46,8 +43,6 @@ const prs: PRWithClass[] = (data?.prs ?? []).map((pr) => ({
   stateClass: 'gh-state gh-state--' + pr.state.toLowerCase(),
 }));
 
-const commits: CommitWithRepo[] = data?.commits ?? [];
-
 const languages: LangWithBg[] = (data?.languages ?? []).map((lang) => ({
   ...lang,
   dotBg: lang.color ?? '#ccc',
@@ -55,13 +50,30 @@ const languages: LangWithBg[] = (data?.languages ?? []).map((lang) => ({
 
 const hasError = errorMsg !== null;
 const hasData = data !== null && !hasError;
-const isEmpty = hasData && !prs.length && !commits.length && !languages.length && !data.currentStreak;
+const isEmpty = hasData && !prs.length && !languages.length && !data.totalContributions;
 const showFallback = hasError || isEmpty;
 const fallbackMsg = hasError ? errorMsg : 'No recent activity';
 
-const streakNum = data?.currentStreak ?? 0;
-const streakLabel = 'day' + (streakNum !== 1 ? 's' : '');
-const streakTotal = data?.totalContributions ?? 0;
+const contributionWeeks: ContributionWeek[] = data?.contributionWeeks ?? [];
+const contributionTotal = data?.totalContributions ?? 0;
+
+function getLevel(count: number): number {
+  if (count === 0) return 0;
+  if (count <= 3) return 1;
+  if (count <= 7) return 2;
+  return 3;
+}
+
+const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+function formatTooltip(date: string, count: number): string {
+  const d = new Date(date + 'T00:00:00');
+  const month = monthNames[d.getMonth()];
+  const day = d.getDate();
+  const year = d.getFullYear();
+  return count + ' contributions on ' + month + ' ' + day + ', ' + year;
+}
 ---
 
 {showFallback ? (
@@ -99,27 +111,6 @@ const streakTotal = data?.totalContributions ?? 0;
 
     <article class="gh-card">
       <h3 class="gh-card-title">
-        <a href="https://github.com/JFuller3000" target="_blank" rel="noopener noreferrer">Recent Commits</a>
-      </h3>
-      {commits.length > 0 ? (
-      <ul class="gh-list">
-        {commits.map((commit) => (
-          <li>
-            <span class="gh-list-title">{commit.message}</span>
-            <span class="gh-meta">
-              <span class="gh-repo">{commit.repo}</span>
-              <span class="gh-time">{timeAgo(commit.date)}</span>
-            </span>
-          </li>
-        ))}
-      </ul>
-      ) : (
-      <p class="gh-empty">No recent commits.</p>
-      )}
-    </article>
-
-    <article class="gh-card">
-      <h3 class="gh-card-title">
         <a href="https://github.com/JFuller3000?tab=repositories" target="_blank" rel="noopener noreferrer">Top Languages</a>
       </h3>
       {languages.length > 0 ? (
@@ -137,13 +128,54 @@ const streakTotal = data?.totalContributions ?? 0;
       )}
     </article>
 
-    <article class="gh-card gh-streak-card">
-      <h3 class="gh-card-title">Contribution Streak</h3>
-      <div class="gh-streak">
-        <span class="gh-streak-number">{streakNum}</span>
-        <span class="gh-streak-label">{streakLabel}</span>
+    <article class="gh-card gh-contrib-graph">
+      <h3 class="gh-card-title">
+        <a href="https://github.com/JFuller3000" target="_blank" rel="noopener noreferrer">2026 Contributions</a>
+      </h3>
+      <div class="gh-graph" role="img" aria-label={contributionTotal + ' contributions in 2026'}>
+        <div class="gh-graph-months">
+          {contributionWeeks.length > 0 ? (() => {
+            let lastMonth = -1;
+            let colIndex = 0;
+            const labels: { month: string; col: number }[] = [];
+            for (const week of contributionWeeks) {
+              const firstDay = week.days[0];
+              if (firstDay) {
+                const d = new Date(firstDay.date + 'T00:00:00');
+                const month = d.getMonth();
+                if (month !== lastMonth) {
+                  labels.push({ month: monthNames[month], col: colIndex });
+                  lastMonth = month;
+                }
+              }
+              colIndex++;
+            }
+            return labels.map((label) => (
+              <span class="gh-graph-month" style={{ left: (label.col * 13) + 'px' }}>{label.month}</span>
+            ));
+          })() : null}
+        </div>
+        <div class="gh-graph-weeks">
+          <div class="gh-graph-days">
+            {dayNames.map((_, i) => i % 2 === 1 ? <span class="gh-graph-day-label">{dayNames[i]}</span> : <span></span>)}
+          </div>
+          {contributionWeeks.map((week) => (
+            <div class="gh-graph-week">
+              {week.days.map((day) => {
+                const level = getLevel(day.count);
+                return (
+                  <div
+                    class={"gh-graph-day gh-graph-day--" + level}
+                    title={formatTooltip(day.date, day.count)}
+                    data-date={day.date}
+                  ></div>
+                );
+              })}
+            </div>
+          ))}
+        </div>
       </div>
-      <p class="gh-streak-total">{streakTotal} contributions this year</p>
+      <p class="gh-graph-total">{contributionTotal} contributions in 2026</p>
     </article>
   </div>
 </section>
@@ -285,36 +317,89 @@ const streakTotal = data?.totalContributions ?? 0;
     font-size: 0.8rem;
   }
 
-  .gh-streak-card {
-    text-align: center;
+  .gh-contrib-graph {
+    grid-column: 1 / -1;
+  }
+
+  .gh-graph {
+    position: relative;
+    font-size: 0;
+    padding-top: 1.5rem;
+  }
+
+  .gh-graph-months {
+    position: relative;
+    height: 15px;
+    margin-bottom: 0.25rem;
+    font-size: 0.65rem;
+    color: var(--color-muted);
+  }
+
+  .gh-graph-month {
+    position: absolute;
+    top: 0;
+  }
+
+  .gh-graph-weeks {
+    display: inline-flex;
+    gap: 3px;
+  }
+
+  .gh-graph-week {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 3px;
   }
 
-  .gh-streak {
+  .gh-graph-days {
     display: flex;
-    align-items: baseline;
-    gap: 0.25rem;
-    margin-bottom: 0.5rem;
+    flex-direction: column;
+    gap: 3px;
+    margin-right: 0.35rem;
+    position: absolute;
+    left: 0;
+    top: 1.5rem;
   }
 
-  .gh-streak-number {
-    font-family: var(--font-serif);
-    font-size: 2.5rem;
-    color: var(--color-accent);
+  .gh-graph-day-label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 0.65rem;
+    color: var(--color-muted);
+    height: 10px;
     line-height: 1;
   }
 
-  .gh-streak-label {
-    font-size: 1rem;
-    color: var(--color-muted);
+  .gh-graph-day {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: #ebedf0;
+    outline: 1px solid rgba(27, 31, 35, 0.06);
+    outline-offset: -1px;
   }
 
-  .gh-streak-total {
-    font-size: 0.85rem;
+  .gh-graph-day:hover {
+    outline: 1px solid rgba(27, 31, 35, 0.3);
+  }
+
+  .gh-graph-day--1 {
+    background: #9be9a8;
+  }
+
+  .gh-graph-day--2 {
+    background: #40c463;
+  }
+
+  .gh-graph-day--3 {
+    background: #30a14e;
+  }
+
+  .gh-graph-total {
+    font-size: 0.8rem;
     color: var(--color-muted);
-    margin: 0;
+    margin: 0.75rem 0 0;
   }
 
   .gh-empty {

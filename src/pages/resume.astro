@@ -1,0 +1,212 @@
+---
+import SiteNav from '../components/SiteNav.astro';
+import Resume from '../components/Resume.astro';
+const currentPath = Astro.url.pathname;
+---
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content="John S Fuller — Resume. Front End Visual & UX Designer." />
+		<title>John S Fuller — Resume</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+		<style is:global>
+			:root {
+				--color-bg: #faf9f7;
+				--color-text: #1a1a1a;
+				--color-muted: #5c5c5c;
+				--color-accent: #2d5a4a;
+				--color-border: #e5e3e0;
+				--font-sans: 'DM Sans', system-ui, sans-serif;
+				--font-serif: 'DM Serif Display', Georgia, serif;
+				--max-width: 720px;
+			}
+
+			* {
+				box-sizing: border-box;
+			}
+
+			body {
+				margin: 0;
+				padding: 2rem 1.5rem 4rem;
+				font-family: var(--font-sans);
+				font-size: 1rem;
+				line-height: 1.6;
+				color: var(--color-text);
+				background: var(--color-bg);
+			}
+
+			.page {
+				max-width: var(--max-width);
+				margin: 0 auto;
+			}
+
+			.resume header {
+				text-align: center;
+				margin-bottom: 2.5rem;
+				padding-bottom: 2rem;
+				border-bottom: 1px solid var(--color-border);
+			}
+
+			.name {
+				font-family: var(--font-serif);
+				font-size: clamp(2rem, 5vw, 2.75rem);
+				font-weight: 400;
+				margin: 0 0 0.25rem;
+				letter-spacing: 0.02em;
+			}
+
+			.title {
+				font-size: 1.1rem;
+				color: var(--color-muted);
+				font-weight: 500;
+				margin: 0 0 1rem;
+			}
+
+			.contact {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				gap: 0.5rem 1.25rem;
+				font-size: 0.9rem;
+				color: var(--color-muted);
+			}
+
+			.contact a {
+				color: var(--color-accent);
+				text-decoration: none;
+			}
+
+			.contact a:hover {
+				text-decoration: underline;
+			}
+
+			.contact span:not(.sep) {
+				opacity: 0.85;
+			}
+
+			.resume section {
+				margin-bottom: 2rem;
+			}
+
+			.resume h2 {
+				font-family: var(--font-serif);
+				font-size: 1.25rem;
+				font-weight: 400;
+				margin: 0 0 1rem;
+				color: var(--color-text);
+				letter-spacing: 0.02em;
+			}
+
+			.summary p {
+				margin: 0;
+				color: var(--color-muted);
+				font-size: 0.95rem;
+			}
+
+			.skills-grid {
+				display: grid;
+				gap: 1.25rem 2rem;
+				grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+			}
+
+			.skill-group h3 {
+				font-size: 0.75rem;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				color: var(--color-accent);
+				margin: 0 0 0.5rem;
+			}
+
+			.skill-group p {
+				font-size: 0.9rem;
+				color: var(--color-muted);
+				margin: 0;
+				line-height: 1.5;
+			}
+
+			.job {
+				margin-bottom: 1.75rem;
+			}
+
+			.job:last-child {
+				margin-bottom: 0;
+			}
+
+			.job-header {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: baseline;
+				justify-content: space-between;
+				gap: 0.5rem;
+				margin-bottom: 0.5rem;
+			}
+
+			.job-company {
+				font-weight: 600;
+				font-size: 1rem;
+			}
+
+			.job-role {
+				font-size: 0.95rem;
+				color: var(--color-muted);
+			}
+
+			.job-date {
+				font-size: 0.85rem;
+				color: var(--color-muted);
+			}
+
+			.job ul {
+				margin: 0;
+				padding-left: 1.25rem;
+				color: var(--color-muted);
+				font-size: 0.9rem;
+				line-height: 1.55;
+			}
+
+			.job li {
+				margin-bottom: 0.35rem;
+			}
+
+			.education p {
+				margin: 0 0 0.5rem;
+				font-size: 0.95rem;
+				color: var(--color-muted);
+			}
+
+			.education p:last-child {
+				margin-bottom: 0;
+			}
+
+			@media print {
+				body {
+					background: #fff;
+					padding: 1rem;
+				}
+				.contact a {
+					color: var(--color-text);
+				}
+				.site-nav {
+					display: none;
+				}
+				.resume {
+					max-width: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="page">
+			<SiteNav currentPath={currentPath} />
+			<Resume />
+		</div>
+	</body>
+</html>
