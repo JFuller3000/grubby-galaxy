@@ -1,0 +1,109 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  steps?: { 
+    title: string;
+    description: string;
+  }[];
+}
+
+const { title = "How I Work", description = "A glimpse into my design and development process", steps = [] } = Astro.props;
+---
+
+<section class="how-i-work">
+  <h2 class="section-title">{title}</h2>
+  <p class="section-description">{description}</p>
+  
+  <div class="steps">
+    {steps.map((step, index) => (
+      <div class="step">
+        <div class="step-number">{index + 1}</div>
+        <div class="step-content">
+          <h3 class="step-title">{step.title}</h3>
+          <p class="step-description">{step.description}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .how-i-work {
+    margin: 3rem 0;
+  }
+
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 0 0 1rem;
+    color: var(--color-text);
+    letter-spacing: 0.02em;
+  }
+
+  .section-description {
+    font-size: 1.1rem;
+    color: var(--color-muted);
+    margin: 0 0 2rem;
+    line-height: 1.6;
+  }
+
+  .steps {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .step {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin-top: 0.25rem;
+  }
+
+  .step-content {
+    flex: 1;
+  }
+
+  .step-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin: 0 0 0.75rem;
+    color: var(--color-text);
+    letter-spacing: 0.02em;
+  }
+
+  .step-description {
+    font-size: 1rem;
+    color: var(--color-muted);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .step {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .step-number {
+      width: 2rem;
+      height: 2rem;
+      font-size: 1rem;
+    }
+  }
+</style>

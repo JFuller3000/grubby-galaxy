@@ -1,0 +1,78 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  principles?: string[];
+}
+
+const { title = "Principles", description = "Core values that guide my work and decision-making", principles = [] } = Astro.props;
+---
+
+<section class="principles">
+  <h2 class="section-title">{title}</h2>
+  <p class="section-description">{description}</p>
+  
+  <div class="principles-list">
+    {principles.map((principle, index) => (
+      <div class="principle" key={index}>
+        <div class="principle-content">
+          <h3 class="principle-title">{principle}</h3>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .principles {
+    margin: 3rem 0;
+  }
+
+  .section-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 0 0 1rem;
+    color: var(--color-text);
+    letter-spacing: 0.02em;
+  }
+
+  .section-description {
+    font-size: 1.1rem;
+    color: var(--color-muted);
+    margin: 0 0 2rem;
+    line-height: 1.6;
+  }
+
+  .principles-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .principle {
+    padding: 1rem;
+    background: var(--color-bg-secondary);
+    border-radius: 0.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .principle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .principle-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin: 0;
+    color: var(--color-text);
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 768px) {
+    .principle {
+      padding: 0.75rem;
+    }
+  }
+</style>

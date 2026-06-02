@@ -4,6 +4,10 @@ import Hero from '../components/homepage/Hero.astro';
 import FeaturedProject from '../components/homepage/FeaturedProject.astro';
 import SelectedWork from '../components/homepage/SelectedWork.astro';
 import GithubActivity from '../components/GithubActivity.astro';
+import HowIWork from '../components/homepage/HowIWork.astro';
+import BuildingWithAI from '../components/homepage/BuildingWithAI.astro';
+import Principles from '../components/homepage/Principles.astro';
+import About from '../components/homepage/About.astro';
 ---
 <Layout title="John S Fuller — Front End Visual & UX Designer" description="John S Fuller — Front End Visual & UX Designer. Resume and portfolio.">
   <!-- Page-specific styles for featured projects -->
@@ -44,12 +48,12 @@ import GithubActivity from '../components/GithubActivity.astro';
   <section class="featured-project">
     <h2 class="section-title">Featured Project</h2>    
     <FeaturedProject
-        title="Glorp glorp"
-        description="Personal portfolio site built with Astro 5, showcasing design systems work and front-end expertise."
+        title="AOPA Platform Migration & Website Redesign"
+        description="Led the redesign of AOPA’s digital platform, modernizing the organization’s web presence to improve performance, scalability, and user experience for millions of pilots and aviation enthusiasts."
         href="/"
         image="/images/grubby-galaxy-preview.jpg"
-        imageAlt="Grubby Galaxy homepage screenshot"
-        tags={["Astro", "TypeScript", "Design Systems"]}
+        imageAlt="AOPA new homepage screenshot"
+        tags={["Astro", "TypeScript", "Preact"]}
       />
   </section>
 
@@ -75,6 +79,55 @@ import GithubActivity from '../components/GithubActivity.astro';
     </div>
   </section>
   <GithubActivity />
+  <HowIWork
+    title="How I Work"
+    description="A glimpse into my design and development process"
+    steps={[
+      {
+        title: "Research & Discovery",
+        description: "I begin by understanding project goals, target users, and requirements through stakeholder interviews, user research, and competitive analysis."
+      },
+      {
+        title: "Design & Prototyping",
+        description: "I create wireframes, mockups, and interactive prototypes to visualize ideas and gather feedback before finalizing designs."
+      },
+      {
+        title: "Development",
+        description: "I build accessible, performant web experiences using modern technologies like Astro, React, and CSS-in-JS frameworks."
+      },
+      {
+        title: "Testing & Refinement",
+        description: "I conduct usability testing and iterate on designs and code to ensure optimal performance and user satisfaction."
+      }
+    ]}
+  />
+  <BuildingWithAI
+    title="Building with AI"
+    description="How I leverage AI tools to enhance my workflow and deliver better results"
+    items={[
+      "Automated bug triage",
+      "Research synthesis",
+      "Design system generation",
+      "Internal productivity tools",
+      "Agent workflows"
+    ]}
+  />
+  <Principles
+    title="Principles"
+    description="Core values that guide my work and decision-making"
+    principles={[
+      "Ship before perfect.",
+      "Measure before debating.",
+      "Design systems scale teams.",
+      "Documentation is a feature.",
+      "User feedback beats assumptions."
+    ]}
+  />
+  <About
+    title="About"
+    description="A brief overview of my work and interests"
+    content="I'm a Product Design Engineer working at the intersection of design, engineering, and product strategy. I enjoy turning ambiguous problems into shipped experiences, especially when I can own the entire process from discovery through implementation and measurement. Lately I've been exploring AI-assisted workflows, analytics-driven product development, and tools that help teams move faster."
+  />
   <div style="text-align: center; margin: 2rem 0;">
     <a href="/resume" data-astro-transition="page" style="background: var(--color-accent); color: white; padding: 0.5rem 1rem; border-radius: 0.25rem; text-decoration: none;">View Resume</a>
   </div>
