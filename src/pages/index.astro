@@ -1,13 +1,78 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/homepage/Hero.astro';
+import FeaturedProject from '../components/homepage/FeaturedProject.astro';
+import SelectedWork from '../components/homepage/SelectedWork.astro';
 import GithubActivity from '../components/GithubActivity.astro';
 ---
 <Layout title="John S Fuller — Front End Visual & UX Designer" description="John S Fuller — Front End Visual & UX Designer. Resume and portfolio.">
+  <!-- Page-specific styles for featured projects -->
+  <style slot="head">
+    .featured-projects {
+      margin: 3rem 0;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin: 0 0 1.5rem;
+      color: var(--color-text);
+      letter-spacing: 0.02em;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* Override the .featured-project link styles for this context */
+    .featured-projects .featured-project {
+      display: block;
+    }
+
+    .featured-projects .featured-project:hover {
+      text-decoration: none;
+    }
+  </style>
   <Hero
     name="John S Fuller"
     title="Front End Visual & UX Designer"
     description="Design systems, Astro, and accessible web experiences."
   />
+  <section class="featured-project">
+    <h2 class="section-title">Featured Project</h2>    
+    <FeaturedProject
+        title="Glorp glorp"
+        description="Personal portfolio site built with Astro 5, showcasing design systems work and front-end expertise."
+        href="/"
+        image="/images/grubby-galaxy-preview.jpg"
+        imageAlt="Grubby Galaxy homepage screenshot"
+        tags={["Astro", "TypeScript", "Design Systems"]}
+      />
+  </section>
+
+  <section class="featured-projects">
+    <h2 class="section-title">Selected Work</h2>
+    <div class="projects-grid">
+      <SelectedWork
+        title="AOP Design System"
+        description="Comprehensive design system for AOPA including documentation, components, and usage guidelines."
+        href="/design-system"
+        image="/images/design-system-preview.jpg"
+        imageAlt="AOPA Design System documentation homepage"
+        tags={["Design System", "Documentation", "Components"]}
+      />
+      <SelectedWork
+        title="Hub Hero Component"
+        description="Customizable hero component with preview capabilities for AOPA's content hubs."
+        href="/aopa/hub/hero"
+        image="/images/hub-hero-preview.jpg"
+        imageAlt="Hub Hero component preview interface"
+        tags={["React", "Component Library", "Preview"]}
+      />
+    </div>
+  </section>
   <GithubActivity />
 </Layout>
