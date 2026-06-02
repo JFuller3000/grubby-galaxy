@@ -33,5 +33,7 @@ export default defineConfig(({ mode }) => {
           : {},
       },
     },
+    // Enable view transitions
+    viewTransitions: true,
   };
 });

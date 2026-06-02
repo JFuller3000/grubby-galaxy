@@ -56,7 +56,7 @@ const currentPath = Astro.url.pathname;
 		<slot name="head" />
 	</head>
 	<body>
-		<div class="page">
+		<div class="page" data-astro-transition-scope="page">
 			<SiteNav currentPath={currentPath} />
 			<slot />
 		</div>
