@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg: #faf9f7;
+  --color-text: #1a1a1a;
+  --color-muted: #5c5c5c;
+  --color-accent: #2d5a4a;
+  --color-border: #e5e3e0;
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-serif: 'Baskervville', Georgia, serif;
+  --max-width: 1180px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 2rem 1.5rem 4rem;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+.page {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}

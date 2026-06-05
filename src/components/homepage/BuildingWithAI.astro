@@ -1,4 +1,6 @@
 ---
+import SectionHeading from './SectionHeading.astro';
+
 interface Props {
   title?: string;
   description?: string;
@@ -8,77 +10,18 @@ interface Props {
 const { title = "Building with AI", description = "How I leverage AI tools to enhance my workflow and deliver better results", items = [] } = Astro.props;
 ---
 
-<section class="building-with-ai">
-  <h2 class="section-title">{title}</h2>
-  <p class="section-description">{description}</p>
+<section class="h-full">
+  <SectionHeading text={title} class="mb-4 text-xl" />
+  <p class="text-gray-300 mb-8 text-lg leading-relaxed">{description}</p>
   
-  <div class="items">
+  <div class="grid gap-6">
     {items.map((item, index) => (
-      <div class="item" key={index}>
-        <div class="item-icon">🤖</div>
-        <div class="item-content">
-          <h3 class="item-title">{item}</h3>
+      <div class="flex gap-4" key={index}>
+        <div class="flex-shrink-0 text-xl mt-1">🤖</div>
+        <div class="flex-1">
+          <h3 class="font-serif text-lg font-normal mb-2 text-white leading-tight">{item}</h3>
         </div>
       </div>
     ))}
   </div>
 </section>
-
-<style>
-  .building-with-ai {
-    margin: 3rem 0;
-  }
-
-  .section-title {
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    font-weight: 400;
-    margin: 0 0 1rem;
-    color: var(--color-text);
-    letter-spacing: 0.02em;
-  }
-
-  .section-description {
-    font-size: 1.1rem;
-    color: var(--color-muted);
-    margin: 0 0 2rem;
-    line-height: 1.6;
-  }
-
-  .items {
-    display: grid;
-    gap: 1.5rem;
-  }
-
-  .item {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-  }
-
-  .item-icon {
-    flex-shrink: 0;
-    font-size: 1.5rem;
-    margin-top: 0.25rem;
-  }
-
-  .item-content {
-    flex: 1;
-  }
-
-  .item-title {
-    font-family: var(--font-serif);
-    font-size: 1.25rem;
-    font-weight: 400;
-    margin: 0 0 0.5rem;
-    color: var(--color-text);
-    letter-spacing: 0.02em;
-  }
-
-  @media (max-width: 768px) {
-    .item {
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-  }
-</style>

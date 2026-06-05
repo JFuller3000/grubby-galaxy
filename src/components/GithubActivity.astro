@@ -38,9 +38,16 @@ interface LangWithBg extends LanguageInfo {
   dotBg: string;
 }
 
+const prStateClass = 'inline-flex rounded-[0.25em] px-[0.4em] py-[0.1em] text-[0.7rem] font-semibold uppercase tracking-[0.04em]';
+const prStateClasses: Record<PRInfo['state'], string> = {
+  MERGED: `${prStateClass} bg-[#f3e8fd] text-[#8250df]`,
+  OPEN: `${prStateClass} bg-[#dafbe1] text-[#1a7f37]`,
+  CLOSED: `${prStateClass} bg-[#ffebe9] text-[#cf222e]`,
+};
+
 const prs: PRWithClass[] = (data?.prs ?? []).map((pr) => ({
   ...pr,
-  stateClass: 'gh-state gh-state--' + pr.state.toLowerCase(),
+  stateClass: prStateClasses[pr.state],
 }));
 
 const languages: LangWithBg[] = (data?.languages ?? []).map((lang) => ({
@@ -52,7 +59,6 @@ const hasError = errorMsg !== null;
 const hasData = data !== null && !hasError;
 const isEmpty = hasData && !prs.length && !languages.length && !data.totalContributions;
 const showFallback = hasError || isEmpty;
-const fallbackMsg = hasError ? errorMsg : 'No recent activity';
 
 const contributionWeeks: ContributionWeek[] = data?.contributionWeeks ?? [];
 const contributionTotal = data?.totalContributions ?? 0;
@@ -62,6 +68,15 @@ function getLevel(count: number): number {
   if (count <= 3) return 1;
   if (count <= 7) return 2;
   return 3;
+}
+
+function getContributionClass(count: number): string {
+  const baseClass = 'h-2.5 w-2.5 rounded-[2px] outline outline-1 -outline-offset-1 outline-[rgba(27,31,35,0.06)]';
+  const level = getLevel(count);
+  if (level === 1) return `${baseClass} bg-[#9be9a8]`;
+  if (level === 2) return `${baseClass} bg-[#40c463]`;
+  if (level === 3) return `${baseClass} bg-[#30a14e]`;
+  return `${baseClass} bg-[#ebedf0]`;
 }
 
 const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -77,63 +92,63 @@ function formatTooltip(date: string, count: number): string {
 ---
 
 {showFallback ? (
-<section class="gh-section" aria-label="GitHub activity">
-  <div class="gh-card gh-fallback">
+<section class="mx-auto mt-12 w-full max-w-[var(--max-width)]" aria-label="GitHub activity">
+  <div class="text-center text-gray-400">
     <p>Activity data unavailable{hasError && errorMsg !== 'No recent activity' ? ': ' + errorMsg : ''}.</p>
   </div>
 </section>
 ) : hasData ? (
-<section class="gh-section" aria-label="GitHub activity">
-  <div class="gh-grid">
-    <article class="gh-card">
-      <h3 class="gh-card-title">
-        <a href="https://github.com/JFuller3000?tab=pullrequests" target="_blank" rel="noopener noreferrer">Recent PRs</a>
+<section class="mx-auto mt-12 w-full max-w-[var(--max-width)]" aria-label="GitHub activity">
+  <div class="grid grid-cols-1 gap-5 sm:grid-cols-[repeat(auto-fill,minmax(280px,1fr))]">
+    <article>
+      <h3 class="mb-3 font-serif text-base font-normal tracking-[0.02em]">
+        <a class="text-white no-underline" href="https://github.com/JFuller3000?tab=pullrequests" target="_blank" rel="noopener noreferrer">Recent PRs</a>
       </h3>
       {prs.length > 0 ? (
-      <ul class="gh-list">
+      <ul class="m-0 flex list-none flex-col gap-3 p-0">
         {prs.map((pr) => (
-          <li>
-            <span class="gh-list-title">{pr.title}</span>
-            <span class="gh-meta">
-              <span class="gh-repo">{pr.repo}</span>
+          <li class="flex flex-col gap-1">
+            <span class="text-[0.9rem] leading-[1.3] text-gray-200">{pr.title}</span>
+            <span class="flex items-center gap-2 text-[0.8rem] text-gray-400">
+              <span class="opacity-80">{pr.repo}</span>
             </span>
-            <span class="gh-meta">
+            <span class="flex items-center gap-2 text-[0.8rem] text-gray-400">
               <span class={pr.stateClass}>{pr.state}</span>
-              <span class="gh-time">{timeAgo(pr.date)}</span>
+              <span class="opacity-70">{timeAgo(pr.date)}</span>
             </span>
           </li>
         ))}
       </ul>
       ) : (
-      <p class="gh-empty">No recent pull requests.</p>
+      <p class="m-0 text-[0.9rem] text-gray-400">No recent pull requests.</p>
       )}
     </article>
 
-    <article class="gh-card">
-      <h3 class="gh-card-title">
-        <a href="https://github.com/JFuller3000?tab=repositories" target="_blank" rel="noopener noreferrer">Top Languages</a>
+    <article>
+      <h3 class="mb-3 font-serif text-base font-normal tracking-[0.02em]">
+        <a class="text-white no-underline" href="https://github.com/JFuller3000?tab=repositories" target="_blank" rel="noopener noreferrer">Top Languages</a>
       </h3>
       {languages.length > 0 ? (
-      <ul class="gh-lang-list">
+      <ul class="m-0 flex list-none flex-col gap-2 p-0">
         {languages.map((lang) => (
-          <li>
-            <span class="gh-lang-dot" style={"background: " + lang.dotBg}></span>
-            <span class="gh-lang-name">{lang.name}</span>
-            <span class="gh-lang-count">{lang.count}</span>
+          <li class="flex items-center gap-2 text-[0.9rem]">
+            <span class="h-3 w-3 flex-shrink-0 rounded-full" style={"background: " + lang.dotBg}></span>
+            <span class="flex-1 text-gray-200">{lang.name}</span>
+            <span class="text-[0.8rem] text-gray-400">{lang.count}</span>
           </li>
         ))}
       </ul>
       ) : (
-      <p class="gh-empty">No languages found.</p>
+      <p class="m-0 text-[0.9rem] text-gray-400">No languages found.</p>
       )}
     </article>
 
-    <article class="gh-card gh-contrib-graph">
-      <h3 class="gh-card-title">
-        <a href="https://github.com/JFuller3000" target="_blank" rel="noopener noreferrer">2026 Contributions</a>
+    <article class="col-span-full">
+      <h3 class="mb-3 font-serif text-base font-normal tracking-[0.02em]">
+        <a class="text-white no-underline" href="https://github.com/JFuller3000" target="_blank" rel="noopener noreferrer">2026 Contributions</a>
       </h3>
-      <div class="gh-graph" role="img" aria-label={contributionTotal + ' contributions in 2026'}>
-        <div class="gh-graph-months">
+      <div class="relative pt-6 text-[0]" role="img" aria-label={contributionTotal + ' contributions in 2026'}>
+        <div class="relative mb-1 h-[15px] text-[0.65rem] text-gray-400">
           {contributionWeeks.length > 0 ? (() => {
             let lastMonth = -1;
             let colIndex = 0;
@@ -151,21 +166,20 @@ function formatTooltip(date: string, count: number): string {
               colIndex++;
             }
             return labels.map((label) => (
-              <span class="gh-graph-month" style={{ left: (label.col * 13) + 'px' }}>{label.month}</span>
+              <span class="absolute top-0" style={{ left: (label.col * 13) + 'px' }}>{label.month}</span>
             ));
           })() : null}
         </div>
-        <div class="gh-graph-weeks">
-          <div class="gh-graph-days">
-            {dayNames.map((_, i) => i % 2 === 1 ? <span class="gh-graph-day-label">{dayNames[i]}</span> : <span></span>)}
+        <div class="inline-flex gap-[3px]">
+          <div class="absolute left-0 top-6 mr-[0.35rem] flex flex-col gap-[3px]">
+            {dayNames.map((_, i) => i % 2 === 1 ? <span class="flex h-2.5 items-center justify-end text-[0.65rem] leading-none text-gray-400">{dayNames[i]}</span> : <span></span>)}
           </div>
           {contributionWeeks.map((week) => (
-            <div class="gh-graph-week">
+            <div class="flex flex-col gap-[3px]">
               {week.days.map((day) => {
-                const level = getLevel(day.count);
                 return (
                   <div
-                    class={"gh-graph-day gh-graph-day--" + level}
+                    class={getContributionClass(day.count)}
                     title={formatTooltip(day.date, day.count)}
                     data-date={day.date}
                   ></div>
@@ -175,247 +189,8 @@ function formatTooltip(date: string, count: number): string {
           ))}
         </div>
       </div>
-      <p class="gh-graph-total">{contributionTotal} contributions in 2026</p>
+      <p class="m-0 mt-3 text-[0.8rem] text-gray-400">{contributionTotal} contributions in 2026</p>
     </article>
   </div>
 </section>
 ) : null}
-
-<style>
-  .gh-section {
-    max-width: var(--max-width);
-    margin: 3rem auto 0;
-    width: 100%;
-  }
-
-  .gh-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.25rem;
-  }
-
-  .gh-card {
-    background: #fff;
-    border: 1px solid var(--color-border);
-    border-radius: 0.5rem;
-    padding: 1.25rem;
-  }
-
-  .gh-card-title {
-    font-family: var(--font-serif);
-    font-size: 1rem;
-    font-weight: 400;
-    margin: 0 0 0.75rem;
-    letter-spacing: 0.02em;
-  }
-
-  .gh-card-title a {
-    color: var(--color-accent);
-    text-decoration: none;
-  }
-
-  .gh-card-title a:hover {
-    text-decoration: underline;
-  }
-
-  .gh-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .gh-list li {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .gh-list li::before {
-    content: '';
-    display: none;
-  }
-
-  .gh-list-title {
-    font-size: 0.9rem;
-    color: var(--color-text);
-    line-height: 1.3;
-  }
-
-  .gh-meta {
-    font-size: 0.8rem;
-    color: var(--color-muted);
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-  }
-
-  .gh-repo {
-    opacity: 0.8;
-  }
-
-  .gh-state {
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.7rem;
-    letter-spacing: 0.04em;
-    padding: 0.1em 0.4em;
-    border-radius: 0.25em;
-  }
-
-  .gh-state--merged {
-    color: #8250df;
-    background: #f3e8fd;
-  }
-
-  .gh-state--open {
-    color: #1a7f37;
-    background: #dafbe1;
-  }
-
-  .gh-state--closed {
-    color: #cf222e;
-    background: #ffebe9;
-  }
-
-  .gh-time {
-    opacity: 0.7;
-  }
-
-  .gh-lang-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .gh-lang-list li {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-  }
-
-  .gh-lang-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .gh-lang-name {
-    flex: 1;
-    color: var(--color-text);
-  }
-
-  .gh-lang-count {
-    color: var(--color-muted);
-    font-size: 0.8rem;
-  }
-
-  .gh-contrib-graph {
-    grid-column: 1 / -1;
-  }
-
-  .gh-graph {
-    position: relative;
-    font-size: 0;
-    padding-top: 1.5rem;
-  }
-
-  .gh-graph-months {
-    position: relative;
-    height: 15px;
-    margin-bottom: 0.25rem;
-    font-size: 0.65rem;
-    color: var(--color-muted);
-  }
-
-  .gh-graph-month {
-    position: absolute;
-    top: 0;
-  }
-
-  .gh-graph-weeks {
-    display: inline-flex;
-    gap: 3px;
-  }
-
-  .gh-graph-week {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
-
-  .gh-graph-days {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    margin-right: 0.35rem;
-    position: absolute;
-    left: 0;
-    top: 1.5rem;
-  }
-
-  .gh-graph-day-label {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    font-size: 0.65rem;
-    color: var(--color-muted);
-    height: 10px;
-    line-height: 1;
-  }
-
-  .gh-graph-day {
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-    background: #ebedf0;
-    outline: 1px solid rgba(27, 31, 35, 0.06);
-    outline-offset: -1px;
-  }
-
-  .gh-graph-day:hover {
-    outline: 1px solid rgba(27, 31, 35, 0.3);
-  }
-
-  .gh-graph-day--1 {
-    background: #9be9a8;
-  }
-
-  .gh-graph-day--2 {
-    background: #40c463;
-  }
-
-  .gh-graph-day--3 {
-    background: #30a14e;
-  }
-
-  .gh-graph-total {
-    font-size: 0.8rem;
-    color: var(--color-muted);
-    margin: 0.75rem 0 0;
-  }
-
-  .gh-empty {
-    font-size: 0.9rem;
-    color: var(--color-muted);
-    margin: 0;
-  }
-
-  .gh-fallback {
-    text-align: center;
-    color: var(--color-muted);
-  }
-
-  @media (max-width: 640px) {
-    .gh-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

@@ -1,141 +1,85 @@
 ---
+interface Stat {
+  value: string;
+  label: string;
+}
+
 interface Props {
   title: string;
   description: string;
-  image?: string;
-  imageAlt?: string;
+  body?: string;
+  stats?: Stat[];
   href?: string;
   tags?: string[];
 }
 
-const { title, description, image, imageAlt, href, tags = [] } = Astro.props;
+const { title, description, body, href, stats = [], tags = [] } = Astro.props;
+
+const splitDropCap = (text: string) => {
+  const trimmed = text.trim();
+  return {
+    firstLetter: trimmed.charAt(0),
+    rest: trimmed.slice(1),
+  };
+};
+
+const intro = splitDropCap(description);
+const detail = body ? splitDropCap(body) : null;
 ---
 
-{href ? (
-  <a href={href}>
-    <article class="featured-project">
-      <div class="project-card">
-        {image && (
-          <div class="project-image">
-            <img 
-              src={image} 
-              alt={imageAlt ?? title} 
-              loading="lazy"
-            />
-          </div>
-        )}
-        <div class="project-content">
-          <h2 class="project-title">{title}</h2>
-          <p class="project-description">{description}</p>
-          {tags.length > 0 && (
-            <div class="project-tags">
-              {tags.map((tag) => (
-                <span class="project-tag" key={tag}>{tag}</span>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    </article>
-  </a>
-) : (
-  <article class="featured-project">
-    <div class="project-card">
-      {image && (
-        <div class="project-image">
-          <img 
-            src={image} 
-            alt={imageAlt ?? title} 
-            loading="lazy"
-          />
+<article class="border border-[#34343d]">
+  <div class="grid min-h-[26rem] grid-cols-1 items-center gap-10 px-8 py-16 md:grid-cols-[minmax(14rem,0.65fr)_minmax(0,1.35fr)] md:px-28">
+    <div>
+      {href ? (
+        <a href={href} class="text-white no-underline">
+          <h3 class="mb-4 max-w-sm text-xl font-bold leading-snug text-balance">{title}</h3>
+        </a>
+      ) : (
+        <h3 class="mb-4 max-w-sm text-xl font-bold leading-snug text-white text-balance">{title}</h3>
+      )}
+
+      {tags.length > 0 && (
+        <div class="flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <span class="text-xs font-semibold uppercase tracking-wide text-gray-400" key={tag}>{tag}</span>
+          ))}
         </div>
       )}
-      <div class="project-content">
-        <h2 class="project-title">{title}</h2>
-        <p class="project-description">{description}</p>
-        {tags.length > 0 && (
-          <div class="project-tags">
-            {tags.map((tag) => (
-              <span class="project-tag" key={tag}>{tag}</span>
-            ))}
-          </div>
-        )}
-      </div>
     </div>
-  </article>
-)}
 
-<style>
-  .featured-project {
-    display: block;
-    text-decoration: none;
-  }
+    <p class="m-0 max-w-3xl text-balance text-xl leading-relaxed text-gray-200 md:text-xl font-extralight">
+      <span class="float-left mr-4 font-serif text-8xl font-normal italic leading-[0.78] text-white md:text-7xl mt-2">
+        {intro.firstLetter}
+      </span>
+      {intro.rest}
+    </p>
+  </div>
 
-  .featured-project:hover {
-    text-decoration: none;
-  }
+  {stats.length > 0 && (
+    <div class="grid grid-cols-2 border-t border-[#34343d] md:grid-cols-4">
+      {stats.map((stat, index) => (
+        <div class:list={["flex min-h-36 flex-col items-center justify-center border-[#34343d] px-6 py-8 text-center md:border-b-0", index % 2 === 0 && "border-r", index < stats.length - 2 && "border-b", index < stats.length - 1 && "md:border-r"]}>
+          <strong class="font-serif text-4xl text-white md:text-5xl font-light">{stat.value}</strong>
+          <span class="text-lg leading-tight text-gray-300 md:text-xl font-extralight">{stat.label}</span>
+        </div>
+      ))}
+    </div>
+  )}
 
-  .project-card {
-    background: #fff;
-    border: 1px solid var(--color-border);
-    border-radius: 0.5rem;
-    overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
+  <div class="grid grid-cols-1 border-t border-[#34343d] md:grid-cols-[minmax(16rem,0.58fr)_minmax(0,1.42fr)]">
+    {detail && (
+      <div class="px-8 py-12 md:px-12 md:py-20">
+        <p class="m-0 text-lg leading-relaxed text-gray-200 md:text-xl font-extralight">
+          <span class="float-left mr-6 font-serif text-7xl font-normal italic leading-[0.78] text-white md:text-8xl -mt-2 -mb-2">
+            {detail.firstLetter}
+          </span>
+          {detail.rest}
+        </p>
+      </div>
+    )}
 
-  .featured-project:hover .project-card {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-
-  .project-image {
-    width: 100%;
-    height: 180px;
-    overflow: hidden;
-  }
-
-  .project-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .project-content {
-    padding: 1.5rem;
-  }
-
-  .project-title {
-    font-family: var(--font-serif);
-    font-size: 1.25rem;
-    font-weight: 400;
-    margin: 0 0 0.75rem;
-    color: var(--color-text);
-    letter-spacing: 0.02em;
-  }
-
-  .project-description {
-    font-size: 0.95rem;
-    color: var(--color-muted);
-    margin: 0 0 1.25rem;
-    line-height: 1.5;
-  }
-
-  .project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .project-tag {
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    padding: 0.25rem 0.5rem;
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: 0.35rem;
-    color: var(--color-text);
-  }
-</style>
+    <div class:list={["min-w-0", detail && "border-t border-[#34343d] md:border-l md:border-t-0"]}>
+      <slot name="media" />
+    </div>
+  </div>
+</article>

@@ -4,67 +4,51 @@ import Hero from '../components/homepage/Hero.astro';
 import FeaturedProject from '../components/homepage/FeaturedProject.astro';
 import SelectedWork from '../components/homepage/SelectedWork.astro';
 import GithubActivity from '../components/GithubActivity.astro';
+import ImageComparisonSlider from '../components/homepage/ImageComparisonSlider.astro';
+import LogoGrid from '../components/homepage/LogoGrid.astro';
+import SectionHeading from '../components/homepage/SectionHeading.astro';
 import HowIWork from '../components/homepage/HowIWork.astro';
 import BuildingWithAI from '../components/homepage/BuildingWithAI.astro';
 import Principles from '../components/homepage/Principles.astro';
 import About from '../components/homepage/About.astro';
 ---
-<Layout title="John S Fuller — Front End Visual & UX Designer" description="John S Fuller — Front End Visual & UX Designer. Resume and portfolio.">
-  <!-- Page-specific styles for featured projects -->
-  <style slot="head">
-    .featured-projects {
-      margin: 3rem 0;
-    }
-
-    .section-title {
-      font-family: var(--font-serif);
-      font-size: 1.5rem;
-      font-weight: 400;
-      margin: 0 0 1.5rem;
-      color: var(--color-text);
-      letter-spacing: 0.02em;
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-
-    /* Override the .featured-project link styles for this context */
-    .featured-projects .featured-project {
-      display: block;
-    }
-
-    .featured-projects .featured-project:hover {
-      text-decoration: none;
-    }
-  </style>
+<Layout title="John S Fuller — Front End Visual & UX Designer" description="John S Fuller — Front End Visual & UX Designer. Resume and portfolio." bodyClass="bg-[#17171c] text-gray-200">
   <Hero
-    name="John S Fuller"
-    title="Front End Visual & UX Designer"
-    description="Design systems, Astro, and accessible web experiences."
+    name="John Fuller"
+    title="Product Design Engineer"
+    description="I design and build products from idea to production."
   />
-  <section class="featured-project">
-    <h2 class="section-title">Featured Project</h2>    
+  <LogoGrid />
+  <section class="mt-16">
+    <SectionHeading text="Featured Project" class="mb-6 text-3xl md:text-4xl" />    
     <FeaturedProject
         title="AOPA Platform Migration & Website Redesign"
         description="Led the redesign of AOPA’s digital platform, modernizing the organization’s web presence to improve performance, scalability, and user experience for millions of pilots and aviation enthusiasts."
-        href="/"
-        image="/images/grubby-galaxy-preview.jpg"
-        imageAlt="AOPA new homepage screenshot"
-        tags={["Astro", "TypeScript", "Preact"]}
+        body="The project involved transitioning legacy systems to a modern content management architecture, redesigning key user journeys, and implementing a responsive, accessible design system. Working across cross-functional teams, including product, design, development, and stakeholders, I helped ensure a seamless migration of content, functionality, and integrations while minimizing disruption to users."
+        stats={[
+          { value: "45k", label: "articles migrated" },
+          { value: "3k", label: "pages migrated" },
+          { value: "4", label: "person team" },
+          { value: "4", label: "month timeline" },
+        ]}
+      >
+      <ImageComparisonSlider 
+        slot="media"
+        beforeImage='/images/homepage/aopa-homepage-old.jpg'
+        afterImage='/images/homepage/aopa-homepage-new.jpg'
+        aspectRatio='921/650'
       />
+    </FeaturedProject>
   </section>
 
-  <section class="featured-projects">
-    <h2 class="section-title">Selected Work</h2>
-    <div class="projects-grid">
+  <section class="mt-12">
+    <SectionHeading text="Selected Work" class="mb-6 text-4xl" />
+    <div class="grid grid-cols-2 divide-x divide-[#34343d] border border-[#34343d]">
       <SelectedWork
         title="AOP Design System"
         description="Comprehensive design system for AOPA including documentation, components, and usage guidelines."
         href="/design-system"
-        image="/images/design-system-preview.jpg"
+        image="/images/homepage/design-system.png"
         imageAlt="AOPA Design System documentation homepage"
         tags={["Design System", "Documentation", "Components"]}
       />
@@ -72,13 +56,12 @@ import About from '../components/homepage/About.astro';
         title="Hub Hero Component"
         description="Customizable hero component with preview capabilities for AOPA's content hubs."
         href="/aopa/hub/hero"
-        image="/images/hub-hero-preview.jpg"
+        image="/images/homepage/hub-hero.png"
         imageAlt="Hub Hero component preview interface"
         tags={["React", "Component Library", "Preview"]}
       />
     </div>
   </section>
-  <GithubActivity />
   <HowIWork
     title="How I Work"
     description="A glimpse into my design and development process"
@@ -101,34 +84,37 @@ import About from '../components/homepage/About.astro';
       }
     ]}
   />
-  <BuildingWithAI
-    title="Building with AI"
-    description="How I leverage AI tools to enhance my workflow and deliver better results"
-    items={[
-      "Automated bug triage",
-      "Research synthesis",
-      "Design system generation",
-      "Internal productivity tools",
-      "Agent workflows"
-    ]}
-  />
-  <Principles
-    title="Principles"
-    description="Core values that guide my work and decision-making"
-    principles={[
-      "Ship before perfect.",
-      "Measure before debating.",
-      "Design systems scale teams.",
-      "Documentation is a feature.",
-      "User feedback beats assumptions."
-    ]}
-  />
+  <div class="mt-12 grid grid-cols-2 gap-8">
+    <BuildingWithAI
+      title="Building with AI"
+      description="How I leverage AI tools to enhance my workflow and deliver better results"
+      items={[
+        "Automated bug triage",
+        "Research synthesis",
+        "Design system generation",
+        "Internal productivity tools",
+        "Agent workflows"
+      ]}
+    />
+    <Principles
+      title="Principles"
+      description="Core values that guide my work and decision-making"
+      principles={[
+        "Ship before perfect.",
+        "Measure before debating.",
+        "Design systems scale teams.",
+        "Documentation is a feature.",
+        "User feedback beats assumptions."
+      ]}
+    />
+  </div>
+
   <About
     title="About"
     description="A brief overview of my work and interests"
     content="I'm a Product Design Engineer working at the intersection of design, engineering, and product strategy. I enjoy turning ambiguous problems into shipped experiences, especially when I can own the entire process from discovery through implementation and measurement. Lately I've been exploring AI-assisted workflows, analytics-driven product development, and tools that help teams move faster."
   />
-  <div style="text-align: center; margin: 2rem 0;">
-    <a href="/resume" data-astro-transition="page" style="background: var(--color-accent); color: white; padding: 0.5rem 1rem; border-radius: 0.25rem; text-decoration: none;">View Resume</a>
+  <div class="text-center mt-8 mb-8">
+    <a href="/resume" data-astro-transition="page" class="rounded-md bg-blue-600 px-4 py-2 text-white no-underline">View Resume</a>
   </div>
 </Layout>

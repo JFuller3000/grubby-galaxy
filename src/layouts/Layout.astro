@@ -4,9 +4,10 @@ import SiteNav from '../components/SiteNav.astro';
 interface Props {
   title: string;
   description: string;
+  bodyClass?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, bodyClass } = Astro.props;
 const currentPath = Astro.url.pathname;
 ---
 <!DOCTYPE html>
@@ -21,7 +22,7 @@ const currentPath = Astro.url.pathname;
 		<title>{title}</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700;1,400..700&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
 		<style is:global>
 			:root {
 				--color-bg: #faf9f7;
@@ -30,8 +31,8 @@ const currentPath = Astro.url.pathname;
 				--color-accent: #2d5a4a;
 				--color-border: #e5e3e0;
 				--font-sans: 'DM Sans', system-ui, sans-serif;
-				--font-serif: 'DM Serif Display', Georgia, serif;
-				--max-width: 720px;
+				--font-serif: 'Baskervville', Georgia, serif;
+				--max-width: 1400px;
 			}
 
 			* {
@@ -53,9 +54,14 @@ const currentPath = Astro.url.pathname;
 				margin: 0 auto;
 			}
 		</style>
+		<style is:global>
+			@tailwind base;
+			@tailwind components;
+			@tailwind utilities;
+		</style>
 		<slot name="head" />
 	</head>
-	<body>
+	<body class={bodyClass}>
 		<div class="page" data-astro-transition-scope="page">
 			<SiteNav currentPath={currentPath} />
 			<slot />

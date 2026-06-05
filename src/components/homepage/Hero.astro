@@ -6,41 +6,37 @@ interface Props {
 }
 
 const { name, title, description } = Astro.props;
+const nameParts = name.trim().split(/\s+/);
+const lastName = nameParts.pop();
+const firstName = nameParts.join(" ");
+const titleParts = title.trim().split(/\s+/);
 ---
-<div class="hero">
-  <h1 class="hero-name">{name}</h1>
-  <p class="hero-title">{title}</p>
-  {description && <p class="hero-description">{description}</p>}
-</div>
-
-<style>
-  .hero {
-    text-align: center;
-    margin-bottom: 2.5rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .hero-name {
-    font-family: var(--font-serif);
-    font-size: clamp(2rem, 5vw, 2.75rem);
-    font-weight: 400;
-    margin: 0 0 0.25rem;
-    letter-spacing: 0.02em;
-  }
-
-  .hero-title {
-    font-size: 1.1rem;
-    color: var(--color-muted);
-    font-weight: 500;
-    margin: 0 0 1rem;
-  }
-
-  .hero-description {
-    font-size: 0.95rem;
-    color: var(--color-muted);
-    margin: 0;
-    max-width: 40ch;
-    margin-inline: auto;
-  }
-</style>
+<section class="mb-0 flex min-h-[25.75rem] w-full items-center border-b border-[#34343d] text-[#f8f8f6]">
+  <div class="mx-auto flex w-full max-w-[870px] flex-col gap-12 px-4 py-20 md:flex-row md:items-center md:gap-28 md:px-0">
+    <div class="md:w-96 md:flex-none">
+      <h1 class="m-0 flex flex-wrap items-baseline gap-[0.28em] font-serif text-[clamp(2.5rem,5vw,3.25rem)] font-normal leading-[0.92] tracking-[0]">
+      {firstName && <span>{firstName}</span>}
+        {lastName && <strong class="font-bold italic">{lastName}</strong>}
+      </h1>
+      <p class="m-0 mt-2 font-sans text-[clamp(2.45rem,5vw,3rem)] leading-[0.98] tracking-[0]" aria-label={title}>
+        {titleParts.map((word, index) => (
+          <span
+            class:list={{
+              "block": true,
+              "font-extralight": index === 0,
+              "font-light": index !== 0 && word.toLowerCase() !== "design",
+              "font-extrabold italic": word.toLowerCase() === "design",
+            }}
+          >
+            {word}
+          </span>
+        ))}
+      </p>
+    </div>
+    {description && (
+      <p class="m-0 max-w-[31rem] text-[1.125rem] text-balance font-normal leading-relaxed text-[#f8f8f6] md:flex-1 md:pt-6">
+        {description}
+      </p>
+    )}
+  </div>
+</section>

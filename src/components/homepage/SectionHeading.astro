@@ -1,0 +1,16 @@
+---
+interface Props {
+  text: string;
+  class?: string;
+}
+
+const { text, class: className = "" } = Astro.props;
+const words = text.trim().split(/\s+/).filter(Boolean);
+const lastWord = words.pop() ?? "";
+const leadingText = words.join(" ");
+---
+
+<h2 class:list={["font-serif font-normal leading-tight tracking-[0.02em] text-white", className]}>
+  {leadingText && <>{leadingText} </>}
+  <span class="font-bold italic">{lastWord}</span>
+</h2>

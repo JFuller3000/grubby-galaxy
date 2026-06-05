@@ -1,39 +1,34 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import { loadEnv } from "vite";
+import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
-// Dev: browser calls same-origin /api/authgravity/* → Vite proxies to AuthGravity (avoids CORS on localhost).
-export default defineConfig(({ mode }) => {
-
-  const env = loadEnv(mode, process.cwd(), "");
-  const proxyTarget = (
-    env.AUTHGRAVITY_PROXY_TARGET ||
-    env.PUBLIC_AUTHGRAVITY_URL ||
-    ""
-  )
-    .trim()
-    .replace(/\/$/, "");
-
-  return {
-    devToolbar: {
-      enabled: false,
-    },
-    vite: {
-      server: {
-        proxy: proxyTarget
-          ? {
-              "/api/authgravity": {
-                target: proxyTarget,
-                changeOrigin: true,
-                secure: true,
-                rewrite: (path) => path.replace(/^\/api\/authgravity/, "") || "/",
-              },
-            }
-          : {},
-      },
-    },
-    // Enable view transitions
-    viewTransitions: true,
-  };
+export default defineConfig({
+  site: 'https://grubby-galaxy.netlify.app',
+  integrations: [
+    tailwind({
+      config: {
+        content: [
+          "./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}",
+        ],
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['DM Sans', 'system-ui', 'sans-serif'],
+              serif: ['Baskervville', 'Georgia', 'serif'],
+            },
+            colors: {
+              'text': 'var(--color-text)',
+              'border': 'var(--color-border)',
+              'accent': 'var(--color-accent)',
+              'bg': 'var(--color-bg)',
+              'bg-secondary': 'var(--color-bg-secondary)',
+              'muted': 'var(--color-muted)',
+            },
+          },
+        },
+        plugins: [],
+      }
+    })
+  ],
 });

@@ -1,0 +1,48 @@
+---
+interface LogoItem {
+  name: string;
+  src?: string;
+}
+
+interface Props {
+  logos?: LogoItem[];
+}
+
+const defaultLogos: LogoItem[] = [
+  { name: 'AOPA', src: '/images/homepage/logo-grid/aopa.png' },
+  { name: 'AOL', src: '/images/homepage/logo-grid/aol.png' },
+  { name: 'Curbed', src: '/images/homepage/logo-grid/curbed.png' },
+  { name: 'Polygon', src: '/images/homepage/logo-grid/polygon.png' },
+  { name: 'Inman', src: '/images/homepage/logo-grid/inman.png' },
+  { name: 'Eater', src: '/images/homepage/logo-grid/eater.png' },
+  { name: 'Vox Media', src: '/images/homepage/logo-grid/vox-media.png' },
+  { name: 'Engadget', src: '/images/homepage/logo-grid/engadget.png' },
+  { name: 'New York Magazine', src: '/images/homepage/logo-grid/ny-mag.png' },
+  { name: 'SB Nation', src: '/images/homepage/logo-grid/sbnation.png' },
+  { name: 'The Verge', src: '/images/homepage/logo-grid/verge.png' },
+  { name: 'Vox', src: '/images/homepage/logo-grid/vox.png' },
+];
+
+const { logos = defaultLogos } = Astro.props;
+---
+
+<section class="mb-12 overflow-hidden border-x border-b border-[#34343d]" aria-label="Selected clients and collaborators">
+  <div class="-mb-px -mr-px grid grid-cols-4">
+    {logos.map((logo) => (
+      <div class="flex min-h-14 items-center justify-center border-b border-r border-[#34343d] sm:min-h-20 ">
+        {logo.src ? (
+          <img
+            src={logo.src}
+            alt={logo.name}
+            loading="lazy"
+            class="max-h-16 max-w-44 object-contain opacity-80 grayscale sm:max-h-20 sm:max-w-56"
+          />
+        ) : (
+          <span class="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-gray-500">
+            {logo.name}
+          </span>
+        )}
+      </div>
+    ))}
+  </div>
+</section>
