@@ -3,23 +3,21 @@ import SectionHeading from './SectionHeading.astro';
 
 interface Props {
   title?: string;
-  description?: string;
   items?: string[];
 }
 
-const { title = "Building with AI", description = "How I leverage AI tools to enhance my workflow and deliver better results", items = [] } = Astro.props;
+const { title = "Building with AI", items = [] } = Astro.props;
 ---
 
-<section class="h-full">
-  <SectionHeading text={title} class="mb-4 text-xl" />
-  <p class="text-gray-300 mb-8 text-lg leading-relaxed">{description}</p>
+<section class="h-full border border-[#34343d] px-6 py-8">
+  <SectionHeading text={title} class="mb-8 text-xl" />
   
   <div class="grid gap-6">
     {items.map((item, index) => (
       <div class="flex gap-4" key={index}>
         <div class="flex-shrink-0 text-xl mt-1">🤖</div>
         <div class="flex-1">
-          <h3 class="font-serif text-lg font-normal mb-2 text-white leading-tight">{item}</h3>
+          <h3 class="font-bold text-lg font-normal mb-2 text-white leading-tight">{item}</h3>
         </div>
       </div>
     ))}

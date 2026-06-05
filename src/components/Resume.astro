@@ -1,133 +1,141 @@
-<main class="resume">
-	<header>
-		<h1 class="name">John S Fuller</h1>
-		<p class="title">Product Designer</p>
-		<div class="contact">
-			<a href="mailto:Johnsfuller@gmail.com">Johnsfuller@gmail.com</a>
-			<span class="sep">|</span>
-			<a href="tel:+12026818640">202-681-8640</a>
-			<span class="sep">|</span>
-			<a href="https://www.linkedin.com/in/john-fuller-74410631" target="_blank" rel="noopener noreferrer"
-				>LinkedIn</a
+<main class="mx-auto max-w-5xl text-text print:max-w-none">
+	<header class="mb-10 border-b border-border pb-8 text-center">
+		<h1 class="m-0 mb-1 font-serif text-[clamp(2rem,5vw,2.75rem)] font-normal tracking-[0.02em] text-text">
+			John S Fuller
+		</h1>
+		<p class="m-0 mb-4 text-lg font-medium text-muted">Product Designer</p>
+		<div class="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-muted">
+			<a class="text-accent no-underline hover:underline print:text-text" href="mailto:Johnsfuller@gmail.com">
+				Johnsfuller@gmail.com
+			</a>
+			<span aria-hidden="true">|</span>
+			<a class="text-accent no-underline hover:underline print:text-text" href="tel:+12026818640">202-681-8640</a>
+			<span aria-hidden="true">|</span>
+			<a
+				class="text-accent no-underline hover:underline print:text-text"
+				href="https://www.linkedin.com/in/john-fuller-74410631"
+				target="_blank"
+				rel="noopener noreferrer"
 			>
-			<span class="sep">|</span>
-			<a href="https://github.com/JFuller3000" target="_blank" rel="noopener noreferrer">Github</a>
+				LinkedIn
+			</a>
+			<span aria-hidden="true">|</span>
+			<a
+				class="text-accent no-underline hover:underline print:text-text"
+				href="https://github.com/JFuller3000"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				Github
+			</a>
 		</div>
 	</header>
 
-	<section class="summary" aria-labelledby="summary-heading">
-		<h2 id="summary-heading">Summary</h2>
-		<p>
+	<section class="mb-8" aria-labelledby="summary-heading">
+		<h2 id="summary-heading" class="mb-4 font-serif text-xl font-normal tracking-[0.02em] text-text">Summary</h2>
+		<p class="m-0 text-[0.95rem] leading-relaxed text-muted">
 			Front-end engineer and visual designer specializing in content driven large scale web apps. Ships with
 			Astro, TypeScript, and Tailwind; comfortable with headless CMS, GraphQL, and static-first/Jamstack
 			architecture.
 		</p>
 	</section>
 
-	<section class="skills" aria-labelledby="skills-heading">
-		<h2 id="skills-heading">Skills</h2>
-		<div class="skills-grid">
-			<div class="skill-group">
-				<h3>Frontend</h3>
-				<p>Astro, TypeScript, TSX, Preact, React (hooks), Tailwind CSS, CSS custom properties, responsive design</p>
+	<section class="mb-8" aria-labelledby="skills-heading">
+		<h2 id="skills-heading" class="mb-4 font-serif text-xl font-normal tracking-[0.02em] text-text">Skills</h2>
+		<div class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-x-8 gap-y-5">
+			<div>
+				<h3 class="mb-2 text-xs font-semibold uppercase tracking-[0.08em] text-accent">Frontend</h3>
+				<p class="m-0 text-sm leading-relaxed text-muted">
+					Astro, TypeScript, TSX, Preact, React (hooks), Tailwind CSS, CSS custom properties, responsive design
+				</p>
 			</div>
-			<div class="skill-group">
-				<h3>Design systems</h3>
-				<p>
+			<div>
+				<h3 class="mb-2 text-xs font-semibold uppercase tracking-[0.08em] text-accent">Design systems</h3>
+				<p class="m-0 text-sm leading-relaxed text-muted">
 					Design tokens (typography, color, spacing), component libraries, Tailwind theme extension,
 					prose/editorial styling, accessibility (ARIA, semantic HTML)
 				</p>
 			</div>
-			<div class="skill-group">
-				<h3>Data &amp; APIs</h3>
-				<p>GraphQL, Apollo Client, headless CMS (WordPress / WPGraphQL), REST</p>
+			<div>
+				<h3 class="mb-2 text-xs font-semibold uppercase tracking-[0.08em] text-accent">Data &amp; APIs</h3>
+				<p class="m-0 text-sm leading-relaxed text-muted">GraphQL, Apollo Client, headless CMS (WordPress / WPGraphQL), REST</p>
 			</div>
-			<div class="skill-group">
-				<h3>Auth &amp; tooling</h3>
-				<p>OIDC / Ory, Prettier, Vitest, Git</p>
+			<div>
+				<h3 class="mb-2 text-xs font-semibold uppercase tracking-[0.08em] text-accent">Auth &amp; tooling</h3>
+				<p class="m-0 text-sm leading-relaxed text-muted">OIDC / Ory, Prettier, Vitest, Git</p>
 			</div>
-			<div class="skill-group">
-				<h3>Platform / infra</h3>
-				<p>Jamstack, static site generation, Cloudflare, Node</p>
+			<div>
+				<h3 class="mb-2 text-xs font-semibold uppercase tracking-[0.08em] text-accent">Platform / infra</h3>
+				<p class="m-0 text-sm leading-relaxed text-muted">Jamstack, static site generation, Cloudflare, Node</p>
 			</div>
 		</div>
 	</section>
 
-	<section class="experience" aria-labelledby="experience-heading">
-		<h2 id="experience-heading">Work Experience</h2>
+	<section class="mb-8" aria-labelledby="experience-heading">
+		<h2 id="experience-heading" class="mb-4 font-serif text-xl font-normal tracking-[0.02em] text-text">
+			Work Experience
+		</h2>
 
-		<article class="job">
-			<div class="job-header">
-				<span class="job-company">AOPA</span>
-				<span class="job-date">2021–present</span>
+		<article class="mb-7 last:mb-0 print:break-inside-avoid">
+			<div class="mb-2 flex flex-wrap items-baseline justify-between gap-2">
+				<span class="text-base font-semibold text-text">AOPA</span>
+				<span class="text-sm text-muted">2021-present</span>
 			</div>
-			<p class="job-role">Design System Engineer</p>
-			<ul>
-				<li>
-					Lead UX and visual design for a major platform redesign; own end-to-end design from concept to
-					implementation
-				</li>
-				<li>
-					Define and build the design system (tokens, components, typography) that powers the new member-facing
-					product
-				</li>
-				<li>
-					Partner with engineering to ship a mobile-first, conversion-focused front end (Astro, Tailwind, headless
-					CMS)
-				</li>
+			<p class="m-0 mb-2 text-[0.95rem] text-muted">Design System Engineer</p>
+			<ul class="m-0 list-disc space-y-1 pl-5 text-sm leading-relaxed text-muted">
+				<li>Lead UX and visual design for a major platform redesign; own end-to-end design from concept to implementation</li>
+				<li>Define and build the design system (tokens, components, typography) that powers the new member-facing product</li>
+				<li>Partner with engineering to ship a mobile-first, conversion-focused front end (Astro, Tailwind, headless CMS)</li>
 				<li>Drive UX and visual direction for landing pages, sign-up flows, and editorial experiences</li>
 			</ul>
 		</article>
 
-		<article class="job">
-			<div class="job-header">
-				<span class="job-company">Solas AI</span>
-				<span class="job-date">2019–2021</span>
+		<article class="mb-7 last:mb-0 print:break-inside-avoid">
+			<div class="mb-2 flex flex-wrap items-baseline justify-between gap-2">
+				<span class="text-base font-semibold text-text">Solas AI</span>
+				<span class="text-sm text-muted">2019-2021</span>
 			</div>
-			<p class="job-role">Principal Designer</p>
-			<ul>
+			<p class="m-0 mb-2 text-[0.95rem] text-muted">Principal Designer</p>
+			<ul class="m-0 list-disc space-y-1 pl-5 text-sm leading-relaxed text-muted">
 				<li>Served as sole designer on a small team; owned branding, visual identity, and key go-to-market materials</li>
 				<li>Designed and produced pitch decks and sales collateral that supported fundraising and client conversations</li>
 				<li>Established brand guidelines and reusable templates for a fast-moving early-stage team</li>
 			</ul>
 		</article>
 
-		<article class="job">
-			<div class="job-header">
-				<span class="job-company">Freelance</span>
-				<span class="job-date">2017–2019</span>
+		<article class="mb-7 last:mb-0 print:break-inside-avoid">
+			<div class="mb-2 flex flex-wrap items-baseline justify-between gap-2">
+				<span class="text-base font-semibold text-text">Freelance</span>
+				<span class="text-sm text-muted">2017-2019</span>
 			</div>
-			<p class="job-role">Design &amp; Front-end</p>
-			<ul>
+			<p class="m-0 mb-2 text-[0.95rem] text-muted">Design &amp; Front-end</p>
+			<ul class="m-0 list-disc space-y-1 pl-5 text-sm leading-relaxed text-muted">
 				<li>Delivered brand identity, web design, and front-end implementation for startups and small businesses</li>
 				<li>Shipped responsive sites and design systems across industries including media and technology</li>
 			</ul>
 		</article>
 
-		<article class="job">
-			<div class="job-header">
-				<span class="job-company">Vox Media Inc.</span>
-				<span class="job-date">2009–2017</span>
+		<article class="mb-7 last:mb-0 print:break-inside-avoid">
+			<div class="mb-2 flex flex-wrap items-baseline justify-between gap-2">
+				<span class="text-base font-semibold text-text">Vox Media Inc.</span>
+				<span class="text-sm text-muted">2009-2017</span>
 			</div>
-			<p class="job-role">Principal Front End Designer</p>
-			<ul>
+			<p class="m-0 mb-2 text-[0.95rem] text-muted">Principal Front End Designer</p>
+			<ul class="m-0 list-disc space-y-1 pl-5 text-sm leading-relaxed text-muted">
 				<li>First design hire; helped scale the design org from 1 to a 40-person, multi-location team</li>
 				<li>Led design of major rebrand initiatives and long-term brand platforms for flagship properties</li>
-				<li>
-					Created and evolved brand systems and design standards that supported growth and consistency across
-					properties
-				</li>
+				<li>Created and evolved brand systems and design standards that supported growth and consistency across properties</li>
 				<li>Shipped high-impact brand and product work that defined visual identity and audience experience</li>
 			</ul>
 		</article>
 
-		<article class="job">
-			<div class="job-header">
-				<span class="job-company">AOL</span>
-				<span class="job-date">2007–2009</span>
+		<article class="mb-7 last:mb-0 print:break-inside-avoid">
+			<div class="mb-2 flex flex-wrap items-baseline justify-between gap-2">
+				<span class="text-base font-semibold text-text">AOL</span>
+				<span class="text-sm text-muted">2007-2009</span>
 			</div>
-			<p class="job-role">Junior Designer</p>
-			<ul>
+			<p class="m-0 mb-2 text-[0.95rem] text-muted">Junior Designer</p>
+			<ul class="m-0 list-disc space-y-1 pl-5 text-sm leading-relaxed text-muted">
 				<li>Designed and supported content brands at scale across a large portfolio of properties</li>
 				<li>Delivered UX and visual design for high-traffic, editorially driven products</li>
 				<li>Collaborated with senior design leadership and cross-functional teams in a fast-paced, scaled environment</li>
@@ -135,9 +143,13 @@
 		</article>
 	</section>
 
-	<section class="education" aria-labelledby="education-heading">
-		<h2 id="education-heading">Education</h2>
-		<p><strong>Corcoran College of Art &amp; Design</strong> | BA Graphic design | Washington DC</p>
-		<p><strong>University of Tallin</strong> | 1yr Study Abroad, CS | Tallinn, Estonia</p>
+	<section class="mb-8" aria-labelledby="education-heading">
+		<h2 id="education-heading" class="mb-4 font-serif text-xl font-normal tracking-[0.02em] text-text">Education</h2>
+		<p class="m-0 mb-2 text-[0.95rem] text-muted">
+			<strong class="font-semibold text-text">Corcoran College of Art &amp; Design</strong> | BA Graphic design | Washington DC
+		</p>
+		<p class="m-0 text-[0.95rem] text-muted">
+			<strong class="font-semibold text-text">University of Tallin</strong> | 1yr Study Abroad, CS | Tallinn, Estonia
+		</p>
 	</section>
 </main>
