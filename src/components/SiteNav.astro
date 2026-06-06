@@ -12,7 +12,10 @@ const isDocumentation = currentPath === "/design-system/documentation";
 const isDecks = currentPath === "/design-system/decks";
 ---
 <nav class="site-nav" aria-label="Main">
-	<ul class="site-nav-list">
+	<ul class="site-nav-list text-white">
+		<li>
+			<a href="/" data-astro-transition="page">Home</a>
+		</li>
 		<li>
 			<a href="/resume" class:list={{ active: isResume }} data-astro-transition="page">Resume</a>
 		</li>
