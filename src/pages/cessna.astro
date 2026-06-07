@@ -1,0 +1,414 @@
+---
+---
+
+<div id="cessna-sim">
+  <div id="hud"></div>
+</div>
+
+<style>
+  html, body {
+    margin: 0;
+    overflow: hidden;
+    background: #000;
+  }
+
+  #cessna-sim {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  #hud {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 10;
+    color: white;
+    font: 14px monospace;
+    background: rgba(0,0,0,.45);
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  canvas {
+    display: block;
+  }
+</style>
+
+<script>
+  import * as THREE from 'three';
+  import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+  import { Water } from 'three/examples/jsm/objects/Water.js';
+  import { Sky } from 'three/examples/jsm/objects/Sky.js';
+
+  const container = document.getElementById('cessna-sim');
+  const hud = document.getElementById('hud');
+
+  const scene = new THREE.Scene();
+
+  const camera = new THREE.PerspectiveCamera(
+    65,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    20000
+  );
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.shadowMap.enabled = true;
+  container.appendChild(renderer.domElement);
+
+  const sun = new THREE.Vector3();
+
+  const sky = new Sky();
+  sky.scale.setScalar(10000);
+  scene.add(sky);
+
+  sky.material.uniforms.turbidity.value = 4;
+  sky.material.uniforms.rayleigh.value = 2;
+  sky.material.uniforms.mieCoefficient.value = 0.003;
+  sky.material.uniforms.mieDirectionalG.value = 0.8;
+
+  sun.setFromSphericalCoords(
+    1,
+    THREE.MathUtils.degToRad(88),
+    THREE.MathUtils.degToRad(180)
+  );
+
+  sky.material.uniforms.sunPosition.value.copy(sun);
+
+  const water = new Water(
+    new THREE.PlaneGeometry(12000, 12000),
+    {
+      textureWidth: 512,
+      textureHeight: 512,
+      waterNormals: new THREE.TextureLoader().load(
+        '/waternormals.jpg',
+        texture => {
+          texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+        }
+      ),
+      sunDirection: sun.clone().normalize(),
+      sunColor: 0xffffff,
+      waterColor: 0x174a6a,
+      distortionScale: 3.7,
+      fog: false,
+    }
+  );
+
+  water.rotation.x = -Math.PI / 2;
+  scene.add(water);
+
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x334455, 2.2));
+
+  const dir = new THREE.DirectionalLight(0xffffff, 2.4);
+  dir.position.set(-300, 500, 200);
+  scene.add(dir);
+
+  const ground = new THREE.Mesh(
+    new THREE.PlaneGeometry(1400, 2400, 40, 40),
+    new THREE.MeshStandardMaterial({ color: 0x31552e, roughness: 1 })
+  );
+  ground.rotation.x = -Math.PI / 2;
+  ground.position.set(0, 2, -900);
+  // scene.add(ground);
+
+  const runway = new THREE.Mesh(
+    new THREE.BoxGeometry(70, 1, 900),
+    new THREE.MeshStandardMaterial({ color: 0x222222 })
+  );
+  runway.position.set(0, 3, -900);
+  // scene.add(runway);
+
+  const plane = new THREE.Group();
+  plane.position.set(0, 80, 150);
+  scene.add(plane);
+
+  const boat = new THREE.Group();
+  boat.position.set(80, -4, -150);
+  scene.add(boat);
+
+  new GLTFLoader().load('/models/sailboat.glb', gltf => {
+    const model = gltf.scene;
+    model.scale.setScalar(1.5);
+    boat.add(model);
+  });
+
+  const ducky = new THREE.Group();
+  ducky.position.set(400, -1, -750);
+  scene.add(ducky);
+
+  new GLTFLoader().load('/models/rubber_ducky.glb', gltf => {
+    const model = gltf.scene;
+    model.scale.setScalar(100.5);
+    ducky.add(model);
+  });
+
+  const lighthouse = new THREE.Group();
+  lighthouse.position.set(-360, -3, -1250);
+  scene.add(lighthouse);
+
+  new GLTFLoader().load('/models/lighthouse.glb', gltf => {
+    const model = gltf.scene;
+    model.scale.setScalar(20);
+    lighthouse.add(model);
+  });
+
+  let propellerPivotLeft = null;
+  let propellerPivotRight = null;
+  let rudderPivot = null;
+  let rudderNeutralRotation = 0;
+  const rudderMaxDeflection = THREE.MathUtils.degToRad(30);
+
+  const fallback = new THREE.Mesh(
+    new THREE.BoxGeometry(4, 1, 8),
+    new THREE.MeshStandardMaterial({ color: 0xffffff })
+  );
+  plane.add(fallback);
+
+  new GLTFLoader().load(
+    '/models/cessna-3.glb',
+    gltf => {
+      plane.remove(fallback);
+      const model = gltf.scene;
+      model.scale.setScalar(2);
+      model.rotation.y = Math.PI;
+      plane.add(model);
+
+      plane.updateWorldMatrix(true, true);
+
+      const propLeft = model.getObjectByName('node159_78');
+      const propRight = model.getObjectByName('node159001_79');
+
+      [propLeft, propRight].forEach((prop, i) => {
+        if (!prop) return;
+        const blade = prop.getObjectByName(i === 0 ? 'Object_99' : 'Object_101') || prop;
+        const worldCenter = new THREE.Vector3();
+        new THREE.Box3().setFromObject(blade).getCenter(worldCenter);
+        const parent = prop.parent || model;
+
+        const pivot = new THREE.Object3D();
+        pivot.position.copy(parent.worldToLocal(worldCenter.clone()));
+        parent.add(pivot);
+        pivot.attach(prop);
+
+        if (i === 0) propellerPivotLeft = pivot; else propellerPivotRight = pivot;
+      });
+
+      const rudderMesh = model.getObjectByName('node166_85');
+
+      if (rudderMesh) {
+        const rudderBounds = new THREE.Box3().setFromObject(rudderMesh);
+        const rudderSize = rudderBounds.getSize(new THREE.Vector3());
+        const rudderCenter = rudderBounds.getCenter(new THREE.Vector3());
+        const rudderDepth = THREE.MathUtils.clamp(rudderSize.z * 0.42, 0.8, 1.8);
+        const rudderHeight = THREE.MathUtils.clamp(rudderSize.y * 0.78, 1.8, 4.5);
+        const rudderThickness = THREE.MathUtils.clamp(rudderSize.x * 0.75, 0.08, 0.22);
+        const hingeWorld = new THREE.Vector3(
+          rudderCenter.x,
+          rudderCenter.y,
+          rudderBounds.max.z - rudderDepth
+        );
+
+        rudderPivot = new THREE.Object3D();
+        rudderPivot.position.copy(plane.worldToLocal(hingeWorld.clone()));
+        plane.add(rudderPivot);
+
+        const rudderFlap = new THREE.Mesh(
+          new THREE.BoxGeometry(rudderThickness, rudderHeight, rudderDepth),
+          new THREE.MeshStandardMaterial({
+            color: 0xf2f4f5,
+            roughness: 0.8,
+            metalness: 0,
+          })
+        );
+        rudderFlap.position.set(0, 0, rudderDepth / 2);
+        rudderPivot.add(rudderFlap);
+        rudderNeutralRotation = rudderPivot.rotation.y;
+      }
+    },
+    undefined,
+    error => {
+      console.warn('Could not load /models/cessna-3.glb', error);
+    }
+  );
+
+  const keys = {};
+
+  window.addEventListener('keydown', e => {
+    if (e.repeat) return;
+    keys[e.code] = true;
+
+    const now = performance.now();
+    if (e.code === 'ArrowLeft' && now - lastLeftTap < doubleTapWindow && lastLeftTap > 0) {
+      if (barrelRoll === 0) barrelRoll = -1;
+    }
+    if (e.code === 'ArrowRight' && now - lastRightTap < doubleTapWindow && lastRightTap > 0) {
+      if (barrelRoll === 0) barrelRoll = 1;
+    }
+    if (e.code === 'ArrowLeft') lastLeftTap = now;
+    if (e.code === 'ArrowRight') lastRightTap = now;
+  });
+
+  window.addEventListener('keyup', e => {
+    keys[e.code] = false;
+  });
+
+  window.addEventListener('keyup', e => {
+    keys[e.code] = false;
+  });
+
+  let throttle = 0.45;
+  let speed = 0;
+  let pitch = 0;
+  let roll = 0;
+  let yaw = 0;
+  let barrelRoll = 0;
+  let barrelRollYaw = 0;
+
+  const velocity = new THREE.Vector3();
+  const forward = new THREE.Vector3();
+  const clock = new THREE.Clock();
+
+  let lastLeftTap = 0;
+  let lastRightTap = 0;
+  const doubleTapWindow = 250;
+
+  window.addEventListener('keydown', e => {
+    if (e.repeat) return;
+    if (keys[e.code]) return;
+    keys[e.code] = true;
+
+    const now = performance.now();
+    if (e.code === 'ArrowLeft' && now - lastLeftTap < doubleTapWindow && lastLeftTap > 0) {
+      if (barrelRoll === 0) barrelRoll = -1;
+    }
+    if (e.code === 'ArrowRight' && now - lastRightTap < doubleTapWindow && lastRightTap > 0) {
+      if (barrelRoll === 0) barrelRoll = 1;
+    }
+    if (e.code === 'ArrowLeft') lastLeftTap = now;
+    if (e.code === 'ArrowRight') lastRightTap = now;
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    const dt = Math.min(clock.getDelta(), 0.033);
+
+    if (keys.KeyW) throttle += dt * 0.25;
+    if (keys.KeyS) throttle -= dt * 0.25;
+
+    throttle = THREE.MathUtils.clamp(throttle, 0, 1);
+
+    const pitchInput = (keys.ArrowUp ? 1 : 0) - (keys.ArrowDown ? 1 : 0);
+    const rollInput = (keys.ArrowRight ? 1 : 0) - (keys.ArrowLeft ? 1 : 0);
+    const yawInput = (keys.KeyA ? 1 : 0) - (keys.KeyD ? 1 : 0);
+
+    const climbRate = ((keys.ArrowUp ? 1 : 0) - (keys.ArrowDown ? 1 : 0)) * 45;
+
+    pitch += pitchInput * dt * 0.8;
+    roll += rollInput * dt * 1.4;
+    yaw += yawInput * dt * 0.6;
+
+    pitch *= 0.985;
+    roll *= 0.985;
+    yaw *= 0.985;
+
+    if (rudderPivot) {
+      const rudderTarget = rudderNeutralRotation + yawInput * rudderMaxDeflection;
+      rudderPivot.rotation.y = THREE.MathUtils.lerp(
+        rudderPivot.rotation.y,
+        rudderTarget,
+        Math.min(1, dt * 10)
+      );
+    }
+
+    speed += throttle * dt * 22;
+    speed -= dt * (2.5 + speed * 0.15);
+    speed = THREE.MathUtils.clamp(speed, 0, 132);
+
+    velocity.y = climbRate;
+
+    plane.rotation.order = 'YXZ';
+    
+    if (barrelRoll !== 0) {
+      plane.rotation.z += barrelRoll * dt * Math.PI * 2;
+      barrelRollYaw += barrelRoll * dt * 1.5;
+      if (Math.abs(plane.rotation.z) >= Math.PI * 2) {
+        plane.rotation.z = 0;
+        barrelRoll = 0;
+        barrelRollYaw = 0;
+      }
+    } else {
+      plane.rotation.z = roll;
+    }
+    
+    plane.rotation.y += yaw * dt + roll * dt * 0.35 + barrelRollYaw * dt * 0.5;
+    plane.rotation.x = pitch;
+
+    forward.set(0, 0, -1).applyQuaternion(plane.quaternion);
+
+    velocity.x = forward.x * speed;
+    velocity.z = forward.z * speed;
+
+    plane.position.addScaledVector(velocity, dt);
+
+    if (plane.position.y < 7) {
+      plane.position.y = 7;
+      velocity.y = Math.max(0, velocity.y);
+      speed *= 0.998;
+    }
+
+    const camOffset = new THREE.Vector3(0, 18, 55);
+    camOffset.applyQuaternion(plane.quaternion);
+
+    camera.position.lerp(
+      plane.position.clone().add(camOffset),
+      0.08
+    );
+
+    camera.lookAt(
+      plane.position.clone().add(new THREE.Vector3(0, 4, 0))
+    );
+
+    water.material.uniforms.time.value += dt;
+
+    const boatBobbing = Math.sin(clock.getElapsedTime() * 1.5);
+    boat.position.y = -4 + boatBobbing * 1.0;
+    boat.rotation.z = Math.cos(clock.getElapsedTime() * 1.5) * 0.12 + 0.06;
+    boat.position.z += 3.09 * dt;
+    if (boat.position.z > 200) boat.position.z = -200;
+
+    const bobbing = Math.sin(clock.getElapsedTime() * 2.0);
+    ducky.position.y = -1 + bobbing * 1.15;
+    ducky.rotation.z = Math.cos(clock.getElapsedTime() * 2.0) * 0.1;
+
+    const propSpin = (10 + throttle * 70) * dt;
+
+    if (propellerPivotLeft) {
+      propellerPivotLeft.rotation.y += propSpin;
+    }
+    if (propellerPivotRight) {
+      propellerPivotRight.rotation.y += propSpin;
+    }
+
+    hud.innerHTML =
+      `W/S throttle: ${(throttle * 100).toFixed(0)}%<br>` +
+      `Speed: ${(speed * 2.237).toFixed(1)} mph<br>` +
+      `Alt: ${plane.position.y.toFixed(1)} m<br>` +
+      `Heading: ${(((plane.rotation.y * 180 / Math.PI) % 360 + 360) % 360).toFixed(0)}°<br>` +
+      `Rudder: ${(rudderPivot ? ((rudderPivot.rotation.y - rudderNeutralRotation) * 180 / Math.PI) : 0).toFixed(0)}°<br>` +
+      `Controls: W/S throttle, arrows climb/dive, A/D yaw, double-tap arrows for barrel roll`;
+
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+</script>
