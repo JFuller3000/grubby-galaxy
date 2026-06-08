@@ -5,7 +5,7 @@
   <div id="hud" aria-live="polite"></div>
   <div id="high-score-modal" role="dialog" aria-modal="true" aria-labelledby="high-score-title" hidden>
     <form id="high-score-form" class="high-score-card">
-      <p class="high-score-kicker">Course complete</p>
+      <p id="high-score-kicker" class="high-score-kicker">Level 1-1 complete</p>
       <h2 id="high-score-title">High Score</h2>
       <div class="high-score-stats">
         <div>
@@ -24,6 +24,7 @@
       <div class="high-score-actions">
         <button id="save-score-button" type="submit">Save score</button>
         <button id="restart-course-button" type="button">Fly again</button>
+        <button id="next-level-button" type="button">Level 1-2</button>
       </div>
       <ol id="high-score-list" class="high-score-list" aria-label="Local high scores"></ol>
     </form>
@@ -191,15 +192,21 @@
     color: rgba(255, 255, 255, 0.82);
   }
 
-  .high-score-list li {
+  #high-score-modal :global(.high-score-row) {
     display: grid;
-    grid-template-columns: 2rem 1fr auto auto;
-    gap: 0.75rem;
+    grid-template-columns: 2.5rem minmax(3.5rem, 1fr) minmax(5rem, auto) minmax(4rem, auto);
+    column-gap: 1rem;
     align-items: baseline;
     font: 700 0.9rem/1.2 monospace;
   }
 
-  .high-score-list .empty-score {
+  #high-score-modal :global(.high-score-row__score),
+  #high-score-modal :global(.high-score-row__time) {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  #high-score-modal :global(.empty-score) {
     grid-template-columns: 1fr;
     color: rgba(255, 255, 255, 0.56);
   }
@@ -224,12 +231,16 @@
   const hud = document.getElementById('hud');
   const highScoreModal = document.getElementById('high-score-modal');
   const highScoreForm = document.getElementById('high-score-form');
+  const highScoreKicker = document.getElementById('high-score-kicker');
   const initialsInput = document.getElementById('initials-input');
   const finalScore = document.getElementById('final-score');
   const finalTime = document.getElementById('final-time');
   const highScoreList = document.getElementById('high-score-list');
   const saveScoreButton = document.getElementById('save-score-button');
   const restartCourseButton = document.getElementById('restart-course-button');
+  const nextLevelButton = document.getElementById('next-level-button');
+  const currentLevel = new URLSearchParams(window.location.search).get('level') === '1-2' ? '1-2' : '1-1';
+  const nextLevel = currentLevel === '1-1' ? '1-2' : null;
 
   const scene = new THREE.Scene();
 
@@ -390,18 +401,40 @@
     blending: THREE.AdditiveBlending,
     depthWrite: false,
   });
-  const ringPositions = [
-    new THREE.Vector3(0, 92, -80),
-    new THREE.Vector3(-55, 98, -260),
-    new THREE.Vector3(-140, 112, -450),
-    new THREE.Vector3(-265, 126, -650),
-    new THREE.Vector3(-430, 134, -850),
-    new THREE.Vector3(-630, 128, -1060),
-    new THREE.Vector3(-865, 116, -1280),
-    new THREE.Vector3(-1120, 110, -1510),
-    new THREE.Vector3(-1390, 98, -1760),
-    new THREE.Vector3(-1600, 92, -2010),
-  ];
+  const levelConfigs = {
+    '1-1': {
+      label: 'Level 1-1',
+      ringPositions: [
+        new THREE.Vector3(0, 92, -80),
+        new THREE.Vector3(-55, 98, -260),
+        new THREE.Vector3(-140, 112, -450),
+        new THREE.Vector3(-265, 126, -650),
+        new THREE.Vector3(-430, 134, -850),
+        new THREE.Vector3(-630, 128, -1060),
+        new THREE.Vector3(-865, 116, -1280),
+        new THREE.Vector3(-1120, 110, -1510),
+        new THREE.Vector3(-1390, 98, -1760),
+        new THREE.Vector3(-1600, 92, -2010),
+      ],
+    },
+    '1-2': {
+      label: 'Level 1-2',
+      ringPositions: [
+        new THREE.Vector3(35, 106, -120),
+        new THREE.Vector3(120, 138, -330),
+        new THREE.Vector3(40, 168, -540),
+        new THREE.Vector3(-130, 142, -760),
+        new THREE.Vector3(-350, 104, -980),
+        new THREE.Vector3(-610, 152, -1180),
+        new THREE.Vector3(-850, 182, -1390),
+        new THREE.Vector3(-1110, 128, -1625),
+        new THREE.Vector3(-1360, 96, -1880),
+        new THREE.Vector3(-1680, 118, -2160),
+      ],
+    },
+  };
+  const currentLevelConfig = levelConfigs[currentLevel];
+  const ringPositions = currentLevelConfig.ringPositions;
   const rings = ringPositions.map((position, index) => {
     const group = new THREE.Group();
     group.position.copy(position);
@@ -428,10 +461,12 @@
   let ringsCollected = 0;
   let scoreFlashTime = 0;
   let lastRingScore = 0;
+  let lastCenterAccuracy = 0;
+  let lastCenterBonus = 0;
   let courseComplete = false;
   let highScoreOpen = false;
   let finalCourseTime = 0;
-  const highScoreStorageKey = 'cessna-ring-high-scores';
+  const highScoreStorageKey = `cessna-ring-high-scores-${currentLevel}`;
 
   const sanitizeInitials = value => value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 3);
 
@@ -458,7 +493,7 @@
 
     if (scores.length === 0) {
       const empty = document.createElement('li');
-      empty.className = 'empty-score';
+      empty.className = 'high-score-row empty-score';
       empty.textContent = 'No scores yet';
       highScoreList.append(empty);
       return;
@@ -470,6 +505,12 @@
       const initials = document.createElement('span');
       const points = document.createElement('span');
       const time = document.createElement('span');
+
+      item.className = 'high-score-row';
+      rank.className = 'high-score-row__rank';
+      initials.className = 'high-score-row__initials';
+      points.className = 'high-score-row__score';
+      time.className = 'high-score-row__time';
 
       rank.textContent = `${index + 1}.`;
       initials.textContent = entry.initials;
@@ -499,10 +540,13 @@
   const showHighScoreModal = courseTime => {
     highScoreOpen = true;
     finalCourseTime = Number(courseTime.toFixed(1));
+    highScoreKicker.textContent = `${currentLevelConfig.label} complete`;
     finalScore.textContent = String(score);
     finalTime.textContent = `${finalCourseTime.toFixed(1)} s`;
     highScoreForm.dataset.saved = 'false';
     saveScoreButton.textContent = 'Save score';
+    nextLevelButton.hidden = !nextLevel;
+    nextLevelButton.textContent = nextLevel ? `Level ${nextLevel}` : '';
     initialsInput.value = '';
     Object.keys(keys).forEach(code => {
       keys[code] = false;
@@ -610,6 +654,11 @@
     window.location.reload();
   });
 
+  nextLevelButton.addEventListener('click', () => {
+    if (!nextLevel) return;
+    window.location.assign(`${window.location.pathname}?level=${nextLevel}`);
+  });
+
   window.addEventListener('keydown', e => {
     if (highScoreOpen) return;
     if (e.repeat) return;
@@ -692,7 +741,7 @@
     yaw *= 0.985;
 
     if (rudderPivot) {
-      const rudderTarget = rudderNeutralRotation + yawInput * rudderMaxDeflection;
+      const rudderTarget = rudderNeutralRotation - yawInput * rudderMaxDeflection;
       rudderPivot.rotation.y = THREE.MathUtils.lerp(
         rudderPivot.rotation.y,
         rudderTarget,
@@ -779,17 +828,23 @@
       ringTarget.ring.rotation.z += dt * 2.6;
       ringTarget.glow.rotation.z -= dt * 1.7;
 
-      if (plane.position.distanceTo(ringTarget.group.position) < ringHitRadius) {
+      const ringDistance = plane.position.distanceTo(ringTarget.group.position);
+
+      if (ringDistance < ringHitRadius) {
         const courseTime = clock.getElapsedTime() - courseStartTime;
         const speedMph = speed * 2.237;
         const speedBonus = Math.round(speedMph * 3);
         const timeBonus = Math.max(0, Math.round(600 - courseTime * 8));
-        const ringScore = 100 + speedBonus + timeBonus;
+        const centerAccuracy = 1 - ringDistance / ringHitRadius;
+        const centerBonus = Math.round(centerAccuracy * 500);
+        const ringScore = 100 + speedBonus + timeBonus + centerBonus;
 
         ringTarget.collected = true;
         ringTarget.group.visible = false;
         score += ringScore;
         lastRingScore = ringScore;
+        lastCenterAccuracy = centerAccuracy;
+        lastCenterBonus = centerBonus;
         ringsCollected += 1;
         scoreFlashTime = 0.9;
       }
@@ -802,10 +857,13 @@
     }
 
     const scoreFlash = scoreFlashTime > 0 ? ` <span style="color:#ffd447">+${lastRingScore}</span>` : '';
+    const centerFlash = scoreFlashTime > 0 ? `Center: ${(lastCenterAccuracy * 100).toFixed(0)}% (+${lastCenterBonus})<br>` : '';
     const courseStatus = ringsCollected === rings.length ? ' complete' : '';
 
     hud.innerHTML =
+      `${currentLevelConfig.label}<br>` +
       `Score: ${score}${scoreFlash}<br>` +
+      centerFlash +
       `Rings: ${ringsCollected}/${rings.length}${courseStatus}<br>` +
       `Time: ${courseTime.toFixed(1)} s<br>` +
       `W/S throttle: ${(throttle * 100).toFixed(0)}%<br>` +
