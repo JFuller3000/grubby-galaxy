@@ -3,16 +3,14 @@ import SectionHeading from './SectionHeading.astro';
 
 interface Props {
   title?: string;
-  description?: string;
   content?: string;
 }
 
-const { title = "About", description = "A brief overview of my work and interests", content = "" } = Astro.props;
+const { title = "About", content = "" } = Astro.props;
 ---
 
 <section class="mt-12">
-  <SectionHeading text={title} class="mb-4 text-xl" />
-  <p class="text-gray-300 mb-8 text-lg leading-relaxed">{description}</p>
+  <SectionHeading text={title} class="mb-4 text-4xl" />
   
   <div class="text-gray-300 text-lg leading-relaxed">
     <p class="mb-6">{content}</p>

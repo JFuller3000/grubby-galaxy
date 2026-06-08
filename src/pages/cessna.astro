@@ -2,35 +2,215 @@
 ---
 
 <div id="cessna-sim">
-  <div id="hud"></div>
+  <div id="hud" aria-live="polite"></div>
+  <div id="high-score-modal" role="dialog" aria-modal="true" aria-labelledby="high-score-title" hidden>
+    <form id="high-score-form" class="high-score-card">
+      <p class="high-score-kicker">Course complete</p>
+      <h2 id="high-score-title">High Score</h2>
+      <div class="high-score-stats">
+        <div>
+          <span>Score</span>
+          <strong id="final-score">0</strong>
+        </div>
+        <div>
+          <span>Time</span>
+          <strong id="final-time">0.0 s</strong>
+        </div>
+      </div>
+      <label class="initials-field">
+        <span>Initials</span>
+        <input id="initials-input" name="initials" maxlength="3" autocomplete="off" inputmode="text" />
+      </label>
+      <div class="high-score-actions">
+        <button id="save-score-button" type="submit">Save score</button>
+        <button id="restart-course-button" type="button">Fly again</button>
+      </div>
+      <ol id="high-score-list" class="high-score-list" aria-label="Local high scores"></ol>
+    </form>
+  </div>
 </div>
 
 <style>
-  html, body {
-    margin: 0;
+  :global(html),
+  :global(body) {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
     overflow: hidden;
     background: #000;
   }
 
   #cessna-sim {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    isolation: isolate;
   }
 
   #hud {
-    position: fixed;
-    top: 12px;
-    left: 12px;
-    z-index: 10;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 2;
+    max-width: min(36rem, calc(100vw - 2rem));
     color: white;
-    font: 14px monospace;
-    background: rgba(0,0,0,.45);
-    padding: 10px;
+    font: 14px/1.45 monospace;
+    background: rgba(0, 0, 0, 0.55);
+    padding: 10px 12px;
     border-radius: 8px;
+    pointer-events: none;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(6px);
   }
 
-  canvas {
+  #high-score-modal {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.36);
+    backdrop-filter: blur(8px);
+  }
+
+  #high-score-modal[hidden] {
+    display: none;
+  }
+
+  .high-score-card {
+    width: min(28rem, 100%);
+    border: 1px solid rgba(255, 212, 71, 0.36);
+    border-radius: 8px;
+    background: rgba(9, 12, 18, 0.88);
+    color: white;
+    padding: 1.25rem;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+    font-family: system-ui, sans-serif;
+  }
+
+  .high-score-kicker {
+    margin: 0 0 0.3rem;
+    color: #ffd447;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .high-score-card h2 {
+    margin: 0;
+    font-size: clamp(2rem, 8vw, 3rem);
+    line-height: 1;
+  }
+
+  .high-score-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
+
+  .high-score-stats div {
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 6px;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .high-score-stats span,
+  .initials-field span {
     display: block;
+    margin-bottom: 0.25rem;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .high-score-stats strong {
+    display: block;
+    font-size: 1.6rem;
+    line-height: 1.1;
+  }
+
+  .initials-field input {
+    width: 100%;
+    border: 1px solid rgba(255, 212, 71, 0.5);
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.34);
+    color: #ffd447;
+    padding: 0.65rem 0.75rem;
+    font: 800 1.6rem/1 monospace;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+
+  .initials-field input:focus-visible,
+  .high-score-actions button:focus-visible {
+    outline: 2px solid #ffd447;
+    outline-offset: 2px;
+  }
+
+  .high-score-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .high-score-actions button {
+    flex: 1 1 9rem;
+    border: 0;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    color: #111;
+    background: #ffd447;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .high-score-actions button + button {
+    color: white;
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .high-score-list {
+    display: grid;
+    gap: 0.45rem;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .high-score-list li {
+    display: grid;
+    grid-template-columns: 2rem 1fr auto auto;
+    gap: 0.75rem;
+    align-items: baseline;
+    font: 700 0.9rem/1.2 monospace;
+  }
+
+  .high-score-list .empty-score {
+    grid-template-columns: 1fr;
+    color: rgba(255, 255, 255, 0.56);
+  }
+
+  #cessna-sim :global(canvas) {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
   }
 </style>
 
@@ -42,20 +222,38 @@
 
   const container = document.getElementById('cessna-sim');
   const hud = document.getElementById('hud');
+  const highScoreModal = document.getElementById('high-score-modal');
+  const highScoreForm = document.getElementById('high-score-form');
+  const initialsInput = document.getElementById('initials-input');
+  const finalScore = document.getElementById('final-score');
+  const finalTime = document.getElementById('final-time');
+  const highScoreList = document.getElementById('high-score-list');
+  const saveScoreButton = document.getElementById('save-score-button');
+  const restartCourseButton = document.getElementById('restart-course-button');
 
   const scene = new THREE.Scene();
 
   const camera = new THREE.PerspectiveCamera(
     65,
     window.innerWidth / window.innerHeight,
-    0.1,
-    20000
+    1,
+    9000
   );
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    logarithmicDepthBuffer: true,
+  });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.shadowMap.enabled = true;
+  Object.assign(renderer.domElement.style, {
+    position: 'absolute',
+    inset: '0',
+    zIndex: '0',
+    width: '100%',
+    height: '100%',
+  });
   container.appendChild(renderer.domElement);
 
   const sun = new THREE.Vector3();
@@ -77,26 +275,34 @@
 
   sky.material.uniforms.sunPosition.value.copy(sun);
 
+  const waterNormals = new THREE.TextureLoader().load(
+    '/waternormals.jpg',
+    texture => {
+      texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+      texture.minFilter = THREE.LinearMipmapLinearFilter;
+      texture.magFilter = THREE.LinearFilter;
+      texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
+      texture.needsUpdate = true;
+    }
+  );
+
   const water = new Water(
     new THREE.PlaneGeometry(12000, 12000),
     {
-      textureWidth: 512,
-      textureHeight: 512,
-      waterNormals: new THREE.TextureLoader().load(
-        '/waternormals.jpg',
-        texture => {
-          texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-        }
-      ),
+      textureWidth: 1024,
+      textureHeight: 1024,
+      clipBias: 0.003,
+      waterNormals,
       sunDirection: sun.clone().normalize(),
       sunColor: 0xffffff,
       waterColor: 0x174a6a,
-      distortionScale: 3.7,
+      distortionScale: 1.45,
       fog: false,
     }
   );
 
   water.rotation.x = -Math.PI / 2;
+  water.material.uniforms.size.value = 0.45;
   scene.add(water);
 
   scene.add(new THREE.HemisphereLight(0xffffff, 0x334455, 2.2));
@@ -153,6 +359,158 @@
     model.scale.setScalar(20);
     lighthouse.add(model);
   });
+
+  const pirateIsland = new THREE.Group();
+  pirateIsland.position.set(-1720, 2, -2180);
+  scene.add(pirateIsland);
+
+  new GLTFLoader().load('/models/pirate_island.glb', gltf => {
+    const model = gltf.scene;
+    model.scale.setScalar(1.5);
+    model.rotation.y = THREE.MathUtils.degToRad(-12);
+    pirateIsland.add(model);
+  });
+
+  const ringCourse = new THREE.Group();
+  scene.add(ringCourse);
+
+  const ringGeometry = new THREE.TorusGeometry(18, 2.2, 16, 64);
+  const ringGlowGeometry = new THREE.TorusGeometry(18.4, 4.2, 12, 64);
+  const ringMaterial = new THREE.MeshStandardMaterial({
+    color: 0xffd447,
+    emissive: 0xff9b00,
+    emissiveIntensity: 1.8,
+    metalness: 0.15,
+    roughness: 0.28,
+  });
+  const ringGlowMaterial = new THREE.MeshBasicMaterial({
+    color: 0xffc928,
+    transparent: true,
+    opacity: 0.24,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+  });
+  const ringPositions = [
+    new THREE.Vector3(0, 92, -80),
+    new THREE.Vector3(-55, 98, -260),
+    new THREE.Vector3(-140, 112, -450),
+    new THREE.Vector3(-265, 126, -650),
+    new THREE.Vector3(-430, 134, -850),
+    new THREE.Vector3(-630, 128, -1060),
+    new THREE.Vector3(-865, 116, -1280),
+    new THREE.Vector3(-1120, 110, -1510),
+    new THREE.Vector3(-1390, 98, -1760),
+    new THREE.Vector3(-1600, 92, -2010),
+  ];
+  const rings = ringPositions.map((position, index) => {
+    const group = new THREE.Group();
+    group.position.copy(position);
+
+    const glow = new THREE.Mesh(ringGlowGeometry, ringGlowMaterial);
+    const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+    group.add(glow, ring);
+
+    const target = ringPositions[index + 1] ?? position.clone().add(new THREE.Vector3(-120, 0, -160));
+    group.lookAt(target);
+    ringCourse.add(group);
+
+    return {
+      group,
+      ring,
+      glow,
+      collected: false,
+      pulseOffset: index * 0.65,
+    };
+  });
+  const ringHitRadius = 26;
+  const courseStartTime = 0;
+  let score = 0;
+  let ringsCollected = 0;
+  let scoreFlashTime = 0;
+  let lastRingScore = 0;
+  let courseComplete = false;
+  let highScoreOpen = false;
+  let finalCourseTime = 0;
+  const highScoreStorageKey = 'cessna-ring-high-scores';
+
+  const sanitizeInitials = value => value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 3);
+
+  const getHighScores = () => {
+    try {
+      const scores = JSON.parse(localStorage.getItem(highScoreStorageKey) || '[]');
+      return Array.isArray(scores) ? scores : [];
+    } catch {
+      return [];
+    }
+  };
+
+  const setHighScores = scores => {
+    try {
+      localStorage.setItem(highScoreStorageKey, JSON.stringify(scores));
+    } catch {
+      // Local storage can be unavailable in private browsing; the modal still works for this run.
+    }
+  };
+
+  const renderHighScores = () => {
+    highScoreList.replaceChildren();
+    const scores = getHighScores();
+
+    if (scores.length === 0) {
+      const empty = document.createElement('li');
+      empty.className = 'empty-score';
+      empty.textContent = 'No scores yet';
+      highScoreList.append(empty);
+      return;
+    }
+
+    scores.forEach((entry, index) => {
+      const item = document.createElement('li');
+      const rank = document.createElement('span');
+      const initials = document.createElement('span');
+      const points = document.createElement('span');
+      const time = document.createElement('span');
+
+      rank.textContent = `${index + 1}.`;
+      initials.textContent = entry.initials;
+      points.textContent = String(entry.score);
+      time.textContent = `${Number(entry.time).toFixed(1)}s`;
+
+      item.append(rank, initials, points, time);
+      highScoreList.append(item);
+    });
+  };
+
+  const saveHighScore = initials => {
+    const entry = {
+      initials: sanitizeInitials(initials) || 'ACE',
+      score,
+      time: finalCourseTime,
+      date: Date.now(),
+    };
+    const scores = [entry, ...getHighScores()]
+      .sort((a, b) => b.score - a.score || a.time - b.time)
+      .slice(0, 5);
+
+    setHighScores(scores);
+    renderHighScores();
+  };
+
+  const showHighScoreModal = courseTime => {
+    highScoreOpen = true;
+    finalCourseTime = Number(courseTime.toFixed(1));
+    finalScore.textContent = String(score);
+    finalTime.textContent = `${finalCourseTime.toFixed(1)} s`;
+    highScoreForm.dataset.saved = 'false';
+    saveScoreButton.textContent = 'Save score';
+    initialsInput.value = '';
+    Object.keys(keys).forEach(code => {
+      keys[code] = false;
+    });
+    renderHighScores();
+    highScoreModal.hidden = false;
+    requestAnimationFrame(() => initialsInput.focus());
+  };
 
   let propellerPivotLeft = null;
   let propellerPivotRight = null;
@@ -235,7 +593,25 @@
 
   const keys = {};
 
+  initialsInput.addEventListener('input', () => {
+    initialsInput.value = sanitizeInitials(initialsInput.value);
+  });
+
+  highScoreForm.addEventListener('submit', e => {
+    e.preventDefault();
+    if (highScoreForm.dataset.saved === 'true') return;
+
+    saveHighScore(initialsInput.value);
+    highScoreForm.dataset.saved = 'true';
+    saveScoreButton.textContent = 'Saved';
+  });
+
+  restartCourseButton.addEventListener('click', () => {
+    window.location.reload();
+  });
+
   window.addEventListener('keydown', e => {
+    if (highScoreOpen) return;
     if (e.repeat) return;
     keys[e.code] = true;
 
@@ -275,6 +651,7 @@
   const doubleTapWindow = 250;
 
   window.addEventListener('keydown', e => {
+    if (highScoreOpen) return;
     if (e.repeat) return;
     if (keys[e.code]) return;
     keys[e.code] = true;
@@ -371,7 +748,7 @@
       plane.position.clone().add(new THREE.Vector3(0, 4, 0))
     );
 
-    water.material.uniforms.time.value += dt;
+    water.material.uniforms.time.value += dt * 0.4;
 
     const boatBobbing = Math.sin(clock.getElapsedTime() * 1.5);
     boat.position.y = -4 + boatBobbing * 1.0;
@@ -392,7 +769,45 @@
       propellerPivotRight.rotation.y += propSpin;
     }
 
+    scoreFlashTime = Math.max(0, scoreFlashTime - dt);
+    const ringPulseTime = clock.getElapsedTime();
+    rings.forEach(ringTarget => {
+      if (ringTarget.collected) return;
+
+      const pulse = 1 + Math.sin(ringPulseTime * 4 + ringTarget.pulseOffset) * 0.08;
+      ringTarget.group.scale.setScalar(pulse);
+      ringTarget.ring.rotation.z += dt * 2.6;
+      ringTarget.glow.rotation.z -= dt * 1.7;
+
+      if (plane.position.distanceTo(ringTarget.group.position) < ringHitRadius) {
+        const courseTime = clock.getElapsedTime() - courseStartTime;
+        const speedMph = speed * 2.237;
+        const speedBonus = Math.round(speedMph * 3);
+        const timeBonus = Math.max(0, Math.round(600 - courseTime * 8));
+        const ringScore = 100 + speedBonus + timeBonus;
+
+        ringTarget.collected = true;
+        ringTarget.group.visible = false;
+        score += ringScore;
+        lastRingScore = ringScore;
+        ringsCollected += 1;
+        scoreFlashTime = 0.9;
+      }
+    });
+
+    const courseTime = clock.getElapsedTime() - courseStartTime;
+    if (!courseComplete && ringsCollected === rings.length) {
+      courseComplete = true;
+      showHighScoreModal(courseTime);
+    }
+
+    const scoreFlash = scoreFlashTime > 0 ? ` <span style="color:#ffd447">+${lastRingScore}</span>` : '';
+    const courseStatus = ringsCollected === rings.length ? ' complete' : '';
+
     hud.innerHTML =
+      `Score: ${score}${scoreFlash}<br>` +
+      `Rings: ${ringsCollected}/${rings.length}${courseStatus}<br>` +
+      `Time: ${courseTime.toFixed(1)} s<br>` +
       `W/S throttle: ${(throttle * 100).toFixed(0)}%<br>` +
       `Speed: ${(speed * 2.237).toFixed(1)} mph<br>` +
       `Alt: ${plane.position.y.toFixed(1)} m<br>` +

@@ -43,7 +43,7 @@ import About from '../components/homepage/About.astro';
 
   <section class="mt-12">
     <SectionHeading text="Selected Work" class="mb-6 text-4xl" />
-    <div class="grid grid-cols-2 divide-x divide-[#34343d] border border-[#34343d]">
+    <div class="grid grid-cols-3 divide-x divide-[#34343d] border border-[#34343d]">
       <SelectedWork
         title="AOP Design System"
         description="Comprehensive design system for AOPA including documentation, components, and usage guidelines."
@@ -59,6 +59,14 @@ import About from '../components/homepage/About.astro';
         image="/images/homepage/hub-hero.png"
         imageAlt="Hub Hero component preview interface"
         tags={["React", "Component Library", "Preview"]}
+      />
+      <SelectedWork
+        title="Three.js Cessna Flight Sim"
+        description="Interactive WebGL flight scene with a Cessna model, animated propellers, water, sky, and simple flight controls."
+        href="/cessna"
+        image="/images/cessna-ducky.png"
+        imageAlt="Hub Hero component preview interface"
+        tags={["Three.js", "WebGL", "3D Interaction"]}
       />
     </div>
   </section>
@@ -109,7 +117,6 @@ import About from '../components/homepage/About.astro';
 
   <About
     title="About"
-    description="A brief overview of my work and interests"
     content="I'm a Product Design Engineer working at the intersection of design, engineering, and product strategy. I enjoy turning ambiguous problems into shipped experiences, especially when I can own the entire process from discovery through implementation and measurement. Lately I've been exploring AI-assisted workflows, analytics-driven product development, and tools that help teams move faster."
   />
   <div class="text-center mt-8 mb-8">
