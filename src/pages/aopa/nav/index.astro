@@ -1,0 +1,118 @@
+---
+const variants = [
+	{
+		name: "Ribbon",
+		href: "/aopa/nav/ribbon/",
+		description: "Two stacked horizontal ribbons — a dark utility bar on top and a blue main navigation bar below. Clean, traditional, and highly scannable.",
+	},
+	{
+		name: "Together",
+		href: "/aopa/nav/together/",
+		description: "A single unified bar where main navigation, search, and utility actions live together in one cohesive layout with a card-based mega-menu panel.",
+	},
+];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>AOPA Nav Variants</title>
+	<style>
+		*, *::before, *::after { box-sizing: border-box; }
+		body {
+			margin: 0;
+			font-family: "Gotham Book", Gotham, "Helvetica Neue", Arial, sans-serif;
+			background: #f0f4f8;
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			padding: 2rem;
+		}
+	</style>
+</head>
+<body>
+	<header style="text-align: center; margin-bottom: 3rem;">
+		<div style="
+			display: inline-flex;
+			align-items: baseline;
+			gap: 0.08em;
+			font-family: 'Arial Narrow', 'Helvetica Neue Condensed', Arial, sans-serif;
+			font-weight: 700;
+			font-size: 1.25rem;
+			color: #29abe2;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+		">
+			<span style="font-size: 1.6rem;">AOPA</span><span style="opacity:.5">/</span><span style="font-weight:400;font-size:.85em;">Nav Comparison</span>
+		</div>
+		<h1 style="
+			margin: 0.75rem 0 0;
+			font-family: 'Gotham Bold', Gotham, 'Helvetica Neue', Arial, sans-serif;
+			font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.5rem);
+			font-weight: 700;
+			color: #2d3748;
+			letter-spacing: -0.01em;
+		">Two Navigation Options</h1>
+		<p style="
+			margin: 0.5rem auto 0;
+			max-width: 32rem;
+			font-size: clamp(0.875rem, 0.8rem + 0.25vw, 1.0625rem);
+			line-height: 1.55;
+			color: #6b7280;
+		">Both use the same structure: 6 main nav items + utility bar with search, membership, donate, join, and login.</p>
+	</header>
+
+	<div style="
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 1.5rem;
+		width: 100%;
+		max-width: 56rem;
+	">
+		{variants.map((v) => (
+			<a href={v.href} style="
+				display: flex;
+				flex-direction: column;
+				gap: 0.75rem;
+				padding: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+				background: #fff;
+				border-radius: 12px;
+				border: 2px solid transparent;
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+				text-decoration: none;
+				transition: border-color 0.15s ease, box-shadow 0.15s ease;
+			" onmouseover="this.style.borderColor='#29abe2'; this.style.boxShadow='0 8px 28px rgba(0,130,175,0.12)'"
+			   onmouseout="this.style.borderColor='transparent'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.05)'">
+
+				<h2 style="
+					margin: 0;
+					font-family: 'Gotham Bold', Gotham, 'Helvetica Neue', Arial, sans-serif;
+					font-size: 1.5rem;
+					font-weight: 700;
+					color: #29abe2;
+					letter-spacing: 0.02em;
+				">{v.name}</h2>
+
+				<span style="
+					font-size: 0.75rem;
+					font-weight: 700;
+					text-transform: uppercase;
+					letter-spacing: 0.1em;
+					color: #9ca3af;
+				">View demo →</span>
+
+				<p style="
+					margin: 0;
+					font-size: clamp(0.875rem, 0.82rem + 0.15vw, 1rem);
+					line-height: 1.6;
+					color: #6b7280;
+				">{v.description}</p>
+			</a>
+		))}
+	</div>
+</body>
+</html>

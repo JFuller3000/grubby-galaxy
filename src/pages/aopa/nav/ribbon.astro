@@ -1,0 +1,442 @@
+---
+const mainNavItems = [
+	{ label: "Learn to Fly" },
+	{ label: "Training & Safety" },
+	{ label: "Pilot Tools" },
+	{ label: "Ownership" },
+	{ label: "Advocacy" },
+	{ label: "News & Community" },
+];
+
+const utilityLinks = ["membership", "donate", "join", "login"];
+
+const slugify = (v: string) =>
+	v.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>AOPA Nav — Ribbon</title>
+	<style>
+		*, *::before, *::after { box-sizing: border-box; }
+		body {
+			margin: 0;
+			font-family: "Arial Narrow", "Helvetica Neue Condensed", "Helvetica Neue", Arial, sans-serif;
+			background: #f5f7fa;
+		}
+	</style>
+</head>
+<body>
+
+<!-- ───────── UTILITY BAR / RIBBON ───────── -->
+<div class="rb-utility" data-rb-utility>
+	<div class="rb-utility__inner">
+		<div class="rb-utility__left">
+			<a href="#" class="rb-utility__brand">
+				<span class="rb-utility__brand-primary">AOPA</span><span class="rb-utility__brand-sep">/</span><span class="rb-utility__brand-sub">Home</span>
+			</a>
+		</div>
+		<div class="rb-utility__right">
+			<button type="button" class="rb-utility__search" aria-label="Search">
+				<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+					<circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.25" />
+					<path fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" d="M15 15l6 6" />
+				</svg>
+			</button>
+			{utilityLinks.map((label) => (
+				<a href={`#${slugify(label)}`} class="rb-utility__link">{label}</a>
+			))}
+		</div>
+	</div>
+</div>
+
+<!-- ───────── MAIN NAV / RIBBON ───────── -->
+<nav class="rb-nav" aria-label="Main navigation" data-rb-nav>
+	<div class="rb-nav__bar">
+		<button
+			type="button"
+			class="rb-nav__toggle"
+			aria-expanded="false"
+			aria-controls="rb-nav-drawer"
+			aria-label="Open menu"
+			data-rb-toggle
+		>
+			<span class="rb-nav__toggle-lines" aria-hidden="true"></span>
+		</button>
+		{mainNavItems.map((item, i) => (
+			<a href={`#${slugify(item.label)}`} class="rb-nav__link">{item.label}</a>
+		))}
+		<span class="rb-nav__spacer"></span>
+	</div>
+
+	<div
+		id="rb-nav-drawer"
+		class="rb-nav__drawer"
+		aria-hidden="true"
+		inert
+		data-rb-drawer
+	>
+		<div class="rb-nav__drawer-inner">
+			{mainNavItems.map((item) => (
+				<section class="rb-nav__col">
+					<h3 class="rb-nav__col-title">{item.label}</h3>
+					<ul class="rb-nav__col-list">
+						<li><a href="#">Overview</a></li>
+						<li><a href="#">Getting Started</a></li>
+						<li><a href="#">Resources</a></li>
+						<li><a href="#">Events & Programs</a></li>
+					</ul>
+				</section>
+			))}
+		</div>
+	</div>
+</nav>
+
+<!-- ───────── HERO (demo context) ───────── -->
+<section class="rb-hero">
+	<div class="rb-hero__inner">
+		<h1 class="rb-hero__title">Ribbon Navigation</h1>
+		<p class="rb-hero__desc">Two stacked horizontal ribbons — a dark utility bar on top and a blue main navigation bar below. Clean, traditional, and highly scannable.</p>
+	</div>
+</section>
+
+<script>
+	const nav = document.querySelector<HTMLElement>("[data-rb-nav]");
+	const toggle = nav?.querySelector<HTMLButtonElement>("[data-rb-toggle]");
+	const drawer = nav?.querySelector<HTMLElement>("[data-rb-drawer]");
+
+	if (nav && toggle && drawer) {
+		const setOpen = (open: boolean) => {
+			nav.classList.toggle("is-open", open);
+			toggle.setAttribute("aria-expanded", String(open));
+			toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+			drawer.setAttribute("aria-hidden", String(!open));
+			if (open) drawer.removeAttribute("inert");
+			else drawer.setAttribute("inert", "");
+		};
+
+		toggle.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
+
+		drawer.addEventListener("click", (e) => {
+			if (e.target instanceof HTMLAnchorElement) setOpen(false);
+		});
+
+		document.addEventListener("keydown", (e) => {
+			if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
+				setOpen(false);
+				toggle.focus();
+			}
+		});
+	}
+</script>
+
+<style>
+	/* ── UTILITY RIBBON ── */
+	.rb-utility {
+		background: #333338;
+		color: #fff;
+		font-family: "Arial Narrow", "Helvetica Neue Condensed", "Helvetica Neue", Arial, sans-serif;
+	}
+
+	.rb-utility__inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		max-width: 1440px;
+		margin: 0 auto;
+		padding: 0 clamp(1rem, 0.5rem + 2vw, 2.5rem);
+		min-height: 2.75rem;
+	}
+
+	.rb-utility__left {
+		display: flex;
+		align-items: center;
+	}
+
+	.rb-utility__brand {
+		display: flex;
+		align-items: baseline;
+		gap: 0.08em;
+		text-decoration: none;
+		color: #fff;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		font-size: clamp(0.875rem, 0.8rem + 0.3vw, 1rem);
+	}
+
+	.rb-utility__brand-primary { font-size: 1.1em; }
+	.rb-utility__brand-sep { opacity: 0.6; margin: 0 0.1em; }
+	.rb-utility__brand-sub { font-weight: 400; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85em; opacity: 0.75; }
+
+	.rb-utility__right {
+		display: flex;
+		align-items: center;
+		gap: clamp(0.75rem, 0.5rem + 1vw, 1.5rem);
+	}
+
+	.rb-utility__link {
+		color: #cbd5e1;
+		text-decoration: none;
+		font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		transition: color 0.15s ease;
+	}
+
+	.rb-utility__link:hover { color: #fff; }
+	.rb-utility__link:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+	.rb-utility__search {
+		display: grid;
+		place-items: center;
+		width: 2rem;
+		height: 2rem;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		color: #cbd5e1;
+		cursor: pointer;
+		border-radius: 2px;
+	}
+	.rb-utility__search:hover { color: #fff; }
+	.rb-utility__search:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+	/* ── MAIN NAV RIBBON ── */
+	.rb-nav {
+		--rb-blue: #29abe2;
+		--rb-blue-btn: #0082af;
+		--rb-ink: #2d3748;
+		--rb-font: "Arial Narrow", "Helvetica Neue Condensed", "Helvetica Neue", Arial, sans-serif;
+		--rb-bar-height: clamp(3rem, 2.5rem + 1.5vw, 3.75rem);
+
+		position: relative;
+		z-index: 10;
+		width: 100%;
+		font-family: var(--rb-font);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		line-height: 1;
+	}
+
+	.rb-nav::after {
+		content: "";
+		position: absolute;
+		left: 0; right: 0; top: 100%;
+		height: 4px;
+		background: rgba(0, 0, 0, 0.15);
+		pointer-events: none;
+	}
+
+	.rb-nav__bar {
+		display: flex;
+		align-items: center;
+		gap: 0;
+		min-height: var(--rb-bar-height);
+		background: var(--rb-blue);
+		padding-right: clamp(1rem, 0.5rem + 1vw, 1.5rem);
+		position: relative;
+	}
+
+	.rb-nav__toggle {
+		display: none;
+		place-items: center;
+		width: 3rem;
+		height: 100%;
+		min-height: var(--rb-bar-height);
+		margin: 0;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		color: var(--rb-ink);
+		cursor: pointer;
+	}
+
+	.rb-nav__toggle-lines,
+	.rb-nav__toggle-lines::before,
+	.rb-nav__toggle-lines::after {
+		display: block;
+		width: 1.25rem;
+		height: 2px;
+		background: currentColor;
+		transition: transform 180ms ease, opacity 180ms ease;
+	}
+
+	.rb-nav__toggle-lines { position: relative; }
+	.rb-nav__toggle-lines::before,
+	.rb-nav__toggle-lines::after {
+		content: "";
+		position: absolute;
+		left: 0;
+	}
+	.rb-nav__toggle-lines::before { top: -6px; }
+	.rb-nav__toggle-lines::after { top: 6px; }
+
+	.rb-nav.is-open .rb-nav__toggle-lines { background: transparent; }
+	.rb-nav.is-open .rb-nav__toggle-lines::before { transform: translateY(6px) rotate(45deg); }
+	.rb-nav.is-open .rb-nav__toggle-lines::after { transform: translateY(-6px) rotate(-45deg); }
+
+	.rb-nav__link {
+		display: inline-flex;
+		align-items: center;
+		height: 100%;
+		padding: 0 clamp(0.75rem, 0.5rem + 0.8vw, 1.25rem);
+		color: var(--rb-ink);
+		text-decoration: none;
+		font-size: clamp(0.9375rem, 0.85rem + 0.35vw, 1.125rem);
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		white-space: nowrap;
+		transition: background 0.15s ease, color 0.15s ease;
+	}
+
+	.rb-nav__link:hover { background: rgba(0, 0, 0, 0.08); color: #fff; }
+	.rb-nav__link:focus-visible { outline: 2px solid var(--rb-ink); outline-offset: -2px; }
+
+	.rb-nav__spacer { flex: 1 1 auto; }
+
+	.rb-nav__drawer {
+		position: absolute;
+		top: 100%;
+		left: 0; right: 0;
+		z-index: 2;
+		max-height: 0;
+		overflow: hidden;
+		background: #fff;
+		box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+		opacity: 0;
+		transform: translateY(-0.5rem);
+		transition: max-height 280ms ease, opacity 200ms ease, transform 240ms ease;
+	}
+
+	.rb-nav.is-open .rb-nav__drawer {
+		max-height: 70vh;
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.rb-nav__drawer-inner {
+		display: grid;
+		grid-template-columns: repeat(6, 1fr);
+		gap: 0;
+		max-height: 70vh;
+		overflow-y: auto;
+		padding: clamp(1.25rem, 1rem + 1vw, 2rem);
+		border-top: 3px solid var(--rb-blue);
+	}
+
+	.rb-nav__col {
+		padding: 0 clamp(0.75rem, 0.5rem + 0.5vw, 1rem);
+		border-right: 1px solid #e5e7eb;
+	}
+	.rb-nav__col:last-child { border-right: none; }
+
+	.rb-nav__col-title {
+		margin: 0 0 0.75rem;
+		font-size: 0.85rem;
+		font-weight: 700;
+		color: var(--rb-blue-btn);
+		letter-spacing: 0.06em;
+	}
+
+	.rb-nav__col-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.rb-nav__col-list a {
+		display: block;
+		color: var(--rb-ink);
+		text-decoration: none;
+		font-size: 0.8rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: none;
+		line-height: 1.3;
+		padding: 0.2rem 0;
+		transition: color 0.12s ease;
+	}
+	.rb-nav__col-list a:hover { color: var(--rb-blue-btn); }
+
+	/* ── HERO ── */
+	.rb-hero {
+		min-height: clamp(24rem, 50vh, 36rem);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: linear-gradient(135deg, #d4ecf7 0%, #eaf4fb 50%, #f0f7fb 100%);
+		padding: clamp(2rem, 1.25rem + 3vw, 4rem);
+	}
+
+	.rb-hero__inner {
+		max-width: 48rem;
+		text-align: center;
+	}
+
+	.rb-hero__title {
+		margin: 0 0 1rem;
+		font-family: "Gotham Bold", Gotham, "Helvetica Neue", Arial, sans-serif;
+		font-size: clamp(1.75rem, 1.25rem + 2vw, 3rem);
+		font-weight: 700;
+		color: #2d3748;
+		letter-spacing: -0.01em;
+		text-transform: none;
+	}
+
+	.rb-hero__desc {
+		margin: 0;
+		font-family: "Gotham Book", Gotham, "Helvetica Neue", Arial, sans-serif;
+		font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
+		line-height: 1.6;
+		color: #5c5c64;
+		text-transform: none;
+		letter-spacing: normal;
+		font-weight: 400;
+	}
+
+	/* ── RESPONSIVE ── */
+	@media (max-width: 900px) {
+		.rb-nav__toggle { display: grid; }
+		.rb-nav__link { display: none; }
+		.rb-nav__bar {
+			padding-left: clamp(0.75rem, 0.5rem + 1vw, 1rem);
+		}
+		.rb-nav__drawer-inner {
+			grid-template-columns: 1fr 1fr;
+		}
+		.rb-nav__col {
+			border-right: none;
+			border-bottom: 1px solid #e5e7eb;
+			padding-bottom: 1rem;
+		}
+		.rb-nav__col:nth-last-child(-n+2) { border-bottom: none; }
+	}
+
+	@media (max-width: 600px) {
+		.rb-nav__drawer-inner { grid-template-columns: 1fr; }
+		.rb-nav__col { border-bottom: 1px solid #e5e7eb; }
+		.rb-nav__col:last-child { border-bottom: none; }
+		.rb-utility__link { font-size: 0.7rem; }
+		.rb-utility__right { gap: 0.5rem; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.rb-nav__drawer,
+		.rb-nav__toggle-lines,
+		.rb-nav__toggle-lines::before,
+		.rb-nav__toggle-lines::after { transition: none; }
+	}
+</style>
+
+</body>
+</html>

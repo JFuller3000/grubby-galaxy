@@ -1,0 +1,521 @@
+---
+const mainNavItems = [
+	{ label: "Learn to Fly" },
+	{ label: "Training & Safety" },
+	{ label: "Pilot Tools" },
+	{ label: "Ownership" },
+	{ label: "Advocacy" },
+	{ label: "News & Community" },
+];
+
+const utilityLinks = ["membership", "donate", "join", "login"];
+
+const slugify = (v: string) =>
+	v.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>AOPA Nav — Together</title>
+	<style>
+		*, *::before, *::after { box-sizing: border-box; }
+		body {
+			margin: 0;
+			font-family: "Arial Narrow", "Helvetica Neue Condensed", "Helvetica Neue", Arial, sans-serif;
+			background: #f5f7fa;
+		}
+	</style>
+</head>
+<body>
+
+<nav class="tg-nav" aria-label="Main navigation" data-tg-nav>
+	<div class="tg-nav__bar">
+
+		<div class="tg-nav__left">
+			<button
+				type="button"
+				class="tg-nav__hamburger"
+				aria-expanded="false"
+				aria-controls="tg-nav-panel"
+				aria-label="Open menu"
+				data-tg-toggle
+			>
+				<span class="tg-nav__hamburger-lines" aria-hidden="true"></span>
+			</button>
+			<a href="#" class="tg-nav__brand">
+				<span class="tg-nav__brand-primary">AOPA</span><span class="tg-nav__brand-sep">/</span><span class="tg-nav__brand-sub">Home</span>
+			</a>
+		</div>
+
+		<div class="tg-nav__center">
+			{mainNavItems.map((item) => (
+				<a href={`#${slugify(item.label)}`} class="tg-nav__link">{item.label}</a>
+			))}
+		</div>
+
+		<div class="tg-nav__right">
+			<button type="button" class="tg-nav__search-btn" aria-label="Search">
+				<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+					<circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.25" />
+					<path fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" d="M15 15l6 6" />
+				</svg>
+			</button>
+			{utilityLinks.map((label) => (
+				<a href={`#${slugify(label)}`} class="tg-nav__util-link">{label}</a>
+			))}
+		</div>
+	</div>
+
+	<div
+		id="tg-nav-panel"
+		class="tg-nav__panel"
+		aria-hidden="true"
+		inert
+		data-tg-panel
+	>
+		<div class="tg-nav__panel-inner">
+			<div class="tg-nav__panel-grid">
+				{mainNavItems.map((item) => (
+					<div class="tg-nav__card">
+						<h4 class="tg-nav__card-title">{item.label}</h4>
+						<ul class="tg-nav__card-list">
+							<li><a href="#">Overview</a></li>
+							<li><a href="#">Getting Started</a></li>
+							<li><a href="#">Resources</a></li>
+							<li><a href="#">Events & Programs</a></li>
+						</ul>
+					</div>
+				))}
+			</div>
+			<div class="tg-nav__panel-utils">
+				{utilityLinks.map((label) => (
+					<a href={`#${slugify(label)}`} class="tg-nav__panel-util-link">{label}</a>
+				))}
+			</div>
+		</div>
+	</div>
+</nav>
+
+<!-- ───────── HERO (demo context) ───────── -->
+<section class="tg-hero">
+	<div class="tg-hero__inner">
+		<h1 class="tg-hero__title">Together Navigation</h1>
+		<p class="tg-hero__desc">A single unified bar where everything lives together — main navigation, search, and utility actions in one cohesive layout. The mega-menu panel opens as a card-based grid below.</p>
+	</div>
+</section>
+
+<script>
+	const nav = document.querySelector<HTMLElement>("[data-tg-nav]");
+	const toggle = nav?.querySelector<HTMLButtonElement>("[data-tg-toggle]");
+	const panel = nav?.querySelector<HTMLElement>("[data-tg-panel]");
+
+	if (nav && toggle && panel) {
+		const setOpen = (open: boolean) => {
+			nav.classList.toggle("is-open", open);
+			toggle.setAttribute("aria-expanded", String(open));
+			toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+			panel.setAttribute("aria-hidden", String(!open));
+			if (open) panel.removeAttribute("inert");
+			else panel.setAttribute("inert", "");
+		};
+
+		toggle.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
+
+		panel.addEventListener("click", (e) => {
+			if (e.target instanceof HTMLAnchorElement) setOpen(false);
+		});
+
+		document.addEventListener("keydown", (e) => {
+			if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
+				setOpen(false);
+				toggle.focus();
+			}
+		});
+	}
+</script>
+
+<style>
+	/* ── SINGLE UNIFIED BAR ── */
+	.tg-nav {
+		--tg-blue: #29abe2;
+		--tg-blue-deep: #0082af;
+		--tg-ink: #2d3748;
+		--tg-charcoal: #333338;
+		--tg-font: "Arial Narrow", "Helvetica Neue Condensed", "Helvetica Neue", Arial, sans-serif;
+		--tg-bar-height: clamp(3.25rem, 2.75rem + 1.5vw, 4rem);
+		--tg-radius: 9999px;
+
+		position: relative;
+		z-index: 10;
+		width: 100%;
+		font-family: var(--tg-font);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		line-height: 1;
+		background: #fff;
+		box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+	}
+
+	.tg-nav::after {
+		content: "";
+		position: absolute;
+		left: 0; right: 0; top: 100%;
+		height: 3px;
+		background: linear-gradient(90deg, var(--tg-blue), var(--tg-blue-deep));
+		pointer-events: none;
+	}
+
+	.tg-nav__bar {
+		display: flex;
+		align-items: center;
+		min-height: var(--tg-bar-height);
+		max-width: 1440px;
+		margin: 0 auto;
+		padding: 0 clamp(1rem, 0.5rem + 1.5vw, 2rem);
+		gap: clamp(0.5rem, 0.25rem + 0.5vw, 1rem);
+	}
+
+	/* ── LEFT (hamburger + brand) ── */
+	.tg-nav__left {
+		display: flex;
+		align-items: center;
+		flex: 0 0 auto;
+	}
+
+	.tg-nav__hamburger {
+		display: none;
+		place-items: center;
+		width: 2.75rem;
+		height: 2.75rem;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		color: var(--tg-ink);
+		cursor: pointer;
+		border-radius: 6px;
+	}
+
+	.tg-nav__hamburger-lines,
+	.tg-nav__hamburger-lines::before,
+	.tg-nav__hamburger-lines::after {
+		display: block;
+		width: 1.25rem;
+		height: 2px;
+		background: currentColor;
+		transition: transform 180ms ease, opacity 180ms ease;
+	}
+	.tg-nav__hamburger-lines { position: relative; }
+	.tg-nav__hamburger-lines::before,
+	.tg-nav__hamburger-lines::after {
+		content: "";
+		position: absolute;
+		left: 0;
+	}
+	.tg-nav__hamburger-lines::before { top: -6px; }
+	.tg-nav__hamburger-lines::after { top: 6px; }
+
+	.tg-nav.is-open .tg-nav__hamburger-lines { background: transparent; }
+	.tg-nav.is-open .tg-nav__hamburger-lines::before { transform: translateY(6px) rotate(45deg); }
+	.tg-nav.is-open .tg-nav__hamburger-lines::after { transform: translateY(-6px) rotate(-45deg); }
+
+	.tg-nav__brand {
+		display: flex;
+		align-items: baseline;
+		gap: 0.08em;
+		text-decoration: none;
+		color: var(--tg-ink);
+		font-size: clamp(0.9375rem, 0.85rem + 0.35vw, 1.125rem);
+		font-weight: 700;
+		letter-spacing: 0.08em;
+	}
+	.tg-nav__brand-primary { font-size: 1.05em; }
+	.tg-nav__brand-sep { opacity: 0.5; margin: 0 0.05em; }
+	.tg-nav__brand-sub {
+		font-weight: 400;
+		font-size: 0.78em;
+		letter-spacing: 0.1em;
+		color: #6b7280;
+	}
+
+	/* ── CENTER (main nav pills) ── */
+	.tg-nav__center {
+		display: flex;
+		align-items: center;
+		gap: 0.35rem;
+		flex: 1 1 auto;
+		justify-content: center;
+		padding: 0.35rem 0;
+	}
+
+	.tg-nav__link {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.5em 0.9em 0.45em;
+		color: var(--tg-ink);
+		text-decoration: none;
+		font-size: clamp(0.8125rem, 0.75rem + 0.25vw, 0.9375rem);
+		font-weight: 700;
+		letter-spacing: 0.05em;
+		white-space: nowrap;
+		border-radius: var(--tg-radius);
+		transition: background 0.15s ease, color 0.15s ease;
+	}
+	.tg-nav__link:hover {
+		background: var(--tg-blue);
+		color: #fff;
+	}
+	.tg-nav__link:focus-visible {
+		outline: 2px solid var(--tg-blue-deep);
+		outline-offset: 2px;
+	}
+
+	/* ── RIGHT (utility) ── */
+	.tg-nav__right {
+		display: flex;
+		align-items: center;
+		gap: clamp(0.5rem, 0.3rem + 0.6vw, 0.75rem);
+		flex: 0 0 auto;
+	}
+
+	.tg-nav__util-link {
+		color: #6b7280;
+		text-decoration: none;
+		font-size: clamp(0.7rem, 0.65rem + 0.2vw, 0.8125rem);
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		padding: 0.45em 0.75em;
+		border: 1.5px solid #d1d5db;
+		border-radius: var(--tg-radius);
+		transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+	}
+	.tg-nav__util-link:hover {
+		border-color: var(--tg-blue);
+		color: var(--tg-blue-deep);
+		background: rgba(41, 171, 226, 0.06);
+	}
+	.tg-nav__util-link:focus-visible {
+		outline: 2px solid var(--tg-blue-deep);
+		outline-offset: 2px;
+	}
+
+	.tg-nav__search-btn {
+		display: grid;
+		place-items: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		color: #6b7280;
+		cursor: pointer;
+		border-radius: 50%;
+		transition: background 0.15s ease, color 0.15s ease;
+	}
+	.tg-nav__search-btn:hover { background: rgba(41, 171, 226, 0.1); color: var(--tg-blue-deep); }
+	.tg-nav__search-btn:focus-visible { outline: 2px solid var(--tg-blue-deep); outline-offset: 2px; }
+
+	/* ── MEGA PANEL ── */
+	.tg-nav__panel {
+		position: absolute;
+		top: 100%;
+		left: 0; right: 0;
+		z-index: 2;
+		max-height: 0;
+		overflow: hidden;
+		background: #fff;
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+		opacity: 0;
+		transform: translateY(-0.5rem);
+		transition: max-height 300ms ease, opacity 220ms ease, transform 260ms ease;
+	}
+
+	.tg-nav.is-open .tg-nav__panel {
+		max-height: 80vh;
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.tg-nav__panel-inner {
+		max-width: 1440px;
+		margin: 0 auto;
+		padding: clamp(1.25rem, 1rem + 1.2vw, 2rem) clamp(1rem, 0.5rem + 1.5vw, 2rem);
+		border-top: 3px solid var(--tg-blue);
+	}
+
+	.tg-nav__panel-grid {
+		display: grid;
+		grid-template-columns: repeat(6, 1fr);
+		gap: clamp(0.75rem, 0.5rem + 0.8vw, 1.25rem);
+	}
+
+	.tg-nav__card {
+		background: #f8fafc;
+		border-radius: 12px;
+		padding: clamp(0.85rem, 0.65rem + 0.6vw, 1.15rem);
+		border: 1px solid #e5e7eb;
+		transition: box-shadow 0.15s ease;
+	}
+	.tg-nav__card:hover {
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+	}
+
+	.tg-nav__card-title {
+		margin: 0 0 0.65rem;
+		font-size: 0.78rem;
+		font-weight: 700;
+		color: var(--tg-blue-deep);
+		letter-spacing: 0.08em;
+		padding-bottom: 0.5rem;
+		border-bottom: 2px solid var(--tg-blue);
+	}
+
+	.tg-nav__card-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+	}
+
+	.tg-nav__card-list a {
+		display: block;
+		color: var(--tg-ink);
+		text-decoration: none;
+		font-size: 0.78rem;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		text-transform: none;
+		line-height: 1.3;
+		padding: 0.2rem 0;
+		transition: color 0.12s ease, padding-left 0.12s ease;
+	}
+	.tg-nav__card-list a:hover {
+		color: var(--tg-blue-deep);
+		padding-left: 0.35rem;
+	}
+
+	.tg-nav__panel-utils {
+		display: flex;
+		justify-content: center;
+		gap: 0.75rem;
+		margin-top: clamp(1rem, 0.75rem + 0.8vw, 1.5rem);
+		padding-top: clamp(0.75rem, 0.5rem + 0.6vw, 1rem);
+		border-top: 1px solid #e5e7eb;
+	}
+
+	.tg-nav__panel-util-link {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.45em 1.1em;
+		color: #6b7280;
+		text-decoration: none;
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		border: 1.5px solid #d1d5db;
+		border-radius: 9999px;
+		transition: border-color 0.15s ease, color 0.15s ease;
+	}
+	.tg-nav__panel-util-link:hover {
+		border-color: var(--tg-blue);
+		color: var(--tg-blue-deep);
+	}
+
+	/* ── HERO ── */
+	.tg-hero {
+		min-height: clamp(24rem, 50vh, 36rem);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: linear-gradient(135deg, #eef6fb 0%, #d4ecf7 50%, #f0f7fb 100%);
+		padding: clamp(2rem, 1.25rem + 3vw, 4rem);
+	}
+
+	.tg-hero__inner {
+		max-width: 48rem;
+		text-align: center;
+	}
+
+	.tg-hero__title {
+		margin: 0 0 1rem;
+		font-family: "Gotham Bold", Gotham, "Helvetica Neue", Arial, sans-serif;
+		font-size: clamp(1.75rem, 1.25rem + 2vw, 3rem);
+		font-weight: 700;
+		color: #2d3748;
+		letter-spacing: -0.01em;
+		text-transform: none;
+	}
+
+	.tg-hero__desc {
+		margin: 0;
+		font-family: "Gotham Book", Gotham, "Helvetica Neue", Arial, sans-serif;
+		font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
+		line-height: 1.6;
+		color: #5c5c64;
+		text-transform: none;
+		letter-spacing: normal;
+		font-weight: 400;
+	}
+
+	/* ── RESPONSIVE ── */
+	@media (max-width: 1024px) {
+		.tg-nav__center {
+			gap: 0.2rem;
+		}
+		.tg-nav__link {
+			padding: 0.45em 0.65em;
+			font-size: 0.75rem;
+		}
+		.tg-nav__util-link {
+			display: none;
+		}
+		.tg-nav__panel-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	@media (max-width: 768px) {
+		.tg-nav__hamburger { display: grid; }
+		.tg-nav__center { display: none; }
+		.tg-nav__util-link { display: none; }
+		.tg-nav__bar {
+			justify-content: space-between;
+		}
+		.tg-nav__right {
+			flex: 0 0 auto;
+		}
+		.tg-nav__panel-grid {
+			grid-template-columns: 1fr 1fr;
+		}
+		.tg-nav__card {
+			break-inside: avoid;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.tg-nav__panel-grid {
+			grid-template-columns: 1fr;
+		}
+		.tg-nav__panel-utils {
+			flex-wrap: wrap;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.tg-nav__panel,
+		.tg-nav__hamburger-lines,
+		.tg-nav__hamburger-lines::before,
+		.tg-nav__hamburger-lines::after { transition: none; }
+	}
+</style>
+
+</body>
+</html>
