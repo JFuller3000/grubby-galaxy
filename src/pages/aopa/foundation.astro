@@ -1,0 +1,178 @@
+---
+const introWords = "Building a Stronger Safer Pilot Community".split(" ");
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>AOPA Foundation</title>
+</head>
+<body>
+
+<section class="fdn-page">
+	<img class="fdn-page__image" src="/images/foundation/04-368_075.jpg" alt="" />
+</section>
+
+<video
+	class="fdn-video"
+	id="fdn-video"
+	src="/images/foundation/hero-video-desktop-3.mp4"
+	muted
+	playsinline
+	preload="auto"
+></video>
+
+<div class="fdn-intro" id="fdn-intro" role="presentation">
+	<p class="fdn-intro__text" id="fdn-intro-text" aria-label={introWords.join(" ")}>
+		{introWords.map((word) => (
+			<span class="fdn-intro__word">{word}</span>
+		))}
+	</p>
+</div>
+
+<style>
+	*, *::before, *::after { box-sizing: border-box; }
+
+	html, body {
+		margin: 0;
+		padding: 0;
+		background: #000;
+	}
+
+	/* ── PAGE CONTENT (bottom layer) ── */
+	.fdn-page {
+		position: relative;
+		width: 100vw;
+		height: 100vh;
+		height: 100dvh;
+	}
+
+	.fdn-page__image {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	/* ── VIDEO (middle layer) ── */
+	.fdn-video {
+		position: fixed;
+		inset: 0;
+		z-index: 1;
+		width: 100vw;
+		height: 100vh;
+		height: 100dvh;
+		object-fit: cover;
+		background: #000;
+		opacity: 1;
+		transition: opacity 1.1s ease;
+	}
+
+	.fdn-video.is-hidden {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	/* ── INTRO OVERLAY (top layer) ── */
+	.fdn-intro {
+		position: fixed;
+		inset: 0;
+		z-index: 2;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100vw;
+		height: 100vh;
+		height: 100dvh;
+		background: #000;
+		padding: 0 1.5rem;
+		opacity: 1;
+		transition: opacity 1s ease;
+	}
+
+	.fdn-intro.is-hidden {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.fdn-intro__text {
+		margin: 0;
+		max-width: 44rem;
+		text-align: center;
+		font-family: "Gotham Bold", Gotham, "Helvetica Neue", Arial, sans-serif;
+		font-size: clamp(1.5rem, 1rem + 3vw, 3rem);
+		font-weight: 700;
+		line-height: 1.3;
+		color: #fff;
+	}
+
+	.fdn-intro__word {
+		display: inline-block;
+		margin: 0 0.28em 0.15em 0;
+		opacity: 0;
+		transform: translateY(0.4em);
+		transition: opacity 0.45s ease, transform 0.45s ease;
+	}
+
+	.fdn-intro__word.is-visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.fdn-intro,
+		.fdn-video,
+		.fdn-intro__word {
+			transition: none;
+		}
+	}
+</style>
+
+<script>
+	const intro = document.getElementById("fdn-intro");
+	const words = document.querySelectorAll<HTMLElement>(".fdn-intro__word");
+	const video = document.getElementById("fdn-video") as HTMLVideoElement;
+
+	const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	const wordStagger = 220;
+	const postTypeDelay = 1000;
+	const wordTransitionDuration = 450;
+	const videoPlaybackDuration = 5000;
+
+	const revealWord = (index: number) => {
+		words[index]?.classList.add("is-visible");
+	};
+
+	const hideIntro = () => {
+		intro?.classList.add("is-hidden");
+		video?.play().catch(() => {
+			/* autoplay can be blocked; the video simply stays paused on first frame */
+		});
+		setTimeout(hideVideo, videoPlaybackDuration);
+	};
+
+	const hideVideo = () => {
+		video?.classList.add("is-hidden");
+	};
+
+	if (prefersReducedMotion) {
+		words.forEach((word) => word.classList.add("is-visible"));
+		intro?.classList.add("is-hidden");
+		video?.classList.add("is-hidden");
+	} else {
+		words.forEach((_, index) => {
+			setTimeout(() => revealWord(index), index * wordStagger);
+		});
+
+		const typingDuration = (words.length - 1) * wordStagger + wordTransitionDuration;
+		setTimeout(hideIntro, typingDuration + postTypeDelay);
+
+		video?.addEventListener("ended", hideVideo);
+	}
+</script>
+
+</body>
+</html>
