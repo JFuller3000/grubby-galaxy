@@ -3,6 +3,13 @@ const introWords = "Building a Stronger Safer Pilot Community".split(" ");
 
 const navLinks = ["Programs", "Ways To Give"];
 const navLinksSecondary = ["About", "Contact Us"];
+
+const heroSlides = [
+	"/images/foundation/slideshow/03-295_085.jpg",
+	"/images/foundation/slideshow/04-368_075.jpg",
+	"/images/foundation/slideshow/11-798_3241.jpg",
+	"/images/foundation/slideshow/25_Montana Floatplanes 0720.jpg",
+].map((src) => encodeURI(src));
 ---
 
 <!DOCTYPE html>
@@ -42,7 +49,17 @@ const navLinksSecondary = ["About", "Contact Us"];
 	</header>
 
 	<section class="fdn-page">
-		<img class="fdn-page__image" src="/images/foundation/03-295_085.jpg" alt="" />
+		<div class="fdn-hero-slides" id="fdn-hero-slides">
+			{heroSlides.map((src, index) => (
+				<img
+					class:list={["fdn-hero-slide", index === 0 && "is-active"]}
+					src={src}
+					alt=""
+					loading={index === 0 ? "eager" : "lazy"}
+					decoding="async"
+				/>
+			))}
+		</div>
 
 		<div class="fdn-hero-copy">
 			<h1 class="fdn-hero-copy__title">AOPA<br />Foundation</h1>
@@ -66,6 +83,10 @@ const navLinksSecondary = ["About", "Contact Us"];
 				<dd class="fdn-hero-stats__label">Amet<br />Consectus</dd>
 			</div>
 		</dl>
+
+		<div class="fdn-hero-timer" aria-hidden="true">
+			<div class="fdn-hero-timer__bar" id="fdn-hero-timer-bar"></div>
+		</div>
 	</section>
 </div>
 
@@ -249,12 +270,50 @@ const navLinksSecondary = ["About", "Contact Us"];
 		height: 100%;
 	}
 
-	.fdn-page__image {
+	/* ── HERO SLIDESHOW ── */
+	.fdn-hero-slides {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+	}
+
+	.fdn-hero-slide {
+		position: absolute;
+		inset: 0;
 		display: block;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
 		object-position: center;
+		opacity: 0;
+		transition: opacity 1.5s ease;
+	}
+
+	.fdn-hero-slide.is-active {
+		opacity: 1;
+	}
+
+	/* ── HERO SLIDESHOW TIMER ── */
+	.fdn-hero-timer {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 1;
+		height: 4px;
+		background: rgba(255, 255, 255, 0.25);
+	}
+
+	.fdn-hero-timer__bar {
+		height: 100%;
+		width: 0%;
+		background: #fff;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.fdn-hero-slide {
+			transition: none;
+		}
 	}
 
 	/* ── HERO OVERLAY COPY ── */
@@ -902,6 +961,7 @@ const navLinksSecondary = ["About", "Contact Us"];
 
 	const unlockScroll = () => {
 		document.documentElement.classList.remove("fdn-scroll-lock");
+		document.dispatchEvent(new Event("fdn:intro-complete"));
 	};
 
 	const hideVideo = () => {
@@ -978,6 +1038,45 @@ const navLinksSecondary = ["About", "Contact Us"];
 		);
 
 		countEls.forEach((el) => countObserver.observe(el));
+	}
+</script>
+
+<script>
+	const heroSlideEls = document.querySelectorAll<HTMLElement>(".fdn-hero-slide");
+	const heroTimerBar = document.getElementById("fdn-hero-timer-bar");
+	const heroSlideDuration = 8000;
+	let currentHeroSlide = 0;
+
+	const prefersReducedMotionForSlides = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	const showHeroSlide = (index: number) => {
+		heroSlideEls.forEach((slide, i) => slide.classList.toggle("is-active", i === index));
+	};
+
+	const runHeroTimerBar = () => {
+		if (!heroTimerBar) return;
+		heroTimerBar.style.transition = "none";
+		heroTimerBar.style.width = "0%";
+		void heroTimerBar.offsetWidth;
+		heroTimerBar.style.transition = `width ${heroSlideDuration}ms linear`;
+		heroTimerBar.style.width = "100%";
+	};
+
+	const advanceHeroSlide = () => {
+		currentHeroSlide = (currentHeroSlide + 1) % heroSlideEls.length;
+		showHeroSlide(currentHeroSlide);
+		runHeroTimerBar();
+	};
+
+	const startHeroSlideshow = () => {
+		runHeroTimerBar();
+		setInterval(advanceHeroSlide, heroSlideDuration);
+	};
+
+	if (heroSlideEls.length > 1 && !prefersReducedMotionForSlides) {
+		document.addEventListener("fdn:intro-complete", startHeroSlideshow, { once: true });
+	} else if (heroTimerBar) {
+		heroTimerBar.parentElement?.style.setProperty("display", "none");
 	}
 </script>
 
