@@ -13,6 +13,8 @@ import Principles from '../components/homepage/Principles.astro';
 import About from '../components/homepage/About.astro';
 ---
 <Layout title="John S Fuller — Front End Visual & UX Designer" description="John S Fuller — Front End Visual & UX Designer. Resume and portfolio." bodyClass="bg-[#17171c] text-gray-200">
+{false && (
+  <>
   <Hero
     name="John Fuller"
     title="Product Design Engineer"
@@ -122,4 +124,6 @@ import About from '../components/homepage/About.astro';
   <div class="text-center mt-8 mb-8">
     <a href="/resume" data-astro-transition="page" class="rounded-md bg-blue-600 px-4 py-2 text-white no-underline">View Resume</a>
   </div>
+  </>
+)}
 </Layout>
