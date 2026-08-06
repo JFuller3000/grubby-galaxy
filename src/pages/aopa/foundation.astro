@@ -6,7 +6,7 @@ const navLinksSecondary = ["About", "Contact Us"];
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="fdn-scroll-lock">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -102,6 +102,24 @@ const navLinksSecondary = ["About", "Contact Us"];
 	</div>
 </section>
 
+<section class="fdn-impact">
+	<h2 class="fdn-impact__title">Our Impact</h2>
+	<div class="fdn-impact__grid">
+		<div class="fdn-impact__card fdn-impact__card--highlight">
+			<span class="fdn-impact__value" data-count-to="7000">7,000</span>
+			<span class="fdn-impact__label">Lorem Ipsums</span>
+		</div>
+		<div class="fdn-impact__card">
+			<span class="fdn-impact__value" data-count-to="328" data-count-suffix="k">328k</span>
+			<span class="fdn-impact__label">Lorem Ipsums</span>
+		</div>
+		<div class="fdn-impact__card">
+			<span class="fdn-impact__value" data-count-to="97">97</span>
+			<span class="fdn-impact__label">Lorem Ipsums</span>
+		</div>
+	</div>
+</section>
+
 <video
 	class="fdn-video"
 	id="fdn-video"
@@ -142,6 +160,12 @@ const navLinksSecondary = ["About", "Contact Us"];
 		margin: 0;
 		padding: 0;
 		background: #fff;
+	}
+
+	html.fdn-scroll-lock,
+	html.fdn-scroll-lock body {
+		overflow: hidden;
+		height: 100%;
 	}
 
 	/* ── PAGE CONTENT (bottom layer) ── */
@@ -349,6 +373,69 @@ const navLinksSecondary = ["About", "Contact Us"];
 
 		.fdn-programs__media {
 			height: 22rem;
+		}
+	}
+
+	/* ── IMPACT STATS ── */
+	.fdn-impact {
+		background: rgb(24 47 86);
+		padding: clamp(2.5rem, 2rem + 2vw, 4rem) clamp(1.5rem, 1rem + 3vw, 4.5rem);
+	}
+
+	.fdn-impact__title {
+		margin: 0 0 clamp(1.5rem, 1rem + 2vw, 2.5rem);
+		font-family: "National Compressed", "Arial Narrow", "Helvetica Neue Condensed", Arial, sans-serif;
+		font-style: italic;
+		font-weight: 400;
+		font-synthesis: none;
+		font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
+		line-height: 1.1;
+		color: #fff;
+	}
+
+	.fdn-impact__grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: clamp(1rem, 0.6rem + 1.5vw, 3rem);
+	}
+
+	.fdn-impact__card {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		min-height: clamp(16rem, 12rem + 15vw, 26rem);
+		padding: clamp(1.5rem, 1rem + 2vw, 3rem);
+		background: rgba(255, 255, 255, 0.08);
+	}
+
+	.fdn-impact__card--highlight {
+		background: #3d87ad;
+	}
+
+	.fdn-impact__value {
+		font-family: "National Compressed", "Arial Narrow", "Helvetica Neue Condensed", Arial, sans-serif;
+		font-style: normal;
+		font-weight: 400;
+		font-synthesis: none;
+		font-size: clamp(2.5rem, 1.8rem + 4vw, 4.5rem);
+		line-height: 1;
+		color: #fff;
+	}
+
+	.fdn-impact__label {
+		font-family: "Gotham Book", Gotham, "Helvetica Neue", Arial, sans-serif;
+		font-weight: 400;
+		font-size: clamp(0.9375rem, 0.85rem + 0.3vw, 1.0625rem);
+		color: rgba(255, 255, 255, 0.92);
+	}
+
+	@media (max-width: 720px) {
+		.fdn-impact__grid {
+			grid-template-columns: 1fr;
+		}
+
+		.fdn-impact__card {
+			min-height: 12rem;
 		}
 	}
 
@@ -567,14 +654,25 @@ const navLinksSecondary = ["About", "Contact Us"];
 		setTimeout(hideVideo, videoPlaybackDuration);
 	};
 
+	const unlockScroll = () => {
+		document.documentElement.classList.remove("fdn-scroll-lock");
+	};
+
 	const hideVideo = () => {
 		video?.classList.add("is-hidden");
 	};
+
+	video?.addEventListener("transitionend", (event) => {
+		if (event.propertyName === "opacity" && video.classList.contains("is-hidden")) {
+			unlockScroll();
+		}
+	});
 
 	if (prefersReducedMotion) {
 		words.forEach((word) => word.classList.add("is-visible"));
 		intro?.classList.add("is-hidden");
 		video?.classList.add("is-hidden");
+		unlockScroll();
 	} else {
 		words.forEach((_, index) => {
 			setTimeout(() => revealWord(index), index * wordStagger);
@@ -584,6 +682,56 @@ const navLinksSecondary = ["About", "Contact Us"];
 		setTimeout(hideIntro, typingDuration + postTypeDelay);
 
 		video?.addEventListener("ended", hideVideo);
+	}
+</script>
+
+<script>
+	const countEls = document.querySelectorAll<HTMLElement>(".fdn-impact__value[data-count-to]");
+	const prefersReducedMotionForCounts = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	const countDuration = 1400;
+
+	const formatCount = (value: number, suffix: string) =>
+		`${Math.round(value).toLocaleString("en-US")}${suffix}`;
+
+	const animateCount = (el: HTMLElement) => {
+		const target = Number(el.dataset.countTo ?? "0");
+		const suffix = el.dataset.countSuffix ?? "";
+		const start = performance.now();
+
+		const step = (now: number) => {
+			const progress = Math.min(1, (now - start) / countDuration);
+			const eased = 1 - Math.pow(1 - progress, 3);
+			el.textContent = formatCount(target * eased, suffix);
+			if (progress < 1) requestAnimationFrame(step);
+			else el.textContent = formatCount(target, suffix);
+		};
+
+		requestAnimationFrame(step);
+	};
+
+	if (prefersReducedMotionForCounts || !("IntersectionObserver" in window)) {
+		countEls.forEach((el) => {
+			const target = Number(el.dataset.countTo ?? "0");
+			el.textContent = formatCount(target, el.dataset.countSuffix ?? "");
+		});
+	} else {
+		countEls.forEach((el) => {
+			el.textContent = formatCount(0, el.dataset.countSuffix ?? "");
+		});
+
+		const countObserver = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						animateCount(entry.target as HTMLElement);
+						countObserver.unobserve(entry.target);
+					}
+				});
+			},
+			{ threshold: 0.4 },
+		);
+
+		countEls.forEach((el) => countObserver.observe(el));
 	}
 </script>
 
