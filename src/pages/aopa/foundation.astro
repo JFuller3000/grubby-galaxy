@@ -79,7 +79,7 @@ const navLinksSecondary = ["About", "Contact Us"];
 			these initiatives open doors at every stage of the aviation journey.
 		</p>
 		<a href="#" class="fdn-programs__link">
-			Read More
+			Learn More
 			<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
 				<path
 					d="M5 12h13M13 6l7 6-7 6"
@@ -103,20 +103,53 @@ const navLinksSecondary = ["About", "Contact Us"];
 </section>
 
 <section class="fdn-impact">
-	<h2 class="fdn-impact__title">Our Impact</h2>
-	<div class="fdn-impact__grid">
-		<div class="fdn-impact__card fdn-impact__card--highlight">
-			<span class="fdn-impact__value" data-count-to="7000">7,000</span>
-			<span class="fdn-impact__label">Lorem Ipsums</span>
+	<div class="fdn-impact__inner">
+		<h2 class="fdn-impact__title">Our Impact</h2>
+		<div class="fdn-impact__grid">
+			<div class="fdn-impact__card fdn-impact__card--highlight">
+				<span class="fdn-impact__value" data-count-to="7000">7,000</span>
+				<span class="fdn-impact__label">Lorem Ipsums</span>
+			</div>
+			<div class="fdn-impact__card">
+				<span class="fdn-impact__value" data-count-to="328" data-count-suffix="k">328k</span>
+				<span class="fdn-impact__label">Lorem Ipsums</span>
+			</div>
+			<div class="fdn-impact__card">
+				<span class="fdn-impact__value" data-count-to="97">97</span>
+				<span class="fdn-impact__label">Lorem Ipsums</span>
+			</div>
 		</div>
-		<div class="fdn-impact__card">
-			<span class="fdn-impact__value" data-count-to="328" data-count-suffix="k">328k</span>
-			<span class="fdn-impact__label">Lorem Ipsums</span>
-		</div>
-		<div class="fdn-impact__card">
-			<span class="fdn-impact__value" data-count-to="97">97</span>
-			<span class="fdn-impact__label">Lorem Ipsums</span>
-		</div>
+	</div>
+</section>
+
+<section class="fdn-scholarship">
+	<div class="fdn-scholarship__media">
+		<img
+			class="fdn-scholarship__image"
+			src="/images/foundation/23_eFIRC0619-web.jpg"
+			alt=""
+			loading="lazy"
+			decoding="async"
+		/>
+	</div>
+	<div class="fdn-scholarship__text">
+		<h2 class="fdn-scholarship__title">Flight Training Scholarships</h2>
+		<p class="fdn-scholarship__body">
+			The scholarship program helps student pilots to succeed, eases the financial burden of
+			flight training, and ultimately adds to the pilot population.
+		</p>
+		<a href="#" class="fdn-scholarship__link">
+			Learn More
+			<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+				<path
+					d="M5 12h13M13 6l7 6-7 6"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				/>
+			</svg>
+		</a>
 	</div>
 </section>
 
@@ -382,6 +415,11 @@ const navLinksSecondary = ["About", "Contact Us"];
 		padding: clamp(2.5rem, 2rem + 2vw, 4rem) clamp(1.5rem, 1rem + 3vw, 4.5rem);
 	}
 
+	.fdn-impact__inner {
+		max-width: 90rem;
+		margin: 0 auto;
+	}
+
 	.fdn-impact__title {
 		margin: 0 0 clamp(1.5rem, 1rem + 2vw, 2.5rem);
 		font-family: "National Compressed", "Arial Narrow", "Helvetica Neue Condensed", Arial, sans-serif;
@@ -436,6 +474,94 @@ const navLinksSecondary = ["About", "Contact Us"];
 
 		.fdn-impact__card {
 			min-height: 12rem;
+		}
+	}
+
+	/* ── SCHOLARSHIP SPLIT SECTION ── */
+	.fdn-scholarship {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+		align-items: center;
+		gap: clamp(2rem, 1rem + 5vw, 5.5rem);
+		max-width: 90rem;
+		margin: 0 auto;
+		padding: clamp(3rem, 2rem + 4vw, 6rem) clamp(1.5rem, 1rem + 3vw, 4rem);
+		background: #fff;
+	}
+
+	.fdn-scholarship__media {
+		width: 100%;
+		height: clamp(20rem, 60vh, 36rem);
+		overflow: hidden;
+		border-radius: 0 64px 0 64px;
+	}
+
+	.fdn-scholarship__image {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+	}
+
+	.fdn-scholarship__text {
+		max-width: 26rem;
+	}
+
+	.fdn-scholarship__title {
+		margin: 0 0 1.5rem;
+		font-family: "National Compressed", "Arial Narrow", "Helvetica Neue Condensed", Arial, sans-serif;
+		font-style: italic;
+		font-weight: 400;
+		font-synthesis: none;
+		font-size: clamp(2rem, 1.6rem + 2vw, 3rem);
+		line-height: 1.1;
+		color: #111318;
+	}
+
+	.fdn-scholarship__body {
+		margin: 0 0 2rem;
+		font-family: "Gotham Book", Gotham, "Helvetica Neue", Arial, sans-serif;
+		font-size: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+		font-weight: 400;
+		line-height: 1.65;
+		color: #1f2430;
+	}
+
+	.fdn-scholarship__link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.6rem;
+		font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+		font-size: 0.9375rem;
+		font-weight: 800;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		color: #111318;
+		text-decoration: none;
+		transition: color 0.15s ease;
+	}
+
+	.fdn-scholarship__link svg {
+		width: 1.4em;
+		height: 1.4em;
+	}
+
+	.fdn-scholarship__link:hover {
+		color: #3d7cb3;
+	}
+
+	@media (max-width: 860px) {
+		.fdn-scholarship {
+			grid-template-columns: 1fr;
+		}
+
+		.fdn-scholarship__text {
+			max-width: none;
+		}
+
+		.fdn-scholarship__media {
+			height: 22rem;
 		}
 	}
 
