@@ -1,0 +1,151 @@
+---
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>AOPA Home</title>
+</head>
+<body>
+
+<div class="home">
+	<header class="home__header" id="home-header">
+		<img class="home__chrome" src="/images/aopa/home/chrome-100.jpg" alt="" />
+		<img class="home__mini-nav" src="/images/aopa/home/mini-nav-100.jpg" alt="" />
+	</header>
+
+	<section class="home__hero">
+		<video
+			class="home__hero-bg"
+			src="/images/aopa/home/CADENCE1.mov"
+			poster="/images/aopa/home/video-placeholder-100.jpg"
+			autoplay
+			muted
+			loop
+			playsinline
+		></video>
+		<img class="home__hero-overlay" src="/images/aopa/home/hero-overlay.png" alt="" />
+	</section>
+
+	<div class="home__hero-spacer" aria-hidden="true"></div>
+
+	<img class="home__body" src="/images/aopa/home/page-body-100.jpg" alt="" />
+</div>
+
+<style>
+	*, *::before, *::after { box-sizing: border-box; }
+
+	html, body {
+		margin: 0;
+		padding: 0;
+		background: #fff;
+	}
+
+	.home {
+		position: relative;
+		width: 100%;
+		--chrome-h: calc(100vw * 127 / 2100);
+		--mini-nav-h: calc(100vw * 76 / 2100);
+	}
+
+	.home__header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 2;
+		width: 100%;
+		height: var(--chrome-h);
+		overflow: hidden;
+		transition: height 0.4s ease;
+	}
+
+	.home__header.is-scrolled {
+		height: var(--mini-nav-h);
+	}
+
+	.home__chrome,
+	.home__mini-nav {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: auto;
+		transition: transform 0.4s ease;
+	}
+
+	.home__chrome {
+		transform: translateY(0);
+	}
+
+	.home__mini-nav {
+		transform: translateY(-100%);
+	}
+
+	.home__header.is-scrolled .home__chrome {
+		transform: translateY(-100%);
+	}
+
+	.home__header.is-scrolled .home__mini-nav {
+		transform: translateY(0);
+	}
+
+	.home__hero {
+		position: fixed;
+		inset: 0;
+		z-index: 0;
+		width: 100%;
+		height: 100vh;
+		height: 100dvh;
+		overflow: hidden;
+	}
+
+	.home__hero-spacer {
+		height: 100vh;
+		height: 100dvh;
+	}
+
+	.home__hero-bg {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+	}
+
+	.home__hero-overlay {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: min(90%, 45rem);
+		height: auto;
+	}
+
+	.home__body {
+		position: relative;
+		z-index: 1;
+		display: block;
+		width: 100%;
+		height: auto;
+		background: #fff;
+	}
+</style>
+
+<script>
+	const header = document.getElementById("home-header");
+	const scrollThreshold = 40;
+
+	const updateHeaderState = () => {
+		header?.classList.toggle("is-scrolled", window.scrollY > scrollThreshold);
+	};
+
+	updateHeaderState();
+	window.addEventListener("scroll", updateHeaderState, { passive: true });
+</script>
+
+</body>
+</html>
