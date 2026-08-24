@@ -32,6 +32,10 @@
 	<div class="home__hero-spacer" aria-hidden="true"></div>
 
 	<img class="home__body" src="/images/aopa/home/page-body-100.jpg" alt="" />
+
+	<div class="home__closing-spacer" id="home-closing-spacer" aria-hidden="true"></div>
+
+	<img class="home__closing" id="home-closing" src="/images/aopa/home/closing-conversion-100.jpg" alt="" />
 </div>
 
 <style>
@@ -48,6 +52,7 @@
 		width: 100%;
 		--chrome-h: calc(100vw * 127 / 2100);
 		--mini-nav-h: calc(100vw * 76 / 2100);
+		--closing-h: calc(100vw * 1400 / 2101);
 	}
 
 	.home__header {
@@ -133,6 +138,25 @@
 		height: auto;
 		background: #fff;
 	}
+
+	.home__closing-spacer {
+		height: var(--closing-h);
+	}
+
+	.home__closing {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 0;
+		width: 100%;
+		height: auto;
+	}
+
+	.home__closing.is-active {
+		display: block;
+	}
 </style>
 
 <script>
@@ -145,6 +169,21 @@
 
 	updateHeaderState();
 	window.addEventListener("scroll", updateHeaderState, { passive: true });
+
+	const closing = document.getElementById("home-closing");
+	const closingSpacer = document.getElementById("home-closing-spacer");
+
+	if (closing && closingSpacer && "IntersectionObserver" in window) {
+		const closingObserver = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					closing.classList.toggle("is-active", entry.isIntersecting);
+				});
+			},
+			{ threshold: 0 },
+		);
+		closingObserver.observe(closingSpacer);
+	}
 </script>
 
 </body>
