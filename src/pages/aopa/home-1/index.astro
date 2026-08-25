@@ -1,0 +1,246 @@
+---
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>AOPA Home</title>
+</head>
+<body>
+
+<div class="home">
+	<header class="home__header" id="home-header">
+		<img class="home__chrome" src="/images/aopa/home/1/chrome-100.jpg" alt="" />
+		<img class="home__mini-nav" src="/images/aopa/home/1/mini-nav-100.jpg" alt="" />
+	</header>
+
+	<section class="home__hero">
+		<div class="home__hero-inner">
+			<video
+				class="home__hero-bg"
+				src="/images/aopa/home/CADENCE1.mov"
+				poster="/images/aopa/home/video-placeholder-100.jpg"
+				autoplay
+				muted
+				loop
+				playsinline
+			></video>
+			<img class="home__hero-header" src="/images/aopa/home/1/hero-header.png" alt="" />
+			<img class="home__hero-overlay" src="/images/aopa/home/1/hero-overlay.png" alt="" />
+		</div>
+	</section>
+
+	<div class="home__hero-spacer" aria-hidden="true"></div>
+
+	<img class="home__body" src="/images/aopa/home/1/page-body-100.jpg" alt="" />
+
+	<div class="home__closing-spacer" id="home-closing-spacer" aria-hidden="true"></div>
+
+	<div class="home__closing" id="home-closing">
+		<div class="home__closing-strip" aria-hidden="true"></div>
+		<video
+			class="home__closing-video"
+			src="/images/aopa/home/AOPA-banner-spinning-prop.mp4"
+			autoplay
+			muted
+			loop
+			playsinline
+		></video>
+		<img class="home__closing-bottom" src="/images/aopa/home/closing-bottom-100.jpg" alt="" />
+	</div>
+</div>
+
+<style>
+	*, *::before, *::after { box-sizing: border-box; }
+
+	html, body {
+		margin: 0;
+		padding: 0;
+		background: #fff;
+	}
+
+	.home {
+		position: relative;
+		width: 100%;
+		--chrome-h: calc(100vw * 127 / 2100);
+		--mini-nav-h: calc(100vw * 76 / 2100);
+		--closing-h: calc(100vw * 1617 / 2101);
+		--closing-strip-h: calc(100vw * 71 / 2101);
+		--closing-video-h: calc(100vw * 474 / 2101);
+	}
+
+	.home__header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 2;
+		width: 100%;
+		height: var(--chrome-h);
+		overflow: hidden;
+		transition: height 0.4s ease;
+	}
+
+	.home__header.is-scrolled {
+		height: var(--mini-nav-h);
+	}
+
+	.home__chrome,
+	.home__mini-nav {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: auto;
+		transition: transform 0.4s ease;
+	}
+
+	.home__chrome {
+		transform: translateY(0);
+	}
+
+	.home__mini-nav {
+		transform: translateY(-100%);
+	}
+
+	.home__header.is-scrolled .home__chrome {
+		transform: translateY(-100%);
+	}
+
+	.home__header.is-scrolled .home__mini-nav {
+		transform: translateY(0);
+	}
+
+	.home__hero {
+		position: fixed;
+		inset: 0;
+		z-index: 0;
+		width: 100%;
+		height: 100vh;
+		height: 100dvh;
+		box-sizing: border-box;
+		padding: 2rem;
+		padding-top: calc(2rem + var(--chrome-h));
+		background: #fff;
+		overflow: hidden;
+	}
+
+	.home__hero-inner {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+
+	.home__hero-spacer {
+		height: 100vh;
+		height: 100dvh;
+	}
+
+	.home__hero-bg {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+	}
+
+	.home__hero-header {
+		position: absolute;
+		top: clamp(3rem, 6vw, 6rem);
+		left: clamp(3rem, 6vw, 6rem);
+		width: 540px;
+		height: auto;
+	}
+
+	.home__hero-overlay {
+		position: absolute;
+		left: 50%;
+		bottom: -2px;
+		transform: translateX(-50%);
+		width: 720px;
+		height: auto;
+	}
+
+	.home__body {
+		position: relative;
+		z-index: 1;
+		display: block;
+		width: 100%;
+		height: auto;
+		background: #fff;
+	}
+
+	.home__closing-spacer {
+		height: var(--closing-h);
+	}
+
+	.home__closing {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 0;
+		width: 100%;
+	}
+
+	.home__closing.is-active {
+		display: block;
+	}
+
+	.home__closing-strip {
+		display: block;
+		width: 100%;
+		height: var(--closing-strip-h);
+		background: rgb(24 47 86);
+	}
+
+	.home__closing-video {
+		display: block;
+		width: 100%;
+		height: var(--closing-video-h);
+		background: #000;
+		object-fit: contain;
+		object-position: top;
+	}
+
+	.home__closing-bottom {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+</style>
+
+<script>
+	const header = document.getElementById("home-header");
+	const scrollThreshold = 40;
+
+	const updateHeaderState = () => {
+		header?.classList.toggle("is-scrolled", window.scrollY > scrollThreshold);
+	};
+
+	updateHeaderState();
+	window.addEventListener("scroll", updateHeaderState, { passive: true });
+
+	const closing = document.getElementById("home-closing");
+	const closingSpacer = document.getElementById("home-closing-spacer");
+
+	if (closing && closingSpacer && "IntersectionObserver" in window) {
+		const closingObserver = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					closing.classList.toggle("is-active", entry.isIntersecting);
+				});
+			},
+			{ threshold: 0 },
+		);
+		closingObserver.observe(closingSpacer);
+	}
+</script>
+
+</body>
+</html>
