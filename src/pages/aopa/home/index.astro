@@ -26,7 +26,7 @@
 			loop
 			playsinline
 		></video>
-		<img class="home__hero-overlay" src="/images/aopa/home/hero-overlay.png" alt="" />
+		<img class="home__hero-overlay" src="/images/aopa/home/hero-overlay-lower.png" alt="" />
 	</section>
 
 	<div class="home__hero-spacer" aria-hidden="true"></div>
@@ -35,7 +35,18 @@
 
 	<div class="home__closing-spacer" id="home-closing-spacer" aria-hidden="true"></div>
 
-	<img class="home__closing" id="home-closing" src="/images/aopa/home/closing-conversion-100.jpg" alt="" />
+	<div class="home__closing" id="home-closing">
+		<div class="home__closing-strip" aria-hidden="true"></div>
+		<video
+			class="home__closing-video"
+			src="/images/aopa/home/AOPA-banner-spinning-prop.mp4"
+			autoplay
+			muted
+			loop
+			playsinline
+		></video>
+		<img class="home__closing-bottom" src="/images/aopa/home/closing-bottom-100.jpg" alt="" />
+	</div>
 </div>
 
 <style>
@@ -52,7 +63,9 @@
 		width: 100%;
 		--chrome-h: calc(100vw * 127 / 2100);
 		--mini-nav-h: calc(100vw * 76 / 2100);
-		--closing-h: calc(100vw * 1400 / 2101);
+		--closing-h: calc(100vw * 1617 / 2101);
+		--closing-strip-h: calc(100vw * 71 / 2101);
+		--closing-video-h: calc(100vw * 474 / 2101);
 	}
 
 	.home__header {
@@ -123,10 +136,9 @@
 
 	.home__hero-overlay {
 		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		width: min(90%, 45rem);
+		bottom: 0;
+		left: 0;
+		width: 100%;
 		height: auto;
 	}
 
@@ -151,11 +163,32 @@
 		right: 0;
 		z-index: 0;
 		width: 100%;
-		height: auto;
 	}
 
 	.home__closing.is-active {
 		display: block;
+	}
+
+	.home__closing-strip {
+		display: block;
+		width: 100%;
+		height: var(--closing-strip-h);
+		background: rgb(24 47 86);
+	}
+
+	.home__closing-video {
+		display: block;
+		width: 100%;
+		height: var(--closing-video-h);
+		background: #000;
+		object-fit: contain;
+		object-position: top;
+	}
+
+	.home__closing-bottom {
+		display: block;
+		width: 100%;
+		height: auto;
 	}
 </style>
 
