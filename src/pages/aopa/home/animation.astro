@@ -2,7 +2,7 @@
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="snap-y snap-mandatory">
+<html lang="en">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,7 +11,7 @@
 <body>
 
 <main class="w-full bg-white">
-	<section class="grid h-screen w-full snap-start place-items-center">
+	<section class="grid h-screen w-full place-items-center">
 		<a
 			href="#"
 			class="js-plane-btn relative inline-flex items-center gap-2 rounded-full bg-[#182f56] py-2 pl-12 pr-2 no-underline"
@@ -50,7 +50,7 @@
 		</a>
 	</section>
 
-	<section class="grid h-screen w-full snap-start place-items-center">
+	<section class="grid h-screen w-full place-items-center">
 		<a
 			href="#"
 			class="js-learn-more relative inline-flex items-center gap-5 overflow-hidden rounded-full bg-[#182f56] py-2 pl-12 pr-2 no-underline"
@@ -79,6 +79,19 @@
 			</span>
 		</a>
 	</section>
+
+	<section class="grid h-screen w-full place-items-center px-12">
+		<p class="js-letter-reveal max-w-4xl text-left font-sans text-3xl text-[#182f56] leading-relaxed">
+			The Aircraft Owners and Pilots Association (AOPA) is the largest, most experienced pilot
+			community in the world. Our 300,000 members give general aviation its voice. Since 1939, we
+			have been in the rooms where the rules get made: on Capitol Hill, at the FAA, and in the
+			statehouses where your right to fly is decided. From your first lesson to your next
+			airplane, AOPA is the membership that protects your freedom to fly.
+		</p>
+	</section>
+
+	<section class="grid h-screen w-full place-items-center">
+	</section>
 </main>
 
 <style>
@@ -89,6 +102,9 @@
 
 <script>
 	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
 
 	class FlairButton {
 		private readonly button: HTMLElement;
@@ -229,6 +245,49 @@
 	}
 
 	document.querySelectorAll<HTMLElement>(".js-plane-btn").forEach((button) => new PlaneButton(button));
+
+	class LetterReveal {
+		constructor(target: HTMLElement) {
+			const letters = this.splitIntoLetters(target);
+
+			gsap.set(letters, { opacity: 0.25 });
+
+			gsap.to(letters, {
+				opacity: 1,
+				stagger: 0.015,
+				ease: "none",
+				scrollTrigger: {
+					trigger: target,
+					start: "top 85%",
+					end: "bottom 65%",
+					scrub: 1.2,
+				},
+			});
+		}
+
+		private splitIntoLetters(target: HTMLElement): HTMLElement[] {
+			const text = target.textContent ?? "";
+			const letters: HTMLElement[] = [];
+			const frag = document.createDocumentFragment();
+
+			for (const char of text) {
+				const span = document.createElement("span");
+				span.textContent = char;
+				span.style.display = "inline";
+				frag.appendChild(span);
+				letters.push(span);
+			}
+
+			target.textContent = "";
+			target.appendChild(frag);
+
+			return letters;
+		}
+	}
+
+	document
+		.querySelectorAll<HTMLElement>(".js-letter-reveal")
+		.forEach((el) => new LetterReveal(el));
 </script>
 
 </body>
