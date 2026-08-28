@@ -516,7 +516,7 @@
 							<a href="#" class="mt-auto font-national font-bold text-[#5b9bd5] no-underline">View All</a>
 						</div>
 					</div>
-					<p class="mt-4 font-national">Pilot Magazine</p>
+					<p class="text-lg mt-4 font-national">Pilot Magazine</p>
 				</div>
 				<div class="js-magazine-card">
 					<div class="group relative aspect-[356/466] w-full overflow-hidden">
@@ -536,7 +536,7 @@
 							<a href="#" class="mt-auto font-national font-bold text-[#5b9bd5] no-underline">View All</a>
 						</div>
 					</div>
-					<p class="mt-4 font-national">Pilot Turbine Magazine</p>
+					<p class="text-lg mt-4 font-national">Pilot Turbine Magazine</p>
 				</div>
 				<div class="js-magazine-card">
 					<div class="group relative aspect-[356/466] w-full overflow-hidden">
@@ -556,13 +556,14 @@
 							<a href="#" class="mt-auto font-national font-bold text-[#5b9bd5] no-underline">View All</a>
 						</div>
 					</div>
-					<p class="mt-4 font-national">Flight Training Magazine</p>
+					<p class="mt-4 text-lg font-national">Flight Training Magazine</p>
 				</div>
 			</div>
 		</div>
 	</section>
 
 	<div class="home__flyin-spacer relative" id="flyin-spacer">
+
 		<div class="absolute left-6 top-0 z-[1] h-[260vh] sm:left-16 lg:left-24">
 			<div class="sticky top-24 max-w-xl bg-[#182f56]/95 p-10 sm:top-28 lg:top-32 mt-12">
 				<h2 class="font-national text-2xl font-bold leading-tight text-white sm:text-3xl">
@@ -663,6 +664,53 @@
 			</div>
 		</div>
 	</section>
+
+	<footer class="relative z-[1] bg-[#182f56] px-8 py-16 sm:px-12 lg:px-24">
+		<div class="mx-auto grid max-w-7xl gap-10 sm:grid-cols-2 lg:grid-cols-5">
+			<div class="sm:col-span-2 lg:col-span-2">
+				<img src="/images/aopa/home/4/aopa-wings.svg" alt="AOPA" class="w-40 select-none" />
+				<p class="mt-6 max-w-xs font-national text-sm leading-relaxed text-white/70">
+					The Aircraft Owners and Pilots Association is the largest, most experienced pilot
+					community in the world.
+				</p>
+			</div>
+
+			<div>
+				<p class="font-national text-sm font-bold uppercase tracking-widest text-white">Advocacy</p>
+				<ul class="mt-4 list-none space-y-2 p-0 font-national text-sm text-white/70">
+					<li><a href="#" class="text-white/70 no-underline hover:text-white">GA Advocacy</a></li>
+					<li><a href="#" class="text-white/70 no-underline hover:text-white">Airport Watch</a></li>
+					<li><a href="#" class="text-white/70 no-underline hover:text-white">State Advocacy</a></li>
+				</ul>
+			</div>
+
+			<div>
+				<p class="font-national text-sm font-bold uppercase tracking-widest text-white">Go Fly</p>
+				<ul class="mt-4 list-none space-y-2 p-0 font-national text-sm text-white/70">
+					<li><a href="#" class="text-white/70 no-underline hover:text-white">Flying Clubs</a></li>
+					<li><a href="#" class="text-white/70 no-underline hover:text-white">Fly-Ins &amp; Events</a></li>
+					<li><a href="#" class="text-white/70 no-underline hover:text-white">Flight Planning</a></li>
+				</ul>
+			</div>
+
+			<div>
+				<p class="font-national text-sm font-bold uppercase tracking-widest text-white">About AOPA</p>
+				<ul class="mt-4 list-none space-y-2 p-0 font-national text-sm text-white/70">
+					<li><a href="#" class="text-white/70 no-underline hover:text-white">Membership</a></li>
+					<li><a href="#" class="text-white/70 no-underline hover:text-white">News &amp; Media</a></li>
+					<li><a href="#" class="text-white/70 no-underline hover:text-white">Contact Us</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="mx-auto mt-14 flex max-w-7xl flex-col gap-4 border-t border-white/15 pt-8 font-national text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
+			<p class="m-0">&copy; {new Date().getFullYear()} Aircraft Owners and Pilots Association</p>
+			<div class="flex gap-6">
+				<a href="#" class="text-white/50 no-underline hover:text-white">Privacy Policy</a>
+				<a href="#" class="text-white/50 no-underline hover:text-white">Terms of Use</a>
+			</div>
+		</div>
+	</footer>
 </div>
 
 <style>
@@ -885,8 +933,8 @@
 		opacity: 0;
 		transition: opacity 0.25s ease;
 		background: radial-gradient(
-			circle 70px at var(--spot-x, 50%) var(--spot-y, 50%),
-			rgba(255, 255, 255, 0.65),
+			circle 60px at var(--spot-x, 50%) var(--spot-y, 50%),
+			rgba(255, 255, 255, 0.25),
 			transparent 70%
 		);
 	}
@@ -1222,6 +1270,50 @@
 	document.querySelectorAll<HTMLElement>(".js-letter-reveal").forEach((el) => {
 		const trigger = el.closest<HTMLElement>(".js-ga-section") ?? el;
 		new LetterReveal(el, trigger);
+	});
+
+	class TextRipple {
+		private readonly letters: HTMLElement[];
+
+		constructor(target: HTMLElement) {
+			this.letters = this.splitIntoLetters(target);
+		}
+
+		play() {
+			gsap.killTweensOf(this.letters);
+			gsap.to(this.letters, {
+				y: -5,
+				duration: 0.2,
+				ease: "power1.inOut",
+				stagger: { each: 0.03, from: "start" },
+				yoyo: true,
+				repeat: 1,
+			});
+		}
+
+		private splitIntoLetters(target: HTMLElement): HTMLElement[] {
+			const letters: HTMLElement[] = [];
+			const text = target.textContent ?? "";
+			target.textContent = "";
+
+			for (const char of text) {
+				const span = document.createElement("span");
+				span.textContent = char === " " ? " " : char;
+				span.style.display = "inline-block";
+				target.appendChild(span);
+				letters.push(span);
+			}
+
+			return letters;
+		}
+	}
+
+	document.querySelectorAll<HTMLElement>(".js-ripple-btn").forEach((button) => {
+		const textEl = button.querySelector<HTMLElement>(".js-ripple-text");
+		if (!textEl) return;
+
+		const ripple = new TextRipple(textEl);
+		button.addEventListener("mouseenter", () => ripple.play());
 	});
 
 	const header = document.getElementById("home-header");
