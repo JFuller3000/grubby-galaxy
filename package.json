@@ -10,6 +10,7 @@
     "tailwind": "npx tailwindcss -i ./src/styles/input.css -o ./src/styles/output.css --watch"
   },
   "dependencies": {
+    "@phosphor-icons/core": "^2.1.1",
     "@simplewebauthn/browser": "^13.3.0",
     "astro": "^5.17.1",
     "gsap": "^3.15.0",

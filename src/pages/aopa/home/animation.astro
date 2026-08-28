@@ -17,7 +17,7 @@
 			class="js-plane-btn relative inline-flex items-center gap-2 rounded-full bg-[#182f56] py-2 pl-12 pr-2 no-underline"
 		>
 			<span class="relative inline-flex items-center gap-2">
-				<span class="js-plane-word relative inline-block font-sans text-[1.0625rem] font-extrabold uppercase tracking-widest text-white">
+				<span class="js-plane-word relative inline-block text-[1.0625rem] uppercase tracking-widest text-white">
 					Go
 				</span>
 				<span
@@ -32,7 +32,7 @@
 					</svg>
 				</span>
 				</span>
-				<span class="js-plane-word relative inline-block font-sans text-[1.0625rem] font-extrabold uppercase tracking-widest text-white">
+				<span class="js-plane-word relative inline-block text-[1.0625rem] uppercase tracking-widest text-white">
 					Fly
 				</span>
 			</span>
@@ -59,10 +59,10 @@
 				class="js-learn-more-flair pointer-events-none absolute inset-0 origin-top-left scale-0 will-change-transform"
 				aria-hidden="true"
 			>
-				<span class="absolute left-0 top-0 aspect-square w-[260%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5b9bd5]"></span>
+				<span class="absolute left-0 top-0 aspect-square w-[260%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5b9bd5] opacity-40"></span>
 			</span>
 			<span
-				class="js-learn-more-label relative font-sans text-[1.0625rem] font-extrabold uppercase tracking-widest text-white pr-4 transition-colors duration-150"
+				class="js-learn-more-label relative text-[1.0625rem] uppercase tracking-widest text-white pr-4"
 			>
 				Join Now
 			</span>
@@ -81,7 +81,7 @@
 	</section>
 
 	<section class="grid h-screen w-full place-items-center px-12">
-		<p class="js-letter-reveal max-w-4xl text-left font-sans text-3xl text-[#182f56] leading-relaxed">
+		<p class="js-letter-reveal max-w-4xl text-left text-3xl text-[#3f5c85] leading-relaxed">
 			The Aircraft Owners and Pilots Association (AOPA) is the largest, most experienced pilot
 			community in the world. Our 300,000 members give general aviation its voice. Since 1939, we
 			have been in the rooms where the rules get made: on Capitol Hill, at the FAA, and in the
@@ -90,13 +90,71 @@
 		</p>
 	</section>
 
-	<section class="grid h-screen w-full place-items-center">
+	<section class="grid h-screen w-full place-items-center px-12">
+		<figure class="mx-auto max-w-3xl text-center">
+			<span
+				class="js-testimonial-mark mb-4 block select-none font-serif text-[7rem] leading-none text-[#5b9bd5]"
+				aria-hidden="true"
+			>
+				&ldquo;
+			</span>
+			<blockquote class="js-testimonial-quote text-3xl leading-relaxed text-[#182f56]">
+				I never could have imagined my Stinson 108's engine failure, or that it would be
+				illegally seized right after I made an emergency landing. AOPA's legal team and
+				government affairs team stood up for me, researching federal regulations and advocating
+				on my behalf until I finally got my airplane back.
+			</blockquote>
+			<figcaption class="js-testimonial-attribution mt-8 text-sm uppercase tracking-widest text-[#5b9bd5]">
+				— Jane Smith, KLOU · AOPA Member Since 2011
+			</figcaption>
+		</figure>
 	</section>
 </main>
 
 <style>
-	.js-learn-more:hover .js-learn-more-label {
-		color: #182f56;
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-regular.woff2") format("woff2");
+		font-weight: 400;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-regular-italic.woff2") format("woff2");
+		font-weight: 400;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-medium.woff2") format("woff2");
+		font-weight: 500;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-medium-italic.woff2") format("woff2");
+		font-weight: 500;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	.js-plane-word,
+	.js-learn-more-label,
+	.js-testimonial-attribution {
+		font-family: "National", sans-serif;
+		font-weight: 500;
+	}
+
+	.js-letter-reveal,
+	.js-testimonial-quote {
+		font-family: "National", sans-serif;
+		font-weight: 400;
 	}
 </style>
 
@@ -250,7 +308,7 @@
 		constructor(target: HTMLElement) {
 			const letters = this.splitIntoLetters(target);
 
-			gsap.set(letters, { opacity: 0.25 });
+			gsap.set(letters, { opacity: 0.45 });
 
 			gsap.to(letters, {
 				opacity: 1,
@@ -288,6 +346,58 @@
 	document
 		.querySelectorAll<HTMLElement>(".js-letter-reveal")
 		.forEach((el) => new LetterReveal(el));
+
+	class TestimonialReveal {
+		constructor(figure: HTMLElement) {
+			const mark = figure.querySelector<HTMLElement>(".js-testimonial-mark")!;
+			const quote = figure.querySelector<HTMLElement>(".js-testimonial-quote")!;
+			const attribution = figure.querySelector<HTMLElement>(".js-testimonial-attribution")!;
+			const words = this.splitIntoWords(quote);
+
+			gsap.set(mark, { scale: 0, opacity: 0, transformOrigin: "50% 100%" });
+			gsap.set(words, { opacity: 0, y: 14 });
+			gsap.set(attribution, { opacity: 0, y: 10 });
+
+			const tl = gsap.timeline({
+				scrollTrigger: {
+					trigger: figure,
+					start: "top 70%",
+					toggleActions: "play none none reverse",
+				},
+			});
+
+			tl.to(mark, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(1.9)" })
+				.to(words, { opacity: 1, y: 0, duration: 0.35, stagger: 0.018, ease: "power2.out" }, "-=0.2")
+				.to(attribution, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, "-=0.1");
+		}
+
+		private splitIntoWords(target: HTMLElement): HTMLElement[] {
+			const text = target.textContent ?? "";
+			const words: HTMLElement[] = [];
+			const frag = document.createDocumentFragment();
+
+			for (const part of text.trim().split(/(\s+)/)) {
+				if (part.trim() === "") {
+					frag.appendChild(document.createTextNode(part));
+					continue;
+				}
+				const span = document.createElement("span");
+				span.textContent = part;
+				span.style.display = "inline-block";
+				frag.appendChild(span);
+				words.push(span);
+			}
+
+			target.textContent = "";
+			target.appendChild(frag);
+
+			return words;
+		}
+	}
+
+	document
+		.querySelectorAll<HTMLElement>("figure")
+		.forEach((el) => new TestimonialReveal(el));
 </script>
 
 </body>
