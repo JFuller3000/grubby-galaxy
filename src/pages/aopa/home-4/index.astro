@@ -27,29 +27,33 @@
 				loop
 				playsinline
 			></video>
-			<h1 class="font-national absolute left-12 top-12 z-10 m-0 flex flex-col text-5xl font-bold leading-[1.05] tracking-tight sm:left-16 sm:top-16 sm:text-6xl lg:left-24 lg:top-24 lg:text-8xl leading-none">
-				<span class="text-white/90 drop-shadow-lg">Where</span>
-				<span class="text-[#01a2e0] drop-shadow-lg">Pilots Belong</span>
-			</h1>
+			<div class="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-1/2 bg-gradient-to-t from-black/70 to-transparent"></div>
 
-			<div class="absolute bottom-[-2px] left-1/2 z-10 w-[calc(100%-2rem)] max-w-[620px] -translate-x-1/2 rounded-t-[1.75rem] bg-white px-8 pb-10 pt-8 text-center shadow-2xl sm:px-10">
-				<p class="mb-6 text-[1.0625rem] leading-relaxed text-gray-500">
-					Trusted tools, a nationwide community, and aviation's boldest advocates, together in
-					one membership.
-				</p>
-				<div class="flex flex-wrap justify-center gap-3">
-					<a
-						href="#"
-						class="inline-flex items-center justify-center rounded-md border-[1.5px] border-[#182f56] bg-white px-7 py-3.5 text-[0.95rem] font-bold text-[#182f56] no-underline"
-					>
-						Join AOPA
-					</a>
-					<a
-						href="#"
-						class="inline-flex items-center justify-center rounded-md border-[1.5px] border-[#40b9e8] bg-white px-7 py-3.5 text-[0.95rem] font-bold text-[#182f56] no-underline"
-					>
-						Membership Options
-					</a>
+			<div class="absolute inset-x-0 bottom-12 z-10 flex flex-col gap-8 px-8 sm:bottom-16 sm:px-12 lg:bottom-20 lg:flex-row lg:items-end lg:justify-around lg:gap-16 lg:px-24">
+				<h1 class="font-national m-0 flex flex-col text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-8xl leading-none">
+					<span class="w-fit font-normal italic text-white/90 drop-shadow-lg">Where</span>
+					<span class="mt-2 w-fit pb-1 text-white drop-shadow-lg">Pilots Belong</span>
+				</h1>
+
+				<div class="max-w-lg lg:pb-2">
+					<p class="text-3xl leading-relaxed text-white/90">
+						Trusted tools, a nationwide community, and aviation's boldest advocates,
+						<span class="italic">together in one membership.</span>
+					</p>
+					<div class="mt-6 flex flex-wrap gap-3">
+						<a
+							href="#"
+							class="inline-flex items-center justify-center rounded-full bg-[#182f56] px-7 py-3.5 text-[0.95rem] font-bold text-white no-underline"
+						>
+							Join AOPA
+						</a>
+						<a
+							href="#"
+							class="inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 text-[0.95rem] font-bold text-[#182f56] no-underline"
+						>
+							Membership Options
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -124,8 +128,8 @@
 				<span class="font-national font-normal italic">Everything</span> your kind of flying demands.
 			</h2>
 
-			<div class="mt-14 grid gap-4 text-center sm:grid-cols-2 lg:grid-cols-4">
-				<div class="rounded-2xl bg-black/15 p-8">
+			<div class="js-fly-cards-grid mt-14 grid gap-4 text-center sm:grid-cols-2 lg:grid-cols-4">
+				<div class="js-fly-card rounded-2xl bg-black/15 p-8">
 					<svg class="mx-auto mb-6 h-14 w-14 text-white" viewBox="0 0 256 256" fill="currentColor">
 						<path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.27,47,25.53a8,8,0,0,0,4.2,0c1-.26,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.07-13.66,67.16-40.6,89.42A129.3,129.3,0,0,1,128,223.62a128.25,128.25,0,0,1-38.92-21.81C61.82,179.51,48,149.3,48,112l0-56,160,0Z" />
 					</svg>
@@ -136,7 +140,7 @@
 					</a>
 				</div>
 
-				<div class="rounded-2xl bg-black/15 p-8">
+				<div class="js-fly-card rounded-2xl bg-black/15 p-8">
 					<svg class="mx-auto mb-6 h-14 w-14 text-white" viewBox="0 0 256 256" fill="currentColor">
 						<path d="M220,160a12,12,0,1,1-12-12A12,12,0,0,1,220,160Zm-4.55,39.29A48.08,48.08,0,0,1,168,240H144a48.05,48.05,0,0,1-48-48V151.49A64,64,0,0,1,40,88V40a8,8,0,0,1,8-8H72a8,8,0,0,1,0,16H56V88a48,48,0,0,0,48.64,48c26.11-.34,47.36-22.25,47.36-48.83V48H136a8,8,0,0,1,0-16h24a8,8,0,0,1,8,8V87.17c0,32.84-24.53,60.29-56,64.31V192a32,32,0,0,0,32,32h24a32.06,32.06,0,0,0,31.22-25,40,40,0,1,1,16.23.27ZM232,160a24,24,0,1,0-24,24A24,24,0,0,0,232,160Z" />
 					</svg>
@@ -151,7 +155,7 @@
 					</a>
 				</div>
 
-				<div class="rounded-2xl bg-black/15 p-8">
+				<div class="js-fly-card rounded-2xl bg-black/15 p-8">
 					<svg class="mx-auto mb-6 h-14 w-14 text-white" viewBox="0 0 256 256" fill="currentColor">
 						<path d="M140,180a12,12,0,1,1-12-12A12,12,0,0,1,140,180ZM128,72c-22.06,0-40,16.15-40,36v4a8,8,0,0,0,16,0v-4c0-11,10.77-20,24-20s24,9,24,20-10.77,20-24,20a8,8,0,0,0-8,8v8a8,8,0,0,0,16,0v-.72c18.24-3.35,32-17.9,32-35.28C168,88.15,150.06,72,128,72Zm104,56A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z" />
 					</svg>
@@ -164,7 +168,7 @@
 					</a>
 				</div>
 
-				<div class="rounded-2xl bg-black/15 p-8">
+				<div class="js-fly-card rounded-2xl bg-black/15 p-8">
 					<svg class="mx-auto mb-6 h-14 w-14 text-white" viewBox="0 0 256 256" fill="currentColor">
 						<path d="M251.76,88.94l-120-64a8,8,0,0,0-7.52,0l-120,64a8,8,0,0,0,0,14.12L32,117.87v48.42a15.91,15.91,0,0,0,4.06,10.65C49.16,191.53,78.51,216,128,216a130,130,0,0,0,48-8.76V240a8,8,0,0,0,16,0V199.51a115.63,115.63,0,0,0,27.94-22.57A15.91,15.91,0,0,0,224,166.29V117.87l27.76-14.81a8,8,0,0,0,0-14.12ZM128,200c-43.27,0-68.72-21.14-80-33.71V126.4l76.24,40.66a8,8,0,0,0,7.52,0L176,143.47v46.34C163.4,195.69,147.52,200,128,200Zm80-33.75a97.83,97.83,0,0,1-16,14.25V134.93l16-8.53ZM188,118.94l-.22-.13-56-29.87a8,8,0,0,0-7.52,14.12L171,128l-43,22.93L25,96,128,41.07,231,96Z" />
 					</svg>
@@ -468,7 +472,7 @@
 					advocating on my behalf until I finally got my airplane back."
 				</p>
 
-				<div class="mt-6 flex items-center gap-4">
+				<div class="js-testimonial-4-byline mt-6 flex items-center gap-4 opacity-0 will-change-transform">
 					<span class="h-0.5 w-8 shrink-0 bg-[#01a2e0]"></span>
 					<span class="font-national font-bold text-[#182f56]">Jane Smith, KLOU</span>
 				</div>
@@ -493,8 +497,8 @@
 				<p class="font-national text-4xl font-bold leading-tight text-[#1d3f6d]">This month's issues</p>
 			</div>
 
-			<div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
-				<div>
+			<div class="js-magazine-grid grid grid-cols-1 gap-8 sm:grid-cols-3">
+				<div class="js-magazine-card">
 					<div class="group relative aspect-[356/466] w-full overflow-hidden">
 						<img
 							src="/images/aopa/home/4/magazine/pilot.jpg"
@@ -514,7 +518,7 @@
 					</div>
 					<p class="mt-4 font-national">Pilot Magazine</p>
 				</div>
-				<div>
+				<div class="js-magazine-card">
 					<div class="group relative aspect-[356/466] w-full overflow-hidden">
 						<img
 							src="/images/aopa/home/4/magazine/turbine.jpg"
@@ -534,7 +538,7 @@
 					</div>
 					<p class="mt-4 font-national">Pilot Turbine Magazine</p>
 				</div>
-				<div>
+				<div class="js-magazine-card">
 					<div class="group relative aspect-[356/466] w-full overflow-hidden">
 						<img
 							src="/images/aopa/home/4/magazine/flight-training.jpg"
@@ -559,8 +563,8 @@
 	</section>
 
 	<div class="home__flyin-spacer relative" id="flyin-spacer">
-		<div class="absolute left-6 top-[40vh] z-[1] h-[260vh] sm:left-16 lg:left-24">
-			<div class="sticky top-[50vh] max-w-xl bg-[#182f56]/95 p-10">
+		<div class="absolute left-6 top-0 z-[1] h-[260vh] sm:left-16 lg:left-24">
+			<div class="sticky top-24 max-w-xl bg-[#182f56]/95 p-10 sm:top-28 lg:top-32 mt-12">
 				<h2 class="font-national text-2xl font-bold leading-tight text-white sm:text-3xl">
 					Find Your People<br />
 					Find your next fly-in.
@@ -597,7 +601,7 @@
 
 	<div class="home__flyin" id="flyin-fixed">
 		<img
-			src="/images/aopa/home/4/your-people.jpg"
+			src="/images/aopa/home/4/fly-in-100.jpg"
 			alt=""
 			aria-hidden="true"
 			class="absolute inset-0 h-full w-full select-none object-cover"
@@ -659,21 +663,6 @@
 			</div>
 		</div>
 	</section>
-
-	<div class="home__closing-spacer" id="home-closing-spacer" aria-hidden="true"></div>
-
-	<div class="home__closing" id="home-closing">
-		<div class="home__closing-strip" aria-hidden="true"></div>
-		<video
-			class="home__closing-video"
-			src="/images/aopa/home/AOPA-banner-spinning-prop.mp4"
-			autoplay
-			muted
-			loop
-			playsinline
-		></video>
-		<img class="home__closing-bottom" src="/images/aopa/home/closing-bottom-100.jpg" alt="" />
-	</div>
 </div>
 
 <style>
@@ -764,9 +753,6 @@
 		width: 100%;
 		--chrome-h: calc(100vw * 127 / 2100);
 		--mini-nav-h: calc(100vw * 76 / 2100);
-		--closing-h: calc(100vw * 1617 / 2101);
-		--closing-strip-h: calc(100vw * 71 / 2101);
-		--closing-video-h: calc(100vw * 474 / 2101);
 	}
 
 	.home__header {
@@ -819,9 +805,7 @@
 		width: 100%;
 		height: 100vh;
 		height: 100dvh;
-		box-sizing: border-box;
-		padding: 2rem;
-		padding-top: calc(2rem + var(--chrome-h));
+		box-sizing: border-box;	
 		background: #fff;
 		overflow: hidden;
 	}
@@ -847,8 +831,8 @@
 	}
 
 	.home__advocacy-spacer {
-		height: 200vh;
-		height: 200dvh;
+		height: 150vh;
+		height: 150dvh;
 	}
 
 	.home__advocacy {
@@ -867,8 +851,8 @@
 	}
 
 	.home__flyin-spacer {
-		height: 200vh;
-		height: 200dvh;
+		height: 150vh;
+		height: 150dvh;
 	}
 
 	.home__flyin {
@@ -886,45 +870,6 @@
 		display: block;
 	}
 
-	.home__closing-spacer {
-		height: var(--closing-h);
-	}
-
-	.home__closing {
-		display: none;
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		z-index: 0;
-		width: 100%;
-	}
-
-	.home__closing.is-active {
-		display: block;
-	}
-
-	.home__closing-strip {
-		display: block;
-		width: 100%;
-		height: var(--closing-strip-h);
-		background: rgb(24 47 86);
-	}
-
-	.home__closing-video {
-		display: block;
-		width: 100%;
-		height: var(--closing-video-h);
-		background: #000;
-		object-fit: contain;
-		object-position: top;
-	}
-
-	.home__closing-bottom {
-		display: block;
-		width: 100%;
-		height: auto;
-	}
 </style>
 
 <script>
@@ -1085,6 +1030,22 @@
 		);
 	}
 
+	const magazineGrid = document.querySelector<HTMLElement>(".js-magazine-grid");
+	const magazineCards = document.querySelectorAll<HTMLElement>(".js-magazine-card");
+
+	if (magazineGrid && magazineCards.length) {
+		gsap.from(magazineCards, {
+			opacity: 0,
+			y: 40,
+			duration: 0.6,
+			stagger: 0.2,
+			scrollTrigger: {
+				trigger: magazineGrid,
+				start: "top 80%",
+			},
+		});
+	}
+
 	const testimonial4Section = document.querySelector<HTMLElement>(".js-testimonial-4-section");
 	const testimonial4Text = testimonial4Section?.querySelector<HTMLElement>(".js-testimonial-4-text");
 
@@ -1099,11 +1060,29 @@
 				scrollTrigger: {
 					trigger: testimonial4Section,
 					start: "top 95%",
-					end: "top 45%",
+					end: "top 55%",
 					scrub: 1,
 				},
 			},
 		);
+	}
+
+	const testimonial4Byline = testimonial4Section?.querySelector<HTMLElement>(".js-testimonial-4-byline");
+
+	if (testimonial4Section && testimonial4Byline) {
+		gsap.set(testimonial4Byline, { x: -60 });
+
+		gsap.to(testimonial4Byline, {
+			x: 0,
+			opacity: 1,
+			duration: 0.9,
+			ease: "elastic.out(1, 0.6)",
+			scrollTrigger: {
+				trigger: testimonial4Section,
+				start: "top 55%",
+				toggleActions: "play none none reverse",
+			},
+		});
 	}
 
 	const toolsSection = document.querySelector<HTMLElement>(".js-tools-section");
@@ -1144,6 +1123,22 @@
 				},
 			},
 		);
+	}
+
+	const flyCardsGrid = document.querySelector<HTMLElement>(".js-fly-cards-grid");
+	const flyCards = document.querySelectorAll<HTMLElement>(".js-fly-card");
+
+	if (flyCardsGrid && flyCards.length) {
+		gsap.from(flyCards, {
+			opacity: 0,
+			y: 40,
+			duration: 0.6,
+			stagger: 0.2,
+			scrollTrigger: {
+				trigger: flyCardsGrid,
+				start: "top 80%",
+			},
+		});
 	}
 
 	class LetterReveal {
@@ -1236,20 +1231,7 @@
 		flyinObserver.observe(flyinSpacer);
 	}
 
-	const closing = document.getElementById("home-closing");
-	const closingSpacer = document.getElementById("home-closing-spacer");
-
-	if (closing && closingSpacer && "IntersectionObserver" in window) {
-		const closingObserver = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					closing.classList.toggle("is-active", entry.isIntersecting);
-				});
-			},
-			{ threshold: 0 },
-		);
-		closingObserver.observe(closingSpacer);
-	}
+	window.addEventListener("load", () => ScrollTrigger.refresh());
 </script>
 
 </body>
