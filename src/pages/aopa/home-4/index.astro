@@ -238,8 +238,9 @@
 			src="/images/aopa/home/4/advocacy-gas-100.jpg"
 			alt=""
 			aria-hidden="true"
-			class="js-advocacy-bg absolute inset-0 h-full w-full select-none object-cover will-change-transform"
+			class="js-advocacy-bg js-duotone-photo absolute inset-0 h-full w-full select-none object-cover will-change-transform"
 		/>
+		<div class="js-duotone-overlay pointer-events-none absolute inset-0"></div>
 
 		<div class="absolute bottom-6 left-1/2 z-[1] flex -translate-x-1/2 gap-2">
 			<span class="h-2.5 w-2.5 rounded-full bg-[#182f56]"></span>
@@ -633,8 +634,9 @@
 			src="/images/aopa/home/4/fly-in-100.jpg"
 			alt=""
 			aria-hidden="true"
-			class="absolute inset-0 h-full w-full select-none object-cover"
+			class="js-duotone-photo absolute inset-0 h-full w-full select-none object-cover"
 		/>
+		<div class="js-duotone-overlay pointer-events-none absolute inset-0"></div>
 	</div>
 
 	<section class="relative z-[1] bg-[#f2f3f5] px-8 py-16 sm:px-12 lg:px-24">
@@ -1000,6 +1002,12 @@
 
 	.js-cube-face--side {
 		transform: rotateY(90deg) translateZ(var(--cube-depth, 160px));
+	}
+
+	.js-duotone-overlay {
+		background: #01a2e0;
+		mix-blend-mode: color;
+		opacity: 0;
 	}
 
 </style>
@@ -1383,6 +1391,46 @@
 		);
 		flyinObserver.observe(flyinSpacer);
 	}
+
+	document.querySelectorAll<HTMLElement>(".home__advocacy, .home__flyin").forEach((fixedSection) => {
+		const spacer = fixedSection.previousElementSibling as HTMLElement | null;
+		const photo = fixedSection.querySelector<HTMLElement>(".js-duotone-photo");
+		const overlay = fixedSection.querySelector<HTMLElement>(".js-duotone-overlay");
+
+		if (!spacer || !photo || !overlay) return;
+
+		const start = fixedSection.id === "advocacy-fixed" ? "bottom+=500 bottom" : "bottom bottom";
+
+		gsap.fromTo(
+			photo,
+			{ filter: "grayscale(0%)" },
+			{
+				filter: "grayscale(100%)",
+				ease: "none",
+				scrollTrigger: {
+					trigger: spacer,
+					start,
+					end: "bottom top",
+					scrub: true,
+				},
+			},
+		);
+
+		gsap.fromTo(
+			overlay,
+			{ opacity: 0 },
+			{
+				opacity: 0.85,
+				ease: "none",
+				scrollTrigger: {
+					trigger: spacer,
+					start,
+					end: "bottom top",
+					scrub: true,
+				},
+			},
+		);
+	});
 
 	window.addEventListener("load", () => ScrollTrigger.refresh());
 </script>
