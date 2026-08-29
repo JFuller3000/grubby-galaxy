@@ -188,16 +188,25 @@
 	</section>
 
 	<div class="home__advocacy-spacer relative" id="advocacy-spacer">
-		<div class="absolute right-6 top-[50vh] z-[1] h-[100vh] sm:right-10">
+		<div class="pointer-events-none absolute right-6 top-[50vh] z-[1] h-[100vh] sm:right-10">
 			<a
 				href="#"
-				class="sticky top-24 inline-flex items-center gap-4 rounded-full bg-white py-2 pl-8 pr-2 no-underline shadow-lg mb-4"
+				class="js-learn-more-4 pointer-events-auto sticky top-24 relative inline-flex items-center gap-4 overflow-hidden rounded-full bg-white py-2 pl-8 pr-2 no-underline shadow-lg mb-4"
 			>
-				<span class="font-national text-sm font-bold uppercase tracking-wide text-[#182f56]">
+				<span
+					class="js-learn-more-4-flair pointer-events-none absolute inset-0 origin-top-left scale-0 will-change-transform"
+					aria-hidden="true"
+				>
+					<span class="absolute left-0 top-0 aspect-square w-[260%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#01a2e0] opacity-10"></span>
+				</span>
+				<span class="js-learn-more-4-label relative font-national text-sm font-bold uppercase tracking-wide text-[#182f56]">
 					See What We're Fighting For
 				</span>
-				<span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#01a2e0] text-white">
-					<svg class="h-6 w-6 rotate-45" viewBox="0 0 41.69 43.1" fill="none">
+				<span
+					class="js-learn-more-4-icon relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#01a2e0] text-white"
+					aria-hidden="true"
+				>
+					<svg class="js-learn-more-4-arrow h-6 w-6 rotate-45" viewBox="0 0 41.69 43.1" fill="none">
 						<polygon
 							fill="currentColor"
 							points="30.75 21.39 27.61 18.25 24.66 15.09 24.85 17.26 24.83 43.05 16.76 43.1 16.77 17.45 16.82 15.38 12.56 19.77 0 32.33 0 20.83 5.47 15.32 8.82 12 12.8 7.99 20.87 0 41.68 20.8 41.69 32.33 38.04 28.68 30.75 21.39"
@@ -207,45 +216,177 @@
 			</a>
 		</div>
 
-		<div class="absolute left-6 top-[40vh] z-[1] h-[260vh] sm:left-16 lg:left-24">
-			<div class="sticky top-[50vh] flex max-w-6xl flex-wrap gap-x-10 gap-y-4 bg-[#f2f2f2]/90 p-20">
+		<div class="pointer-events-none absolute left-6 top-[40vh] z-[1] h-[260vh] sm:left-16 lg:left-24">
+			<div class="pointer-events-auto sticky top-[30vh] flex max-w-6xl flex-wrap gap-x-10 gap-y-4 bg-[#f2f2f2]/90 p-20">
 				<div class="shrink-0 text-4xl">
 					<p class="font-national italic  italic leading-none text-[#182f56]">Advocacy</p>
 					<p class="font-national  font-bold leading-none text-[#182f56]">in Action</p>
 				</div>
-				<div class="max-w-sm">
-					<h3 class="font-national text-2xl font-bold text-[#182f56]">Prioritizing Unleaded Avgas</h3>
-					<p class="mt-3 font-national italic leading-relaxed text-gray-500 text-xl">
-						AOPA is working with the FAA and industry to provide a clear, safe path to a single
-						high-octane unleaded avgas, to ensure the industry's transition to unleaded fuel.
-					</p>
-					<a
-						href="#"
-						class="font-national mt-4 inline-flex items-center gap-2 text-lg font-bold uppercase tracking-wide text-[#01a2e0] no-underline"
-					>
-						Read More
-						<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
-						</svg>
-					</a>
+				<div class="js-carousel-stories relative max-w-sm">
+					<div class="js-carousel-story is-active" data-index="0">
+						<h3 class="font-national text-2xl font-bold text-[#182f56]">Prioritizing Unleaded Avgas</h3>
+						<p class="mt-3 font-national italic leading-relaxed text-gray-500 text-xl">
+							AOPA is working with the FAA and industry to provide a clear, safe path to a single
+							high-octane unleaded avgas, to ensure the industry's transition to unleaded fuel.
+						</p>
+						<a
+							href="#"
+							class="font-national mt-4 inline-flex items-center gap-2 text-lg font-bold uppercase tracking-wide text-[#01a2e0] no-underline"
+						>
+							Read More
+							<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+							</svg>
+						</a>
+					</div>
+					<div class="js-carousel-story absolute inset-0" data-index="1">
+						<h3 class="font-national text-2xl font-bold text-[#182f56]">Fighting for Airspace Access</h3>
+						<p class="mt-3 font-national italic leading-relaxed text-gray-500 text-xl">
+							AOPA is pushing back on airspace restrictions that limit where and how general
+							aviation pilots can fly, protecting your freedom to explore the skies.
+						</p>
+						<a
+							href="#"
+							class="font-national mt-4 inline-flex items-center gap-2 text-lg font-bold uppercase tracking-wide text-[#01a2e0] no-underline"
+						>
+							Read More
+							<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+							</svg>
+						</a>
+					</div>
+					<div class="js-carousel-story absolute inset-0" data-index="2">
+						<h3 class="font-national text-2xl font-bold text-[#182f56]">Defending Affordable Flight Training</h3>
+						<p class="mt-3 font-national italic leading-relaxed text-gray-500 text-xl">
+							We're working with lawmakers to keep flight training within reach, ensuring the next
+							generation of pilots isn't priced out of the sky.
+						</p>
+						<a
+							href="#"
+							class="font-national mt-4 inline-flex items-center gap-2 text-lg font-bold uppercase tracking-wide text-[#01a2e0] no-underline"
+						>
+							Read More
+							<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+							</svg>
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<div class="home__advocacy" id="advocacy-fixed">
-		<img
-			src="/images/aopa/home/4/advocacy-gas-100.jpg"
-			alt=""
-			aria-hidden="true"
-			class="js-advocacy-bg js-duotone-photo absolute inset-0 h-full w-full select-none object-cover will-change-transform"
-		/>
-		<div class="js-duotone-overlay pointer-events-none absolute inset-0"></div>
+		<div class="js-carousel-frame absolute inset-0 h-full w-full overflow-hidden will-change-transform">
+			<div
+				class="js-carousel-under absolute inset-0 h-full w-full bg-cover bg-center"
+				style="background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"
+			></div>
 
-		<div class="absolute bottom-6 left-1/2 z-[1] flex -translate-x-1/2 gap-2">
-			<span class="h-2.5 w-2.5 rounded-full bg-[#182f56]"></span>
-			<span class="h-2.5 w-2.5 rounded-full bg-white/60"></span>
-			<span class="h-2.5 w-2.5 rounded-full bg-white/60"></span>
+			<div class="js-carousel-blinds absolute inset-0 flex flex-col">
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:0.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-100.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-200.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-300.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-400.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-500.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-600.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-700.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-800.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-900.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-1000.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-1100.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-1200.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-1300.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-1400.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-1500.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-1600.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-1700.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-1800.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-1900.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-2000.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-2100.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-2200.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-2300.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-2400.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-2500.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-2600.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-2700.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-2800.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+				<span class="js-carousel-blind relative w-full flex-1 overflow-hidden origin-top">
+					<span class="js-carousel-blind-inner absolute left-0 w-full bg-cover bg-center" style="top:-2900.00%; height:3000%; background-image:url(/images/aopa/home/4/advocacy/advocacy-gas-100.jpg);"></span>
+				</span>
+			</div>
+		</div>
+
+		<div class="absolute bottom-12 left-1/2 z-[1] flex -translate-x-1/2 gap-8 bg-white/70 py-8 px-12 justify-center shadow rounded-full">
+			<button type="button" class="js-carousel-dot relative h-2.5 w-10 overflow-hidden rounded-full bg-black/15" data-index="0" aria-label="Slide 1">
+				<span class="js-carousel-dot-fill absolute inset-y-0 left-0 h-full w-full origin-left scale-x-0 rounded-full bg-[#182f56]"></span>
+			</button>
+			<button type="button" class="js-carousel-dot relative h-2.5 w-10 overflow-hidden rounded-full bg-black/15" data-index="1" aria-label="Slide 2">
+				<span class="js-carousel-dot-fill absolute inset-y-0 left-0 h-full w-full origin-left scale-x-0 rounded-full bg-[#182f56]"></span>
+			</button>
+			<button type="button" class="js-carousel-dot relative h-2.5 w-10 overflow-hidden rounded-full bg-black/15" data-index="2" aria-label="Slide 3">
+				<span class="js-carousel-dot-fill absolute inset-y-0 left-0 h-full w-full origin-left scale-x-0 rounded-full bg-[#182f56]"></span>
+			</button>
 		</div>
 	</div>
 
@@ -456,8 +597,8 @@
 		</div>
 	</section>
 
-	<section class="js-testimonial-4-section relative z-[1] overflow-hidden bg-white px-8 py-16 sm:px-12 lg:px-24">
-		<div class="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[minmax(0,26rem)_1fr]">
+	<section class="js-testimonial-4-section relative z-[1] overflow-hidden bg-white px-8 py-24 sm:px-12 lg:px-24">
+		<div class="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-[minmax(0,34rem)_1fr]">
 			<img
 				src="/images/aopa/home/4/testimoinial-100.jpg"
 				alt="AOPA member wearing a headset in the cockpit"
@@ -469,7 +610,7 @@
 					<span class="font-normal italic">Pilots like you</span> fly with AOPA.
 				</h2>
 
-				<p class="js-testimonial-4-text mt-8 font-national text-xl italic leading-relaxed text-gray-500 will-change-transform">
+				<p class="js-testimonial-4-text mt-8 font-national text-2xl italic leading-relaxed text-gray-500 will-change-transform">
 					"I never could have imagined my Stinson 108's engine failure, or that it would be
 					illegally seized right after I made an emergency landing. AOPA's legal team and
 					government affairs team stood up for me, researching federal regulations and
@@ -478,12 +619,12 @@
 
 				<div class="js-testimonial-4-byline mt-6 flex items-center gap-4 opacity-0 will-change-transform">
 					<span class="h-0.5 w-8 shrink-0 bg-[#01a2e0]"></span>
-					<span class="font-national font-bold text-[#182f56]">Jane Smith, KLOU</span>
+					<span class="font-national text-xl font-bold text-[#182f56]">Jane Smith, KLOU</span>
 				</div>
 
 				<hr class="mt-12 border-gray-200" />
 
-				<div class="mt-6 flex items-center gap-4">
+				<div class="mt-6 flex items-center gap-8">
 					<span class="h-2.5 w-2.5 rounded-full bg-[#182f56]"></span>
 					<span class="h-2.5 w-2.5 rounded-full bg-gray-300"></span>
 					<span class="h-2.5 w-2.5 rounded-full bg-gray-300"></span>
@@ -580,10 +721,10 @@
 
 	<div class="home__flyin-spacer relative" id="flyin-spacer">
 
-		<div class="absolute right-6 top-[50vh] z-[1] h-[100vh] sm:right-10">
+		<div class="pointer-events-none absolute right-6 top-[50vh] z-[1] h-[100vh] sm:right-10">
 			<a
 				href="#"
-				class="sticky top-24 inline-flex items-center gap-4 rounded-full bg-[#01a2e0] py-2 pl-8 pr-2 no-underline shadow-lg mb-4"
+				class="pointer-events-auto sticky top-24 inline-flex items-center gap-4 rounded-full bg-[#01a2e0] py-2 pl-8 pr-2 no-underline shadow-lg mb-4"
 			>
 				<span class="font-national text-sm font-bold uppercase tracking-widest text-white">
 					Browse Events
@@ -599,8 +740,8 @@
 			</a>
 		</div>
 
-		<div class="absolute left-6 top-0 z-[1] h-[260vh] sm:left-16 lg:left-24">
-			<div class="sticky top-24 max-w-xl bg-[#182f56]/95 p-10 sm:top-28 lg:top-32 mt-12">
+		<div class="pointer-events-none absolute left-6 top-0 z-[1] h-[260vh] sm:left-16 lg:left-24">
+			<div class="pointer-events-auto sticky top-24 max-w-xl bg-[#182f56]/95 p-10 sm:top-28 lg:top-32 mt-12">
 				<h2 class="font-national text-2xl font-bold leading-tight text-white sm:text-3xl">
 					Find Your People<br />
 					Find your next fly-in.
@@ -1010,6 +1151,21 @@
 		opacity: 0;
 	}
 
+	.js-carousel-story {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.js-carousel-story.is-active {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.js-carousel-blind {
+		/* overscan hides sub-pixel gaps between adjacent flex rows */
+		transform: scaleY(1.03);
+	}
+
 </style>
 
 <script>
@@ -1314,8 +1470,8 @@
 				ease: "none",
 				scrollTrigger: {
 					trigger: triggerEl,
-					start: "top bottom",
-					end: "top top",
+					start: "top 55%",
+					end: "top 0%",
 					scrub: 1.2,
 				},
 			});
@@ -1394,15 +1550,15 @@
 
 	document.querySelectorAll<HTMLElement>(".home__advocacy, .home__flyin").forEach((fixedSection) => {
 		const spacer = fixedSection.previousElementSibling as HTMLElement | null;
-		const photo = fixedSection.querySelector<HTMLElement>(".js-duotone-photo");
+		const photos = fixedSection.querySelectorAll<HTMLElement>(".js-duotone-photo");
 		const overlay = fixedSection.querySelector<HTMLElement>(".js-duotone-overlay");
 
-		if (!spacer || !photo || !overlay) return;
+		if (!spacer || !photos.length || !overlay) return;
 
 		const start = fixedSection.id === "advocacy-fixed" ? "bottom+=500 bottom" : "bottom bottom";
 
 		gsap.fromTo(
-			photo,
+			photos,
 			{ filter: "grayscale(0%)" },
 			{
 				filter: "grayscale(100%)",
@@ -1431,6 +1587,100 @@
 			},
 		);
 	});
+
+	class AdvocacyCarousel {
+		private readonly slideImages = [
+			"/images/aopa/home/4/advocacy/advocacy-gas-100.jpg",
+			"/images/aopa/home/4/advocacy/c182-flying.jpg",
+			"/images/aopa/home/4/advocacy/floatplane.jpg",
+		];
+		private readonly under: HTMLElement;
+		private readonly blinds: HTMLElement[];
+		private readonly blindInners: HTMLElement[];
+		private readonly stories: HTMLElement[];
+		private readonly dots: HTMLElement[];
+		private readonly dotFills: HTMLElement[];
+		private readonly slideDuration = 6;
+		private index = 0;
+		private transitioning = false;
+		private timer?: gsap.core.Tween;
+
+		constructor(root: HTMLElement, storiesRoot: HTMLElement) {
+			this.under = root.querySelector<HTMLElement>(".js-carousel-under")!;
+			this.blinds = Array.from(root.querySelectorAll<HTMLElement>(".js-carousel-blind"));
+			this.blindInners = Array.from(root.querySelectorAll<HTMLElement>(".js-carousel-blind-inner"));
+			this.stories = Array.from(storiesRoot.querySelectorAll<HTMLElement>(".js-carousel-story"));
+			this.dots = Array.from(root.querySelectorAll<HTMLElement>(".js-carousel-dot"));
+			this.dotFills = Array.from(root.querySelectorAll<HTMLElement>(".js-carousel-dot-fill"));
+
+			this.dots.forEach((dot, i) => {
+				dot.addEventListener("click", () => this.goTo(i));
+			});
+
+			this.playTimer();
+		}
+
+		private playTimer() {
+			this.timer?.kill();
+			this.dotFills.forEach((fill, i) => {
+				gsap.set(fill, { scaleX: i < this.index ? 1 : 0 });
+			});
+			this.timer = gsap.to(this.dotFills[this.index], {
+				scaleX: 1,
+				duration: this.slideDuration,
+				ease: "none",
+				onComplete: () => this.goTo((this.index + 1) % this.slideImages.length),
+			});
+		}
+
+		private goTo(nextIndex: number) {
+			if (this.transitioning || nextIndex === this.index) return;
+			this.transitioning = true;
+			this.timer?.kill();
+
+			this.dotFills.forEach((fill, i) => gsap.set(fill, { scaleX: i < nextIndex ? 1 : 0 }));
+
+			const nextUrl = this.slideImages[nextIndex];
+
+			const tl = gsap.timeline({
+				onComplete: () => {
+					this.index = nextIndex;
+					this.transitioning = false;
+					this.playTimer();
+				},
+			});
+
+			// the "under" layer already shows the next photo, so as the blinds
+			// (still showing the outgoing photo) shrink away, the next photo
+			// is what gets revealed underneath — not a solid color.
+			tl.set(this.under, { backgroundImage: `url(${nextUrl})` })
+				.to(this.blinds, {
+					scaleY: 0,
+					duration: 0.22,
+					stagger: { each: 0.028, from: "end" },
+					ease: "power1.inOut",
+				})
+				.add(() => {
+					// the blinds now match the under layer, so resetting them
+					// (for the next transition) is instant and invisible —
+					// no second wipe.
+					this.blindInners.forEach((inner) => {
+						inner.style.backgroundImage = `url(${nextUrl})`;
+					});
+					gsap.set(this.blinds, { scaleY: 1.03 });
+					this.stories.forEach((story, i) => {
+						story.classList.toggle("is-active", i === nextIndex);
+					});
+				});
+		}
+	}
+
+	const advocacyFixed = document.getElementById("advocacy-fixed");
+	const advocacyStories = document.querySelector<HTMLElement>(".js-carousel-stories");
+
+	if (advocacyFixed && advocacyStories) {
+		new AdvocacyCarousel(advocacyFixed, advocacyStories);
+	}
 
 	window.addEventListener("load", () => ScrollTrigger.refresh());
 </script>
