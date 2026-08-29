@@ -1507,10 +1507,20 @@
 	});
 
 	const header = document.getElementById("home-header");
-	const scrollThreshold = 40;
+	let lastScrollY = window.scrollY;
 
 	const updateHeaderState = () => {
-		header?.classList.toggle("is-scrolled", window.scrollY > scrollThreshold);
+		const currentScrollY = window.scrollY;
+
+		if (currentScrollY <= 0) {
+			header?.classList.remove("is-scrolled");
+		} else if (currentScrollY > lastScrollY) {
+			header?.classList.add("is-scrolled");
+		} else if (currentScrollY < lastScrollY) {
+			header?.classList.remove("is-scrolled");
+		}
+
+		lastScrollY = currentScrollY;
 	};
 
 	updateHeaderState();
