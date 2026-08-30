@@ -511,37 +511,118 @@
 
 	<section class="js-testimonial-4-section relative z-[1] overflow-hidden bg-white px-8 py-24 sm:px-12 lg:px-24">
 		<div class="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-[minmax(0,34rem)_1fr]">
-			<img
-				src="/images/aopa/home/4/testimoinial-100.jpg"
-				alt="AOPA member wearing a headset in the cockpit"
-				class="aspect-[555/647] w-full object-cover"
-			/>
+			<div class="js-testimonial-photos relative aspect-[555/647] w-full overflow-hidden">
+				<img
+					src="/images/aopa/home/4/testimoinial-0.jpg"
+					alt="AOPA member wearing a headset in the cockpit"
+					class="js-testimonial-photo absolute inset-0 h-full w-full object-cover opacity-100"
+					data-index="0"
+				/>
+				<img
+					src="/images/aopa/home/4/testimonial-4.jpg"
+					alt="AOPA member testimonial photo"
+					class="js-testimonial-photo absolute inset-0 h-full w-full object-cover opacity-0"
+					data-index="1"
+				/>
+				<img
+					src="/images/aopa/home/4/testimonial-3.jpg"
+					alt="AOPA member testimonial photo"
+					class="js-testimonial-photo absolute inset-0 h-full w-full object-cover opacity-0"
+					data-index="2"
+				/>
+				<img
+					src="/images/aopa/home/4/testimonial-2.jpg"
+					alt="AOPA member testimonial photo"
+					class="js-testimonial-photo absolute inset-0 h-full w-full object-cover opacity-0"
+					data-index="3"
+				/>
+				<img
+					src="/images/aopa/home/4/testimonial-1.jpg"
+					alt="AOPA member testimonial photo"
+					class="js-testimonial-photo absolute inset-0 h-full w-full object-cover opacity-0"
+					data-index="4"
+				/>
+			</div>
 
 			<div>
 				<h2 class="font-national text-3xl font-bold leading-tight text-[#182f56] sm:text-4xl">
 					<span class="font-normal italic">Pilots like you</span> fly with AOPA.
 				</h2>
 
-				<p class="js-testimonial-4-text mt-8 font-national text-2xl italic leading-relaxed text-gray-500 will-change-transform">
-					"I never could have imagined my Stinson 108's engine failure, or that it would be
-					illegally seized right after I made an emergency landing. AOPA's legal team and
-					government affairs team stood up for me, researching federal regulations and
-					advocating on my behalf until I finally got my airplane back."
-				</p>
+				<div class="js-testimonial-stories relative">
+					<div class="js-testimonial-story is-active" data-index="0">
+						<p class="js-testimonial-4-text mt-8 font-national text-2xl italic leading-relaxed text-gray-500 will-change-transform">
+							"I never could have imagined my Stinson 108's engine failure, or that it would be
+							illegally seized right after I made an emergency landing. AOPA's legal team and
+							government affairs team stood up for me, researching federal regulations and
+							advocating on my behalf until I finally got my airplane back."
+						</p>
 
-				<div class="js-testimonial-4-byline mt-6 flex items-center gap-4 opacity-0 will-change-transform">
-					<span class="h-0.5 w-8 shrink-0 bg-[#01a2e0]"></span>
-					<span class="font-national text-xl font-bold text-[#182f56]">Jane Smith, KLOU</span>
+						<div class="js-testimonial-4-byline mt-6 flex items-center gap-4 opacity-0 will-change-transform">
+							<span class="h-0.5 w-8 shrink-0 bg-[#01a2e0]"></span>
+							<span class="font-national text-xl font-bold text-[#182f56]">Jane Smith, KLOU</span>
+						</div>
+					</div>
+
+					<div class="js-testimonial-story absolute inset-0" data-index="1">
+						<p class="mt-8 font-national text-2xl italic leading-relaxed text-gray-500">
+							"When I lost my medical certificate after a health scare, AOPA's medical certification
+							specialists walked me through every step of the special issuance process. I'm back in
+							the left seat because they never gave up on my case."
+						</p>
+						<div class="mt-6 flex items-center gap-4">
+							<span class="h-0.5 w-8 shrink-0 bg-[#01a2e0]"></span>
+							<span class="font-national text-xl font-bold text-[#182f56]">Mike Torres, KAPA</span>
+						</div>
+					</div>
+
+					<div class="js-testimonial-story absolute inset-0" data-index="2">
+						<p class="mt-8 font-national text-2xl italic leading-relaxed text-gray-500">
+							"Buying my first airplane felt overwhelming until I called AOPA's Pilot Information
+							Center. They talked me through financing, insurance, and prebuy inspections like a
+							friend who'd done it a hundred times."
+						</p>
+						<div class="mt-6 flex items-center gap-4">
+							<span class="h-0.5 w-8 shrink-0 bg-[#01a2e0]"></span>
+							<span class="font-national text-xl font-bold text-[#182f56]">Sarah Chen, KFXE</span>
+						</div>
+					</div>
+
+					<div class="js-testimonial-story absolute inset-0" data-index="3">
+						<p class="mt-8 font-national text-2xl italic leading-relaxed text-gray-500">
+							"Our county tried to close the airport for a shopping development. AOPA's Airport
+							Support Network helped us organize, testify, and ultimately save the field for the
+							next generation of pilots."
+						</p>
+						<div class="mt-6 flex items-center gap-4">
+							<span class="h-0.5 w-8 shrink-0 bg-[#01a2e0]"></span>
+							<span class="font-national text-xl font-bold text-[#182f56]">David Alvarez, KTYR</span>
+						</div>
+					</div>
+
+					<div class="js-testimonial-story absolute inset-0" data-index="4">
+						<p class="mt-8 font-national text-2xl italic leading-relaxed text-gray-500">
+							"The AOPA Foundation scholarship didn't just pay for my flight training, it connected
+							me with mentors who helped me land my first job as a commercial pilot."
+						</p>
+						<div class="mt-6 flex items-center gap-4">
+							<span class="h-0.5 w-8 shrink-0 bg-[#01a2e0]"></span>
+							<span class="font-national text-xl font-bold text-[#182f56]">Emily Park, KPWK</span>
+						</div>
+					</div>
 				</div>
 
-				<hr class="mt-12 border-gray-200" />
-
-				<div class="mt-6 flex items-center gap-8">
-					<span class="h-2.5 w-2.5 rounded-full bg-[#182f56]"></span>
-					<span class="h-2.5 w-2.5 rounded-full bg-gray-300"></span>
-					<span class="h-2.5 w-2.5 rounded-full bg-gray-300"></span>
-					<span class="h-2.5 w-2.5 rounded-full bg-gray-300"></span>
-					<span class="h-2.5 w-2.5 rounded-full bg-gray-300"></span>
+				<div class="mt-12 w-full">
+					<div class="js-testimonial-timer relative h-px w-full overflow-hidden bg-[#182f56]/15">
+						<span class="js-testimonial-timer-fill absolute inset-y-0 left-0 h-full w-full origin-left scale-x-0 bg-[#182f56]"></span>
+					</div>
+					<div class="mt-8 flex items-center gap-8 justify-center">
+						<button type="button" class="js-testimonial-dot h-2.5 w-2.5 rounded-full bg-[#182f56]/25" data-index="0" aria-label="Testimonial 1"></button>
+						<button type="button" class="js-testimonial-dot h-2.5 w-2.5 rounded-full bg-[#182f56]/25" data-index="1" aria-label="Testimonial 2"></button>
+						<button type="button" class="js-testimonial-dot h-2.5 w-2.5 rounded-full bg-[#182f56]/25" data-index="2" aria-label="Testimonial 3"></button>
+						<button type="button" class="js-testimonial-dot h-2.5 w-2.5 rounded-full bg-[#182f56]/25" data-index="3" aria-label="Testimonial 4"></button>
+						<button type="button" class="js-testimonial-dot h-2.5 w-2.5 rounded-full bg-[#182f56]/25" data-index="4" aria-label="Testimonial 5"></button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -1066,6 +1147,25 @@
 		background-color: #182f56;
 	}
 
+	.js-testimonial-story {
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.8s ease;
+	}
+
+	.js-testimonial-story.is-active {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.js-testimonial-dot {
+		transition: background-color 0.3s ease;
+	}
+
+	.js-testimonial-dot.is-active {
+		background-color: #182f56;
+	}
+
 	.js-partners-gradient {
 		background: linear-gradient(135deg, #0d1b2a, #16304d, #0a1522, #182f56);
 		background-size: 300% 300%;
@@ -1306,6 +1406,75 @@
 				toggleActions: "play none none reverse",
 			},
 		});
+	}
+
+	class TestimonialCarousel {
+		private readonly photos: HTMLElement[];
+		private readonly stories: HTMLElement[];
+		private readonly dots: HTMLElement[];
+		private readonly timerFill: HTMLElement | null;
+		private readonly slideDuration = 9;
+		private index = 0;
+		private transitioning = false;
+		private timer?: gsap.core.Tween;
+
+		constructor(root: HTMLElement, photosRoot: HTMLElement) {
+			this.photos = Array.from(photosRoot.querySelectorAll<HTMLElement>(".js-testimonial-photo"));
+			this.stories = Array.from(root.querySelectorAll<HTMLElement>(".js-testimonial-story"));
+			this.dots = Array.from(document.querySelectorAll<HTMLElement>(".js-testimonial-dot"));
+			this.timerFill = document.querySelector<HTMLElement>(".js-testimonial-timer-fill");
+
+			this.dots.forEach((dot, i) => {
+				dot.classList.toggle("is-active", i === this.index);
+				dot.addEventListener("click", () => this.goTo(i));
+			});
+
+			this.playTimer();
+		}
+
+		private playTimer() {
+			this.timer?.kill();
+			if (!this.timerFill) return;
+			gsap.set(this.timerFill, { scaleX: 0 });
+			this.timer = gsap.to(this.timerFill, {
+				scaleX: 1,
+				duration: this.slideDuration,
+				ease: "none",
+				onComplete: () => this.goTo((this.index + 1) % this.stories.length),
+			});
+		}
+
+		private goTo(nextIndex: number) {
+			if (this.transitioning || nextIndex === this.index) return;
+			this.transitioning = true;
+			this.timer?.kill();
+
+			this.stories.forEach((story, i) => story.classList.toggle("is-active", i === nextIndex));
+			this.dots.forEach((dot, i) => dot.classList.toggle("is-active", i === nextIndex));
+
+			// fade the incoming photo in on top; the outgoing one stays fully
+			// opaque underneath so the two never both go translucent at once.
+			gsap.set(this.photos[nextIndex], { zIndex: 1 });
+			gsap.to(this.photos[nextIndex], {
+				opacity: 1,
+				duration: 0.8,
+				ease: "power1.inOut",
+				onComplete: () => {
+					gsap.set(this.photos[this.index], { opacity: 0, zIndex: 0 });
+					gsap.set(this.photos[nextIndex], { zIndex: 0 });
+					this.index = nextIndex;
+					this.transitioning = false;
+					this.playTimer();
+				},
+			});
+		}
+	}
+
+	const testimonialStories = document.querySelector<HTMLElement>(".js-testimonial-stories");
+	const testimonialPhotos = document.querySelector<HTMLElement>(".js-testimonial-photos");
+
+	if (testimonialStories && testimonialPhotos) {
+		new TestimonialCarousel(testimonialStories, testimonialPhotos);
 	}
 
 	const toolsSection = document.querySelector<HTMLElement>(".js-tools-section");
