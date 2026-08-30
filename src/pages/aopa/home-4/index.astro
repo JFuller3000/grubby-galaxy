@@ -619,31 +619,31 @@
 				<img
 					src="/images/aopa/home/4/testimoinial-0.jpg"
 					alt="AOPA member wearing a headset in the cockpit"
-					class="js-testimonial-photo absolute inset-0 h-full w-full object-cover opacity-100"
+					class="js-testimonial-photo absolute inset-x-0 top-[-8%] h-[116%] w-full object-cover opacity-100"
 					data-index="0"
 				/>
 				<img
 					src="/images/aopa/home/4/testimonial-4.jpg"
 					alt="AOPA member testimonial photo"
-					class="js-testimonial-photo absolute inset-0 h-full w-full object-cover opacity-0"
+					class="js-testimonial-photo absolute inset-x-0 top-[-8%] h-[116%] w-full object-cover opacity-0"
 					data-index="1"
 				/>
 				<img
 					src="/images/aopa/home/4/testimonial-3.jpg"
 					alt="AOPA member testimonial photo"
-					class="js-testimonial-photo absolute inset-0 h-full w-full object-cover opacity-0"
+					class="js-testimonial-photo absolute inset-x-0 top-[-8%] h-[116%] w-full object-cover opacity-0"
 					data-index="2"
 				/>
 				<img
 					src="/images/aopa/home/4/testimonial-2.jpg"
 					alt="AOPA member testimonial photo"
-					class="js-testimonial-photo absolute inset-0 h-full w-full object-cover opacity-0"
+					class="js-testimonial-photo absolute inset-x-0 top-[-8%] h-[116%] w-full object-cover opacity-0"
 					data-index="3"
 				/>
 				<img
 					src="/images/aopa/home/4/testimonial-1.jpg"
 					alt="AOPA member testimonial photo"
-					class="js-testimonial-photo absolute inset-0 h-full w-full object-cover opacity-0"
+					class="js-testimonial-photo absolute inset-x-0 top-[-8%] h-[116%] w-full object-cover opacity-0"
 					data-index="4"
 				/>
 			</div>
@@ -1761,6 +1761,25 @@
 	}
 
 	const testimonial4Section = document.querySelector<HTMLElement>(".js-testimonial-4-section");
+	const testimonial4Photos = testimonial4Section?.querySelectorAll<HTMLElement>(".js-testimonial-photo");
+
+	if (testimonial4Section && testimonial4Photos?.length) {
+		gsap.fromTo(
+			testimonial4Photos,
+			{ yPercent: -6 },
+			{
+				yPercent: 6,
+				ease: "none",
+				scrollTrigger: {
+					trigger: testimonial4Section,
+					start: "top bottom",
+					end: "bottom top",
+					scrub: 1,
+				},
+			},
+		);
+	}
+
 	const testimonial4Text = testimonial4Section?.querySelector<HTMLElement>(".js-testimonial-4-text");
 
 	if (testimonial4Section && testimonial4Text) {
