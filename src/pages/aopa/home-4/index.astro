@@ -222,7 +222,7 @@
 					<p class="font-national italic  italic leading-none text-[#182f56]">Advocacy</p>
 					<p class="font-national  font-bold leading-none text-[#182f56]">in Action</p>
 				</div>
-				<div class="js-carousel-stories relative max-w-sm">
+				<div class="js-carousel-stories relative max-w-[27rem]">
 					<div class="js-carousel-story is-active" data-index="0">
 						<h3 class="font-national text-2xl font-bold text-[#182f56]">Prioritizing Unleaded Avgas</h3>
 						<p class="mt-3 font-national italic leading-relaxed text-gray-500 text-xl">
@@ -269,6 +269,17 @@
 							</svg>
 						</a>
 					</div>
+
+					<div class="mt-6 w-full">
+						<div class="js-carousel-timer relative h-px w-full overflow-hidden bg-[#182f56]/15">
+							<span class="js-carousel-timer-fill absolute inset-y-0 left-0 h-full w-full origin-left scale-x-0 bg-[#182f56]"></span>
+						</div>
+						<div class="mt-8 flex gap-8 justify-center">
+							<button type="button" class="js-carousel-dot h-3 w-3 rounded-full bg-[#182f56]/25" data-index="0" aria-label="Slide 1"></button>
+							<button type="button" class="js-carousel-dot h-3 w-3 rounded-full bg-[#182f56]/25" data-index="1" aria-label="Slide 2"></button>
+							<button type="button" class="js-carousel-dot h-3 w-3 rounded-full bg-[#182f56]/25" data-index="2" aria-label="Slide 3"></button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -282,24 +293,12 @@
 			></div>
 			<div
 				class="js-carousel-photo absolute inset-0 h-full w-full bg-cover bg-center opacity-0"
-				style="background-image:url(/images/aopa/home/4/advocacy/c182-flying.jpg);"
+				style="background-image:url(/images/aopa/home/4/advocacy/plane-5.jpg);"
 			></div>
 			<div
 				class="js-carousel-photo absolute inset-0 h-full w-full bg-cover bg-center opacity-0"
-				style="background-image:url(/images/aopa/home/4/advocacy/floatplane.jpg);"
+				style="background-image:url(/images/aopa/home/4/advocacy/new-spread.jpg);"
 			></div>
-		</div>
-
-		<div class="absolute bottom-12 left-1/2 z-[1] flex -translate-x-1/2 gap-8 bg-white/70 py-8 px-12 justify-center shadow rounded-full">
-			<button type="button" class="js-carousel-dot relative h-2.5 w-10 overflow-hidden rounded-full bg-black/15" data-index="0" aria-label="Slide 1">
-				<span class="js-carousel-dot-fill absolute inset-y-0 left-0 h-full w-full origin-left scale-x-0 rounded-full bg-[#182f56]"></span>
-			</button>
-			<button type="button" class="js-carousel-dot relative h-2.5 w-10 overflow-hidden rounded-full bg-black/15" data-index="1" aria-label="Slide 2">
-				<span class="js-carousel-dot-fill absolute inset-y-0 left-0 h-full w-full origin-left scale-x-0 rounded-full bg-[#182f56]"></span>
-			</button>
-			<button type="button" class="js-carousel-dot relative h-2.5 w-10 overflow-hidden rounded-full bg-black/15" data-index="2" aria-label="Slide 3">
-				<span class="js-carousel-dot-fill absolute inset-y-0 left-0 h-full w-full origin-left scale-x-0 rounded-full bg-[#182f56]"></span>
-			</button>
 		</div>
 	</div>
 
@@ -1059,6 +1058,14 @@
 		pointer-events: auto;
 	}
 
+	.js-carousel-dot {
+		transition: background-color 0.3s ease;
+	}
+
+	.js-carousel-dot.is-active {
+		background-color: #182f56;
+	}
+
 	.js-partners-gradient {
 		background: linear-gradient(135deg, #0d1b2a, #16304d, #0a1522, #182f56);
 		background-size: 300% 300%;
@@ -1501,7 +1508,7 @@
 		private readonly photos: HTMLElement[];
 		private readonly stories: HTMLElement[];
 		private readonly dots: HTMLElement[];
-		private readonly dotFills: HTMLElement[];
+		private readonly timerFill: HTMLElement | null;
 		private readonly slideDuration = 6;
 		private index = 0;
 		private transitioning = false;
@@ -1510,10 +1517,11 @@
 		constructor(root: HTMLElement, storiesRoot: HTMLElement) {
 			this.photos = Array.from(root.querySelectorAll<HTMLElement>(".js-carousel-photo"));
 			this.stories = Array.from(storiesRoot.querySelectorAll<HTMLElement>(".js-carousel-story"));
-			this.dots = Array.from(root.querySelectorAll<HTMLElement>(".js-carousel-dot"));
-			this.dotFills = Array.from(root.querySelectorAll<HTMLElement>(".js-carousel-dot-fill"));
+			this.dots = Array.from(document.querySelectorAll<HTMLElement>(".js-carousel-dot"));
+			this.timerFill = document.querySelector<HTMLElement>(".js-carousel-timer-fill");
 
 			this.dots.forEach((dot, i) => {
+				dot.classList.toggle("is-active", i === this.index);
 				dot.addEventListener("click", () => this.goTo(i));
 			});
 
@@ -1522,10 +1530,9 @@
 
 		private playTimer() {
 			this.timer?.kill();
-			this.dotFills.forEach((fill, i) => {
-				gsap.set(fill, { scaleX: i < this.index ? 1 : 0 });
-			});
-			this.timer = gsap.to(this.dotFills[this.index], {
+			if (!this.timerFill) return;
+			gsap.set(this.timerFill, { scaleX: 0 });
+			this.timer = gsap.to(this.timerFill, {
 				scaleX: 1,
 				duration: this.slideDuration,
 				ease: "none",
@@ -1537,8 +1544,6 @@
 			if (this.transitioning || nextIndex === this.index) return;
 			this.transitioning = true;
 			this.timer?.kill();
-
-			this.dotFills.forEach((fill, i) => gsap.set(fill, { scaleX: i < nextIndex ? 1 : 0 }));
 
 			// fade the incoming photo in on top; the outgoing one stays fully
 			// opaque underneath so the two never both go translucent at once
@@ -1559,6 +1564,9 @@
 
 			this.stories.forEach((story, i) => {
 				story.classList.toggle("is-active", i === nextIndex);
+			});
+			this.dots.forEach((dot, i) => {
+				dot.classList.toggle("is-active", i === nextIndex);
 			});
 		}
 	}
