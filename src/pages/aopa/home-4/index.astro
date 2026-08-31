@@ -456,7 +456,7 @@
 			src="/images/aopa/home/4/sky-portrait.jpg"
 			alt=""
 			aria-hidden="true"
-			class="js-tools-bg pointer-events-none absolute inset-x-0 -top-[15%] h-[130%] w-full select-none object-cover will-change-transform"
+			class="js-tools-bg pointer-events-none absolute inset-x-0 -top-[28%] h-[130%] w-full select-none object-cover will-change-transform"
 		/>
 		<div class="pointer-events-none absolute inset-0 bg-[#1d3f6d]/80"></div>
 
@@ -531,7 +531,7 @@
 				</div>
 			</div>
 
-			<div class="relative overflow-hidden rounded-t-lg rounded-bl-[7rem] bg-[#1d3f6d]">
+			<div class="js-tools-gradient relative overflow-hidden rounded-t-lg rounded-bl-[7rem]">
 				<img
 					src="/images/aopa/home/4/wings-bg.svg"
 					alt=""
@@ -664,7 +664,10 @@
 
 						<div class="js-testimonial-4-byline mt-6 flex items-center gap-4 opacity-0 will-change-transform">
 							<span class="h-0.5 w-8 shrink-0 bg-[#01a2e0]"></span>
-							<span class="font-national text-xl font-bold text-[#182f56]">Jane Smith, KLOU</span>
+							<span class="flex flex-col">
+								<span class="font-national text-xl font-bold text-[#182f56]">Jane Smith, KLOU</span>
+								<span class="font-national font-normal text-gray-500">Member Since 2011</span>
+							</span>
 						</div>
 					</div>
 
@@ -676,7 +679,10 @@
 						</p>
 						<div class="mt-6 flex items-center gap-4">
 							<span class="h-0.5 w-8 shrink-0 bg-[#01a2e0]"></span>
-							<span class="font-national text-xl font-bold text-[#182f56]">Mike Torres, KAPA</span>
+							<span class="flex flex-col">
+								<span class="font-national text-xl font-bold text-[#182f56]">Mike Torres, KAPA</span>
+								<span class="font-national font-normal text-gray-500">Member Since 2008</span>
+							</span>
 						</div>
 					</div>
 
@@ -688,7 +694,10 @@
 						</p>
 						<div class="mt-6 flex items-center gap-4">
 							<span class="h-0.5 w-8 shrink-0 bg-[#01a2e0]"></span>
-							<span class="font-national text-xl font-bold text-[#182f56]">Sarah Chen, KFXE</span>
+							<span class="flex flex-col">
+								<span class="font-national text-xl font-bold text-[#182f56]">Sarah Chen, KFXE</span>
+								<span class="font-national font-normal text-gray-500">Member Since 2019</span>
+							</span>
 						</div>
 					</div>
 
@@ -700,7 +709,10 @@
 						</p>
 						<div class="mt-6 flex items-center gap-4">
 							<span class="h-0.5 w-8 shrink-0 bg-[#01a2e0]"></span>
-							<span class="font-national text-xl font-bold text-[#182f56]">David Alvarez, KTYR</span>
+							<span class="flex flex-col">
+								<span class="font-national text-xl font-bold text-[#182f56]">David Alvarez, KTYR</span>
+								<span class="font-national font-normal text-gray-500">Member Since 2014</span>
+							</span>
 						</div>
 					</div>
 
@@ -711,7 +723,10 @@
 						</p>
 						<div class="mt-6 flex items-center gap-4">
 							<span class="h-0.5 w-8 shrink-0 bg-[#01a2e0]"></span>
-							<span class="font-national text-xl font-bold text-[#182f56]">Emily Park, KPWK</span>
+							<span class="flex flex-col">
+								<span class="font-national text-xl font-bold text-[#182f56]">Emily Park, KPWK</span>
+								<span class="font-national font-normal text-gray-500">Member Since 2022</span>
+							</span>
 						</div>
 					</div>
 				</div>
@@ -1225,7 +1240,7 @@
 	}
 
 	.js-duotone-overlay {
-		background: #01a2e0;
+		background: #017fae;
 		mix-blend-mode: color;
 		opacity: 0;
 	}
@@ -1270,6 +1285,12 @@
 
 	.js-partners-gradient {
 		background: linear-gradient(135deg, #0d1b2a, #16304d, #0a1522, #182f56);
+		background-size: 300% 300%;
+		background-position: 0% 0%;
+	}
+
+	.js-tools-gradient {
+		background: linear-gradient(135deg, #0d1b2a, #1d3f6d, #01609e, #182f56);
 		background-size: 300% 300%;
 		background-position: 0% 0%;
 	}
@@ -1738,11 +1759,13 @@
 		gsap.from(magazineCards, {
 			opacity: 0,
 			y: 40,
-			duration: 0.6,
 			stagger: 0.2,
+			ease: "none",
 			scrollTrigger: {
 				trigger: magazineGrid,
-				start: "top 70%",
+				start: "top 80%",
+				end: "top 50%",
+				scrub: 1,
 			},
 		});
 	}
@@ -1934,11 +1957,13 @@
 		gsap.from(flyCards, {
 			opacity: 0,
 			y: 40,
-			duration: 0.6,
 			stagger: 0.2,
+			ease: "none",
 			scrollTrigger: {
 				trigger: flyCardsGrid,
 				start: "top 80%",
+				end: "top 50%",
+				scrub: 1,
 			},
 		});
 	}
@@ -2164,6 +2189,17 @@
 			trigger: ".js-partners-gradient",
 			start: "top bottom",
 			end: "bottom top",
+			scrub: 1,
+		},
+	});
+
+	gsap.to(".js-tools-gradient", {
+		backgroundPosition: "100% 100%",
+		ease: "none",
+		scrollTrigger: {
+			trigger: ".js-tools-gradient",
+			start: "top bottom",
+			end: "center top",
 			scrub: 1,
 		},
 	});
