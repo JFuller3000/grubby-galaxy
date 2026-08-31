@@ -1593,8 +1593,8 @@
 				// exactly at the runway's end when the taxi duration elapses - and since the
 				// tail duration matches exactly what's left in the tween, x never stops
 				// moving before the climb and fade-out finish.
-				const taxiDuration = 1;
-				const tailDuration = 1;
+				const taxiDuration = 1.3;
+				const tailDuration = 1.3;
 				const totalDuration = taxiDuration + tailDuration;
 				const totalDistance = runway / (taxiDuration / totalDuration) ** 2;
 
@@ -1606,9 +1606,9 @@
 					// never stalls out horizontally while the climb/fade finish above it
 					.to(this.plane, { x: totalDistance, duration: totalDuration, ease: "power1.in" }, "flight")
 					// angle up and lift off right at the end of the runway
-					.to(this.plane, { y: -12, rotation: 20, duration: 0.4, ease: "power2.out" }, `flight+=${taxiDuration}`)
+					.to(this.plane, { y: -12, rotation: 20, duration: 0.5, ease: "power2.out" }, `flight+=${taxiDuration}`)
 					// climb away on a shallow angle and fade out
-					.to(this.plane, { y: -60, opacity: 0, duration: 0.7, ease: "power1.in" }, `flight+=${taxiDuration + 0.3}`);
+					.to(this.plane, { y: -60, opacity: 0, duration: 0.9, ease: "power1.in" }, `flight+=${taxiDuration + 0.4}`);
 			});
 
 			this.button.addEventListener("mouseleave", () => {
