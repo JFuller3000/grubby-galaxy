@@ -1,0 +1,760 @@
+---
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Safety, AOPA Hub</title>
+</head>
+<body>
+
+<div class="home">
+	<header class="home__header" id="home-header">
+		<img class="home__chrome" src="/images/aopa/home/1/chrome-100.jpg" alt="" />
+		<img class="home__mini-nav" src="/images/aopa/home/1/mini-nav-100.jpg" alt="" />
+	</header>
+
+	<section class="js-hub-hero hub-hero relative overflow-hidden bg-[#0d1b2a]">
+		<div
+			class="js-hub-hero-bg pointer-events-none absolute inset-x-0 -top-[20%] h-[140%] w-full select-none will-change-transform bg-[repeating-linear-gradient(115deg,rgba(255,255,255,0.045)_0_2px,transparent_2px_140px),repeating-linear-gradient(25deg,rgba(255,255,255,0.025)_0_1px,transparent_1px_90px),linear-gradient(180deg,rgba(13,27,42,0.15)_0%,rgba(13,27,42,0.75)_78%,rgba(13,27,42,0.95)_100%),radial-gradient(circle_at_30%_20%,#1d3f6d_0%,#0d1b2a_65%)]"
+		></div>
+
+		<div class="relative z-[1] mx-auto flex min-h-[calc(97vh-var(--chrome-h))] w-full max-w-7xl flex-col justify-end px-8 pb-20 sm:px-12 lg:px-24">
+			<div class="js-reveal flex items-center gap-3 font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">
+				<span class="h-px w-8 bg-[#01a2e0]"></span>
+				Safety
+			</div>
+			<h1 class="js-reveal mt-3 max-w-[15ch] font-national text-5xl font-medium leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-8xl">
+				The best pilots never stop learning.
+			</h1>
+			<p class="js-reveal mt-4 max-w-[46ch] font-national text-xl font-light leading-relaxed text-white/80 sm:text-2xl">
+				Decades of accident analysis, free courses, and expert-led training,
+				so the right instinct is there when you need it. Join AOPA and fly ready.
+			</p>
+			<div class="js-reveal mt-6 flex flex-wrap gap-3">
+				<a
+					href="#"
+					class="inline-flex items-center justify-center rounded-full bg-[#01a2e0] px-7 py-3.5 font-national text-[0.95rem] font-bold text-white no-underline"
+				>
+					Start a WINGS Course
+				</a>
+				<a
+					href="#"
+					class="inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 font-national text-[0.95rem] font-bold text-[#182f56] no-underline"
+				>
+					Check Your Medical Status
+				</a>
+			</div>
+		</div>
+
+		<div class="js-reveal pointer-events-none absolute bottom-8 right-8 z-[1] hidden font-national text-xs uppercase tracking-widest text-white/50 sm:block">
+			Scroll
+		</div>
+	</section>
+
+	<!-- ===== ORIENTATION / STATS ===== -->
+	<section class="relative overflow-hidden bg-white px-8 py-24 sm:px-12 lg:px-24">
+		<div class="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-[1.1fr_0.9fr]">
+			<div>
+				<p class="js-reveal font-national text-2xl font-light leading-relaxed text-gray-600">
+					Weather that turns. An engine that goes quiet. A runway shorter than you planned.
+					Flying rewards those who are prepared, the Air Safety Institute puts real-world
+					scenarios and expert training in your hands.
+				</p>
+				<div class="js-reveal mt-10 flex flex-wrap gap-10">
+					<div>
+						<div class="font-national text-4xl font-bold text-[#01a2e0]">1st</div>
+						<div class="mt-1 max-w-[16ch] font-national text-sm font-light text-gray-500">
+							largest free GA safety library
+						</div>
+					</div>
+					<div>
+						<div class="font-national text-4xl font-bold text-[#01a2e0]">100+</div>
+						<div class="mt-1 max-w-[16ch] font-national text-sm font-light text-gray-500">
+							interactive courses &amp; quizzes
+						</div>
+					</div>
+					<div>
+						<div class="font-national text-4xl font-bold text-[#01a2e0]">2 yr</div>
+						<div class="mt-1 max-w-[16ch] font-national text-sm font-light text-gray-500">
+							flight review cycle, tracked for you
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="relative aspect-[4/3]">
+				<svg class="js-flightline h-full w-full" viewBox="0 0 400 300" fill="none">
+					<line class="stroke-[#182f56]/10" x1="0" y1="60" x2="400" y2="60" stroke-width="1" />
+					<line class="stroke-[#182f56]/10" x1="0" y1="150" x2="400" y2="150" stroke-width="1" />
+					<line class="stroke-[#182f56]/10" x1="0" y1="240" x2="400" y2="240" stroke-width="1" />
+					<path
+						class="js-flightline-path"
+						d="M20 250 C 90 230, 120 120, 180 110 S 300 40, 380 40"
+						stroke="#01a2e0"
+						stroke-width="2"
+					/>
+					<circle class="js-flightline-node" cx="20" cy="250" r="4" fill="#182f56" opacity="0" />
+					<circle class="js-flightline-node" cx="180" cy="110" r="4" fill="#182f56" opacity="0" />
+					<circle class="js-flightline-node" cx="380" cy="40" r="4" fill="#182f56" opacity="0" />
+					<text class="js-flightline-text" x="24" y="270" font-family="National" font-size="10" fill="#454e58" opacity="0">DEP</text>
+					<text class="js-flightline-text" x="184" y="100" font-family="National" font-size="10" fill="#454e58" opacity="0">WX HOLD</text>
+					<text class="js-flightline-text" x="330" y="30" font-family="National" font-size="10" fill="#454e58" opacity="0">CURRENT</text>
+				</svg>
+			</div>
+		</div>
+	</section>
+
+	<!-- ===== FEATURED TOOL MODULE ===== -->
+	<section class="js-tool-module relative overflow-hidden bg-[#182f56] px-8 py-36 sm:px-12 lg:px-24">
+		<img
+			class="js-tool-module-bg pointer-events-none absolute inset-x-0 -top-[40%] h-[300%] w-full select-none object-cover will-change-transform"
+			src="/images/aopa/home/4/sky-portrait.jpg"
+			alt=""
+		/>
+		<div class="pointer-events-none absolute inset-0 bg-[#182f56]/35"></div>
+
+		<div class="relative mx-auto max-w-7xl">
+			<div class="js-reveal mb-14 flex flex-wrap items-end justify-between gap-8">
+				<h2 class="max-w-[20ch] font-national text-3xl font-medium text-white sm:text-4xl">
+					<span class="font-light italic">Find your</span> next course
+				</h2>
+				<p class="max-w-[34ch] font-national italic font-light text-white/90 text-lg">
+					Flight reviews, WINGS phases, and online courses, track completion straight to
+					your transcript.
+				</p>
+			</div>
+
+			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+				<a href="#" class="js-flair-btn relative isolate flex min-h-[170px] flex-col justify-between gap-4 overflow-hidden rounded-lg bg-[#182f56]/55 p-7 no-underline">
+					<span class="js-flair-btn-flair pointer-events-none absolute inset-0 origin-top-left scale-0 will-change-transform" aria-hidden="true">
+						<span class="absolute left-0 top-0 aspect-square w-[260%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5b9bd5] opacity-30"></span>
+					</span>
+					<span class="relative font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">WINGS</span>
+					<span class="relative font-national text-lg font-medium text-white">Current Phase Courses</span>
+					<span class="relative font-national font-light text-white/60">Complete a flight review credit</span>
+				</a>
+				<a href="#" class="js-flair-btn relative isolate flex min-h-[170px] flex-col justify-between gap-4 overflow-hidden rounded-lg border border-white/10 bg-[#182f56]/55 p-7 no-underline">
+					<span class="js-flair-btn-flair pointer-events-none absolute inset-0 origin-top-left scale-0 will-change-transform" aria-hidden="true">
+						<span class="absolute left-0 top-0 aspect-square w-[260%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5b9bd5] opacity-30"></span>
+					</span>
+					<span class="relative font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">ASI Library</span>
+					<span class="relative font-national text-lg font-medium text-white">Course &amp; Video Finder</span>
+					<span class="relative font-national  font-light text-white/60">Browse by topic or aircraft type</span>
+				</a>
+				<a href="#" class="js-flair-btn relative isolate flex min-h-[170px] flex-col justify-between gap-4 overflow-hidden rounded-lg border border-white/10 bg-[#182f56]/55 p-7 no-underline">
+					<span class="js-flair-btn-flair pointer-events-none absolute inset-0 origin-top-left scale-0 will-change-transform" aria-hidden="true">
+						<span class="absolute left-0 top-0 aspect-square w-[260%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5b9bd5] opacity-30"></span>
+					</span>
+					<span class="relative font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">Meds</span>
+					<span class="relative font-national text-lg font-medium text-white">Medication Database</span>
+					<span class="relative font-national font-light text-white/60">Check before you fly</span>
+				</a>
+				<a href="#" class="js-flair-btn relative isolate flex min-h-[170px] flex-col justify-between gap-4 overflow-hidden rounded-lg border border-white/10 bg-[#182f56]/55 p-7 no-underline">
+					<span class="js-flair-btn-flair pointer-events-none absolute inset-0 origin-top-left scale-0 will-change-transform" aria-hidden="true">
+						<span class="absolute left-0 top-0 aspect-square w-[260%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5b9bd5] opacity-30"></span>
+					</span>
+					<span class="relative font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">CFI</span>
+					<span class="relative font-national text-lg font-medium text-white">Flight Review Finder</span>
+					<span class="relative font-national  font-light text-white/60">Find a CFI near you</span>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- ===== BASICMED ANSWER BLOCK ===== -->
+	<section class="relative overflow-hidden bg-[#f2f2f2]">
+		<div class="grid lg:grid-cols-2">
+			<div class="js-basicmed-frame relative min-h-[70vh] overflow-hidden">
+				<img
+					src="/images/aopa/home/4/advocacy/c182-flying.jpg"
+					alt=""
+					class="js-basicmed-bg pointer-events-none absolute inset-x-0 -top-[20%] h-[140%] w-full select-none object-cover will-change-transform"
+				/>
+			</div>
+
+			<div class="px-8 py-24 sm:px-12 lg:px-16 xl:pr-24">
+				<span class="mb-5 inline-block rounded-full border border-[#01a2e0] px-4 py-1 font-national text-xs font-bold uppercase tracking-widest text-[#01a2e0]">
+					BasicMed
+				</span>
+				<p class="font-national text-xl font-light leading-relaxed text-[#182f56]">
+					BasicMed lets most pilots fly without a full FAA medical exam. AOPA championed
+					the rule, here's what it covers, and what we're protecting next.
+				</p>
+
+				<div class="js-faq mt-10 border-t border-[#182f56]/10">
+				<div class="js-faq-item is-open border-b border-[#182f56]/10">
+					<button type="button" class="js-faq-q flex w-full items-center justify-between gap-4 py-5 text-left font-national text-base font-bold text-[#182f56]">
+						What is BasicMed and am I eligible?
+						<span class="js-faq-plus font-national text-xl font-light text-[#01a2e0]">+</span>
+					</button>
+					<div class="js-faq-a overflow-hidden">
+						<p class="mb-5 font-national text-[15px] font-light leading-relaxed text-gray-500">
+							You qualify if you've held a regular medical certificate at some point since
+							2006, complete a physician's checklist every four years, and stay within
+							BasicMed's aircraft and altitude limits.
+						</p>
+					</div>
+				</div>
+				<div class="js-faq-item border-b border-[#182f56]/10">
+					<button type="button" class="js-faq-q flex w-full items-center justify-between gap-4 py-5 text-left font-national text-base font-bold text-[#182f56]">
+						How is it different from a third-class medical?
+						<span class="js-faq-plus font-national text-xl font-light text-[#01a2e0]">+</span>
+					</button>
+					<div class="js-faq-a overflow-hidden">
+						<p class="mb-5 font-national text-[15px] font-light leading-relaxed text-gray-500">
+							BasicMed replaces the FAA exam with a visit to your own physician and a free
+							online course, no application to the FAA required once you're enrolled.
+						</p>
+					</div>
+				</div>
+				<div class="js-faq-item border-b border-[#182f56]/10">
+					<button type="button" class="js-faq-q flex w-full items-center justify-between gap-4 py-5 text-left font-national text-base font-bold text-[#182f56]">
+						What medications disqualify me from flying?
+						<span class="js-faq-plus font-national text-xl font-light text-[#01a2e0]">+</span>
+					</button>
+					<div class="js-faq-a overflow-hidden">
+						<p class="mb-5 font-national text-[15px] font-light leading-relaxed text-gray-500">
+							It depends on the medication and dosage. Search AOPA's medication database or
+							talk to a Pilot Protection Services medical specialist before you fly.
+						</p>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ===== SECONDARY RESOURCES ===== -->
+	<section class="relative overflow-hidden bg-white px-8 py-24 sm:px-12 lg:px-24">
+		<div class="mx-auto max-w-7xl">
+			<h2 class="js-reveal mb-12 font-national text-3xl font-medium text-[#182f56] sm:text-4xl">
+				<span class="font-light italic">Keep building</span> good judgment
+			</h2>
+			<div class="flex flex-col">
+				<div class="js-reveal grid grid-cols-1 items-center gap-4 border-t border-[#182f56]/10 py-6 sm:grid-cols-[1fr_2fr_auto]">
+					<span class="font-national text-xs font-bold uppercase tracking-widest text-gray-400">Weather</span>
+					<div>
+						<span class="block font-national text-lg font-medium text-[#182f56]">Weather &amp; Preflight Planning</span>
+						<span class="block font-national text-sm font-light text-gray-500">Real scenarios for go/no-go decisions.</span>
+					</div>
+					<a href="#" class="font-national text-sm font-bold text-[#01a2e0] no-underline">Open →</a>
+				</div>
+				<div class="js-reveal grid grid-cols-1 items-center gap-4 border-t border-[#182f56]/10 py-6 sm:grid-cols-[1fr_2fr_auto]">
+					<span class="font-national text-xs font-bold uppercase tracking-widest text-gray-400">Lessons</span>
+					<div>
+						<span class="block font-national text-lg font-medium text-[#182f56]">Accident Analysis &amp; Lessons Learned</span>
+						<span class="block font-national text-sm font-light text-gray-500">What the data teaches, mission by mission.</span>
+					</div>
+					<a href="#" class="font-national text-sm font-bold text-[#01a2e0] no-underline">Open →</a>
+				</div>
+				<div class="js-reveal grid grid-cols-1 items-center gap-4 border-y border-[#182f56]/10 py-6 sm:grid-cols-[1fr_2fr_auto]">
+					<span class="font-national text-xs font-bold uppercase tracking-widest text-gray-400">Systems</span>
+					<div>
+						<span class="block font-national text-lg font-medium text-[#182f56]">Aircraft Systems &amp; Performance</span>
+						<span class="block font-national text-sm font-light text-gray-500">Know your airplane's limits cold.</span>
+					</div>
+					<a href="#" class="font-national text-sm font-bold text-[#01a2e0] no-underline">Open →</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ===== ADVOCACY BAND ===== -->
+	<section class="js-hub-advocacy relative overflow-hidden bg-[#1d3f6d] px-8 py-36 sm:px-12 lg:px-24">
+		<img
+			class="js-hub-advocacy-bg pointer-events-none absolute inset-x-0 -top-[100%] h-[300%] w-full select-none object-cover will-change-transform"
+			src="/images/aopa/home/4/sky-portrait.jpg"
+			alt=""
+		/>
+		<div class="pointer-events-none absolute inset-0 bg-[#1d3f6d]/55"></div>
+
+		<div class="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[auto_1fr]">
+			<svg class="h-24 w-24 shrink-0" viewBox="0 0 104 104">
+				<defs>
+					<clipPath id="js-hub-ai-clip">
+						<circle cx="52" cy="52" r="48" />
+					</clipPath>
+				</defs>
+				<circle cx="52" cy="52" r="50" fill="#0d1b2a" stroke="rgba(255,255,255,0.25)" />
+				<g class="js-hub-horizon" clip-path="url(#js-hub-ai-clip)">
+					<rect x="-20" y="52" width="144" height="60" fill="#1d3f6d" />
+					<rect x="-20" y="-8" width="144" height="60" fill="#5b9bd5" />
+					<line x1="-20" y1="52" x2="124" y2="52" stroke="#ffffff" stroke-width="1.5" />
+				</g>
+				<line x1="30" y1="52" x2="44" y2="52" stroke="#01a2e0" stroke-width="2.5" />
+				<line x1="60" y1="52" x2="74" y2="52" stroke="#01a2e0" stroke-width="2.5" />
+				<circle cx="52" cy="52" r="2" fill="#01a2e0" />
+			</svg>
+			<div class="js-reveal">
+				<div class="mb-3 font-national font-bold uppercase tracking-widest text-[#7ce0ff]">
+					AOPA in Action
+				</div>
+				<h2 class="max-w-[24ch] font-national text-3xl font-medium text-white sm:text-3xl">
+					AOPA promotes safety without unnecessary regulation.
+				</h2>
+				<p class="mt-4 max-w-[52ch] font-national text-xl font-light leading-relaxed text-white/90">
+					The Air Safety Institute is the world's largest provider of free general aviation
+					safety content. We analyze real-world accident data and share it with regulators,
+					proof that GA polices itself, so lawmakers don't have to.
+				</p>
+				<div class="mt-5 flex items-center gap-2 font-national text-lg font-bold uppercase tracking-widest text-[#7ce0ff]">
+					<span class="h-2 w-2 rounded-full bg-[#01a2e0]"></span>
+					Active, Collision avoidance course expansion, 2026
+				</div>
+				<a href="#" class="mt-6 inline-block border-b border-[#01a2e0] pb-0.5 font-national text-base font-bold text-white no-underline">
+					See AOPA's fight for BasicMed
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- ===== MEMBER BENEFIT ===== -->
+	<section class="relative overflow-hidden bg-white px-8 py-20 sm:px-12 lg:px-24">
+		<div class="mx-auto max-w-7xl">
+			<div class="js-reveal flex flex-wrap items-center justify-between gap-8 border border-[#182f56]/10 p-11">
+				<div>
+					<h3 class="max-w-[26ch] font-national text-2xl font-medium text-[#182f56]">
+						Members fly with more than instinct.
+					</h3>
+					<p class="mt-2 max-w-[44ch] font-national text-base font-light text-gray-500">
+						Discounted ASI courses, free medical consultations, and AOPA Legal Services,
+						included with membership.
+					</p>
+				</div>
+				<a href="#" class="inline-flex items-center justify-center rounded-full bg-[#182f56] px-7 py-3.5 font-national text-[0.95rem] font-bold text-white no-underline">
+					Join AOPA
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- ===== SOCIAL PROOF ===== -->
+	<section class="relative overflow-hidden bg-[#f2f2f2] px-8 py-24 sm:px-12 lg:px-24">
+		<div class="mx-auto max-w-7xl">
+			<blockquote class="js-reveal max-w-4xl font-national text-2xl font-light italic leading-relaxed text-[#182f56] sm:text-3xl">
+				"I'd done the WINGS course twice before, but the scenario on density altitude is the
+				reason I turned around instead of pushing it. That's not a course. That's a habit
+				AOPA built in me."
+				<cite class="mt-6 block font-national text-sm font-bold not-italic uppercase tracking-widest text-gray-500">
+					— Member since 2014, Cessna 182 owner
+				</cite>
+			</blockquote>
+		</div>
+	</section>
+
+	<!-- ===== CROSS-LINK FOOTER NAV ===== -->
+	<section class="js-cross-link relative overflow-hidden bg-[#182f56] px-8 py-36 sm:px-12 lg:px-24">
+		<img
+			class="js-cross-link-bg pointer-events-none absolute inset-x-0 -top-[160%] h-[300%] w-full select-none object-cover will-change-transform"
+			src="/images/aopa/home/4/sky-portrait.jpg"
+			alt=""
+		/>
+		<div class="pointer-events-none absolute inset-0 bg-[#182f56]/35"></div>
+
+		<div class="relative mx-auto max-w-7xl">
+			<h2 class="js-reveal mb-12 font-national text-3xl font-medium text-white sm:text-4xl">
+				Where to next
+			</h2>
+			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+				<a href="#" class="js-flair-btn relative isolate overflow-hidden rounded-lg border border-white/10 bg-[#182f56]/55 p-7 no-underline">
+					<span class="js-flair-btn-flair pointer-events-none absolute inset-0 origin-top-left scale-0 will-change-transform" aria-hidden="true">
+						<span class="absolute left-0 top-0 aspect-square w-[260%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5b9bd5] opacity-30"></span>
+					</span>
+					<span class="relative font-national text-xs font-bold text-[#01a2e0]">01</span>
+					<div class="relative mt-3 font-national text-lg font-medium text-white">Training &amp; Courses</div>
+				</a>
+				<a href="#" class="js-flair-btn relative isolate overflow-hidden rounded-lg border border-white/10 bg-[#182f56]/55 p-7 no-underline">
+					<span class="js-flair-btn-flair pointer-events-none absolute inset-0 origin-top-left scale-0 will-change-transform" aria-hidden="true">
+						<span class="absolute left-0 top-0 aspect-square w-[260%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5b9bd5] opacity-30"></span>
+					</span>
+					<span class="relative font-national text-xs font-bold text-[#01a2e0]">02</span>
+					<div class="relative mt-3 font-national text-lg font-medium text-white">Pilot Tools</div>
+				</a>
+				<a href="#" class="js-flair-btn relative isolate overflow-hidden rounded-lg border border-white/10 bg-[#182f56]/55 p-7 no-underline">
+					<span class="js-flair-btn-flair pointer-events-none absolute inset-0 origin-top-left scale-0 will-change-transform" aria-hidden="true">
+						<span class="absolute left-0 top-0 aspect-square w-[260%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5b9bd5] opacity-30"></span>
+					</span>
+					<span class="relative font-national text-xs font-bold text-[#01a2e0]">03</span>
+					<div class="relative mt-3 font-national text-lg font-medium text-white">Advocacy</div>
+				</a>
+				<a href="#" class="js-flair-btn relative isolate overflow-hidden rounded-lg border border-white/10 bg-[#182f56]/55 p-7 no-underline">
+					<span class="js-flair-btn-flair pointer-events-none absolute inset-0 origin-top-left scale-0 will-change-transform" aria-hidden="true">
+						<span class="absolute left-0 top-0 aspect-square w-[260%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5b9bd5] opacity-30"></span>
+					</span>
+					<span class="relative font-national text-xs font-bold text-[#01a2e0]">04</span>
+					<div class="relative mt-3 font-national text-lg font-medium text-white">Aircraft Ownership</div>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<footer class="bg-[#0d1b2a] px-8 py-9 sm:px-12 lg:px-24">
+		<div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 font-national text-xs font-light text-white/50">
+			<span>© AOPA, Aircraft Owners and Pilots Association</span>
+		</div>
+	</footer>
+</div>
+
+<style>
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-bold.woff2") format("woff2");
+		font-weight: 700;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-bold-italic.woff2") format("woff2");
+		font-weight: 700;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-regular.woff2") format("woff2");
+		font-weight: 400;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-regular-italic.woff2") format("woff2");
+		font-weight: 400;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-medium.woff2") format("woff2");
+		font-weight: 500;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-medium-italic.woff2") format("woff2");
+		font-weight: 500;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-light.woff2") format("woff2");
+		font-weight: 300;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-light-italic.woff2") format("woff2");
+		font-weight: 300;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	.font-national {
+		font-family: "National", system-ui, -apple-system, sans-serif;
+		font-variant-numeric: lining-nums;
+	}
+
+	*, *::before, *::after { box-sizing: border-box; }
+
+	html, body {
+		margin: 0;
+		padding: 0;
+		background: #fff;
+	}
+
+	.home {
+		position: relative;
+		width: 100%;
+		--chrome-h: calc(100vw * 127 / 2100);
+		--mini-nav-h: calc(100vw * 76 / 2100);
+	}
+
+	.home__header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 10;
+		width: 100%;
+		height: var(--chrome-h);
+		overflow: hidden;
+		transition: height 0.4s ease;
+	}
+
+	.home__header.is-scrolled {
+		height: var(--mini-nav-h);
+	}
+
+	.home__chrome,
+	.home__mini-nav {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: auto;
+		transition: transform 0.4s ease;
+	}
+
+	.home__chrome {
+		transform: translateY(0);
+	}
+
+	.home__mini-nav {
+		transform: translateY(-100%);
+	}
+
+	.home__header.is-scrolled .home__chrome {
+		transform: translateY(-100%);
+	}
+
+	.home__header.is-scrolled .home__mini-nav {
+		transform: translateY(0);
+	}
+
+	.hub-hero {
+		padding-top: var(--chrome-h);
+	}
+
+	.js-faq-a {
+		max-height: 0;
+		transition: max-height 0.35s ease;
+	}
+
+	.js-faq-item.is-open .js-faq-a {
+		max-height: 240px;
+	}
+
+	.js-faq-plus {
+		display: inline-block;
+		transition: transform 0.25s ease;
+	}
+
+	.js-faq-item.is-open .js-faq-plus {
+		transform: rotate(45deg);
+	}
+</style>
+
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const header = document.getElementById("home-header");
+	let lastScrollY = window.scrollY;
+
+	const updateHeaderState = () => {
+		const currentScrollY = window.scrollY;
+
+		if (currentScrollY <= 0) {
+			header?.classList.remove("is-scrolled");
+		} else if (currentScrollY > lastScrollY) {
+			header?.classList.add("is-scrolled");
+		} else if (currentScrollY < lastScrollY) {
+			header?.classList.remove("is-scrolled");
+		}
+
+		lastScrollY = currentScrollY;
+	};
+
+	updateHeaderState();
+	window.addEventListener("scroll", updateHeaderState, { passive: true });
+
+	class FlairOnlyButton {
+		private readonly button: HTMLElement;
+		private readonly flair: HTMLElement;
+		private readonly xSet: (value: number) => void;
+		private readonly ySet: (value: number) => void;
+
+		constructor(button: HTMLElement) {
+			this.button = button;
+			this.flair = button.querySelector<HTMLElement>(".js-flair-btn-flair")!;
+			this.xSet = gsap.quickSetter(this.flair, "xPercent") as (value: number) => void;
+			this.ySet = gsap.quickSetter(this.flair, "yPercent") as (value: number) => void;
+			this.initEvents();
+		}
+
+		private getXY(e: MouseEvent) {
+			const { left, top, width, height } = this.button.getBoundingClientRect();
+
+			const xTransformer = gsap.utils.pipe(
+				gsap.utils.mapRange(0, width, 0, 100),
+				gsap.utils.clamp(0, 100),
+			);
+			const yTransformer = gsap.utils.pipe(
+				gsap.utils.mapRange(0, height, 0, 100),
+				gsap.utils.clamp(0, 100),
+			);
+
+			return {
+				x: xTransformer(e.clientX - left),
+				y: yTransformer(e.clientY - top),
+			};
+		}
+
+		private initEvents() {
+			this.button.addEventListener("mouseenter", (e) => {
+				const { x, y } = this.getXY(e as MouseEvent);
+				this.xSet(x);
+				this.ySet(y);
+				gsap.to(this.flair, { scale: 1, duration: 0.4, ease: "power2.out" });
+			});
+
+			this.button.addEventListener("mouseleave", (e) => {
+				const { x, y } = this.getXY(e as MouseEvent);
+				gsap.killTweensOf(this.flair);
+
+				gsap.to(this.flair, {
+					xPercent: x > 90 ? x + 20 : x < 10 ? x - 20 : x,
+					yPercent: y > 90 ? y + 20 : y < 10 ? y - 20 : y,
+					scale: 0,
+					duration: 0.3,
+					ease: "power2.out",
+				});
+			});
+
+			this.button.addEventListener("mousemove", (e) => {
+				const { x, y } = this.getXY(e as MouseEvent);
+				gsap.to(this.flair, { xPercent: x, yPercent: y, duration: 0.4, ease: "power2" });
+			});
+		}
+	}
+
+	document.querySelectorAll<HTMLElement>(".js-flair-btn").forEach((button) => new FlairOnlyButton(button));
+
+	document.querySelectorAll<HTMLElement>(".js-reveal").forEach((el) => {
+		gsap.from(el, {
+			opacity: 0,
+			y: 40,
+			ease: "none",
+			scrollTrigger: {
+				trigger: el,
+				start: "top 85%",
+				end: "top 55%",
+				scrub: 1,
+			},
+		});
+	});
+
+	const hubHero = document.querySelector<HTMLElement>(".js-hub-hero");
+	const hubHeroBg = hubHero?.querySelector<HTMLElement>(".js-hub-hero-bg");
+
+	if (hubHero && hubHeroBg) {
+		gsap.fromTo(
+			hubHeroBg,
+			{ yPercent: -10 },
+			{
+				yPercent: 10,
+				ease: "none",
+				scrollTrigger: {
+					trigger: hubHero,
+					start: "top top",
+					end: "bottom top",
+					scrub: 1,
+				},
+			},
+		);
+	}
+
+	[
+		[".js-tool-module", ".js-tool-module-bg"],
+		[".js-hub-advocacy", ".js-hub-advocacy-bg"],
+		[".js-cross-link", ".js-cross-link-bg"],
+		[".js-basicmed-frame", ".js-basicmed-bg"],
+	].forEach(([sectionSelector, bgSelector]) => {
+		const section = document.querySelector<HTMLElement>(sectionSelector);
+		const bg = section?.querySelector<HTMLElement>(bgSelector);
+		if (!section || !bg) return;
+
+		gsap.fromTo(
+			bg,
+			{ yPercent: -10 },
+			{
+				yPercent: 10,
+				ease: "none",
+				scrollTrigger: {
+					trigger: section,
+					start: "top bottom",
+					end: "bottom top",
+					scrub: 1,
+				},
+			},
+		);
+	});
+
+	const flightline = document.querySelector<SVGElement>(".js-flightline");
+	const flightlinePath = flightline?.querySelector<SVGPathElement>(".js-flightline-path");
+	const flightlineNodes = flightline?.querySelectorAll<SVGElement>(".js-flightline-node");
+	const flightlineText = flightline?.querySelectorAll<SVGElement>(".js-flightline-text");
+
+	if (flightline && flightlinePath) {
+		const length = flightlinePath.getTotalLength();
+		gsap.set(flightlinePath, { strokeDasharray: length, strokeDashoffset: length });
+
+		const tl = gsap.timeline({
+			scrollTrigger: {
+				trigger: flightline,
+				start: "top 75%",
+				end: "top 30%",
+				scrub: 1,
+			},
+		});
+
+		tl.to(flightlinePath, { strokeDashoffset: 0, ease: "none" });
+		if (flightlineNodes?.length) {
+			tl.to(flightlineNodes, { opacity: 1, ease: "none" }, "-=0.3");
+		}
+		if (flightlineText?.length) {
+			tl.to(flightlineText, { opacity: 0.8, ease: "none" }, "-=0.2");
+		}
+	}
+
+	const hubAdvocacy = document.querySelector<HTMLElement>(".js-hub-advocacy");
+	const hubHorizon = hubAdvocacy?.querySelector<SVGGElement>(".js-hub-horizon");
+
+	if (hubAdvocacy && hubHorizon) {
+		gsap.set(hubHorizon, { svgOrigin: "52 52" });
+		gsap.fromTo(
+			hubHorizon,
+			{ rotation: -14 },
+			{
+				rotation: 0,
+				ease: "none",
+				scrollTrigger: {
+					trigger: hubAdvocacy,
+					start: "top 70%",
+					end: "top 30%",
+					scrub: 1,
+				},
+			},
+		);
+	}
+
+	document.querySelectorAll<HTMLElement>(".js-faq-q").forEach((btn) => {
+		btn.addEventListener("click", () => {
+			const item = btn.closest<HTMLElement>(".js-faq-item")!;
+			const wasOpen = item.classList.contains("is-open");
+			item.parentElement?.querySelectorAll<HTMLElement>(".js-faq-item").forEach((i) => i.classList.remove("is-open"));
+			if (!wasOpen) item.classList.add("is-open");
+		});
+	});
+
+	window.addEventListener("load", () => ScrollTrigger.refresh());
+</script>
+</body>
+</html>
