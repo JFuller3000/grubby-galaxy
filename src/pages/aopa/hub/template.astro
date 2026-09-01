@@ -23,7 +23,7 @@
 			alt=""
 		/>
 		<div
-			class="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(115deg,rgba(255,255,255,0.045)_0_2px,transparent_2px_140px),repeating-linear-gradient(25deg,rgba(255,255,255,0.025)_0_1px,transparent_1px_90px),linear-gradient(180deg,rgba(13,27,42,0.15)_0%,rgba(13,27,42,0.75)_78%,rgba(13,27,42,0.95)_100%)]"
+			class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(13,27,42,0.15)_0%,rgba(13,27,42,0.75)_78%,rgba(13,27,42,0.95)_100%)]"
 		></div>
 
 		<div class="relative z-[1] mx-auto flex min-h-[calc(97vh-var(--chrome-h))] w-full max-w-7xl flex-col justify-end px-8 pb-20 sm:px-12 lg:px-24">
@@ -315,21 +315,60 @@
 	</section>
 
 	<!-- ===== MEMBER BENEFIT ===== -->
-	<section class="relative overflow-hidden bg-white px-8 py-20 sm:px-12 lg:px-24">
-		<div class="mx-auto max-w-7xl">
-			<div class="js-reveal flex flex-wrap items-center justify-between gap-8 border border-[#182f56]/10 p-11">
-				<div>
-					<h3 class="max-w-[26ch] font-national text-2xl font-medium text-[#182f56]">
-						Members fly with more than instinct.
+	<section class="relative overflow-hidden bg-white">
+		<div class="grid lg:grid-cols-2">
+			<div class="js-reveal flex flex-col justify-center gap-6 px-8 py-16 sm:px-12 lg:px-16 xl:pl-24">
+				<div class="mx-auto w-fit">
+					<h3 class="max-w-[26ch] font-national text-4xl font-medium text-[#182f56]">
+						<span class="font-light italic">Members fly</span> <br />with more than instinct.
 					</h3>
-					<p class="mt-2 max-w-[44ch] font-national text-base font-light text-gray-500">
+					<p class="mt-2 max-w-[44ch] font-national text-2xl font-light text-gray-500 mb-8">
 						Discounted ASI courses, free medical consultations, and AOPA Legal Services,
 						included with membership.
 					</p>
+					<a
+						href="#"
+						class="js-learn-more-4 js-plane-runway-btn relative mt-6 inline-flex items-center gap-7 rounded-full bg-[#182f56] py-2 pl-10 pr-2 no-underline"
+					>
+						<span class="pointer-events-none absolute inset-0 overflow-hidden rounded-full" aria-hidden="true">
+							<span
+								class="js-learn-more-4-flair pointer-events-none absolute inset-0 origin-top-left scale-0 will-change-transform"
+								aria-hidden="true"
+							>
+								<span class="absolute left-0 top-0 aspect-square w-[260%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5b9bd5] opacity-40"></span>
+							</span>
+						</span>
+						<span class="pointer-events-none absolute inset-0" aria-hidden="true">
+							<span class="js-plane-runway-icon absolute left-6 top-[-4px] grid h-6 w-6 -translate-y-1/2 place-items-center text-[#5b9bd5] opacity-0">
+								<svg viewBox="0 0 32 32" fill="currentColor" class="h-full w-full">
+									<path d="M30.79,10.85l-2.33-2.99v-.02c-1.57-1.92-4.3-2.4-6.42-1.14l-6.45,3.85-6.74-2.48c-.23-.08-.47-.08-.7,0l-.9.34-.04.02c-1.02.44-1.48,1.61-1.05,2.63.11.26.28.49.48.68l2.73,2.65-2.52,1.52-3.53-1.19c-.25-.08-.52-.07-.76.05l-.38.18c-1.01.45-1.46,1.63-1.01,2.64.11.24.26.45.45.63l4.5,4.41h.01c.92.89,2.14,1.37,3.41,1.37.89,0,1.76-.24,2.53-.69l18.43-11c.47-.28.63-.9.35-1.37-.02-.04-.04-.07-.07-.1h0Z" />
+								</svg>
+							</span>
+						</span>
+						<span class="js-learn-more-4-label relative font-national font-medium  uppercase tracking-widest text-white">
+							Join Now
+						</span>
+						<span
+							class="js-learn-more-4-icon relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white text-[#182f56]"
+							aria-hidden="true"
+						>
+							<svg class="js-learn-more-4-arrow h-8 w-8 rotate-45" viewBox="0 0 41.69 43.1" fill="none">
+								<polygon
+									fill="currentColor"
+									points="30.75 21.39 27.61 18.25 24.66 15.09 24.85 17.26 24.83 43.05 16.76 43.1 16.77 17.45 16.82 15.38 12.56 19.77 0 32.33 0 20.83 5.47 15.32 8.82 12 12.8 7.99 20.87 0 41.68 20.8 41.69 32.33 38.04 28.68 30.75 21.39"
+								/>
+							</svg>
+						</span>
+					</a>
 				</div>
-				<a href="#" class="inline-flex items-center justify-center rounded-full bg-[#182f56] px-7 py-3.5 font-national text-[0.95rem] font-bold text-white no-underline">
-					Join AOPA
-				</a>
+			</div>
+
+			<div class="js-member-frame relative min-h-[70vh] overflow-hidden">
+				<img
+					src="/images/aopa/hub/template/two-pilots.jpg"
+					alt=""
+					class="js-member-bg pointer-events-none absolute inset-x-0 -top-[20%] h-[140%] w-full select-none object-cover will-change-transform"
+				/>
 			</div>
 		</div>
 	</section>
@@ -619,6 +658,142 @@
 	updateHeaderState();
 	window.addEventListener("scroll", updateHeaderState, { passive: true });
 
+	class FlairButton {
+		private readonly button: HTMLElement;
+		private readonly flair: HTMLElement;
+		private readonly icon: HTMLElement;
+		private readonly arrow: SVGElement;
+		private readonly xSet: (value: number) => void;
+		private readonly ySet: (value: number) => void;
+		private arrowRotation = 45;
+
+		constructor(button: HTMLElement) {
+			this.button = button;
+			this.flair = button.querySelector<HTMLElement>(".js-learn-more-4-flair")!;
+			this.icon = button.querySelector<HTMLElement>(".js-learn-more-4-icon")!;
+			this.arrow = button.querySelector<SVGElement>(".js-learn-more-4-arrow")!;
+			this.xSet = gsap.quickSetter(this.flair, "xPercent") as (value: number) => void;
+			this.ySet = gsap.quickSetter(this.flair, "yPercent") as (value: number) => void;
+			gsap.set(this.arrow, { rotation: this.arrowRotation, transformOrigin: "50% 50%" });
+			this.initEvents();
+		}
+
+		private getXY(e: MouseEvent) {
+			const { left, top, width, height } = this.button.getBoundingClientRect();
+
+			const xTransformer = gsap.utils.pipe(
+				gsap.utils.mapRange(0, width, 0, 100),
+				gsap.utils.clamp(0, 100),
+			);
+			const yTransformer = gsap.utils.pipe(
+				gsap.utils.mapRange(0, height, 0, 100),
+				gsap.utils.clamp(0, 100),
+			);
+
+			return {
+				x: xTransformer(e.clientX - left),
+				y: yTransformer(e.clientY - top),
+			};
+		}
+
+		private initEvents() {
+			this.button.addEventListener("mouseenter", (e) => {
+				const { x, y } = this.getXY(e as MouseEvent);
+				this.xSet(x);
+				this.ySet(y);
+
+				gsap.to(this.flair, { scale: 1, duration: 0.4, ease: "power2.out" });
+
+				gsap.killTweensOf([this.icon, this.arrow]);
+				this.arrowRotation += 45;
+
+				const tl = gsap.timeline();
+				tl.to(this.icon, { scale: 1.15, duration: 0.25, ease: "power2.out" }, 0)
+					.to(this.icon, { scale: 1, duration: 0.6, ease: "elastic.out(1, 0.35)" }, 0.25)
+					.to(this.arrow, { rotation: this.arrowRotation, duration: 0.6, ease: "power3.out" }, 0);
+			});
+
+			this.button.addEventListener("mouseleave", (e) => {
+				const { x, y } = this.getXY(e as MouseEvent);
+				gsap.killTweensOf(this.flair);
+
+				gsap.to(this.flair, {
+					xPercent: x > 90 ? x + 20 : x < 10 ? x - 20 : x,
+					yPercent: y > 90 ? y + 20 : y < 10 ? y - 20 : y,
+					scale: 0,
+					duration: 0.3,
+					ease: "power2.out",
+				});
+
+				gsap.killTweensOf([this.icon, this.arrow]);
+				this.arrowRotation = 45;
+				gsap.to(this.icon, { scale: 1, duration: 0.3, ease: "power2.out" });
+				gsap.to(this.arrow, { rotation: this.arrowRotation, duration: 0.4, ease: "power2.out" });
+			});
+
+			this.button.addEventListener("mousemove", (e) => {
+				const { x, y } = this.getXY(e as MouseEvent);
+				gsap.to(this.flair, { xPercent: x, yPercent: y, duration: 0.4, ease: "power2" });
+			});
+		}
+	}
+
+	document.querySelectorAll<HTMLElement>(".js-learn-more-4").forEach((button) => new FlairButton(button));
+
+	class PlaneRunwayButton {
+		private readonly button: HTMLElement;
+		private readonly plane: HTMLElement;
+
+		constructor(button: HTMLElement) {
+			this.button = button;
+			this.plane = button.querySelector<HTMLElement>(".js-plane-runway-icon")!;
+			this.initEvents();
+		}
+
+		private initEvents() {
+			this.button.addEventListener("mouseenter", () => {
+				gsap.killTweensOf(this.plane);
+				// the artwork itself is drawn banked upward, so level it out to fly horizontal
+				gsap.set(this.plane, { x: 0, y: 0, rotation: 30, scale: 0, opacity: 0 });
+
+				// runway spans the full length of the button, right out to its end
+				const planeRect = this.plane.getBoundingClientRect();
+				const buttonRect = this.button.getBoundingClientRect();
+				const runway = buttonRect.right - planeRect.left - 8;
+
+				// fixed timing regardless of button width: taxi always takes 1s, then a 1s
+				// lift+climb tail. The x tween's distance is solved backwards so that its
+				// power1.in easing (which accelerates as (t/duration)^2) places the plane
+				// exactly at the runway's end when the taxi duration elapses - and since the
+				// tail duration matches exactly what's left in the tween, x never stops
+				// moving before the climb and fade-out finish.
+				const taxiDuration = 1.3;
+				const tailDuration = 1.3;
+				const totalDuration = taxiDuration + tailDuration;
+				const totalDistance = runway / (taxiDuration / totalDuration) ** 2;
+
+				const tl = gsap.timeline();
+				tl.to(this.plane, { scale: 1, opacity: 1, duration: 0.2, ease: "power2.out" })
+					.addLabel("flight")
+					// one continuous, ever-accelerating horizontal run: taxi, liftoff, and climb-away
+					// are all the same x tween, running the full length of the timeline so it
+					// never stalls out horizontally while the climb/fade finish above it
+					.to(this.plane, { x: totalDistance, duration: totalDuration, ease: "power1.in" }, "flight")
+					// angle up and lift off right at the end of the runway
+					.to(this.plane, { y: -12, rotation: 20, duration: 0.5, ease: "power2.out" }, `flight+=${taxiDuration}`)
+					// climb away on a shallow angle and fade out
+					.to(this.plane, { y: -60, opacity: 0, duration: 0.9, ease: "power1.in" }, `flight+=${taxiDuration + 0.4}`);
+			});
+
+			this.button.addEventListener("mouseleave", () => {
+				gsap.killTweensOf(this.plane);
+				gsap.to(this.plane, { opacity: 0, scale: 0, duration: 0.2, ease: "power2.in" });
+			});
+		}
+	}
+
+	document.querySelectorAll<HTMLElement>(".js-plane-runway-btn").forEach((button) => new PlaneRunwayButton(button));
+
 	class FlairOnlyButton {
 		private readonly button: HTMLElement;
 		private readonly flair: HTMLElement;
@@ -720,6 +895,7 @@
 		[".js-hub-advocacy", ".js-hub-advocacy-bg"],
 		[".js-cross-link", ".js-cross-link-bg"],
 		[".js-basicmed-frame", ".js-basicmed-bg"],
+		[".js-member-frame", ".js-member-bg"],
 	].forEach(([sectionSelector, bgSelector]) => {
 		const section = document.querySelector<HTMLElement>(sectionSelector);
 		const bg = section?.querySelector<HTMLElement>(bgSelector);
