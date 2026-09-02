@@ -270,6 +270,7 @@
 					<p class="font-national  font-bold leading-none text-[#182f56]">in Action</p>
 				</div>
 				<div class="js-carousel-stories relative max-w-[27rem]">
+					<div class="js-carousel-track relative">
 					<div class="js-carousel-story is-active" data-index="0">
 						<h3 class="font-national text-2xl font-bold text-[#182f56]">Prioritizing Unleaded Avgas</h3>
 						<p class="mt-3 font-national italic leading-relaxed text-gray-500 text-xl">
@@ -315,6 +316,7 @@
 								<path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
 							</svg>
 						</a>
+					</div>
 					</div>
 
 					<div class="mt-6 w-full">
@@ -2112,6 +2114,8 @@
 		private readonly photos: HTMLElement[];
 		private readonly stories: HTMLElement[];
 		private readonly dots: HTMLElement[];
+		private readonly track: HTMLElement | null;
+		private readonly storyHeights: number[];
 		private readonly timerFill: HTMLElement | null;
 		private readonly slideDuration = 6;
 		private index = 0;
@@ -2122,14 +2126,46 @@
 			this.photos = Array.from(root.querySelectorAll<HTMLElement>(".js-carousel-photo"));
 			this.stories = Array.from(storiesRoot.querySelectorAll<HTMLElement>(".js-carousel-story"));
 			this.dots = Array.from(document.querySelectorAll<HTMLElement>(".js-carousel-dot"));
+			this.track = storiesRoot.querySelector<HTMLElement>(".js-carousel-track");
 			this.timerFill = document.querySelector<HTMLElement>(".js-carousel-timer-fill");
+			this.storyHeights = this.measureStoryHeights();
 
 			this.dots.forEach((dot, i) => {
 				dot.classList.toggle("is-active", i === this.index);
 				dot.addEventListener("click", () => this.goTo(i));
 			});
 
+			if (this.track) {
+				gsap.set(this.track, { height: this.storyHeights[this.index] });
+			}
 			this.playTimer();
+		}
+
+		// .js-carousel-story (other than index 0) is positioned "absolute inset-0",
+		// so its rendered box always matches whatever height the track currently
+		// has - reading scrollHeight directly would just report that circular
+		// value back. Clone each story with the inset constraint stripped so it
+		// can size to its own content, to get its true natural height instead.
+		private measureStoryHeights(): number[] {
+			const width = this.stories[0]?.getBoundingClientRect().width ?? 0;
+			return this.stories.map((story) => {
+				const clone = story.cloneNode(true) as HTMLElement;
+				clone.classList.remove("absolute", "inset-0", "is-active");
+				clone.style.cssText = `position:absolute; visibility:hidden; pointer-events:none; top:0; left:0; width:${width}px; opacity:1;`;
+				(this.track ?? story.parentElement)!.appendChild(clone);
+				const height = clone.scrollHeight;
+				clone.remove();
+				return height;
+			});
+		}
+
+		private syncTrackHeight(index: number) {
+			if (!this.track) return;
+			gsap.to(this.track, {
+				height: this.storyHeights[index],
+				duration: 0.35,
+				ease: "power1.inOut",
+			});
 		}
 
 		private playTimer() {
@@ -2148,6 +2184,7 @@
 			if (this.transitioning || nextIndex === this.index) return;
 			this.transitioning = true;
 			this.timer?.kill();
+			this.syncTrackHeight(nextIndex);
 
 			// fade the incoming photo in on top; the outgoing one stays fully
 			// opaque underneath so the two never both go translucent at once
