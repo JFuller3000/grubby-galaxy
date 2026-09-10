@@ -1,0 +1,53 @@
+---
+const columns: string[][][] = [
+	[["AOPA Foundation"], ["Donate"], ["About Us"]],
+	[["Careers at AOPA"], ["Contact AOPA"], ["Aviation Jobs"], ["AOPA Gear"]],
+	[["Media Room"], ["Advertising"]],
+];
+
+const moreLinks = ["Terms of Use", "Cancellation and Refund Policy", "Privacy Policy", "Privacy Request"];
+
+const linkClass = "font-national text-sm font-light text-white/70 no-underline hover:text-white";
+---
+
+<footer class="relative z-[1] bg-[#182f56] px-8 py-16 sm:px-12 lg:px-24">
+	<div class="mx-auto max-w-7xl">
+		<nav class="grid grid-cols-1 gap-8 sm:grid-cols-4" aria-label="Footer">
+			{columns.map((rows) => (
+				<div class="flex flex-col gap-3">
+					{rows.map((row) => (
+						<div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+							{row.map((label, i) => (
+								<>
+									<a href="#" class={linkClass}>{label}</a>
+									{i < row.length - 1 && <span class="text-white/25" aria-hidden="true">|</span>}
+								</>
+							))}
+						</div>
+					))}
+				</div>
+			))}
+
+			<div>
+				<img src="/images/aopa/home/4/aopa-wings.svg" alt="AOPA" class="w-40 select-none" />
+				<p class="mt-6 max-w-xs font-national font-light text-sm leading-relaxed text-white/70">
+					The Aircraft Owners and Pilots Association is the largest, most experienced pilot
+					community in the world.
+				</p>
+			</div>
+		</nav>
+
+		<div class="mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-white/15 pt-8">
+			{moreLinks.map((label, i) => (
+				<>
+					<a href="#" class={linkClass}>{label}</a>
+					{i < moreLinks.length - 1 && <span class="text-white/25" aria-hidden="true">|</span>}
+				</>
+			))}
+		</div>
+
+		<p class="mt-8 border-t border-white/15 pt-8 font-national font-light text-xs text-white/50">
+			&copy; {new Date().getFullYear()} Aircraft Owners and Pilots Association
+		</p>
+	</div>
+</footer>

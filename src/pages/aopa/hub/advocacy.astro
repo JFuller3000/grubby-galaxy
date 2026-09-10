@@ -1,0 +1,817 @@
+---
+import HubFooter from "../../../components/aopa/HubFooter.astro";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Advocacy, AOPA Hub</title>
+</head>
+<body>
+
+<div class="home">
+	<header class="home__header" id="home-header">
+		<img class="home__chrome" src="/images/aopa/home/1/chrome-100.jpg" alt="" />
+		<img class="home__mini-nav" src="/images/aopa/home/1/mini-nav-100.jpg" alt="" />
+	</header>
+
+	<section class="js-hub-hero hub-hero relative overflow-hidden bg-[#0d1b2a]">
+		<img
+			class="js-hub-hero-bg pointer-events-none absolute inset-x-0 -top-[20%] h-[140%] w-full select-none object-cover will-change-transform"
+			src="/images/aopa/home/4/advocacy/c182-flying.jpg"
+			alt=""
+		/>
+		<div
+			class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(13,27,42,0.15)_0%,rgba(13,27,42,0.75)_78%,rgba(13,27,42,0.95)_100%)]"
+		></div>
+
+		<div class="pointer-events-none absolute inset-0 flex items-end justify-end overflow-hidden">
+			<div class="grid">
+				<span class="js-hub-hero-watermark-overlay [grid-area:1/1] translate-y-[0.2em] mix-blend-overlay font-national text-[10rem] font-bold uppercase leading-none text-white sm:text-[14rem] lg:text-[14rem]">
+					Advocacy
+				</span>
+				<span class="js-hub-hero-watermark-solid [grid-area:1/1] translate-y-[0.2em] mix-blend-normal font-national text-[10rem] font-bold uppercase leading-none text-white opacity-0 sm:text-[14rem] lg:text-[14rem]">
+					Advocacy
+				</span>
+			</div>
+		</div>
+
+		<div class="relative z-[1] mx-auto flex min-h-[calc(97vh-var(--chrome-h))] w-full max-w-8xl flex-col justify-end px-8 pb-20 sm:px-12 lg:px-24">
+			<h1 class="mt-3 max-w-[18ch] font-national text-4xl font-medium leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-6xl">
+				<span class="font-light italic">Your voice</span> in every room.
+			</h1>
+			<p class="mt-4 max-w-[46ch] font-national text-xl font-light leading-relaxed text-white/80 sm:text-2xl">
+				Every fight AOPA is running for pilots right now, where each one stands, and what you can do about it today.
+			</p>
+			<div class="mt-6 flex flex-wrap gap-3">
+				<a
+					href="#"
+					class="inline-flex items-center justify-center rounded-full bg-[#01a2e0] px-7 py-3.5 font-national text-[0.95rem] font-bold text-white no-underline"
+				>
+					See What's Happening in Your State
+				</a>
+				<a
+					href="#"
+					class="inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 font-national text-[0.95rem] font-bold text-[#182f56] no-underline"
+				>
+					Support the Fight
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- ===== CARDS ===== -->
+	<section class="js-tool-module relative overflow-hidden bg-white px-8 py-36 sm:px-12 lg:px-24">
+		<div class="relative mx-auto max-w-7xl">
+			<div class="js-reveal mb-14 flex flex-wrap items-center justify-between gap-8">
+				<h2 class="max-w-[20ch] font-national text-3xl font-medium text-[#182f56] sm:text-4xl">
+					<span class="font-light italic">Explore Advocacy</span> by area
+				</h2>
+			</div>
+
+			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+				<a href="#" class="relative isolate flex min-h-[200px] flex-col justify-start gap-3 overflow-hidden rounded-lg bg-[#182f56] p-7 no-underline">
+					<div class="relative">
+						<span class="block font-national text-xl font-medium text-[#7ce0ff]">Aircraft</span>
+						<p class="mt-2 font-national text-lg font-light text-white">
+							What you can fly and what you can burn — MOSAIC, unleaded fuel, certification, taxes, drones.
+						</p>
+					</div>
+					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">Aircraft →</span>
+				</a>
+				<a href="#" class="relative isolate flex min-h-[200px] flex-col justify-start gap-3 overflow-hidden rounded-lg border border-white/10 bg-[#182f56] p-7 no-underline">
+					<div class="relative">
+						<span class="block font-national text-xl font-medium text-[#7ce0ff]">Airports</span>
+						<p class="mt-2 font-national text-lg font-light text-white">
+							Keeping community airports open, funded and fairly priced, with volunteers watching the fields.
+						</p>
+					</div>
+					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">Airports →</span>
+				</a>
+				<a href="#" class="relative isolate flex min-h-[200px] flex-col justify-start gap-3 overflow-hidden rounded-lg border border-white/10 bg-[#182f56] p-7 no-underline">
+					<div class="relative">
+						<span class="block font-national text-xl font-medium text-[#7ce0ff]">Airmen</span>
+						<p class="mt-2 font-national text-lg font-light text-white">
+							The rules written about you rather than your airplane — medical reform, certification, flight training security.
+						</p>
+					</div>
+					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">Airmen →</span>
+				</a>
+				<a href="#" class="relative isolate flex min-h-[200px] flex-col justify-start gap-3 overflow-hidden rounded-lg border border-white/10 bg-[#182f56] p-7 no-underline">
+					<div class="relative">
+						<span class="block font-national text-xl font-medium text-[#7ce0ff]">Airspace</span>
+						<p class="mt-2 font-national text-lg font-light text-white">
+							Who gets to fly where — airspace redesign and temporary flight restrictions.
+						</p>
+					</div>
+					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">Airspace →</span>
+				</a>
+				<a href="#" class="relative isolate flex min-h-[200px] flex-col justify-start gap-3 overflow-hidden rounded-lg border border-white/10 bg-[#182f56] p-7 no-underline">
+					<div class="relative">
+						<span class="block font-national text-xl font-medium text-[#7ce0ff]">State Advocacy</span>
+						<p class="mt-2 font-national text-lg font-light text-white">
+							The fight in your own backyard, by state, with the regional manager who works it.
+						</p>
+					</div>
+					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">State Advocacy →</span>
+				</a>
+				<a href="#" class="relative isolate flex min-h-[200px] flex-col justify-start gap-3 overflow-hidden rounded-lg border border-white/10 bg-[#182f56] p-7 no-underline">
+					<div class="relative">
+						<span class="block font-national text-xl font-medium text-[#7ce0ff]">Briefs</span>
+						<p class="mt-2 font-national text-lg font-light text-white">
+							AOPA's written position on a specific rule, for whoever needs the argument in full.
+						</p>
+					</div>
+					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">Briefs →</span>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- ===== PROOF (CHARTER) + AOPA IN ACTION ===== -->
+	<section class="js-advocacy-proof relative overflow-hidden bg-[#1d3f6d] px-8 py-36 sm:px-12 lg:px-24">
+		<img
+			class="js-advocacy-proof-bg pointer-events-none absolute inset-x-0 -top-[100%] h-[300%] w-full select-none object-cover will-change-transform"
+			src="/images/aopa/home/4/sky-portrait.jpg"
+			alt=""
+		/>
+		<div class="pointer-events-none absolute inset-0 bg-[#1d3f6d]/55"></div>
+
+		<div class="js-reveal relative mx-auto grid max-w-7xl gap-14 lg:grid-cols-2">
+			<div>
+				<h2 class="max-w-[20ch] font-national text-3xl font-medium text-white sm:text-4xl">
+					More than lobbying Congress or negotiating with the FAA.
+				</h2>
+				<p class="mt-4 max-w-[52ch] font-national text-lg font-light leading-relaxed text-white/90">
+					AOPA's legislative and regulatory work runs in Washington and in all 50 states, carried
+					by professionals working "24/7 in Washington, D.C. and in all 50 states." It covers six
+					areas: aircraft, airports, airmen, airspace, state advocacy, and AOPA's written briefs.
+				</p>
+				<blockquote class="mt-6 max-w-[42ch] font-national text-2xl font-light italic leading-snug text-white">
+					"It's about putting the combined weight of hundreds of thousands of pilots behind you."
+				</blockquote>
+				<p class="mt-4 font-national text-sm font-light text-white/60">
+					Source: aopa.org/advocacy
+				</p>
+			</div>
+
+			<div class="rounded-lg bg-[#0d1b2a]/50 p-10">
+				<div class="mb-3 font-national font-bold uppercase tracking-widest text-[#7ce0ff]">
+					AOPA in Action
+				</div>
+				<h3 class="max-w-[26ch] font-national text-2xl font-medium text-white">
+					MOSAIC: the rule AOPA worked from proposal to the ramp
+				</h3>
+				<p class="mt-4 max-w-[48ch] font-national font-light text-lg leading-relaxed text-white/90">
+					The FAA's MOSAIC rule rewrote what counts as a light-sport aircraft and what a sport
+					pilot may fly. AOPA worked it from proposal through the July 2025 final rule; on July
+					16, 2026 the FAA accepted the industry consensus standards manufacturers now build to.
+				</p>
+				<a
+					href="#"
+					class="mt-5 inline-flex items-center gap-2 font-national text-lg font-bold uppercase tracking-widest text-[#7ce0ff] no-underline"
+				>
+					See what we're fighting for
+				</a>
+				<p class="mt-4 font-national text-sm font-light text-white/50">
+					Source: AOPA news, July 16, 2026
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- ===== TAKE ACTION ===== -->
+	<section class="relative overflow-hidden bg-white px-8 py-24 sm:px-12 lg:px-24">
+		<div class="js-reveal mx-auto max-w-3xl text-center">
+			<h3 class="font-national text-4xl font-medium text-[#182f56]">
+				<span class="font-light italic">Stand up</span> for your right to fly
+			</h3>
+			<p class="mx-auto mt-4 max-w-[50ch] font-national text-2xl font-light text-gray-500">
+				The fight runs whether or not you are watching. Membership funds the staff; a gift funds
+				what dues alone cannot cover.
+			</p>
+
+			<a
+				href="#"
+				class="js-learn-more-4 js-plane-runway-btn relative mt-8 inline-flex items-center gap-7 rounded-full bg-[#182f56] py-2 pl-10 pr-2 no-underline"
+			>
+				<span class="pointer-events-none absolute inset-0 overflow-hidden rounded-full" aria-hidden="true">
+					<span
+						class="js-learn-more-4-flair pointer-events-none absolute inset-0 origin-top-left scale-0 will-change-transform"
+						aria-hidden="true"
+					>
+						<span class="absolute left-0 top-0 aspect-square w-[260%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5b9bd5] opacity-40"></span>
+					</span>
+				</span>
+				<span class="pointer-events-none absolute inset-0" aria-hidden="true">
+					<span class="js-plane-runway-icon absolute left-6 top-[-4px] grid h-6 w-6 -translate-y-1/2 place-items-center text-[#5b9bd5] opacity-0">
+						<svg viewBox="0 0 32 32" fill="currentColor" class="h-full w-full">
+							<path d="M30.79,10.85l-2.33-2.99v-.02c-1.57-1.92-4.3-2.4-6.42-1.14l-6.45,3.85-6.74-2.48c-.23-.08-.47-.08-.7,0l-.9.34-.04.02c-1.02.44-1.48,1.61-1.05,2.63.11.26.28.49.48.68l2.73,2.65-2.52,1.52-3.53-1.19c-.25-.08-.52-.07-.76.05l-.38.18c-1.01.45-1.46,1.63-1.01,2.64.11.24.26.45.45.63l4.5,4.41h.01c.92.89,2.14,1.37,3.41,1.37.89,0,1.76-.24,2.53-.69l18.43-11c.47-.28.63-.9.35-1.37-.02-.04-.04-.07-.07-.1h0Z" />
+						</svg>
+					</span>
+				</span>
+				<span class="js-learn-more-4-label relative font-national font-medium uppercase tracking-widest text-white">
+					Join AOPA
+				</span>
+				<span
+					class="js-learn-more-4-icon relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white text-[#182f56]"
+					aria-hidden="true"
+				>
+					<svg class="js-learn-more-4-arrow h-8 w-8 rotate-45" viewBox="0 0 41.69 43.1" fill="none">
+						<polygon
+							fill="currentColor"
+							points="30.75 21.39 27.61 18.25 24.66 15.09 24.85 17.26 24.83 43.05 16.76 43.1 16.77 17.45 16.82 15.38 12.56 19.77 0 32.33 0 20.83 5.47 15.32 8.82 12 12.8 7.99 20.87 0 41.68 20.8 41.69 32.33 38.04 28.68 30.75 21.39"
+						/>
+					</svg>
+				</span>
+			</a>
+
+			<div class="mx-auto mt-12 grid max-w-2xl gap-4 text-left sm:grid-cols-2">
+				<a href="#" class="rounded-lg border border-[#182f56]/10 bg-[#f2f2f2] p-8 no-underline transition-colors hover:border-[#01a2e0]/30">
+					<p class="font-national text-lg font-medium text-[#182f56]">AOPA Aviation Advocacy Fund</p>
+					<p class="mt-2 font-national text-sm font-light text-gray-500">
+						501(c)(4), not tax-deductible. Primary giving destination.
+					</p>
+				</a>
+				<a href="#" class="rounded-lg border border-[#182f56]/10 bg-[#f2f2f2] p-8 no-underline transition-colors hover:border-[#01a2e0]/30">
+					<p class="font-national text-lg font-medium text-[#182f56]">AOPA Political Action Committee</p>
+					<p class="mt-2 font-national text-sm font-light text-gray-500">
+						Not tax-deductible.
+					</p>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- ===== FAQ + L1 SPOKES + ELSEWHERE + PROVENANCE ===== -->
+	<section class="relative overflow-hidden bg-[#f2f2f2] px-8 py-24 sm:px-12 lg:px-24">
+		<div class="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[1.3fr_1fr]">
+			<div class="js-reveal">
+				<h2 class="mb-8 font-national text-3xl font-medium text-[#182f56]">
+					<span class="font-light italic">Questions</span> Pilots Ask
+				</h2>
+
+				<div class="js-faq border-t border-[#182f56]/10">
+				<div class="js-faq-item is-open border-b border-[#182f56]/10">
+					<button type="button" class="js-faq-q flex w-full items-center justify-between gap-4 py-5 text-left text-xl font-national text-base font-bold text-[#182f56]">
+						What does AOPA's advocacy work actually cover?
+						<span class="js-faq-plus font-national text-xl font-light text-[#01a2e0]">+</span>
+					</button>
+					<div class="js-faq-a overflow-hidden">
+						<p class="mb-5 font-national text-lg font-light leading-relaxed text-gray-500">
+							Six areas: aircraft, airports, airmen, airspace, state advocacy, and AOPA's
+							written briefs — carried by government affairs staff in Washington, D.C. and
+							all 50 states.
+						</p>
+					</div>
+				</div>
+				<div class="js-faq-item border-b border-[#182f56]/10">
+					<button type="button" class="js-faq-q flex w-full text-xl items-center justify-between gap-4 py-5 text-left font-national text-base font-bold text-[#182f56]">
+						What is the difference between the AOPA PAC and the Advocacy Fund?
+						<span class="js-faq-plus font-national text-xl font-light text-[#01a2e0]">+</span>
+					</button>
+					<div class="js-faq-a overflow-hidden">
+						<p class="mb-5 font-national text-lg font-light leading-relaxed text-gray-500">
+							The Aviation Advocacy Fund is a 501(c)(4) and is AOPA's primary giving
+							destination; the Political Action Committee funds candidate support directly.
+							Neither is tax-deductible.
+						</p>
+					</div>
+				</div>
+				<div class="js-faq-item border-b border-[#182f56]/10">
+					<button type="button" class="js-faq-q flex w-full items text-xl items-center justify-between gap-4 py-5 text-left font-national  font-bold text-[#182f56]">
+						Which advocacy issue do I look under for my question?
+						<span class="js-faq-plus font-national text-xl font-light text-[#01a2e0]">+</span>
+					</button>
+					<div class="js-faq-a overflow-hidden">
+						<p class="mb-5 font-national text-lg font-light leading-relaxed text-gray-500">
+							Browse by area above — Aircraft, Airports, Airmen, Airspace, State Advocacy or
+							Briefs — or search AOPA's written briefs for the specific rule in question.
+						</p>
+					</div>
+				</div>
+				<div class="js-faq-item border-b border-[#182f56]/10">
+					<button type="button" class="js-faq-q flex w-full items text-xl items-center justify-between gap-4 py-5 text-left font-national  font-bold text-[#182f56]">
+						How do I take action on an issue AOPA is working?
+						<span class="js-faq-plus font-national text-xl font-light text-[#01a2e0]">+</span>
+					</button>
+					<div class="js-faq-a overflow-hidden">
+						<p class="mb-5 font-national text-lg font-light leading-relaxed text-gray-500">
+							Each area page lists a "Do Something Now" action, or find your state's fight on
+							the State Advocacy page for the regional manager working it.
+						</p>
+					</div>
+				</div>
+			</div>
+			</div>
+
+			<div class="js-reveal flex flex-col gap-10">
+				<div>
+					<p class="font-national text-sm font-bold uppercase tracking-widest text-[#182f56]">
+						More from Advocacy
+					</p>
+					<ul class="mt-4 list-none space-y-2 p-0 font-national text-lg text-[#182f56]">
+						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">Capitol Hill</a></li>
+						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">FAA Funding</a></li>
+						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">GA Caucuses</a></li>
+						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">NextGen</a></li>
+					</ul>
+				</div>
+
+				<div>
+					<p class="font-national text-sm font-bold uppercase tracking-widest text-[#182f56]">
+						Elsewhere on aopa.org
+					</p>
+					<ul class="mt-4 list-none space-y-2 p-0 font-national text-lg text-[#182f56]">
+						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">Get Involved → Ways to Give</a></li>
+						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">Safety → Air Safety Institute</a></li>
+						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">News & Events → News</a></li>
+					</ul>
+				</div>
+
+				<p class="border-t border-[#182f56]/10 pt-6 font-national text-sm font-light text-gray-500">
+					Reviewed by AOPA government affairs staff (named) · Last updated [DATE]
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<HubFooter />
+</div>
+
+<style>
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-bold.woff2") format("woff2");
+		font-weight: 700;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-bold-italic.woff2") format("woff2");
+		font-weight: 700;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-regular.woff2") format("woff2");
+		font-weight: 400;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-regular-italic.woff2") format("woff2");
+		font-weight: 400;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-medium.woff2") format("woff2");
+		font-weight: 500;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-medium-italic.woff2") format("woff2");
+		font-weight: 500;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-light.woff2") format("woff2");
+		font-weight: 300;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-light-italic.woff2") format("woff2");
+		font-weight: 300;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	.font-national {
+		font-family: "National", system-ui, -apple-system, sans-serif;
+		font-variant-numeric: lining-nums;
+	}
+
+	*, *::before, *::after { box-sizing: border-box; }
+
+	html, body {
+		margin: 0;
+		padding: 0;
+		background: #fff;
+	}
+
+	.home {
+		position: relative;
+		width: 100%;
+		--chrome-h: calc(100vw * 127 / 2100);
+		--mini-nav-h: calc(100vw * 76 / 2100);
+	}
+
+	.home__header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 10;
+		width: 100%;
+		height: var(--chrome-h);
+		overflow: hidden;
+		transition: height 0.4s ease;
+	}
+
+	.home__header.is-scrolled {
+		height: var(--mini-nav-h);
+	}
+
+	.home__chrome,
+	.home__mini-nav {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: auto;
+		transition: transform 0.4s ease;
+	}
+
+	.home__chrome {
+		transform: translateY(0);
+	}
+
+	.home__mini-nav {
+		transform: translateY(-100%);
+	}
+
+	.home__header.is-scrolled .home__chrome {
+		transform: translateY(-100%);
+	}
+
+	.home__header.is-scrolled .home__mini-nav {
+		transform: translateY(0);
+	}
+
+	.hub-hero {
+		padding-top: var(--chrome-h);
+	}
+
+	.js-faq {
+		min-height: 380px;
+	}
+
+	.js-faq-a {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 0.35s ease;
+	}
+
+	.js-faq-item.is-open .js-faq-a {
+		grid-template-rows: 1fr;
+	}
+
+	.js-faq-a > p {
+		min-height: 0;
+		overflow: hidden;
+	}
+
+	.js-faq-plus {
+		display: inline-block;
+		transition: transform 0.25s ease;
+	}
+
+	.js-faq-item.is-open .js-faq-plus {
+		transform: rotate(45deg);
+	}
+</style>
+
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const header = document.getElementById("home-header");
+	let lastScrollY = window.scrollY;
+
+	const updateHeaderState = () => {
+		const currentScrollY = window.scrollY;
+
+		if (currentScrollY <= 0) {
+			header?.classList.remove("is-scrolled");
+		} else if (currentScrollY > lastScrollY) {
+			header?.classList.add("is-scrolled");
+		} else if (currentScrollY < lastScrollY) {
+			header?.classList.remove("is-scrolled");
+		}
+
+		lastScrollY = currentScrollY;
+	};
+
+	updateHeaderState();
+	window.addEventListener("scroll", updateHeaderState, { passive: true });
+
+	class FlairButton {
+		private readonly button: HTMLElement;
+		private readonly flair: HTMLElement;
+		private readonly icon: HTMLElement;
+		private readonly arrow: SVGElement;
+		private readonly xSet: (value: number) => void;
+		private readonly ySet: (value: number) => void;
+		private arrowRotation = 45;
+
+		constructor(button: HTMLElement) {
+			this.button = button;
+			this.flair = button.querySelector<HTMLElement>(".js-learn-more-4-flair")!;
+			this.icon = button.querySelector<HTMLElement>(".js-learn-more-4-icon")!;
+			this.arrow = button.querySelector<SVGElement>(".js-learn-more-4-arrow")!;
+			this.xSet = gsap.quickSetter(this.flair, "xPercent") as (value: number) => void;
+			this.ySet = gsap.quickSetter(this.flair, "yPercent") as (value: number) => void;
+			gsap.set(this.arrow, { rotation: this.arrowRotation, transformOrigin: "50% 50%" });
+			this.initEvents();
+		}
+
+		private getXY(e: MouseEvent) {
+			const { left, top, width, height } = this.button.getBoundingClientRect();
+
+			const xTransformer = gsap.utils.pipe(
+				gsap.utils.mapRange(0, width, 0, 100),
+				gsap.utils.clamp(0, 100),
+			);
+			const yTransformer = gsap.utils.pipe(
+				gsap.utils.mapRange(0, height, 0, 100),
+				gsap.utils.clamp(0, 100),
+			);
+
+			return {
+				x: xTransformer(e.clientX - left),
+				y: yTransformer(e.clientY - top),
+			};
+		}
+
+		private initEvents() {
+			this.button.addEventListener("mouseenter", (e) => {
+				const { x, y } = this.getXY(e as MouseEvent);
+				this.xSet(x);
+				this.ySet(y);
+
+				gsap.to(this.flair, { scale: 1, duration: 0.4, ease: "power2.out" });
+
+				gsap.killTweensOf([this.icon, this.arrow]);
+				this.arrowRotation += 45;
+
+				const tl = gsap.timeline();
+				tl.to(this.icon, { scale: 1.15, duration: 0.25, ease: "power2.out" }, 0)
+					.to(this.icon, { scale: 1, duration: 0.6, ease: "elastic.out(1, 0.35)" }, 0.25)
+					.to(this.arrow, { rotation: this.arrowRotation, duration: 0.6, ease: "power3.out" }, 0);
+			});
+
+			this.button.addEventListener("mouseleave", (e) => {
+				const { x, y } = this.getXY(e as MouseEvent);
+				gsap.killTweensOf(this.flair);
+
+				gsap.to(this.flair, {
+					xPercent: x > 90 ? x + 20 : x < 10 ? x - 20 : x,
+					yPercent: y > 90 ? y + 20 : y < 10 ? y - 20 : y,
+					scale: 0,
+					duration: 0.3,
+					ease: "power2.out",
+				});
+
+				gsap.killTweensOf([this.icon, this.arrow]);
+				this.arrowRotation = 45;
+				gsap.to(this.icon, { scale: 1, duration: 0.3, ease: "power2.out" });
+				gsap.to(this.arrow, { rotation: this.arrowRotation, duration: 0.4, ease: "power2.out" });
+			});
+
+			this.button.addEventListener("mousemove", (e) => {
+				const { x, y } = this.getXY(e as MouseEvent);
+				gsap.to(this.flair, { xPercent: x, yPercent: y, duration: 0.4, ease: "power2" });
+			});
+		}
+	}
+
+	document.querySelectorAll<HTMLElement>(".js-learn-more-4").forEach((button) => new FlairButton(button));
+
+	class PlaneRunwayButton {
+		private readonly button: HTMLElement;
+		private readonly plane: HTMLElement;
+
+		constructor(button: HTMLElement) {
+			this.button = button;
+			this.plane = button.querySelector<HTMLElement>(".js-plane-runway-icon")!;
+			this.initEvents();
+		}
+
+		private initEvents() {
+			this.button.addEventListener("mouseenter", () => {
+				gsap.killTweensOf(this.plane);
+				// the artwork itself is drawn banked upward, so level it out to fly horizontal
+				gsap.set(this.plane, { x: 0, y: 0, rotation: 30, scale: 0, opacity: 0 });
+
+				// runway spans the full length of the button, right out to its end
+				const planeRect = this.plane.getBoundingClientRect();
+				const buttonRect = this.button.getBoundingClientRect();
+				const runway = buttonRect.right - planeRect.left - 8;
+
+				// fixed timing regardless of button width: taxi always takes 1s, then a 1s
+				// lift+climb tail. The x tween's distance is solved backwards so that its
+				// power1.in easing (which accelerates as (t/duration)^2) places the plane
+				// exactly at the runway's end when the taxi duration elapses - and since the
+				// tail duration matches exactly what's left in the tween, x never stops
+				// moving before the climb and fade-out finish.
+				const taxiDuration = 1.3;
+				const tailDuration = 1.3;
+				const totalDuration = taxiDuration + tailDuration;
+				const totalDistance = runway / (taxiDuration / totalDuration) ** 2;
+
+				const tl = gsap.timeline();
+				tl.to(this.plane, { scale: 1, opacity: 1, duration: 0.2, ease: "power2.out" })
+					.addLabel("flight")
+					// one continuous, ever-accelerating horizontal run: taxi, liftoff, and climb-away
+					// are all the same x tween, running the full length of the timeline so it
+					// never stalls out horizontally while the climb/fade finish above it
+					.to(this.plane, { x: totalDistance, duration: totalDuration, ease: "power1.in" }, "flight")
+					// angle up and lift off right at the end of the runway
+					.to(this.plane, { y: -12, rotation: 20, duration: 0.5, ease: "power2.out" }, `flight+=${taxiDuration}`)
+					// climb away on a shallow angle and fade out
+					.to(this.plane, { y: -60, opacity: 0, duration: 0.9, ease: "power1.in" }, `flight+=${taxiDuration + 0.4}`);
+			});
+
+			this.button.addEventListener("mouseleave", () => {
+				gsap.killTweensOf(this.plane);
+				gsap.to(this.plane, { opacity: 0, scale: 0, duration: 0.2, ease: "power2.in" });
+			});
+		}
+	}
+
+	document.querySelectorAll<HTMLElement>(".js-plane-runway-btn").forEach((button) => new PlaneRunwayButton(button));
+
+	class FlairOnlyButton {
+		private readonly button: HTMLElement;
+		private readonly flair: HTMLElement;
+		private readonly xSet: (value: number) => void;
+		private readonly ySet: (value: number) => void;
+
+		constructor(button: HTMLElement) {
+			this.button = button;
+			this.flair = button.querySelector<HTMLElement>(".js-flair-btn-flair")!;
+			this.xSet = gsap.quickSetter(this.flair, "xPercent") as (value: number) => void;
+			this.ySet = gsap.quickSetter(this.flair, "yPercent") as (value: number) => void;
+			this.initEvents();
+		}
+
+		private getXY(e: MouseEvent) {
+			const { left, top, width, height } = this.button.getBoundingClientRect();
+
+			const xTransformer = gsap.utils.pipe(
+				gsap.utils.mapRange(0, width, 0, 100),
+				gsap.utils.clamp(0, 100),
+			);
+			const yTransformer = gsap.utils.pipe(
+				gsap.utils.mapRange(0, height, 0, 100),
+				gsap.utils.clamp(0, 100),
+			);
+
+			return {
+				x: xTransformer(e.clientX - left),
+				y: yTransformer(e.clientY - top),
+			};
+		}
+
+		private initEvents() {
+			this.button.addEventListener("mouseenter", (e) => {
+				const { x, y } = this.getXY(e as MouseEvent);
+				this.xSet(x);
+				this.ySet(y);
+				gsap.to(this.flair, { scale: 1, duration: 0.4, ease: "power2.out" });
+			});
+
+			this.button.addEventListener("mouseleave", (e) => {
+				const { x, y } = this.getXY(e as MouseEvent);
+				gsap.killTweensOf(this.flair);
+
+				gsap.to(this.flair, {
+					xPercent: x > 90 ? x + 20 : x < 10 ? x - 20 : x,
+					yPercent: y > 90 ? y + 20 : y < 10 ? y - 20 : y,
+					scale: 0,
+					duration: 0.3,
+					ease: "power2.out",
+				});
+			});
+
+			this.button.addEventListener("mousemove", (e) => {
+				const { x, y } = this.getXY(e as MouseEvent);
+				gsap.to(this.flair, { xPercent: x, yPercent: y, duration: 0.4, ease: "power2" });
+			});
+		}
+	}
+
+	document.querySelectorAll<HTMLElement>(".js-flair-btn").forEach((button) => new FlairOnlyButton(button));
+
+	document.querySelectorAll<HTMLElement>(".js-reveal").forEach((el) => {
+		gsap.from(el, {
+			opacity: 0,
+			y: 40,
+			ease: "none",
+			scrollTrigger: {
+				trigger: el,
+				start: "top 85%",
+				end: "top 55%",
+				scrub: 1,
+			},
+		});
+	});
+
+	const hubHero = document.querySelector<HTMLElement>(".js-hub-hero");
+	const hubHeroBg = hubHero?.querySelector<HTMLElement>(".js-hub-hero-bg");
+
+	if (hubHero && hubHeroBg) {
+		gsap.fromTo(
+			hubHeroBg,
+			{ yPercent: -10 },
+			{
+				yPercent: 10,
+				ease: "none",
+				scrollTrigger: {
+					trigger: hubHero,
+					start: "top top",
+					end: "bottom top",
+					scrub: 1,
+				},
+			},
+		);
+	}
+
+	const hubHeroWatermarkSolid = hubHero?.querySelector<HTMLElement>(".js-hub-hero-watermark-solid");
+
+	if (hubHero && hubHeroWatermarkSolid) {
+		gsap.fromTo(
+			hubHeroWatermarkSolid,
+			{ opacity: 0 },
+			{
+				opacity: 1,
+				ease: "none",
+				scrollTrigger: {
+					trigger: hubHero,
+					start: "top top",
+					end: "70% top",
+					scrub: 1,
+				},
+			},
+		);
+	}
+
+	[
+		[".js-advocacy-proof", ".js-advocacy-proof-bg"],
+	].forEach(([sectionSelector, bgSelector]) => {
+		const section = document.querySelector<HTMLElement>(sectionSelector);
+		const bg = section?.querySelector<HTMLElement>(bgSelector);
+		if (!section || !bg) return;
+
+		gsap.fromTo(
+			bg,
+			{ yPercent: -10 },
+			{
+				yPercent: 10,
+				ease: "none",
+				scrollTrigger: {
+					trigger: section,
+					start: "top bottom",
+					end: "bottom top",
+					scrub: 1,
+				},
+			},
+		);
+	});
+
+	document.querySelectorAll<HTMLElement>(".js-faq-q").forEach((btn) => {
+		btn.addEventListener("click", () => {
+			const item = btn.closest<HTMLElement>(".js-faq-item")!;
+			const wasOpen = item.classList.contains("is-open");
+			item.parentElement?.querySelectorAll<HTMLElement>(".js-faq-item").forEach((i) => i.classList.remove("is-open"));
+			if (!wasOpen) item.classList.add("is-open");
+		});
+	});
+
+	window.addEventListener("load", () => ScrollTrigger.refresh());
+</script>
+</body>
+</html>
