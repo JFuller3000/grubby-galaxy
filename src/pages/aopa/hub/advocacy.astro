@@ -39,8 +39,8 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 		</div>
 
 		<div class="relative z-[1] mx-auto flex min-h-[calc(97vh-var(--chrome-h))] w-full max-w-8xl flex-col justify-end px-8 pb-20 sm:px-12 lg:px-24">
-			<h1 class="mt-3 max-w-[18ch] font-national text-4xl font-medium leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-6xl">
-				<span class="font-light italic">Your voice</span> in every room.
+			<h1 class="mt-3 max-w-[18ch] font-national text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-6xl">
+				Your voice in every room.
 			</h1>
 			<p class="mt-4 max-w-[46ch] font-national text-xl font-light leading-relaxed text-white/80 sm:text-2xl">
 				Every fight AOPA is running for pilots right now, where each one stands, and what you can do about it today.
@@ -66,8 +66,8 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 	<section class="js-tool-module relative overflow-hidden bg-white px-8 py-36 sm:px-12 lg:px-24">
 		<div class="relative mx-auto max-w-7xl">
 			<div class="mb-14 flex flex-wrap items-center justify-between gap-8">
-				<h2 class="max-w-[20ch] font-national text-3xl font-medium text-[#182f56] sm:text-4xl">
-					<span class="font-light italic">Explore Advocacy</span> by area
+				<h2 class="max-w-[20ch] font-national text-3xl font-extrabold text-[#182f56] sm:text-4xl">
+					Explore Advocacy by area
 				</h2>
 			</div>
 
@@ -141,7 +141,7 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 
 		<div class="js-reveal relative mx-auto grid max-w-7xl gap-14 lg:grid-cols-2">
 			<div>
-				<h2 class="max-w-[20ch] font-national text-3xl font-medium text-white sm:text-4xl">
+				<h2 class="max-w-[20ch] font-national text-3xl font-extrabold text-white sm:text-4xl">
 					More than lobbying Congress or negotiating with the FAA.
 				</h2>
 				<p class="mt-4 max-w-[52ch] font-national text-lg font-light leading-relaxed text-white/90">
@@ -161,7 +161,7 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 				<div class="mb-3 font-national font-bold uppercase tracking-widest text-[#7ce0ff]">
 					AOPA in Action
 				</div>
-				<h3 class="max-w-[26ch] font-national text-2xl font-medium text-white">
+				<h3 class="max-w-[26ch] font-national text-2xl font-extrabold text-white">
 					MOSAIC: the rule AOPA worked from proposal to the ramp
 				</h3>
 				<p class="mt-4 max-w-[48ch] font-national font-light text-lg leading-relaxed text-white/90">
@@ -185,8 +185,8 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 	<!-- ===== TAKE ACTION ===== -->
 	<section class="relative overflow-hidden bg-white px-8 py-24 sm:px-12 lg:px-24">
 		<div class="mx-auto max-w-3xl text-center">
-			<h3 class="font-national text-4xl font-medium text-[#182f56]">
-				<span class="font-light italic">Stand up</span> for your right to fly
+			<h3 class="font-national text-4xl font-extrabold text-[#182f56]">
+				Stand up for your right to fly
 			</h3>
 			<p class="mx-auto mt-4 max-w-[50ch] font-national text-2xl font-light text-gray-500">
 				The fight runs whether or not you are watching. Membership funds the staff; a gift funds
@@ -249,8 +249,8 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 	<section class="relative overflow-hidden bg-[#f2f2f2] px-8 py-24 sm:px-12 lg:px-24">
 		<div class="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[1.3fr_1fr]">
 			<div>
-				<h2 class="mb-8 font-national text-3xl font-medium text-[#182f56]">
-					<span class="font-light italic">Questions</span> Pilots Ask
+				<h2 class="mb-8 font-national text-3xl font-extrabold text-[#182f56]">
+					Questions Pilots Ask
 				</h2>
 
 				<div class="js-faq border-t border-[#182f56]/10">
@@ -342,6 +342,22 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 </div>
 
 <style>
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-extrabold.woff2") format("woff2");
+		font-weight: 800;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-extrabold-italic.woff2") format("woff2");
+		font-weight: 800;
+		font-style: italic;
+		font-display: swap;
+	}
+
 	@font-face {
 		font-family: "National";
 		src: url("/fonts/test-national-bold.woff2") format("woff2");
