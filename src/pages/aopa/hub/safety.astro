@@ -19,7 +19,7 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 
 	<section class="js-hub-hero hub-hero relative overflow-hidden bg-[#0d1b2a]">
 		<img
-			class="js-hub-hero-bg pointer-events-none absolute inset-x-0 -top-[20%] h-[140%] w-full select-none object-cover will-change-transform"
+			class="pointer-events-none absolute inset-0 h-full w-full select-none object-cover"
 			src="/images/aopa/hub/template/safety.jpg"
 			alt=""
 		/>
@@ -69,7 +69,7 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 	<!-- ===== FEATURED TOOL MODULE ===== -->
 	<section class="js-tool-module relative overflow-hidden bg-white px-8 py-36 sm:px-12 lg:px-24">
 		<div class="relative mx-auto max-w-7xl">
-			<div class="js-reveal mb-14 flex flex-wrap items-center justify-between gap-8">
+			<div class="mb-14 flex flex-wrap items-center justify-between gap-8">
 				<h2 class="max-w-[20ch] font-national text-3xl font-medium text-[#182f56] sm:text-4xl">
 					<span class="font-light italic">Explore Safety</span> by area
 				</h2>
@@ -253,7 +253,7 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 	<!-- ===== MEMBER BENEFIT ===== -->
 	<section class="relative overflow-hidden bg-white">
 		<div class="grid lg:grid-cols-2">
-			<div class="js-reveal flex flex-col justify-center gap-6 px-8 py-16 sm:px-12 lg:px-16 xl:pl-24">
+			<div class="flex flex-col justify-center gap-6 px-8 py-16 sm:px-12 lg:px-16 xl:pl-24">
 				<div class="mx-auto w-fit">
 					<h3 class="max-w-[26ch] font-national text-4xl font-medium text-[#182f56]">
 						<span class="font-light italic">The education is free</span> to every pilot. Membership
@@ -308,11 +308,11 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 				</div>
 			</div>
 
-			<div class="js-member-frame relative min-h-[70vh] overflow-hidden">
+			<div class="relative min-h-[70vh] overflow-hidden">
 				<img
 					src="/images/aopa/hub/template/two-pilots.jpg"
 					alt=""
-					class="js-member-bg pointer-events-none absolute inset-x-0 -top-[20%] h-[140%] w-full select-none object-cover will-change-transform"
+					class="pointer-events-none absolute inset-0 h-full w-full select-none object-cover"
 				/>
 			</div>
 		</div>
@@ -321,7 +321,7 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 	<!-- ===== FAQ + ELSEWHERE + PROVENANCE ===== -->
 	<section class="relative overflow-hidden bg-[#f2f2f2] px-8 py-24 sm:px-12 lg:px-24">
 		<div class="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[1.3fr_1fr]">
-			<div class="js-reveal">
+			<div>
 				<h2 class="mb-8 font-national text-3xl font-medium text-[#182f56]">
 					<span class="font-light italic">Questions</span> Pilots Ask
 				</h2>
@@ -381,7 +381,7 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 			</div>
 			</div>
 
-			<div class="js-reveal flex flex-col gap-10">
+			<div class="flex flex-col gap-10">
 				<div>
 					<p class="font-national text-sm font-bold uppercase tracking-widest text-[#182f56]">
 						More from Safety
@@ -866,7 +866,7 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 
 	document.querySelectorAll<HTMLElement>(".js-flair-btn").forEach((button) => new FlairOnlyButton(button));
 
-	document.querySelectorAll<HTMLElement>(".js-reveal").forEach((el) => {
+	document.querySelectorAll<HTMLElement>(".js-hub-advocacy .js-reveal").forEach((el) => {
 		gsap.from(el, {
 			opacity: 0,
 			y: 40,
@@ -881,25 +881,6 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 	});
 
 	const hubHero = document.querySelector<HTMLElement>(".js-hub-hero");
-	const hubHeroBg = hubHero?.querySelector<HTMLElement>(".js-hub-hero-bg");
-
-	if (hubHero && hubHeroBg) {
-		gsap.fromTo(
-			hubHeroBg,
-			{ yPercent: -10 },
-			{
-				yPercent: 10,
-				ease: "none",
-				scrollTrigger: {
-					trigger: hubHero,
-					start: "top top",
-					end: "bottom top",
-					scrub: 1,
-				},
-			},
-		);
-	}
-
 	const hubHeroWatermarkSolid = hubHero?.querySelector<HTMLElement>(".js-hub-hero-watermark-solid");
 
 	if (hubHero && hubHeroWatermarkSolid) {
@@ -921,7 +902,6 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 
 	[
 		[".js-hub-advocacy", ".js-hub-advocacy-bg"],
-		[".js-member-frame", ".js-member-bg"],
 	].forEach(([sectionSelector, bgSelector]) => {
 		const section = document.querySelector<HTMLElement>(sectionSelector);
 		const bg = section?.querySelector<HTMLElement>(bgSelector);
@@ -942,34 +922,6 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 			},
 		);
 	});
-
-	const flightline = document.querySelector<SVGElement>(".js-flightline");
-	const flightlinePath = flightline?.querySelector<SVGPathElement>(".js-flightline-path");
-	const flightlineNodes = flightline?.querySelectorAll<SVGElement>(".js-flightline-node");
-	const flightlineText = flightline?.querySelectorAll<SVGElement>(".js-flightline-text");
-
-	if (flightline && flightlinePath) {
-		const length = flightlinePath.getTotalLength();
-		gsap.set(flightlinePath, { strokeDasharray: length, strokeDashoffset: length });
-
-		const tl = gsap.timeline({
-			scrollTrigger: {
-				trigger: flightline,
-				start: "top 75%",
-				end: "top 30%",
-				scrub: 1,
-			},
-		});
-
-		tl.to(flightlinePath, { strokeDashoffset: 0, ease: "none" });
-		if (flightlineNodes?.length) {
-			tl.to(flightlineNodes, { opacity: 1, ease: "none" }, "-=0.3");
-		}
-		if (flightlineText?.length) {
-			tl.to(flightlineText, { opacity: 0.8, ease: "none" }, "-=0.2");
-		}
-	}
-
 
 	document.querySelectorAll<HTMLElement>(".js-faq-q").forEach((btn) => {
 		btn.addEventListener("click", () => {

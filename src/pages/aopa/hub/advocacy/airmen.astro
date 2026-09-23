@@ -1,5 +1,5 @@
 ---
-import HubFooter from "../../../components/aopa/HubFooter.astro";
+import HubFooter from "../../../../components/aopa/HubFooter.astro";
 ---
 
 <!DOCTYPE html>
@@ -7,7 +7,7 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>Advocacy, AOPA Hub</title>
+	<title>Airmen, AOPA Advocacy</title>
 </head>
 <body>
 
@@ -17,46 +17,60 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 		<img class="home__mini-nav" src="/images/aopa/home/1/mini-nav-100.jpg" alt="" />
 	</header>
 
-	<section class="js-hub-hero hub-hero relative overflow-hidden bg-[#0d1b2a]">
-		<img
-			class="pointer-events-none absolute inset-0 h-full w-full select-none object-cover"
-			src="/images/aopa/home/4/advocacy/c182-flying.jpg"
-			alt=""
-		/>
-		<div
-			class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(13,27,42,0.15)_0%,rgba(13,27,42,0.75)_78%,rgba(13,27,42,0.95)_100%)]"
-		></div>
+	<section class="js-hub-hero hub-hero relative overflow-hidden bg-white">
+		<div class="flex min-h-[calc(97vh-var(--chrome-h))] flex-col lg:flex-row">
+			<div class="flex w-full flex-col lg:w-1/2">
+				<p class="px-8 pt-8 font-national font-light text-[#182f56]/80 sm:px-12 lg:px-16">
+					<a href="/" class="text-[#182f56] no-underline hover:underline">Home</a>
+					<span aria-hidden="true">›</span>
+					<a href="/aopa/hub/advocacy" class="text-[#182f56] no-underline hover:underline">Advocacy</a>
+					<span aria-hidden="true">›</span> Airmen
+				</p>
+				<div class="flex flex-1 flex-col justify-center px-8 py-12 sm:px-12 lg:px-16">
+					<h1 class="max-w-[16ch] font-bold text-4xl leading-[1.05] tracking-tight text-[#182f56] sm:text-5xl">
+						The rules that are about you, not your airplane.
+					</h1>
+					<p class="mt-5 max-w-[42ch] font-national text-lg font-light leading-relaxed text-gray-500 sm:text-xl">
+						Medical reform, certification and proficiency, flight training security, and due process
+						when the FAA comes calling.
+					</p>
+					<a
+						href="#"
+						class="mt-6 inline-block font-national text-base font-medium text-[#01a2e0] no-underline hover:underline"
+					>
+						See Where Medical Reform Stands
+					</a>
+				</div>
+			</div>
 
-		<div class="pointer-events-none absolute inset-0 flex items-end justify-end overflow-hidden">
-			<div class="grid">
-				<span class="js-hub-hero-watermark-overlay [grid-area:1/1] translate-y-[0.2em] mix-blend-overlay font-national text-[10rem] font-bold uppercase leading-none text-white sm:text-[14rem] lg:text-[14rem]">
-					Advocacy
-				</span>
-				<span class="js-hub-hero-watermark-solid [grid-area:1/1] translate-y-[0.2em] mix-blend-normal font-national text-[10rem] font-bold uppercase leading-none text-white opacity-0 sm:text-[14rem] lg:text-[14rem]">
-					Advocacy
-				</span>
+			<div class="relative min-h-[360px] w-full overflow-hidden lg:min-h-0 lg:w-1/2">
+				<img
+					class="pointer-events-none absolute inset-0 h-full w-full select-none object-cover"
+					src="/images/aopa/hub/subhub/preflight.jpg"
+					alt=""
+				/>
+				<div class="pointer-events-none absolute inset-x-0 bottom-0 flex justify-end overflow-hidden pr-8 sm:pr-10 lg:pr-12">
+					<span class="translate-y-[0.2em] font-national text-[4.5rem] font-bold uppercase leading-none text-[#1d3f6d] sm:text-[6rem] lg:text-[10rem]">
+						Airmen
+					</span>
+				</div>
 			</div>
 		</div>
+	</section>
 
-		<div class="relative z-[1] mx-auto flex min-h-[calc(97vh-var(--chrome-h))] w-full max-w-8xl flex-col justify-end px-8 pb-20 sm:px-12 lg:px-24">
-			<h1 class="mt-3 max-w-[18ch] font-national text-4xl font-medium leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-6xl">
-				<span class="font-light italic">Your voice</span> in every room.
-			</h1>
-			<p class="mt-4 max-w-[46ch] font-national text-xl font-light leading-relaxed text-white/80 sm:text-2xl">
-				Every fight AOPA is running for pilots right now, where each one stands, and what you can do about it today.
-			</p>
-			<div class="mt-6 flex flex-wrap gap-3">
-				<a
-					href="#"
-					class="inline-flex items-center justify-center rounded-full bg-[#01a2e0] px-7 py-3.5 font-national text-[0.95rem] font-bold text-white no-underline"
-				>
-					See What's Happening in Your State
+	<!-- ===== DO SOMETHING NOW ===== -->
+	<section class="relative overflow-hidden bg-[#1d3f6d] px-8 py-24 sm:px-12 lg:px-24">
+		<div class="mx-auto max-w-7xl">
+			<p class="font-national text-2xl font-light italic text-white">Do Something Now</p>
+			<div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+				<a href="#" class="rounded-2xl bg-gray-100 px-6 py-6 font-national text-lg font-bold leading-snug text-[#182f56] no-underline hover:text-[#01a2e0]">
+					Check your flight training security obligations
 				</a>
-				<a
-					href="#"
-					class="inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 font-national text-[0.95rem] font-bold text-[#182f56] no-underline"
-				>
-					Support the Fight
+				<a href="#" class="rounded-2xl bg-gray-100 px-6 py-6 font-national text-lg font-bold leading-snug text-[#182f56] no-underline hover:text-[#01a2e0]">
+					If you received a letter of investigation
+				</a>
+				<a href="#" class="rounded-2xl bg-gray-100 px-6 py-6 font-national text-lg font-bold leading-snug text-[#182f56] no-underline hover:text-[#01a2e0]">
+					Comment on a proposed rule
 				</a>
 			</div>
 		</div>
@@ -67,70 +81,52 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 		<div class="relative mx-auto max-w-7xl">
 			<div class="mb-14 flex flex-wrap items-center justify-between gap-8">
 				<h2 class="max-w-[20ch] font-national text-3xl font-medium text-[#182f56] sm:text-4xl">
-					<span class="font-light italic">Explore Advocacy</span> by area
+					<span class="font-light italic">Explore</span> by topic
 				</h2>
 			</div>
 
-			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
 				<a href="#" class="relative isolate flex min-h-[200px] flex-col justify-start gap-3 overflow-hidden rounded-lg bg-[#182f56] p-7 no-underline">
 					<div class="relative">
-						<span class="block font-national text-xl font-medium text-[#7ce0ff]">Aircraft</span>
+						<span class="block font-national text-xl font-medium text-[#7ce0ff]">BasicMed and Medical Reform</span>
 						<p class="mt-2 font-national text-lg font-light text-white">
-							What you can fly and what you can burn — MOSAIC, unleaded fuel, certification, taxes, drones.
+							Where third class medical reform stands, what has already changed, and what AOPA is still fighting for.
 						</p>
 					</div>
-					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">Aircraft →</span>
+					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">BasicMed →</span>
 				</a>
 				<a href="#" class="relative isolate flex min-h-[200px] flex-col justify-start gap-3 overflow-hidden rounded-lg border border-white/10 bg-[#182f56] p-7 no-underline">
 					<div class="relative">
-						<span class="block font-national text-xl font-medium text-[#7ce0ff]">Airports</span>
+						<span class="block font-national text-xl font-medium text-[#7ce0ff]">Flight Training Security Program</span>
 						<p class="mt-2 font-national text-lg font-light text-white">
-							Keeping community airports open, funded and fairly priced, with volunteers watching the fields.
+							What the TSA rule requires of a flight training provider, who has to be vetted, and by when.
 						</p>
 					</div>
-					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">Airports →</span>
-				</a>
-				<a href="/aopa/hub/advocacy/airmen" class="relative isolate flex min-h-[200px] flex-col justify-start gap-3 overflow-hidden rounded-lg border border-white/10 bg-[#182f56] p-7 no-underline">
-					<div class="relative">
-						<span class="block font-national text-xl font-medium text-[#7ce0ff]">Airmen</span>
-						<p class="mt-2 font-national text-lg font-light text-white">
-							The rules written about you rather than your airplane — medical reform, certification, flight training security.
-						</p>
-					</div>
-					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">Airmen →</span>
+					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">Flight Training Security Program →</span>
 				</a>
 				<a href="#" class="relative isolate flex min-h-[200px] flex-col justify-start gap-3 overflow-hidden rounded-lg border border-white/10 bg-[#182f56] p-7 no-underline">
 					<div class="relative">
-						<span class="block font-national text-xl font-medium text-[#7ce0ff]">Airspace</span>
+						<span class="block font-national text-xl font-medium text-[#7ce0ff]">Pilot Regulation</span>
 						<p class="mt-2 font-national text-lg font-light text-white">
-							Who gets to fly where — airspace redesign and temporary flight restrictions.
+							Airman certification and proficiency rules, and how to weigh in while they are still being written.
 						</p>
 					</div>
-					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">Airspace →</span>
+					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">Pilot Regulation →</span>
 				</a>
 				<a href="#" class="relative isolate flex min-h-[200px] flex-col justify-start gap-3 overflow-hidden rounded-lg border border-white/10 bg-[#182f56] p-7 no-underline">
 					<div class="relative">
-						<span class="block font-national text-xl font-medium text-[#7ce0ff]">State Advocacy</span>
+						<span class="block font-national text-xl font-medium text-[#7ce0ff]">Pilot's Bill of Rights 2</span>
 						<p class="mt-2 font-national text-lg font-light text-white">
-							The fight in your own backyard, by state, with the regional manager who works it.
+							What the law gives a pilot facing FAA enforcement: notice, access to the evidence, and a real appeal.
 						</p>
 					</div>
-					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">State Advocacy →</span>
-				</a>
-				<a href="#" class="relative isolate flex min-h-[200px] flex-col justify-start gap-3 overflow-hidden rounded-lg border border-white/10 bg-[#182f56] p-7 no-underline">
-					<div class="relative">
-						<span class="block font-national text-xl font-medium text-[#7ce0ff]">Briefs</span>
-						<p class="mt-2 font-national text-lg font-light text-white">
-							AOPA's written position on a specific rule, for whoever needs the argument in full.
-						</p>
-					</div>
-					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">Briefs →</span>
+					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">Pilot's Bill of Rights 2 →</span>
 				</a>
 			</div>
 		</div>
 	</section>
 
-	<!-- ===== PROOF (CHARTER) + AOPA IN ACTION ===== -->
+	<!-- ===== PROOF (STATS) + AOPA IN ACTION ===== -->
 	<section class="js-advocacy-proof relative overflow-hidden bg-[#1d3f6d] px-8 py-36 sm:px-12 lg:px-24">
 		<img
 			class="js-advocacy-proof-bg pointer-events-none absolute inset-x-0 -top-[100%] h-[300%] w-full select-none object-cover will-change-transform"
@@ -139,45 +135,89 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 		/>
 		<div class="pointer-events-none absolute inset-0 bg-[#1d3f6d]/55"></div>
 
-		<div class="js-reveal relative mx-auto grid max-w-7xl gap-14 lg:grid-cols-2">
-			<div>
-				<h2 class="max-w-[20ch] font-national text-3xl font-medium text-white sm:text-4xl">
-					More than lobbying Congress or negotiating with the FAA.
-				</h2>
-				<p class="mt-4 max-w-[52ch] font-national text-lg font-light leading-relaxed text-white/90">
-					AOPA's legislative and regulatory work runs in Washington and in all 50 states, carried
-					by professionals working "24/7 in Washington, D.C. and in all 50 states." It covers six
-					areas: aircraft, airports, airmen, airspace, state advocacy, and AOPA's written briefs.
-				</p>
-				<blockquote class="mt-6 max-w-[42ch] font-national text-2xl font-light italic leading-snug text-white">
-					"It's about putting the combined weight of hundreds of thousands of pilots behind you."
-				</blockquote>
-				<p class="mt-4 font-national text-sm font-light text-white/60">
-					Source: aopa.org/advocacy
-				</p>
+		<div class="relative mx-auto max-w-7xl">
+			<h2 class="js-reveal mb-14 max-w-[30ch] font-national text-3xl font-medium text-white sm:text-4xl">
+				What the rules actually require
+			</h2>
+
+			<div class="js-reveal mb-20 grid grid-cols-1 gap-10 sm:grid-cols-3">
+				<a href="#" class="no-underline">
+					<div class="font-national text-3xl font-bold text-[#7ce0ff]">July 30, 2024</div>
+					<p class="mt-3 font-national text-xl font-medium text-white">
+						Flight Training Security Program rule took effect
+					</p>
+					<p class="mt-2 font-national text-lg font-light italic text-white/80">
+						Providers must "verify U.S. citizenship of trainees, give security awareness initial
+						and biennial training to their employees, and designate a security coordinator with
+						the TSA."
+					</p>
+					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">
+						Flight Training Security Program →
+					</span>
+				</a>
+				<a href="#" class="no-underline">
+					<div class="font-national text-3xl font-bold text-[#7ce0ff]">Each day</div>
+					<p class="mt-3 font-national text-xl font-medium text-white">
+						counts as a separate occurrence subject to penalty
+					</p>
+					<p class="mt-2 font-national text-lg font-light italic text-white/80">
+						"TSA considers each day a person operates in violation to the requirements of the
+						rule an additional occurrence subject to penalty."
+					</p>
+					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">
+						AOPA's guide to the rule →
+					</span>
+				</a>
+				<a href="#" class="no-underline">
+					<div class="font-national text-3xl font-bold text-[#7ce0ff]">60 days · 2 yrs · 5 yrs</div>
+					<p class="mt-3 font-national text-xl font-medium text-white">
+						training due · refresh cycle · records held
+					</p>
+					<p class="mt-2 font-national text-lg font-light text-white/80">
+						Security awareness training is due within 60 days, refreshed every two years, with
+						citizenship records held for five.
+					</p>
+					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">
+						Security awareness training →
+					</span>
+				</a>
 			</div>
 
-			<div class="rounded-lg bg-[#0d1b2a]/50 p-10">
-				<div class="mb-3 font-national font-bold uppercase tracking-widest text-[#7ce0ff]">
-					AOPA in Action
+			<div class="js-reveal grid gap-10 rounded-lg bg-[#0d1b2a]/50 p-10 lg:grid-cols-2 lg:items-center">
+				<div>
+					<div class="mb-3 font-national font-bold uppercase tracking-widest text-[#7ce0ff]">
+						AOPA in Action
+					</div>
+					<h3 class="max-w-[26ch] font-national text-2xl font-medium text-white">
+						One vote closer on mental health and the medical
+					</h3>
+					<p class="mt-4 max-w-[52ch] font-national font-light leading-relaxed text-white/90">
+						The Senate Commerce Committee voted unanimously on April 14, 2026 to advance the
+						Mental Health in Aviation Act, which would modernize how the FAA certificates pilots
+						who seek treatment and address examiner shortages and special issuance delays. The
+						House passed its version in September 2025.
+					</p>
+					<blockquote class="mt-4 max-w-[48ch] font-national text-lg font-light italic leading-snug text-white">
+						"Pilots should feel confident, should they need to seek treatment, without fear of
+						possibly losing their livelihood." — Jim Coon, AOPA SVP government affairs
+					</blockquote>
+					<a
+						href="#"
+						class="mt-5 inline-flex items-center gap-2 font-national text-lg font-bold uppercase tracking-widest text-[#7ce0ff] no-underline"
+					>
+						See what we're fighting for
+					</a>
+					<p class="mt-4 font-national text-sm font-light text-white/50">
+						Source: AOPA news, April 15, 2026
+					</p>
 				</div>
-				<h3 class="max-w-[26ch] font-national text-2xl font-medium text-white">
-					MOSAIC: the rule AOPA worked from proposal to the ramp
-				</h3>
-				<p class="mt-4 max-w-[48ch] font-national font-light text-lg leading-relaxed text-white/90">
-					The FAA's MOSAIC rule rewrote what counts as a light-sport aircraft and what a sport
-					pilot may fly. AOPA worked it from proposal through the July 2025 final rule; on July
-					16, 2026 the FAA accepted the industry consensus standards manufacturers now build to.
-				</p>
-				<a
-					href="#"
-					class="mt-5 inline-flex items-center gap-2 font-national text-lg font-bold uppercase tracking-widest text-[#7ce0ff] no-underline"
-				>
-					See what we're fighting for
-				</a>
-				<p class="mt-4 font-national text-sm font-light text-white/50">
-					Source: AOPA news, July 16, 2026
-				</p>
+				<div class="js-advocacy-proof-photo relative min-h-[280px] overflow-hidden rounded-lg">
+					<img
+						src="/images/aopa/home/4/advocacy/c182-flying.jpg"
+						alt=""
+						class="pointer-events-none absolute inset-0 h-full w-full select-none object-cover"
+					/>
+				</div>
 			</div>
 		</div>
 	</section>
@@ -186,66 +226,60 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 	<section class="relative overflow-hidden bg-white px-8 py-24 sm:px-12 lg:px-24">
 		<div class="mx-auto max-w-3xl text-center">
 			<h3 class="font-national text-4xl font-medium text-[#182f56]">
-				<span class="font-light italic">Stand up</span> for your right to fly
+				<span class="font-light italic">The fight is the benefit,</span> and it runs whether or not
+				you are watching.
 			</h3>
 			<p class="mx-auto mt-4 max-w-[50ch] font-national text-2xl font-light text-gray-500">
-				The fight runs whether or not you are watching. Membership funds the staff; a gift funds
-				what dues alone cannot cover.
+				Membership funds the people in the room; a gift to the Aviation Advocacy Fund covers what
+				dues cannot.
 			</p>
 
-			<a
-				href="#"
-				class="js-learn-more-4 js-plane-runway-btn relative mt-8 inline-flex items-center gap-7 rounded-full bg-[#182f56] py-2 pl-10 pr-2 no-underline"
-			>
-				<span class="pointer-events-none absolute inset-0 overflow-hidden rounded-full" aria-hidden="true">
+			<div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+				<a
+					href="#"
+					class="js-learn-more-4 js-plane-runway-btn relative inline-flex items-center gap-7 rounded-full bg-[#182f56] py-2 pl-10 pr-2 no-underline"
+				>
+					<span class="pointer-events-none absolute inset-0 overflow-hidden rounded-full" aria-hidden="true">
+						<span
+							class="js-learn-more-4-flair pointer-events-none absolute inset-0 origin-top-left scale-0 will-change-transform"
+							aria-hidden="true"
+						>
+							<span class="absolute left-0 top-0 aspect-square w-[260%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5b9bd5] opacity-40"></span>
+						</span>
+					</span>
+					<span class="pointer-events-none absolute inset-0" aria-hidden="true">
+						<span class="js-plane-runway-icon absolute left-6 top-[-4px] grid h-6 w-6 -translate-y-1/2 place-items-center text-[#5b9bd5] opacity-0">
+							<svg viewBox="0 0 32 32" fill="currentColor" class="h-full w-full">
+								<path d="M30.79,10.85l-2.33-2.99v-.02c-1.57-1.92-4.3-2.4-6.42-1.14l-6.45,3.85-6.74-2.48c-.23-.08-.47-.08-.7,0l-.9.34-.04.02c-1.02.44-1.48,1.61-1.05,2.63.11.26.28.49.48.68l2.73,2.65-2.52,1.52-3.53-1.19c-.25-.08-.52-.07-.76.05l-.38.18c-1.01.45-1.46,1.63-1.01,2.64.11.24.26.45.45.63l4.5,4.41h.01c.92.89,2.14,1.37,3.41,1.37.89,0,1.76-.24,2.53-.69l18.43-11c.47-.28.63-.9.35-1.37-.02-.04-.04-.07-.07-.1h0Z" />
+							</svg>
+						</span>
+					</span>
+					<span class="js-learn-more-4-label relative font-national font-medium uppercase tracking-widest text-white">
+						Join AOPA
+					</span>
 					<span
-						class="js-learn-more-4-flair pointer-events-none absolute inset-0 origin-top-left scale-0 will-change-transform"
+						class="js-learn-more-4-icon relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white text-[#182f56]"
 						aria-hidden="true"
 					>
-						<span class="absolute left-0 top-0 aspect-square w-[260%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#5b9bd5] opacity-40"></span>
-					</span>
-				</span>
-				<span class="pointer-events-none absolute inset-0" aria-hidden="true">
-					<span class="js-plane-runway-icon absolute left-6 top-[-4px] grid h-6 w-6 -translate-y-1/2 place-items-center text-[#5b9bd5] opacity-0">
-						<svg viewBox="0 0 32 32" fill="currentColor" class="h-full w-full">
-							<path d="M30.79,10.85l-2.33-2.99v-.02c-1.57-1.92-4.3-2.4-6.42-1.14l-6.45,3.85-6.74-2.48c-.23-.08-.47-.08-.7,0l-.9.34-.04.02c-1.02.44-1.48,1.61-1.05,2.63.11.26.28.49.48.68l2.73,2.65-2.52,1.52-3.53-1.19c-.25-.08-.52-.07-.76.05l-.38.18c-1.01.45-1.46,1.63-1.01,2.64.11.24.26.45.45.63l4.5,4.41h.01c.92.89,2.14,1.37,3.41,1.37.89,0,1.76-.24,2.53-.69l18.43-11c.47-.28.63-.9.35-1.37-.02-.04-.04-.07-.07-.1h0Z" />
+						<svg class="js-learn-more-4-arrow h-8 w-8 rotate-45" viewBox="0 0 41.69 43.1" fill="none">
+							<polygon
+								fill="currentColor"
+								points="30.75 21.39 27.61 18.25 24.66 15.09 24.85 17.26 24.83 43.05 16.76 43.1 16.77 17.45 16.82 15.38 12.56 19.77 0 32.33 0 20.83 5.47 15.32 8.82 12 12.8 7.99 20.87 0 41.68 20.8 41.69 32.33 38.04 28.68 30.75 21.39"
+							/>
 						</svg>
 					</span>
-				</span>
-				<span class="js-learn-more-4-label relative font-national font-medium uppercase tracking-widest text-white">
-					Join AOPA
-				</span>
-				<span
-					class="js-learn-more-4-icon relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white text-[#182f56]"
-					aria-hidden="true"
-				>
-					<svg class="js-learn-more-4-arrow h-8 w-8 rotate-45" viewBox="0 0 41.69 43.1" fill="none">
-						<polygon
-							fill="currentColor"
-							points="30.75 21.39 27.61 18.25 24.66 15.09 24.85 17.26 24.83 43.05 16.76 43.1 16.77 17.45 16.82 15.38 12.56 19.77 0 32.33 0 20.83 5.47 15.32 8.82 12 12.8 7.99 20.87 0 41.68 20.8 41.69 32.33 38.04 28.68 30.75 21.39"
-						/>
-					</svg>
-				</span>
-			</a>
-
-			<div class="mx-auto mt-12 grid max-w-2xl gap-4 text-left sm:grid-cols-2">
-				<a href="#" class="rounded-lg border border-[#182f56]/10 bg-[#f2f2f2] p-8 no-underline transition-colors hover:border-[#01a2e0]/30">
-					<p class="font-national text-lg font-medium text-[#182f56]">AOPA Aviation Advocacy Fund</p>
-					<p class="mt-2 font-national text-sm font-light text-gray-500">
-						501(c)(4), not tax-deductible. Primary giving destination.
-					</p>
 				</a>
-				<a href="#" class="rounded-lg border border-[#182f56]/10 bg-[#f2f2f2] p-8 no-underline transition-colors hover:border-[#01a2e0]/30">
-					<p class="font-national text-lg font-medium text-[#182f56]">AOPA Political Action Committee</p>
-					<p class="mt-2 font-national text-sm font-light text-gray-500">
-						Not tax-deductible.
-					</p>
+				<a
+					href="#"
+					class="inline-flex items-center justify-center rounded-full border border-[#182f56]/20 px-7 py-3.5 font-national text-[0.95rem] font-bold text-[#182f56] no-underline"
+				>
+					Support the Fight
 				</a>
 			</div>
 		</div>
 	</section>
 
-	<!-- ===== FAQ + L1 SPOKES + ELSEWHERE + PROVENANCE ===== -->
+	<!-- ===== FAQ + ELSEWHERE + PROVENANCE ===== -->
 	<section class="relative overflow-hidden bg-[#f2f2f2] px-8 py-24 sm:px-12 lg:px-24">
 		<div class="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[1.3fr_1fr]">
 			<div>
@@ -256,51 +290,50 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 				<div class="js-faq border-t border-[#182f56]/10">
 				<div class="js-faq-item is-open border-b border-[#182f56]/10">
 					<button type="button" class="js-faq-q flex w-full items-center justify-between gap-4 py-5 text-left text-xl font-national text-base font-bold text-[#182f56]">
-						What does AOPA's advocacy work actually cover?
+						Do I need a medical certificate to fly under BasicMed?
 						<span class="js-faq-plus font-national text-xl font-light text-[#01a2e0]">+</span>
 					</button>
 					<div class="js-faq-a overflow-hidden">
 						<p class="mb-5 font-national text-lg font-light leading-relaxed text-gray-500">
-							Six areas: aircraft, airports, airmen, airspace, state advocacy, and AOPA's
-							written briefs — carried by government affairs staff in Washington, D.C. and
-							all 50 states.
+							No — BasicMed lets most pilots fly without a full FAA medical exam, provided you've
+							held a regular medical certificate at some point since 2006 and complete the
+							program's requirements.
 						</p>
 					</div>
 				</div>
 				<div class="js-faq-item border-b border-[#182f56]/10">
 					<button type="button" class="js-faq-q flex w-full text-xl items-center justify-between gap-4 py-5 text-left font-national text-base font-bold text-[#182f56]">
-						What is the difference between the AOPA PAC and the Advocacy Fund?
+						What does the TSA Flight Training Security Program require of my school?
 						<span class="js-faq-plus font-national text-xl font-light text-[#01a2e0]">+</span>
 					</button>
 					<div class="js-faq-a overflow-hidden">
 						<p class="mb-5 font-national text-lg font-light leading-relaxed text-gray-500">
-							The Aviation Advocacy Fund is a 501(c)(4) and is AOPA's primary giving
-							destination; the Political Action Committee funds candidate support directly.
-							Neither is tax-deductible.
+							Providers must verify U.S. citizenship of trainees, give security awareness
+							training to employees, and designate a security coordinator with the TSA.
 						</p>
 					</div>
 				</div>
 				<div class="js-faq-item border-b border-[#182f56]/10">
 					<button type="button" class="js-faq-q flex w-full items text-xl items-center justify-between gap-4 py-5 text-left font-national  font-bold text-[#182f56]">
-						Which advocacy issue do I look under for my question?
+						What are my rights if the FAA opens an investigation?
 						<span class="js-faq-plus font-national text-xl font-light text-[#01a2e0]">+</span>
 					</button>
 					<div class="js-faq-a overflow-hidden">
 						<p class="mb-5 font-national text-lg font-light leading-relaxed text-gray-500">
-							Browse by area above — Aircraft, Airports, Airmen, Airspace, State Advocacy or
-							Briefs — or search AOPA's written briefs for the specific rule in question.
+							The Pilot's Bill of Rights 2 guarantees notice, access to the evidence against you,
+							and a real appeal process before the FAA can act.
 						</p>
 					</div>
 				</div>
 				<div class="js-faq-item border-b border-[#182f56]/10">
 					<button type="button" class="js-faq-q flex w-full items text-xl items-center justify-between gap-4 py-5 text-left font-national  font-bold text-[#182f56]">
-						How do I take action on an issue AOPA is working?
+						Where is the Mental Health in Aviation Act now?
 						<span class="js-faq-plus font-national text-xl font-light text-[#01a2e0]">+</span>
 					</button>
 					<div class="js-faq-a overflow-hidden">
 						<p class="mb-5 font-national text-lg font-light leading-relaxed text-gray-500">
-							Each area page lists a "Do Something Now" action, or find your state's fight on
-							the State Advocacy page for the regional manager working it.
+							The Senate Commerce Committee advanced it unanimously on April 14, 2026; the House
+							passed its version in September 2025.
 						</p>
 					</div>
 				</div>
@@ -310,29 +343,17 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 			<div class="flex flex-col gap-10">
 				<div>
 					<p class="font-national text-sm font-bold uppercase tracking-widest text-[#182f56]">
-						More from Advocacy
-					</p>
-					<ul class="mt-4 list-none space-y-2 p-0 font-national text-lg text-[#182f56]">
-						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">Capitol Hill</a></li>
-						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">FAA Funding</a></li>
-						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">GA Caucuses</a></li>
-						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">NextGen</a></li>
-					</ul>
-				</div>
-
-				<div>
-					<p class="font-national text-sm font-bold uppercase tracking-widest text-[#182f56]">
 						Elsewhere on aopa.org
 					</p>
 					<ul class="mt-4 list-none space-y-2 p-0 font-national text-lg text-[#182f56]">
-						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">Get Involved → Ways to Give</a></li>
-						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">Safety → Air Safety Institute</a></li>
-						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">News & Events → News</a></li>
+						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">Go Fly → Medical Resources</a></li>
+						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">Advocacy → Briefs</a></li>
+						<li><a href="/aopa/hub/advocacy" class="text-[#182f56] no-underline hover:text-[#01a2e0]">Advocacy (hub)</a></li>
 					</ul>
 				</div>
 
 				<p class="border-t border-[#182f56]/10 pt-6 font-national text-sm font-light text-gray-500">
-					Reviewed by AOPA government affairs staff (named) · Last updated [DATE]
+					Reviewed by AOPA government affairs (named) · Last updated [DATE]
 				</p>
 			</div>
 		</div>
@@ -726,40 +747,6 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 
 	document.querySelectorAll<HTMLElement>(".js-flair-btn").forEach((button) => new FlairOnlyButton(button));
 
-	document.querySelectorAll<HTMLElement>(".js-advocacy-proof .js-reveal").forEach((el) => {
-		gsap.from(el, {
-			opacity: 0,
-			y: 40,
-			ease: "none",
-			scrollTrigger: {
-				trigger: el,
-				start: "top 85%",
-				end: "top 55%",
-				scrub: 1,
-			},
-		});
-	});
-
-	const hubHero = document.querySelector<HTMLElement>(".js-hub-hero");
-	const hubHeroWatermarkSolid = hubHero?.querySelector<HTMLElement>(".js-hub-hero-watermark-solid");
-
-	if (hubHero && hubHeroWatermarkSolid) {
-		gsap.fromTo(
-			hubHeroWatermarkSolid,
-			{ opacity: 0 },
-			{
-				opacity: 1,
-				ease: "none",
-				scrollTrigger: {
-					trigger: hubHero,
-					start: "top top",
-					end: "70% top",
-					scrub: 1,
-				},
-			},
-		);
-	}
-
 	[
 		[".js-advocacy-proof", ".js-advocacy-proof-bg"],
 	].forEach(([sectionSelector, bgSelector]) => {
@@ -781,6 +768,20 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 				},
 			},
 		);
+	});
+
+	document.querySelectorAll<HTMLElement>(".js-advocacy-proof .js-reveal").forEach((el) => {
+		gsap.from(el, {
+			opacity: 0,
+			y: 40,
+			ease: "none",
+			scrollTrigger: {
+				trigger: el,
+				start: "top 85%",
+				end: "top 55%",
+				scrub: 1,
+			},
+		});
 	});
 
 	document.querySelectorAll<HTMLElement>(".js-faq-q").forEach((btn) => {
