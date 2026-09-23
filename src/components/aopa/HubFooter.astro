@@ -9,7 +9,7 @@ const linkClass = "font-national text-base font-light text-white/85 no-underline
 
 <footer class="relative z-[1] bg-[#182f56] px-8 py-16 sm:px-12 lg:px-24">
 	<div class="mx-auto max-w-[1600px]">
-		<div class="grid grid-cols-1 gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+		<div class="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
 			<div>
 				<img src="/images/aopa/home/4/aopa-wings.svg" alt="" class="w-36 select-none" />
 				<p class="mt-3 font-national text-3xl font-bold uppercase text-white">
@@ -39,32 +39,34 @@ const linkClass = "font-national text-base font-light text-white/85 no-underline
 				</a>
 			</div>
 
-			<div>
-				<p class={headingClass}>Contact</p>
-				<div class="mt-6 flex flex-col gap-4">
-					<p class="font-national text-base font-light leading-relaxed text-white/90">
-						421 Aviation Way<br />Frederick, MD, 21701
-					</p>
-					<a href="tel:8008722672" class={linkClass}>800.872.2672</a>
-					<a href="#" class={linkClass}>Contact Us</a>
+			<div class="grid grid-cols-1 gap-12 sm:grid-cols-3 sm:gap-16 lg:gap-20">
+				<div>
+					<p class={headingClass}>Contact</p>
+					<div class="mt-6 flex flex-col gap-4">
+						<p class="font-national text-base font-light leading-relaxed text-white/90">
+							421 Aviation Way<br />Frederick, MD, 21701
+						</p>
+						<a href="tel:8008722672" class={linkClass}>800.872.2672</a>
+						<a href="#" class={linkClass}>Contact Us</a>
+					</div>
 				</div>
-			</div>
 
-			<div>
-				<p class={headingClass}>AOPA Foundation</p>
-				<div class="mt-6 flex flex-col gap-3">
-					{foundationLinks.map((label) => (
-						<a href="#" class={linkClass}>{label}</a>
-					))}
+				<div>
+					<p class={headingClass}>AOPA Foundation</p>
+					<div class="mt-6 flex flex-col gap-3">
+						{foundationLinks.map((label) => (
+							<a href="#" class={linkClass}>{label}</a>
+						))}
+					</div>
 				</div>
-			</div>
 
-			<div>
-				<p class={headingClass}>Company</p>
-				<div class="mt-6 flex flex-col gap-3">
-					{companyLinks.map((label) => (
-						<a href="#" class={linkClass}>{label}</a>
-					))}
+				<div>
+					<p class={headingClass}>Company</p>
+					<div class="mt-6 flex flex-col gap-3">
+						{companyLinks.map((label) => (
+							<a href="#" class={linkClass}>{label}</a>
+						))}
+					</div>
 				</div>
 			</div>
 		</div>
