@@ -1,0 +1,267 @@
+---
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>AOPA Home</title>
+</head>
+<body>
+
+<div class="home">
+	<header class="home__header" id="home-header">
+		<img class="home__chrome" src="/images/aopa/home/1/chrome-100.jpg" alt="" />
+		<img class="home__mini-nav" src="/images/aopa/home/1/mini-nav-100.jpg" alt="" />
+	</header>
+
+	<section class="home__hero">
+		<div class="home__hero-inner">
+			<video
+				class="block h-full w-full object-cover object-center"
+				src="/images/aopa/home/CADENCE1.mov"
+				poster="/images/aopa/home/video-placeholder-100.jpg"
+				autoplay
+				muted
+				loop
+				playsinline
+			></video>
+			<div
+				class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0)_0%,rgba(0,0,0,0)_45%,rgba(0,0,0,0.45)_100%)]"
+				aria-hidden="true"
+			></div>
+			<div class="absolute inset-x-0 bottom-[clamp(2rem,6vw,4.5rem)] px-[clamp(2rem,6vw,4.5rem)] text-white">
+				<h1 class="m-0 font-national text-[clamp(3.75rem,9vw,6.5rem)] font-bold leading-[1.05] drop-shadow-[0_4px_16px_rgba(0,0,0,0.6)]">
+					Where Pilots Belong
+				</h1>
+				<p class="mt-4 max-w-[46ch] font-national text-[clamp(1.35rem,2.4vw,2rem)] font-normal leading-[1.4] text-white/90 drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)]">
+					The tools, the experts and the advocacy that protect <br/> your freedom to fly.
+				</p>
+				<div class="mt-6 flex flex-wrap gap-3">
+					<a
+						href="#"
+						class="inline-flex items-center justify-center rounded-full bg-[#01a2e0] px-12 py-4 font-national font-bold uppercase tracking-[0.03em] text-white no-underline"
+					>
+						Join AOPA
+					</a>
+					<a
+						href="#"
+						class="inline-flex items-center justify-center rounded-full bg-[#01a2e0] px-12 py-4 font-national font-bold uppercase tracking-[0.03em] text-white no-underline"
+					>
+						Membership Options
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div class="home__hero-spacer" aria-hidden="true"></div>
+
+	<!-- ===== SECTION 1 (scrolls normally) ===== -->
+	<img class="relative z-[1] block h-auto w-full bg-white" src="/images/aopa/home/12
+	/section-1.jpg" alt="" />
+
+	<!-- ===== FIXED 1 (pins in place while its spacer scrolls by) ===== -->
+	<div class="home-fixed-spacer relative z-[1] bg-white" id="fixed-1-spacer" aria-hidden="true"></div>
+	<div class="home-fixed" id="fixed-1">
+		<img class="block h-full w-full object-cover object-center" src="/images/aopa/home/11/fixed-1.jpg" alt="" />
+	</div>
+
+	<!-- ===== SECTION 2 (scrolls normally) ===== -->
+	<img class="relative z-[1] block h-auto w-full bg-white" src="/images/aopa/home/11/section-2.jpg" alt="" />
+
+	<!-- ===== FIXED 2 (pins in place while its spacer scrolls by) ===== -->
+	<div class="home-fixed-spacer relative z-[1] bg-white" id="fixed-2-spacer" aria-hidden="true"></div>
+	<div class="home-fixed" id="fixed-2">
+		<img class="block h-full w-full object-cover object-center" src="/images/aopa/home/11/fixed-2.jpg" alt="" />
+	</div>
+
+	<!-- ===== SECTION 3 (scrolls normally, includes footer) ===== -->
+	<img class="relative z-[1] block h-auto w-full bg-white" src="/images/aopa/home/11/section-3.jpg" alt="" />
+</div>
+
+<style>
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-bold.woff2") format("woff2");
+		font-weight: 700;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-regular.woff2") format("woff2");
+		font-weight: 400;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	.font-national {
+		font-family: "National", system-ui, -apple-system, sans-serif;
+	}
+
+	*, *::before, *::after { box-sizing: border-box; }
+
+	html, body {
+		margin: 0;
+		padding: 0;
+		background: #fff;
+	}
+
+	.home {
+		position: relative;
+		width: 100%;
+		--chrome-h: calc(100vw * 127 / 2100);
+		--mini-nav-h: calc(100vw * 76 / 2100);
+	}
+
+	.home__header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 3;
+		width: 100%;
+		height: var(--chrome-h);
+		overflow: hidden;
+		transition: height 0.4s ease;
+	}
+
+	.home__header.is-scrolled {
+		height: var(--mini-nav-h);
+	}
+
+	.home__chrome,
+	.home__mini-nav {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: auto;
+		transition: transform 0.4s ease;
+	}
+
+	.home__chrome {
+		transform: translateY(0);
+	}
+
+	.home__mini-nav {
+		transform: translateY(-100%);
+	}
+
+	.home__header.is-scrolled .home__chrome {
+		transform: translateY(-100%);
+	}
+
+	.home__header.is-scrolled .home__mini-nav {
+		transform: translateY(0);
+	}
+
+	.home__hero {
+		position: fixed;
+		inset: 0;
+		z-index: 0;
+		width: 100%;
+		height: 100vh;
+		height: 100dvh;
+		box-sizing: border-box;
+		overflow: hidden;
+	}
+
+	.home__hero-inner {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+
+	.home__hero-spacer {
+		height: 100vh;
+		height: 100dvh;
+	}
+
+	.home-fixed-spacer {
+		height: 100vh;
+		height: 100dvh;
+	}
+
+	.home-fixed {
+		position: fixed;
+		inset: 0;
+		z-index: 2;
+		width: 100%;
+		height: 100vh;
+		height: 100dvh;
+		overflow: hidden;
+		clip-path: inset(100% 0 0 0);
+		pointer-events: none;
+	}
+</style>
+
+<script>
+	const header = document.getElementById("home-header");
+	const scrollThreshold = 40;
+
+	const updateHeaderState = () => {
+		header?.classList.toggle("is-scrolled", window.scrollY > scrollThreshold);
+	};
+
+	updateHeaderState();
+	window.addEventListener("scroll", updateHeaderState, { passive: true });
+
+	const fixedReveals: [string, string][] = [
+		["fixed-1-spacer", "fixed-1"],
+		["fixed-2-spacer", "fixed-2"],
+	];
+
+	const fixedPairs = fixedReveals
+		.map(([spacerId, fixedId]) => ({
+			spacer: document.getElementById(spacerId),
+			fixed: document.getElementById(fixedId),
+		}))
+		.filter(
+			(pair): pair is { spacer: HTMLElement; fixed: HTMLElement } =>
+				!!pair.spacer && !!pair.fixed,
+		);
+
+	// Wipes each fixed panel in/out via clip-path instead of toggling
+	// display or fading opacity. Neither of those can partially cover the
+	// screen, so they either pop the panel over content still fully visible,
+	// leave a dead gap of the spacer's own background showing first, or make
+	// the outgoing section look like it's fading rather than plainly
+	// scrolling away. Clipping the panel to exactly the region its spacer has
+	// already reached means the previous section keeps scrolling off
+	// normally while the fixed panel grows in to fill exactly the space it
+	// vacates - and the same in reverse as the next section arrives.
+	let fixedRevealTicking = false;
+
+	const updateFixedReveals = () => {
+		const viewportHeight = window.innerHeight;
+		fixedPairs.forEach(({ spacer, fixed }) => {
+			const rect = spacer.getBoundingClientRect();
+			const topClip = Math.max(0, Math.min(viewportHeight, rect.top));
+			const bottomClip = Math.max(0, Math.min(viewportHeight, viewportHeight - rect.bottom));
+			fixed.style.clipPath = `inset(${topClip}px 0px ${bottomClip}px 0px)`;
+			fixed.style.pointerEvents = topClip === 0 && bottomClip === 0 ? "auto" : "none";
+		});
+		fixedRevealTicking = false;
+	};
+
+	const onFixedRevealScroll = () => {
+		if (fixedRevealTicking) return;
+		fixedRevealTicking = true;
+		window.requestAnimationFrame(updateFixedReveals);
+	};
+
+	if (fixedPairs.length) {
+		updateFixedReveals();
+		window.addEventListener("scroll", onFixedRevealScroll, { passive: true });
+		window.addEventListener("resize", onFixedRevealScroll);
+	}
+</script>
+
+</body>
+</html>
