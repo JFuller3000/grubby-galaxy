@@ -1,0 +1,634 @@
+---
+import HubFooter from "../../../../components/aopa/HubFooter.astro";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Human Factors: Spatial Disorientation and Decision Making | AOPA</title>
+	<meta
+		name="description"
+		content="Human factors resources for general aviation pilots: run your IMSAFE checklist, judge your fitness to fly, and learn to recognize spatial disorientation."
+	/>
+</head>
+<body>
+
+<div class="home">
+	<header class="home__header" id="home-header">
+		<img class="home__chrome" src="/images/aopa/home/1/chrome-100.jpg" alt="" />
+		<img class="home__mini-nav" src="/images/aopa/home/1/mini-nav-100.jpg" alt="" />
+	</header>
+
+	<section class="js-hub-hero hub-hero relative overflow-hidden bg-white">
+		<div class="flex min-h-[calc(60vh-var(--chrome-h))] flex-col lg:flex-row">
+			<div class="relative flex w-full flex-col justify-center lg:w-1/2">
+				<p class="absolute left-0 top-0 px-8 pt-8 font-national font-light text-[#182f56]/80 sm:px-12 lg:px-16">
+					<a href="/" class="text-[#182f56] no-underline hover:underline">Home</a>
+					<span aria-hidden="true">›</span>
+					<a href="/aopa/hub/safety" class="text-[#182f56] no-underline hover:underline">Safety</a>
+					<span aria-hidden="true">›</span> Human Factors
+				</p>
+				<div class="mx-auto max-w-xl px-8 py-12 sm:px-12 lg:px-16">
+					<p class="font-national text-2xl font-extrabold uppercase tracking-wide text-[#777777] sm:text-2xl">
+						Human Factors
+					</p>
+					<h1 class="mt-2 max-w-[16ch] font-national font-extrabold text-4xl leading-[1.05] tracking-tight text-gray-800 sm:text-5xl">
+						A safe flight starts and ends with the pilot
+					</h1>
+					<p class="mt-5 max-w-[42ch] font-national text-xl font-light leading-relaxed text-gray-500 sm:text-2xl">
+						From the runup to the rollout, these human factors and spatial disorientation
+						resources help you manage your body, mind, and judgment.
+					</p>
+				</div>
+			</div>
+
+			<div class="relative min-h-[360px] w-full overflow-hidden lg:min-h-0 lg:w-1/2">
+				<img
+					class="pointer-events-none absolute inset-0 h-full w-full select-none object-cover"
+					src="/images/aopa/hub/safety/23_eFIRC3079-cropped.jpg"
+					alt=""
+				/>
+				<div
+					class="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-[linear-gradient(180deg,rgba(13,27,42,0)_0%,rgba(13,27,42,0.45)_100%)]"
+					aria-hidden="true"
+				></div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ===== INTRO ===== -->
+	<section class="relative overflow-hidden bg-[#2b2b2e] px-8 py-20 sm:px-12 lg:px-24">
+		<div class="mx-auto max-w-5xl">
+			<p class="font-national text-xl font-light sm:leading-[1.6] text-white sm:text-2xl">
+				The AOPA Air Safety Institute's human factors resources help general aviation pilots
+				sharpen aeronautical decision making, assess their own fitness to fly, recognize spatial
+				disorientation, and survive a forced landing. The Do the Right Thing course is eligible
+				for both Federal Aviation Administration (FAA) Wings credit and Accident Forgiveness and
+				is free to all pilots. In Safety Spotlights, pilots share lessons learned from the
+				cockpit.
+			</p>
+		</div>
+	</section>
+
+	<!-- ===== EXPLORE BY TOPIC ===== -->
+	<section class="relative overflow-hidden bg-gray-100 px-8 py-24 sm:px-12 lg:px-24">
+		<div class="relative mx-auto max-w-7xl">
+			<div class="mb-10 flex flex-wrap items-center justify-between gap-8">
+				<h2 class="max-w-[16ch] font-national text-3xl font-extrabold text-gray-800 sm:text-4xl">
+					Explore human factors by topic
+				</h2>
+			</div>
+
+			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+				<a href="#" class="relative isolate flex min-h-[200px] flex-col justify-start gap-3 overflow-hidden rounded-lg bg-white p-7 no-underline">
+					<div class="relative">
+						<span class="block font-national text-xl font-medium text-gray-800">Make better go/no-go calls</span>
+						<p class="mt-2 font-national text-lg font-light text-gray-600">
+							Improve your aeronautical decision making with the Do the Right Thing spotlight and
+							course. Set personal minimums with ready-made contracts, spot the external pressures
+							pushing a flight, and build habits that keep tough calls from sneaking up on you.
+						</p>
+					</div>
+					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">Aeronautical Decision Making →</span>
+				</a>
+				<a href="#" class="relative isolate flex min-h-[200px] flex-col justify-start gap-3 overflow-hidden rounded-lg border border-black/5 bg-white p-7 no-underline">
+					<div class="relative">
+						<span class="block font-national text-xl font-medium text-gray-800">Mental health help, no judgment</span>
+						<p class="mt-2 font-national text-lg font-light text-gray-600">
+							The Mental Health Resource Center offers helpful videos, including one with the
+							federal air surgeon on medical certification, an interactive stress scale, quick
+							links to FAA mental health guides and myth busters, and a crisis line you can call,
+							text, or chat.
+						</p>
+					</div>
+					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">Mental Health Resource Center →</span>
+				</a>
+				<a href="#" class="relative isolate flex min-h-[200px] flex-col justify-start gap-3 overflow-hidden rounded-lg border border-black/5 bg-white p-7 no-underline">
+					<div class="relative">
+						<span class="block font-national text-xl font-medium text-gray-800">Check your fitness to fly</span>
+						<p class="mt-2 font-national text-lg font-light text-gray-600">
+							Self-assess before every flight, the same way you preflight the airplane. The
+							Aeromedical Center's Aging Gracefully and Fighting Fatigue Safety Spotlights help you
+							judge age- and rest-related changes, so you can stay proficient and fly ready.
+						</p>
+					</div>
+					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">Aeromedical →</span>
+				</a>
+				<a href="#" class="relative isolate flex min-h-[200px] flex-col justify-start gap-3 overflow-hidden rounded-lg border border-black/5 bg-white p-7 no-underline">
+					<div class="relative">
+						<span class="block font-national text-xl font-medium text-gray-800">When your senses lie</span>
+						<p class="mt-2 font-national text-lg font-light text-gray-600">
+							Spatial disorientation can take hold fast when you lose the horizon. Learn the
+							illusions that fool the body, how bank rates can go undetected, and tips for night
+							flying over water. Accident case studies offer cautionary tales for your checklist.
+						</p>
+					</div>
+					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">Spatial Disorientation →</span>
+				</a>
+				<a href="#" class="relative isolate flex min-h-[200px] flex-col justify-start gap-3 overflow-hidden rounded-lg border border-black/5 bg-white p-7 no-underline">
+					<div class="relative">
+						<span class="block font-national text-xl font-medium text-gray-800">Survive after a forced landing</span>
+						<p class="mt-2 font-national text-lg font-light text-gray-600">
+							Walking away is only the start. Learn how to brief passengers, what gear to carry,
+							and how to stay alive after an off-airport landing in the Survive: Beyond the Forced
+							Landing Safety Spotlight. Find the post-accident sequence and more at this safety
+							center.
+						</p>
+					</div>
+					<span class="mt-3 inline-block font-national text-sm font-bold uppercase tracking-widest text-[#01a2e0]">Survival Safety →</span>
+				</a>
+			</div>
+
+			<p class="mt-8 font-national text-base text-gray-600">
+				Running a flight school or operation?
+				<a href="#" class="font-bold text-[#01a2e0] no-underline hover:underline">See the Scalable Safety Framework →</a>
+			</p>
+		</div>
+	</section>
+
+	<!-- ===== REAL PILOT STORIES AND EXPERT INSIGHTS ===== -->
+	<section class="relative overflow-hidden bg-white px-8 py-24 sm:px-12 lg:px-24">
+		<div class="mx-auto max-w-7xl">
+			<div class="max-w-[60ch]">
+				<h2 class="font-national text-3xl font-extrabold text-gray-800 sm:text-4xl">
+					Hear it from pilots who were there
+				</h2>
+				<p class="mt-4 font-national text-lg font-light leading-relaxed text-gray-600 sm:text-xl">
+					In Real Pilot Stories, pilots share what went wrong and how they recovered. Expert
+					Insights courses go deeper, led by people who know the subject, from an Air Force
+					neurologist to a Coast Guard pilot.
+				</p>
+			</div>
+
+			<div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
+				<a href="#" class="flex items-center justify-between rounded-lg border border-black/10 bg-gray-100 px-7 py-6 no-underline">
+					<span class="font-national text-xl font-medium text-gray-800">Real Pilot Stories</span>
+					<span class="font-national text-xl font-bold text-[#01a2e0]">→</span>
+				</a>
+				<a href="#" class="flex items-center justify-between rounded-lg border border-black/10 bg-gray-100 px-7 py-6 no-underline">
+					<span class="font-national text-xl font-medium text-gray-800">Expert Insights</span>
+					<span class="font-national text-xl font-bold text-[#01a2e0]">→</span>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- ===== STORYTELLING AND PROOF + AOPA IN ACTION ===== -->
+	<section class="js-hub-advocacy relative overflow-hidden bg-[#1d3f6d] px-8 py-36 sm:px-12 lg:px-24">
+		<img
+			class="js-hub-advocacy-bg pointer-events-none absolute inset-x-0 -top-[100%] h-[300%] w-full select-none object-cover will-change-transform"
+			src="/images/aopa/home/4/sky-portrait.jpg"
+			alt=""
+		/>
+		<div class="pointer-events-none absolute inset-0 bg-[#1d3f6d]/55"></div>
+
+		<div class="relative mx-auto max-w-7xl">
+			<div class="js-reveal mb-14 grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center">
+				<div class="mr-12">
+					<h2 class="max-w-[32ch] font-national text-3xl font-extrabold text-white sm:text-4xl">
+						Judgment is a skill you can build
+					</h2>
+					<p class="mt-6 max-w-[60ch] font-national text-lg font-light leading-relaxed text-white/90">
+						Risk is personal. Every pilot brings a unique mix of experience, knowledge, skill, and
+						proficiency to the cockpit; operations that are perfectly safe for one pilot may be
+						hazardous for another. That's why these resources help you measure your own limits,
+						not a generic standard. Know your own limits before you fly and honor them.
+					</p>
+				</div>
+				<blockquote class="max-w-[42ch] font-national text-2xl font-light italic leading-snug text-white">
+					"Safe so far does not translate into safe forever."
+					<footer class="mt-2 font-national text-sm not-italic font-light text-white/60">
+						Justin Moore, U.S. Coast Guard pilot, Expert Insights: Risk Management
+					</footer>
+				</blockquote>
+			</div>
+
+			<div class="js-reveal mb-20 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+				<div>
+					<div class="font-national text-4xl font-bold text-[#7ce0ff]">40 minutes</div>
+					<p class="mt-2 font-national text-lg font-light text-white/90">
+						to complete the Do the Right Thing course
+					</p>
+				</div>
+				<div>
+					<div class="font-national text-4xl font-bold text-[#7ce0ff]">7 chapters</div>
+					<p class="mt-2 font-national text-lg font-light text-white/90">
+						in the Spatial Disorientation: Confusion Kills spotlight
+					</p>
+				</div>
+				<div>
+					<div class="font-national text-4xl font-bold text-[#7ce0ff]">5</div>
+					<p class="mt-2 font-national text-lg font-light text-white/90">
+						Expert Insights video courses
+					</p>
+				</div>
+				<div>
+					<div class="font-national text-4xl font-bold text-[#7ce0ff]">5</div>
+					<p class="mt-2 font-national text-lg font-light text-white/90">
+						FAA resources in the Mental Health Resource Center
+					</p>
+				</div>
+			</div>
+
+			<div class="js-reveal grid gap-10 rounded-lg bg-[#0d1b2a]/50 p-10 lg:grid-cols-2 lg:items-center">
+				<div>
+					<div class="mb-3 font-national font-bold uppercase tracking-widest text-[#7ce0ff]">
+						AOPA in Action
+					</div>
+					<h3 class="max-w-[26ch] font-national text-2xl font-extrabold text-white">
+						A mental health bill clears the Senate
+					</h3>
+					<p class="mt-4 max-w-[52ch] font-national text-xl font-light leading-relaxed text-white/90">
+						On September 24, 2026, the U.S. Senate passed the John A. Hauser Mental Health in
+						Aviation Act, work AOPA has long pushed for. AOPA served on the FAA rulemaking
+						committee behind it. If enacted, it would revise FAA rules to encourage pilots to
+						seek help and disclose mental health conditions and require regular special
+						issuance reviews. The final bill is expected by December 31.
+					</p>
+					<a
+						href="#"
+						class="mt-5 inline-flex items-center gap-2 font-national text-lg font-bold uppercase tracking-widest text-[#7ce0ff] no-underline"
+					>
+						Read AOPA's report on the Senate vote →
+					</a>
+					<p class="mt-4 font-national text-sm font-light text-white/50">
+						Source: AOPA News and Media, September 2026
+					</p>
+				</div>
+				<div class="js-hub-advocacy-photo relative min-h-[280px] overflow-hidden rounded-lg">
+					<img
+						src="/images/aopa/hub/template/two-pilots.jpg"
+						alt=""
+						class="pointer-events-none absolute inset-0 h-full w-full select-none object-cover"
+					/>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ===== MEMBER BENEFIT PROMPT ===== -->
+	<section class="relative overflow-hidden bg-white px-8 py-24 sm:px-12 lg:px-24">
+		<div class="mx-auto max-w-3xl text-center">
+			<h3 class="font-national text-4xl font-extrabold text-gray-800">
+				Pilots look out for each other; AOPA is how that happens at scale
+			</h3>
+			<p class="mx-auto mt-4 max-w-[50ch] font-national text-2xl font-light text-gray-500">
+				Our safety resources are free. Membership adds tools like flight planning, the pilot
+				helpline, and publications, and puts your weight behind our work to defend your right to
+				fly.
+			</p>
+		</div>
+	</section>
+
+	<!-- ===== FAQ + CROSS-LINKS + PROVENANCE ===== -->
+	<section class="relative overflow-hidden bg-[#f2f2f2] px-8 py-24 sm:px-12 lg:px-24">
+		<div class="mx-auto grid max-w-6xl gap-24 lg:grid-cols-[1.3fr_1fr] lg:gap-x-64">
+			<div>
+				<h2 class="mb-8 font-national text-3xl font-extrabold text-gray-800">
+					Questions Pilots Ask
+				</h2>
+
+				<div class="js-faq border-t border-[#182f56]/10">
+				<div class="js-faq-item is-open border-b border-[#182f56]/10">
+					<button type="button" class="js-faq-q flex w-full items-center justify-between gap-4 py-5 text-left text-xl font-national text-base font-bold text-[#182f56]">
+						What is aeronautical decision making?
+						<span class="js-faq-plus font-national text-xl font-light text-[#01a2e0]">+</span>
+					</button>
+					<div class="js-faq-a overflow-hidden">
+						<p class="mb-5 font-national text-xl font-light leading-relaxed text-gray-500">
+							Aeronautical decision making is the systematic way a pilot assesses a situation and
+							chooses the safest course of action. The AOPA Air Safety Institute teaches it
+							through the Do the Right Thing course, covering the accident chain, personal
+							minimums, external pressure, and contingency planning. See
+							<a href="#" class="text-[#01a2e0] no-underline hover:underline">Aeronautical Decision Making</a>.
+						</p>
+					</div>
+				</div>
+				<div class="js-faq-item border-b border-[#182f56]/10">
+					<button type="button" class="js-faq-q flex w-full text-xl items-center justify-between gap-4 py-5 text-left font-national text-base font-bold text-[#182f56]">
+						What is spatial disorientation and how do I recover?
+						<span class="js-faq-plus font-national text-xl font-light text-[#01a2e0]">+</span>
+					</button>
+					<div class="js-faq-a overflow-hidden">
+						<p class="mb-5 font-national text-xl font-light leading-relaxed text-gray-500">
+							Spatial disorientation is losing track of your aircraft's attitude, altitude, or
+							motion when you lose visual cues like a clear view of the horizon. To recover,
+							trust your instruments and not what your body is telling you, then level the wings
+							and transition to instrument flight. See
+							<a href="#" class="text-[#01a2e0] no-underline hover:underline">Spatial Disorientation</a>.
+						</p>
+					</div>
+				</div>
+				<div class="js-faq-item border-b border-[#182f56]/10">
+					<button type="button" class="js-faq-q flex w-full items text-xl items-center justify-between gap-4 py-5 text-left font-national  font-bold text-[#182f56]">
+						Can instrument-rated pilots become spatially disoriented?
+						<span class="js-faq-plus font-national text-xl font-light text-[#01a2e0]">+</span>
+					</button>
+					<div class="js-faq-a overflow-hidden">
+						<p class="mb-5 font-national text-xl font-light leading-relaxed text-gray-500">
+							An instrument rating is no guarantee against spatial disorientation; even
+							experienced, instrument-rated pilots can lose orientation in clouds or at night and
+							must rely on their instruments and training to recover. This spotlight shows how it
+							happens and how to stay ahead of it. See
+							<a href="#" class="text-[#01a2e0] no-underline hover:underline">Spatial Disorientation</a>.
+						</p>
+					</div>
+				</div>
+				<div class="js-faq-item border-b border-[#182f56]/10">
+					<button type="button" class="js-faq-q flex w-full items text-xl items-center justify-between gap-4 py-5 text-left font-national  font-bold text-[#182f56]">
+						Which human factors resources earn FAA Wings credit?
+						<span class="js-faq-plus font-national text-xl font-light text-[#01a2e0]">+</span>
+					</button>
+					<div class="js-faq-a overflow-hidden">
+						<p class="mb-5 font-national text-xl font-light leading-relaxed text-gray-500">
+							Do the Right Thing earns FAA Wings credit, as do three Expert Insights courses:
+							Survival Equipment, Risk Management, and Crash Considerations. To enroll, select
+							"Take the Course" and create a free AOPA login. Safety Spotlights do not earn FAA
+							Wings credit. See
+							<a href="#" class="text-[#01a2e0] no-underline hover:underline">Aeronautical Decision Making</a>.
+						</p>
+					</div>
+				</div>
+			</div>
+			</div>
+
+			<div class="flex flex-col gap-10">
+				<div>
+					<p class="font-national font-bold uppercase tracking-widest text-[#182f56]">
+						Elsewhere on aopa.org
+					</p>
+					<ul class="mt-4 list-none space-y-2 p-0 font-national text-lg text-[#182f56]">
+						<li><a href="/aopa/hub/safety" class="text-[#182f56] no-underline hover:text-[#01a2e0]">Safety</a></li>
+						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">Safety → AOPA Air Safety Institute</a></li>
+						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">Safety → Accident Analysis → Night Flying Accident Report</a></li>
+						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">Safety → Weather → VFR into IMC</a></li>
+						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">Safety → Flight Operations → Emergency Procedures</a></li>
+						<li><a href="#" class="text-[#182f56] no-underline hover:text-[#01a2e0]">Go Fly → Medical Resources</a></li>
+					</ul>
+				</div>
+
+				<p class="border-t border-[#182f56]/10 pt-6 font-national text-sm font-light text-gray-500">
+					Reviewed by the AOPA Air Safety Institute (reviewers named) · Last updated [DATE]
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<HubFooter />
+</div>
+
+<style>
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-extrabold.woff2") format("woff2");
+		font-weight: 800;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-extrabold-italic.woff2") format("woff2");
+		font-weight: 800;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-bold.woff2") format("woff2");
+		font-weight: 700;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-bold-italic.woff2") format("woff2");
+		font-weight: 700;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-regular.woff2") format("woff2");
+		font-weight: 400;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-regular-italic.woff2") format("woff2");
+		font-weight: 400;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-medium.woff2") format("woff2");
+		font-weight: 500;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-medium-italic.woff2") format("woff2");
+		font-weight: 500;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-light.woff2") format("woff2");
+		font-weight: 300;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: "National";
+		src: url("/fonts/test-national-light-italic.woff2") format("woff2");
+		font-weight: 300;
+		font-style: italic;
+		font-display: swap;
+	}
+
+	.font-national {
+		font-family: "National", system-ui, -apple-system, sans-serif;
+		font-variant-numeric: lining-nums;
+	}
+
+	*, *::before, *::after { box-sizing: border-box; }
+
+	html, body {
+		margin: 0;
+		padding: 0;
+		background: #fff;
+	}
+
+	.home {
+		position: relative;
+		width: 100%;
+		--chrome-h: calc(100vw * 127 / 2100);
+		--mini-nav-h: calc(100vw * 76 / 2100);
+	}
+
+	.home__header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 10;
+		width: 100%;
+		height: var(--chrome-h);
+		overflow: hidden;
+		transition: height 0.4s ease;
+	}
+
+	.home__header.is-scrolled {
+		height: var(--mini-nav-h);
+	}
+
+	.home__chrome,
+	.home__mini-nav {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: auto;
+		transition: transform 0.4s ease;
+	}
+
+	.home__chrome {
+		transform: translateY(0);
+	}
+
+	.home__mini-nav {
+		transform: translateY(-100%);
+	}
+
+	.home__header.is-scrolled .home__chrome {
+		transform: translateY(-100%);
+	}
+
+	.home__header.is-scrolled .home__mini-nav {
+		transform: translateY(0);
+	}
+
+	.hub-hero {
+		padding-top: var(--chrome-h);
+	}
+
+	.js-faq {
+		min-height: 380px;
+	}
+
+	.js-faq-a {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 0.35s ease;
+	}
+
+	.js-faq-item.is-open .js-faq-a {
+		grid-template-rows: 1fr;
+	}
+
+	.js-faq-a > p {
+		min-height: 0;
+		overflow: hidden;
+	}
+
+	.js-faq-plus {
+		display: inline-block;
+		transition: transform 0.25s ease;
+	}
+
+	.js-faq-item.is-open .js-faq-plus {
+		transform: rotate(45deg);
+	}
+</style>
+
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const header = document.getElementById("home-header");
+	let lastScrollY = window.scrollY;
+
+	const updateHeaderState = () => {
+		const currentScrollY = window.scrollY;
+
+		if (currentScrollY <= 0) {
+			header?.classList.remove("is-scrolled");
+		} else if (currentScrollY > lastScrollY) {
+			header?.classList.add("is-scrolled");
+		} else if (currentScrollY < lastScrollY) {
+			header?.classList.remove("is-scrolled");
+		}
+
+		lastScrollY = currentScrollY;
+	};
+
+	updateHeaderState();
+	window.addEventListener("scroll", updateHeaderState, { passive: true });
+
+	document.querySelectorAll<HTMLElement>(".js-hub-advocacy .js-reveal").forEach((el) => {
+		gsap.from(el, {
+			opacity: 0,
+			y: 40,
+			ease: "none",
+			scrollTrigger: {
+				trigger: el,
+				start: "top 85%",
+				end: "top 55%",
+				scrub: 1,
+			},
+		});
+	});
+
+	[
+		[".js-hub-advocacy", ".js-hub-advocacy-bg"],
+	].forEach(([sectionSelector, bgSelector]) => {
+		const section = document.querySelector<HTMLElement>(sectionSelector);
+		const bg = section?.querySelector<HTMLElement>(bgSelector);
+		if (!section || !bg) return;
+
+		gsap.fromTo(
+			bg,
+			{ yPercent: -10 },
+			{
+				yPercent: 10,
+				ease: "none",
+				scrollTrigger: {
+					trigger: section,
+					start: "top bottom",
+					end: "bottom top",
+					scrub: 1,
+				},
+			},
+		);
+	});
+
+	document.querySelectorAll<HTMLElement>(".js-faq-q").forEach((btn) => {
+		btn.addEventListener("click", () => {
+			const item = btn.closest<HTMLElement>(".js-faq-item")!;
+			const wasOpen = item.classList.contains("is-open");
+			item.parentElement?.querySelectorAll<HTMLElement>(".js-faq-item").forEach((i) => i.classList.remove("is-open"));
+			if (!wasOpen) item.classList.add("is-open");
+		});
+	});
+
+	window.addEventListener("load", () => ScrollTrigger.refresh());
+</script>
+</body>
+</html>
