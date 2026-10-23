@@ -679,13 +679,17 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 	gsap.registerPlugin(ScrollTrigger);
 
 	const header = document.getElementById("home-header");
+	const hero = document.querySelector<HTMLElement>(".js-hub-hero");
 	let lastScrollY = window.scrollY;
 
 	const updateHeaderState = () => {
 		const currentScrollY = window.scrollY;
 		const isStuck = (header?.getBoundingClientRect().top ?? 0) <= 0;
+		const heroRect = hero?.getBoundingClientRect();
+		const headerHeight = header?.getBoundingClientRect().height ?? 0;
+		const pastHeroMidpoint = heroRect ? heroRect.top + heroRect.height / 2 <= headerHeight : true;
 
-		if (!isStuck || currentScrollY <= 0) {
+		if (!isStuck || !pastHeroMidpoint || currentScrollY <= 0) {
 			header?.classList.remove("is-scrolled");
 		} else if (currentScrollY > lastScrollY) {
 			header?.classList.add("is-scrolled");
