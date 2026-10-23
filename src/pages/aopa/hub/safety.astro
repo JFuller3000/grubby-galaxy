@@ -15,6 +15,16 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 </head>
 <body>
 
+<div class="relative z-[11] flex justify-center bg-gray-50 px-4 py-3 sm:py-4" aria-label="Advertisement placement">
+	<div class="h-[50px] w-[320px] overflow-hidden rounded border border-gray-200 sm:h-[90px] sm:w-[970px]">
+		<img
+			src="/images/aopa/ads/970x90.jpeg"
+			alt="Advertisement"
+			class="h-full w-full select-none object-cover"
+		/>
+	</div>
+</div>
+
 <div class="home">
 	<header class="home__header" id="home-header">
 		<img class="home__chrome" src="/images/aopa/home/1/chrome-100.jpg" alt="" />
@@ -49,17 +59,6 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 		</div>
 	</section>
 
-	<!-- ===== AD #1: below hero, premium placement, separately targetable ===== -->
-	<section class="relative overflow-hidden bg-gray-50 px-8 py-8 sm:px-12 lg:px-24" aria-label="Advertisement placement">
-		<div class="mx-auto h-[250px] w-[300px] overflow-hidden rounded-lg border border-gray-200 sm:h-[300px] sm:w-[600px]">
-			<img
-				src="/images/aopa/ads/DC_006-5_600x300-expandable.jpg"
-				alt="Advertisement"
-				class="h-full w-full select-none object-cover"
-			/>
-		</div>
-	</section>
-
 	<!-- ===== INTRO ===== -->
 	<section class="relative flex min-h-[36vh] items-center overflow-hidden bg-white px-8 sm:px-12 lg:px-24">
 		<div class="mx-auto max-w-5xl pb-0 pt-0">
@@ -73,6 +72,17 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 				insurance carriers. The free ASI transcript tracks your progress. Choose a topic below to fight
 				complacency and sharpen the skills that bring you home.
 			</p>
+		</div>
+	</section>
+
+	<!-- ===== AD #1: below the intro text, premium placement, separately targetable ===== -->
+	<section class="relative overflow-hidden bg-gray-50 px-8 py-8 sm:px-12 lg:px-24" aria-label="Advertisement placement">
+		<div class="mx-auto h-[50px] w-[320px] overflow-hidden rounded-lg border border-gray-200 sm:h-[90px] sm:w-[728px]">
+			<img
+				src="/images/aopa/ads/cau-728x90.jpg"
+				alt="Advertisement"
+				class="h-full w-full select-none object-cover"
+			/>
 		</div>
 	</section>
 
@@ -178,19 +188,8 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 		</div>
 	</section>
 
-	<!-- ===== AD #2: in content, at section break, inserted automatically ===== -->
-	<section class="relative overflow-hidden bg-gray-50 px-8 py-8 sm:px-12 lg:px-24" aria-label="Advertisement placement">
-		<div class="mx-auto h-[50px] w-[320px] overflow-hidden rounded-lg border border-gray-200 sm:h-[90px] sm:w-[728px]">
-			<img
-				src="/images/aopa/ads/cau-728x90.jpg"
-				alt="Advertisement"
-				class="h-full w-full select-none object-cover"
-			/>
-		</div>
-	</section>
-
 	<!-- ===== PROOF (STATS) + AOPA IN ACTION ===== -->
-	<section class="js-hub-advocacy relative overflow-hidden bg-[#1d3f6d] px-8 py-36 sm:px-12 lg:px-24">
+	<section class="js-hub-advocacy relative overflow-hidden bg-[#1d3f6d] px-8 pb-14 pt-36 sm:px-12 lg:px-24">
 		<img
 			class="js-hub-advocacy-bg pointer-events-none absolute inset-x-0 -top-[100%] h-[300%] w-full select-none object-cover will-change-transform"
 			src="/images/aopa/home/4/sky-portrait.jpg"
@@ -279,6 +278,17 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 						src="/images/aopa/hub/safety/tower.jpg"
 						alt=""
 						class="pointer-events-none absolute inset-0 h-full w-full select-none object-cover"
+					/>
+				</div>
+			</div>
+
+			<!-- ===== AD #2: in content, at section break, inserted automatically ===== -->
+			<div class="mt-14 flex justify-center" aria-label="Advertisement placement">
+				<div class="h-[250px] w-[300px] overflow-hidden rounded-lg border border-white/20 sm:h-[300px] sm:w-[600px]">
+					<img
+						src="/images/aopa/ads/DC_006-5_600x300-expandable.jpg"
+						alt="Advertisement"
+						class="h-full w-full select-none object-cover"
 					/>
 				</div>
 			</div>
@@ -592,10 +602,8 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 	}
 
 	.home__header {
-		position: fixed;
+		position: sticky;
 		top: 0;
-		left: 0;
-		right: 0;
 		z-index: 10;
 		width: 100%;
 		height: var(--chrome-h);
@@ -634,9 +642,6 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 		transform: translateY(0);
 	}
 
-	.hub-hero {
-		padding-top: var(--chrome-h);
-	}
 
 	.js-faq {
 		min-height: 380px;
@@ -678,8 +683,9 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 
 	const updateHeaderState = () => {
 		const currentScrollY = window.scrollY;
+		const isStuck = (header?.getBoundingClientRect().top ?? 0) <= 0;
 
-		if (currentScrollY <= 0) {
+		if (!isStuck || currentScrollY <= 0) {
 			header?.classList.remove("is-scrolled");
 		} else if (currentScrollY > lastScrollY) {
 			header?.classList.add("is-scrolled");
