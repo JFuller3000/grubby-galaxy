@@ -608,6 +608,7 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 		width: 100%;
 		height: var(--chrome-h);
 		overflow: hidden;
+		overflow-anchor: none;
 		transition: height 0.4s ease;
 	}
 
@@ -680,26 +681,49 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 
 	const header = document.getElementById("home-header");
 	const hero = document.querySelector<HTMLElement>(".js-hub-hero");
-	let lastScrollY = window.scrollY;
+
+	// Cached once per layout (not read live), so the threshold below never
+	// depends on the header's own height while it's mid-transition - reading
+	// a value you're actively animating as the condition for animating it is
+	// a feedback loop: it can flip back and forth every frame if the user
+	// stops scrolling exactly on the boundary, which is what caused the judder.
+	let heroMidpointScrollY = Infinity;
+
+	// Scroll-anchoring (a browser feature, now also disabled via CSS below)
+	// nudges scrollY by a px or two whenever content above the viewport
+	// resizes - exactly what the header does when it shrinks. That nudge
+	// alone can re-cross a zero-width boundary and re-trigger the shrink.
+	// This dead zone absorbs that jitter so one real scroll gesture can't
+	// cause more than one state change.
+	const HYSTERESIS = 24;
+
+	const measure = () => {
+		if (!header || !hero) return;
+		const wasScrolled = header.classList.contains("is-scrolled");
+		header.classList.remove("is-scrolled");
+		const chromeHeight = header.getBoundingClientRect().height;
+		const heroRect = hero.getBoundingClientRect();
+		const heroTopDocY = heroRect.top + window.scrollY;
+		heroMidpointScrollY = heroTopDocY + heroRect.height / 2 - chromeHeight;
+		header.classList.toggle("is-scrolled", wasScrolled);
+	};
 
 	const updateHeaderState = () => {
 		const currentScrollY = window.scrollY;
 		const isStuck = (header?.getBoundingClientRect().top ?? 0) <= 0;
-		const heroRect = hero?.getBoundingClientRect();
-		const headerHeight = header?.getBoundingClientRect().height ?? 0;
-		const pastHeroMidpoint = heroRect ? heroRect.top + heroRect.height / 2 <= headerHeight : true;
+		const isScrolled = header?.classList.contains("is-scrolled") ?? false;
 
-		if (!isStuck || !pastHeroMidpoint || currentScrollY <= 0) {
+		if (!isStuck || currentScrollY <= 0) {
 			header?.classList.remove("is-scrolled");
-		} else if (currentScrollY > lastScrollY) {
+		} else if (!isScrolled && currentScrollY >= heroMidpointScrollY + HYSTERESIS) {
 			header?.classList.add("is-scrolled");
-		} else if (currentScrollY < lastScrollY) {
+		} else if (isScrolled && currentScrollY <= heroMidpointScrollY - HYSTERESIS) {
 			header?.classList.remove("is-scrolled");
 		}
-
-		lastScrollY = currentScrollY;
 	};
 
+	measure();
+	window.addEventListener("resize", measure, { passive: true });
 	updateHeaderState();
 	window.addEventListener("scroll", updateHeaderState, { passive: true });
 
