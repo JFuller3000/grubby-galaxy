@@ -15,16 +15,6 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 </head>
 <body>
 
-<div class="relative z-[11] flex justify-center bg-gray-50 px-4 py-3 sm:py-4" aria-label="Advertisement placement">
-	<div class="h-[50px] w-[320px] overflow-hidden rounded border border-gray-200 sm:h-[90px] sm:w-[970px]">
-		<img
-			src="/images/aopa/ads/970x90.jpeg"
-			alt="Advertisement"
-			class="h-full w-full select-none object-cover"
-		/>
-	</div>
-</div>
-
 <div class="home">
 	<header class="home__header" id="home-header">
 		<img class="home__chrome" src="/images/aopa/home/1/chrome-100.jpg" alt="" />
@@ -602,13 +592,14 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 	}
 
 	.home__header {
-		position: sticky;
+		position: fixed;
 		top: 0;
+		left: 0;
+		right: 0;
 		z-index: 10;
 		width: 100%;
 		height: var(--chrome-h);
 		overflow: hidden;
-		overflow-anchor: none;
 		transition: height 0.4s ease;
 	}
 
@@ -643,6 +634,9 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 		transform: translateY(0);
 	}
 
+	.hub-hero {
+		padding-top: var(--chrome-h);
+	}
 
 	.js-faq {
 		min-height: 380px;
@@ -685,16 +679,11 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 	// Cached once per layout (not read live), so the threshold below never
 	// depends on the header's own height while it's mid-transition - reading
 	// a value you're actively animating as the condition for animating it is
-	// a feedback loop: it can flip back and forth every frame if the user
-	// stops scrolling exactly on the boundary, which is what caused the judder.
+	// a feedback loop that can flip back and forth every frame.
 	let heroMidpointScrollY = Infinity;
 
-	// Scroll-anchoring (a browser feature, now also disabled via CSS below)
-	// nudges scrollY by a px or two whenever content above the viewport
-	// resizes - exactly what the header does when it shrinks. That nudge
-	// alone can re-cross a zero-width boundary and re-trigger the shrink.
-	// This dead zone absorbs that jitter so one real scroll gesture can't
-	// cause more than one state change.
+	// Small dead zone so a stray pixel or two of scroll jitter can't flip
+	// the state back and forth near the boundary.
 	const HYSTERESIS = 24;
 
 	const measure = () => {
@@ -710,10 +699,9 @@ import HubFooter from "../../../components/aopa/HubFooter.astro";
 
 	const updateHeaderState = () => {
 		const currentScrollY = window.scrollY;
-		const isStuck = (header?.getBoundingClientRect().top ?? 0) <= 0;
 		const isScrolled = header?.classList.contains("is-scrolled") ?? false;
 
-		if (!isStuck || currentScrollY <= 0) {
+		if (currentScrollY <= 0) {
 			header?.classList.remove("is-scrolled");
 		} else if (!isScrolled && currentScrollY >= heroMidpointScrollY + HYSTERESIS) {
 			header?.classList.add("is-scrolled");
